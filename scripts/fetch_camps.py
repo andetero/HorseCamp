@@ -135,7 +135,7 @@ def fetch_ridb_state(state):
                     "state":               fstate,
                     "latitude":            lat,
                     "longitude":           lng,
-                    "pricePerNight":       25.0,
+                    "pricePerNight":       0.0,
                     "horseFeePerNight":    0.0,
                     "hookups":             list(dict.fromkeys(hookups)),
                     "accommodations":      list(dict.fromkeys(accommodations)),
@@ -144,7 +144,7 @@ def fetch_ridb_state(state):
                     "paddockCount":        6 if ("corral" in blob_lower or "paddock" in blob_lower) else 0,
                     "phone":               f.get("FacilityPhone", ""),
                     "website":             f.get("FacilityReservationURL", "") or f"https://www.recreation.gov/camping/campgrounds/{fid}",
-                    "description":         desc[:400],
+                    "description":         desc[:2000],
                     "isVerified":          True,
                     "seasonStart":         5,
                     "seasonEnd":           10,
@@ -236,7 +236,7 @@ def fetch_nps_state(state):
             "paddockCount":        4 if amenities.get("corralOrPaddockOnsite") == "Yes" else 0,
             "phone":               phone,
             "website":             c.get("url", f"https://www.nps.gov/{c.get('parkCode', '')}/"),
-            "description":         desc[:400],
+            "description":         desc[:2000],
             "isVerified":          True,
             "seasonStart":         5,
             "seasonEnd":           10,
@@ -418,7 +418,6 @@ def main():
     print(f"HorseCamp data fetch starting — {datetime.now(timezone.utc).isoformat()}")
     print(f"RIDB key present: {'Yes' if RIDB_KEY else 'NO — set RIDB_API_KEY secret'}")
     print(f"NPS key present:  {'Yes' if NPS_KEY  else 'NO — set NPS_API_KEY secret'}")
-    print(f"Google key present: {'Yes' if GOOGLE_KEY else 'NO — set GOOGLE_PLACES_KEY secret'}")
 
     all_camps = {}
     total_ridb = 0
@@ -460,8 +459,9 @@ def main():
         "camps":      camps_list,
     }
 
-    # Write to camps.json/ so GitHub Pages serves it
-    with open("camps.json", "w") as f:
+    # Write to docs/ so GitHub Pages serves it
+    os.makedirs("docs", exist_ok=True)
+    with open("docs/camps.json", "w") as f:
         json.dump(output, f, indent=2)
 
     google_count = sum(1 for c in camps_list if c.get("source") == "Google Places")

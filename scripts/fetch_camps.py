@@ -2,7 +2,7 @@
 """
 HorseCamp Data Fetcher
 Runs nightly via GitHub Actions.
-Calls Recreation.gov (RIDB) and NPS APIs, writes results to docs/camps.json
+Calls Recreation.gov (RIDB) and NPS APIs, writes results to camps.json
 which is served at horsecampfinder.com/camps.json for the iOS app.
 
 Required GitHub Secrets:

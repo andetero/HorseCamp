@@ -242,7 +242,7 @@ def fetch_nps_state(state):
             "hasWashRack":         False,
             "hasDumpStation":      amenities.get("dumpStation") == "Yes",
             "hasWifi":             amenities.get("internetConnectivity") == "Yes",
-            "hasBathhouse":        "shower" in (amenities.get("showers", "") or "").lower(),
+            "hasBathhouse": "shower" in str(amenities.get("showers", "") or "").lower(),
             "pullThroughAvailable": False,
             "rating":              0.0,
             "reviewCount":         0,

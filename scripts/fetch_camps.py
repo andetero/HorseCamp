@@ -2,7 +2,7 @@
 """
 HorseCamp Data Fetcher
 Runs nightly via GitHub Actions.
-Calls Recreation.gov (RIDB) and NPS APIs, writes results to camps.json
+Calls Recreation.gov (RIDB) and NPS APIs, writes results to docs/camps.json
 which is served at horsecampfinder.com/camps.json for the iOS app.
 
 Required GitHub Secrets:
@@ -13,8 +13,9 @@ Required GitHub Secrets:
 import os, json, time, re, requests
 from datetime import datetime, timezone
 
-RIDB_KEY = os.environ.get("RIDB_API_KEY", "")
-NPS_KEY  = os.environ.get("NPS_API_KEY", "")
+RIDB_KEY   = os.environ.get("RIDB_API_KEY", "")
+NPS_KEY    = os.environ.get("NPS_API_KEY", "")
+GOOGLE_KEY = os.environ.get("GOOGLE_PLACES_KEY", "")
 
 RIDB_BASE = "https://ridb.recreation.gov/api/v1"
 NPS_BASE  = "https://developer.nps.gov/api/v1"
@@ -242,7 +243,7 @@ def fetch_nps_state(state):
             "hasWashRack":         False,
             "hasDumpStation":      amenities.get("dumpStation") == "Yes",
             "hasWifi":             amenities.get("internetConnectivity") == "Yes",
-            "hasBathhouse": "shower" in str(amenities.get("showers", "") or "").lower(),
+            "hasBathhouse":        "shower" in str(amenities.get("showers", "") or "").lower(),
             "pullThroughAvailable": False,
             "rating":              0.0,
             "reviewCount":         0,
@@ -252,6 +253,165 @@ def fetch_nps_state(state):
 
     return camps
 
+
+
+# ── GOOGLE PLACES ──────────────────────────────────────────────────────
+def fetch_google_places(existing_camps):
+    """
+    Fetches equestrian camps from Google Places API.
+    Deduplicates against existing RIDB/NPS camps by proximity (500m radius).
+    Requires GOOGLE_PLACES_KEY secret in GitHub.
+    """
+    if not GOOGLE_KEY:
+        print("  GOOGLE_PLACES_KEY not set — skipping Google Places")
+        return []
+
+    import math
+
+    def haversine_meters(lat1, lon1, lat2, lon2):
+        R = 6371000
+        phi1, phi2 = math.radians(lat1), math.radians(lat2)
+        dphi = math.radians(lat2 - lat1)
+        dlam = math.radians(lon2 - lon1)
+        a = math.sin(dphi/2)**2 + math.cos(phi1)*math.cos(phi2)*math.sin(dlam/2)**2
+        return R * 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+
+    def is_duplicate(lat, lng, threshold_m=500):
+        for camp in existing_camps.values():
+            if haversine_meters(lat, lng, camp["latitude"], camp["longitude"]) < threshold_m:
+                return True
+        return False
+
+    queries = [
+        "equestrian campground",
+        "horse camp overnight",
+        "horse corral camping",
+        "equestrian park camping",
+    ]
+
+    # Google Places Text Search covers the whole US
+    # We search nationally and let proximity dedup handle overlap
+    base_url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
+    camps = {}
+    seen = set()
+
+    for query in queries:
+        params = {
+            "query": query,
+            "type": "campground",
+            "key": GOOGLE_KEY,
+            "region": "us",
+        }
+        page_token = None
+        pages = 0
+
+        while pages < 3:  # Google returns max 3 pages (60 results) per query
+            if page_token:
+                params = {"pagetoken": page_token, "key": GOOGLE_KEY}
+                time.sleep(2)  # Google requires 2s delay between page_token requests
+
+            data = safe_get(base_url, params=params)
+            if not data or data.get("status") not in ("OK", "ZERO_RESULTS"):
+                break
+
+            for place in data.get("results", []):
+                pid = place.get("place_id", "")
+                if not pid or pid in seen:
+                    continue
+                seen.add(pid)
+
+                loc = place.get("geometry", {}).get("location", {})
+                lat = loc.get("lat", 0)
+                lng = loc.get("lng", 0)
+                if not lat or not lng:
+                    continue
+
+                # Skip if too close to an existing RIDB/NPS camp
+                if is_duplicate(lat, lng):
+                    continue
+
+                name = place.get("name", "")
+                if not name or not is_equestrian(name + " " + " ".join(place.get("types", []))):
+                    continue
+
+                # Fetch place details for phone, website, address
+                detail_data = safe_get(
+                    "https://maps.googleapis.com/maps/api/place/details/json",
+                    params={
+                        "place_id": pid,
+                        "fields": "name,formatted_address,formatted_phone_number,website,url",
+                        "key": GOOGLE_KEY,
+                    }
+                )
+                detail = detail_data.get("result", {}) if detail_data else {}
+
+                address = detail.get("formatted_address", place.get("formatted_address", ""))
+                # Extract state from address (last part before ZIP)
+                parts = [p.strip() for p in address.split(",")]
+                state = ""
+                for part in reversed(parts):
+                    # State abbreviation is 2 uppercase letters
+                    words = part.strip().split()
+                    for w in words:
+                        if len(w) == 2 and w.isupper():
+                            state = w
+                            break
+                    if state:
+                        break
+
+                # Only include US camps
+                if not state or state not in [
+                    "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID",
+                    "IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS",
+                    "MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK",
+                    "OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
+                ]:
+                    continue
+
+                city = parts[-3] if len(parts) >= 3 else ""
+
+                camps[pid] = {
+                    "id":                  f"google-{pid}",
+                    "name":                name,
+                    "location":            f"{city}, {state}".strip(", "),
+                    "state":               state,
+                    "latitude":            lat,
+                    "longitude":           lng,
+                    "pricePerNight":       25.0,
+                    "horseFeePerNight":    0.0,
+                    "hookups":             ["No Hookups"],
+                    "accommodations":      ["Trails"],
+                    "maxRigLength":        55,
+                    "stallCount":          0,
+                    "paddockCount":        0,
+                    "phone":               detail.get("formatted_phone_number", ""),
+                    "website":             detail.get("website", detail.get("url", "")),
+                    "description":         f"Equestrian facility in {city}, {state}. Verify amenities before arrival.",
+                    "isVerified":          False,
+                    "seasonStart":         5,
+                    "seasonEnd":           10,
+                    "hasWashRack":         False,
+                    "hasDumpStation":      False,
+                    "hasWifi":             False,
+                    "hasBathhouse":        False,
+                    "pullThroughAvailable": False,
+                    "rating":              float(place.get("rating", 0)),
+                    "reviewCount":         place.get("user_ratings_total", 0),
+                    "imageColors":         ["8B5E3C", "D4A853"],
+                    "source":              "Google Places",
+                }
+
+            next_token = data.get("next_page_token")
+            if not next_token:
+                break
+            page_token = next_token
+            pages += 1
+
+        time.sleep(0.5)
+
+    result = list(camps.values())
+    print(f"  Google Places: {len(result)} new camps (not in RIDB/NPS within 500m)")
+    return result
 
 # ── MAIN ───────────────────────────────────────────────────────────────
 def main():
@@ -282,6 +442,14 @@ def main():
 
         time.sleep(0.5)  # be polite to APIs
 
+    # Google Places — deduplicated against RIDB/NPS by proximity
+    print("\nFetching from Google Places (deduplication against existing camps)...")
+    google_camps = fetch_google_places(all_camps)
+    for camp in google_camps:
+        cid = camp["id"]
+        if cid not in all_camps:
+            all_camps[cid] = camp
+
     camps_list = sorted(all_camps.values(), key=lambda c: c["state"])
 
     output = {
@@ -292,13 +460,16 @@ def main():
     }
 
     # Write to docs/ so GitHub Pages serves it
-    with open("camps.json", "w") as f:
+    os.makedirs("docs", exist_ok=True)
+    with open("docs/camps.json", "w") as f:
         json.dump(output, f, indent=2)
 
-    print(f"\nDone. {len(camps_list)} total camps written to docs/camps.json")
-    print(f"  RIDB total: {total_ridb}")
-    print(f"  NPS total:  {total_nps}")
-    print(f"  Unique:     {len(camps_list)}")
+    google_count = sum(1 for c in camps_list if c.get("source") == "Google Places")
+    print(f"\nDone. {len(camps_list)} total camps written to camps.json")
+    print(f"  RIDB:         {total_ridb}")
+    print(f"  NPS:          {total_nps}")
+    print(f"  Google Places:{google_count}")
+    print(f"  Unique total: {len(camps_list)}")
 
 
 if __name__ == "__main__":

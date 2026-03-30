@@ -2,7 +2,7 @@
 """
 HorseCamp Data Fetcher
 Runs nightly via GitHub Actions.
-Calls Recreation.gov (RIDB) and NPS APIs, writes results to docs/camps.json
+Calls Recreation.gov (RIDB) and NPS APIs, writes results to camps.json
 which is served at horsecampfinder.com/camps.json for the iOS app.
 
 Required GitHub Secrets:
@@ -377,7 +377,7 @@ def fetch_google_places(existing_camps):
                     "state":               state,
                     "latitude":            lat,
                     "longitude":           lng,
-                    "pricePerNight":       25.0,
+                    "pricePerNight":       0.0,
                     "horseFeePerNight":    0.0,
                     "hookups":             ["No Hookups"],
                     "accommodations":      ["Trails"],
@@ -418,6 +418,7 @@ def main():
     print(f"HorseCamp data fetch starting — {datetime.now(timezone.utc).isoformat()}")
     print(f"RIDB key present: {'Yes' if RIDB_KEY else 'NO — set RIDB_API_KEY secret'}")
     print(f"NPS key present:  {'Yes' if NPS_KEY  else 'NO — set NPS_API_KEY secret'}")
+    print(f"Google key present: {'Yes' if GOOGLE_KEY else 'NO — set GOOGLE_PLACES_KEY secret'}")
 
     all_camps = {}
     total_ridb = 0
@@ -459,9 +460,8 @@ def main():
         "camps":      camps_list,
     }
 
-    # Write to docs/ so GitHub Pages serves it
-    os.makedirs("docs", exist_ok=True)
-    with open("docs/camps.json", "w") as f:
+    # Write to root so GitHub Pages serves it at horsecampfinder.com/camps.json
+    with open("camps.json", "w") as f:
         json.dump(output, f, indent=2)
 
     google_count = sum(1 for c in camps_list if c.get("source") == "Google Places")

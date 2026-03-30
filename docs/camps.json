@@ -1,0 +1,564 @@
+{
+  "generated": "2026-03-30T02:25:13.395595+00:00",
+  "count": 14,
+  "sources": [
+    "Seeded data \u2014 live RIDB+NPS data loads nightly via GitHub Actions"
+  ],
+  "camps": [
+    {
+      "id": "seed-1",
+      "name": "Aspen Glade Campground",
+      "location": "Conejos, CO",
+      "state": "CO",
+      "latitude": 37.172,
+      "longitude": -106.549,
+      "pricePerNight": 22,
+      "horseFeePerNight": 0,
+      "hookups": [
+        "No Hookups"
+      ],
+      "accommodations": [
+        "Corrals",
+        "Highlines",
+        "Trails"
+      ],
+      "maxRigLength": 60,
+      "stallCount": 0,
+      "paddockCount": 8,
+      "phone": "(719) 274-8971",
+      "website": "https://fs.usda.gov/riogrande",
+      "description": "USFS campground in Rio Grande National Forest with corrals and direct trail access into the South San Juan Wilderness.",
+      "isVerified": true,
+      "seasonStart": 6,
+      "seasonEnd": 9,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": false,
+      "pullThroughAvailable": true,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "5C7A4E",
+        "4A7FA5"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-2",
+      "name": "Pawnee Horse Camp",
+      "location": "Estes Park, CO",
+      "state": "CO",
+      "latitude": 40.529,
+      "longitude": -105.598,
+      "pricePerNight": 30,
+      "horseFeePerNight": 0,
+      "hookups": [
+        "No Hookups"
+      ],
+      "accommodations": [
+        "Corrals",
+        "Highlines",
+        "Trails"
+      ],
+      "maxRigLength": 55,
+      "stallCount": 0,
+      "paddockCount": 6,
+      "phone": "(970) 295-6600",
+      "website": "https://recreation.gov",
+      "description": "USFS horse camp in Roosevelt National Forest with corrals and Indian Peaks Wilderness access.",
+      "isVerified": true,
+      "seasonStart": 6,
+      "seasonEnd": 9,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": true,
+      "pullThroughAvailable": false,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "5C7A4E",
+        "3D2B1A"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-3",
+      "name": "Hatchet Campground",
+      "location": "Moran, WY",
+      "state": "WY",
+      "latitude": 43.988,
+      "longitude": -110.235,
+      "pricePerNight": 20,
+      "horseFeePerNight": 0,
+      "hookups": [
+        "No Hookups"
+      ],
+      "accommodations": [
+        "Corrals",
+        "Highlines",
+        "Trails"
+      ],
+      "maxRigLength": 70,
+      "stallCount": 0,
+      "paddockCount": 10,
+      "phone": "(307) 739-5500",
+      "website": "https://fs.usda.gov/btnf",
+      "description": "Bridger-Teton NF horse camp near Grand Teton NP with large corrals and Teton Wilderness access.",
+      "isVerified": true,
+      "seasonStart": 6,
+      "seasonEnd": 9,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": false,
+      "pullThroughAvailable": true,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "4A7FA5",
+        "5C7A4E"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-4",
+      "name": "Pahaska Tepee Horse Camp",
+      "location": "Cody, WY",
+      "state": "WY",
+      "latitude": 44.479,
+      "longitude": -109.946,
+      "pricePerNight": 35,
+      "horseFeePerNight": 5,
+      "hookups": [
+        "30A",
+        "Water"
+      ],
+      "accommodations": [
+        "Stalls",
+        "Corrals",
+        "Trails"
+      ],
+      "maxRigLength": 65,
+      "stallCount": 6,
+      "paddockCount": 4,
+      "phone": "(307) 527-7701",
+      "website": "https://pahaska.com",
+      "description": "Historic guest ranch at Yellowstone East Entrance with stalls, corrals, and guided trail rides.",
+      "isVerified": true,
+      "seasonStart": 5,
+      "seasonEnd": 10,
+      "hasWashRack": true,
+      "hasDumpStation": true,
+      "hasWifi": false,
+      "hasBathhouse": true,
+      "pullThroughAvailable": true,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "8B5E3C",
+        "5C7A4E"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-5",
+      "name": "Lake Como Horse Camp",
+      "location": "Darby, MT",
+      "state": "MT",
+      "latitude": 45.978,
+      "longitude": -114.322,
+      "pricePerNight": 16,
+      "horseFeePerNight": 0,
+      "hookups": [
+        "No Hookups"
+      ],
+      "accommodations": [
+        "Corrals",
+        "Highlines",
+        "Trails"
+      ],
+      "maxRigLength": 60,
+      "stallCount": 0,
+      "paddockCount": 8,
+      "phone": "(406) 821-3913",
+      "website": "https://fs.usda.gov/bitterroot",
+      "description": "Bitterroot NF horse camp at Lake Como, gateway to Selway-Bitterroot Wilderness.",
+      "isVerified": true,
+      "seasonStart": 6,
+      "seasonEnd": 10,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": false,
+      "pullThroughAvailable": true,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "4A7FA5",
+        "5C7A4E"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-6",
+      "name": "Tin Cup Horse Camp",
+      "location": "Lowman, ID",
+      "state": "ID",
+      "latitude": 44.048,
+      "longitude": -115.618,
+      "pricePerNight": 18,
+      "horseFeePerNight": 0,
+      "hookups": [
+        "No Hookups"
+      ],
+      "accommodations": [
+        "Corrals",
+        "Highlines",
+        "Trails"
+      ],
+      "maxRigLength": 65,
+      "stallCount": 0,
+      "paddockCount": 10,
+      "phone": "(208) 259-3361",
+      "website": "https://fs.usda.gov/boise",
+      "description": "Boise NF horse camp with 10 corrals and access to the Frank Church Wilderness.",
+      "isVerified": true,
+      "seasonStart": 6,
+      "seasonEnd": 9,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": false,
+      "pullThroughAvailable": true,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "5C7A4E",
+        "8B5E3C"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-7",
+      "name": "Lupine Horse Camp",
+      "location": "Mammoth Lakes, CA",
+      "state": "CA",
+      "latitude": 37.651,
+      "longitude": -119.023,
+      "pricePerNight": 28,
+      "horseFeePerNight": 0,
+      "hookups": [
+        "No Hookups"
+      ],
+      "accommodations": [
+        "Corrals",
+        "Highlines",
+        "Trails"
+      ],
+      "maxRigLength": 55,
+      "stallCount": 0,
+      "paddockCount": 12,
+      "phone": "(760) 924-5500",
+      "website": "https://recreation.gov",
+      "description": "Inyo NF horse camp with 12 corrals near Mammoth Lakes and John Muir Trail trailheads.",
+      "isVerified": true,
+      "seasonStart": 6,
+      "seasonEnd": 10,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": true,
+      "pullThroughAvailable": true,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "4A7FA5",
+        "5C7A4E"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-8",
+      "name": "Bandera County River Camp",
+      "location": "Bandera, TX",
+      "state": "TX",
+      "latitude": 29.727,
+      "longitude": -99.073,
+      "pricePerNight": 40,
+      "horseFeePerNight": 5,
+      "hookups": [
+        "30A",
+        "50A",
+        "Water",
+        "Dump Station"
+      ],
+      "accommodations": [
+        "Stalls",
+        "Paddocks",
+        "Wash Rack",
+        "Trails"
+      ],
+      "maxRigLength": 80,
+      "stallCount": 12,
+      "paddockCount": 6,
+      "phone": "(830) 796-4413",
+      "website": "https://banderatexas.com",
+      "description": "Full hookup equestrian camp with covered stalls on the Medina River in the Cowboy Capital.",
+      "isVerified": true,
+      "seasonStart": 1,
+      "seasonEnd": 12,
+      "hasWashRack": true,
+      "hasDumpStation": true,
+      "hasWifi": true,
+      "hasBathhouse": true,
+      "pullThroughAvailable": true,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "D4A853",
+        "8B5E3C"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-9",
+      "name": "Pickett State Park Horse Camp",
+      "location": "Jamestown, TN",
+      "state": "TN",
+      "latitude": 36.544,
+      "longitude": -84.793,
+      "pricePerNight": 30,
+      "horseFeePerNight": 0,
+      "hookups": [
+        "30A",
+        "Water"
+      ],
+      "accommodations": [
+        "Stalls",
+        "Trails"
+      ],
+      "maxRigLength": 60,
+      "stallCount": 20,
+      "paddockCount": 0,
+      "phone": "(931) 879-5821",
+      "website": "https://tnstateparks.com",
+      "description": "20 covered stalls, 30A hookups, and 58 miles of horse trails in Tennessee.",
+      "isVerified": true,
+      "seasonStart": 1,
+      "seasonEnd": 12,
+      "hasWashRack": false,
+      "hasDumpStation": true,
+      "hasWifi": false,
+      "hasBathhouse": true,
+      "pullThroughAvailable": true,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "5C7A4E",
+        "3D2B1A"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-10",
+      "name": "DeSoto State Park Horse Camp",
+      "location": "Fort Payne, AL",
+      "state": "AL",
+      "latitude": 34.519,
+      "longitude": -85.602,
+      "pricePerNight": 29,
+      "horseFeePerNight": 5,
+      "hookups": [
+        "30A",
+        "Water",
+        "Dump Station"
+      ],
+      "accommodations": [
+        "Stalls",
+        "Paddocks",
+        "Trails"
+      ],
+      "maxRigLength": 50,
+      "stallCount": 16,
+      "paddockCount": 4,
+      "phone": "(256) 845-5380",
+      "website": "https://alapark.com/desoto",
+      "description": "16 covered stalls, dump station, and 14 miles of horse trails on Lookout Mountain.",
+      "isVerified": true,
+      "seasonStart": 1,
+      "seasonEnd": 12,
+      "hasWashRack": true,
+      "hasDumpStation": true,
+      "hasWifi": false,
+      "hasBathhouse": true,
+      "pullThroughAvailable": false,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "5C7A4E",
+        "D4A853"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-11",
+      "name": "Kanopolis State Park Horse Camp",
+      "location": "Marquette, KS",
+      "state": "KS",
+      "latitude": 38.617,
+      "longitude": -98.029,
+      "pricePerNight": 22,
+      "horseFeePerNight": 5,
+      "hookups": [
+        "50A",
+        "30A",
+        "Water"
+      ],
+      "accommodations": [
+        "Corrals",
+        "Paddocks",
+        "Trails"
+      ],
+      "maxRigLength": 70,
+      "stallCount": 0,
+      "paddockCount": 14,
+      "phone": "(785) 546-2565",
+      "website": "https://ksoutdoors.com",
+      "description": "Hookups, paddocks, and 26 miles of dramatic canyon trails \u2014 best equestrian park on the plains.",
+      "isVerified": true,
+      "seasonStart": 3,
+      "seasonEnd": 11,
+      "hasWashRack": false,
+      "hasDumpStation": true,
+      "hasWifi": false,
+      "hasBathhouse": true,
+      "pullThroughAvailable": true,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "D4A853",
+        "8B5E3C"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-12",
+      "name": "Redbird Crest Horse Camp",
+      "location": "Big Creek, KY",
+      "state": "KY",
+      "latitude": 36.974,
+      "longitude": -83.738,
+      "pricePerNight": 18,
+      "horseFeePerNight": 0,
+      "hookups": [
+        "No Hookups"
+      ],
+      "accommodations": [
+        "Corrals",
+        "Highlines",
+        "Trails"
+      ],
+      "maxRigLength": 60,
+      "stallCount": 0,
+      "paddockCount": 12,
+      "phone": "(606) 598-2192",
+      "website": "https://fs.usda.gov/dbnf",
+      "description": "Daniel Boone NF with 12 corrals and access to the 65-mile Redbird Crest Trail.",
+      "isVerified": true,
+      "seasonStart": 3,
+      "seasonEnd": 11,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": false,
+      "pullThroughAvailable": true,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "5C7A4E",
+        "8B5E3C"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-13",
+      "name": "Jacks Creek Horse Camp",
+      "location": "Pecos, NM",
+      "state": "NM",
+      "latitude": 35.724,
+      "longitude": -105.641,
+      "pricePerNight": 10,
+      "horseFeePerNight": 0,
+      "hookups": [
+        "No Hookups"
+      ],
+      "accommodations": [
+        "Corrals",
+        "Highlines",
+        "Trails"
+      ],
+      "maxRigLength": 55,
+      "stallCount": 0,
+      "paddockCount": 6,
+      "phone": "(505) 757-6121",
+      "website": "https://fs.usda.gov/santafe",
+      "description": "Santa Fe NF at 8,000ft. Corrals, water, and gateway to the Pecos Wilderness.",
+      "isVerified": true,
+      "seasonStart": 6,
+      "seasonEnd": 10,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": false,
+      "pullThroughAvailable": false,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "D4A853",
+        "5C7A4E"
+      ],
+      "source": "seeded"
+    },
+    {
+      "id": "seed-14",
+      "name": "Buck Creek Horse Camp",
+      "location": "Glacier, WA",
+      "state": "WA",
+      "latitude": 48.742,
+      "longitude": -121.624,
+      "pricePerNight": 14,
+      "horseFeePerNight": 0,
+      "hookups": [
+        "No Hookups"
+      ],
+      "accommodations": [
+        "Corrals",
+        "Highlines",
+        "Trails"
+      ],
+      "maxRigLength": 55,
+      "stallCount": 0,
+      "paddockCount": 8,
+      "phone": "(360) 856-5700",
+      "website": "https://fs.usda.gov/mbs",
+      "description": "Mt. Baker-Snoqualmie NF horse camp with corrals near the North Cascades.",
+      "isVerified": true,
+      "seasonStart": 7,
+      "seasonEnd": 9,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": false,
+      "pullThroughAvailable": true,
+      "rating": 0,
+      "reviewCount": 0,
+      "imageColors": [
+        "4A7FA5",
+        "5C7A4E"
+      ],
+      "source": "seeded"
+    }
+  ]
+}

@@ -21,6 +21,7 @@ jobs:
         env:
           RIDB_API_KEY: ${{ secrets.RIDB_API_KEY }}
           NPS_API_KEY: ${{ secrets.NPS_API_KEY }}
+          GOOGLE_PLACES_KEY: ${{ secrets.GOOGLE_PLACES_KEY }}
         run: python scripts/fetch_camps.py
       - name: Commit and push camps.json
         run: |

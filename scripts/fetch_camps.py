@@ -497,9 +497,8 @@ def fetch_google_places(existing_camps):
     return result
 
 
-# ── HORSE OVERNIGHTS SEEDED LISTINGS ───────────────────────────────────
-# 800 curated horse overnight sites from horseovernights.com (names + coords only)
-# These are permanent and survive every nightly run.
+# ── HORSE OVERNIGHTS  ───────────────────────────────────
+# 800 overnight sites (names + coords only)
 def fetch_horseovernights():
     return [
     {
@@ -781,7 +780,7 @@ def fetch_horseovernights():
         "paddockCount": 0,
         "phone": "251-747-6464",
         "website": "",
-        "description": "Horse overnight site. Verify amenities and availability before arrival."A\" Ranch www.horseovernights.com/Alabama.html#aTel: 251-747-6464",
+        "description": "Horse overnight site. Verify amenities and availability before arrival.",
         "isVerified": false,
         "seasonStart": 1,
         "seasonEnd": 12,

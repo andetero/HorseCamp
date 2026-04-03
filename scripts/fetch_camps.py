@@ -151,7 +151,16 @@ def parse_price(fid, headers):
         return 0.0
 
     lowest = 0.0
-    for site in (data.get("RECDATA") or []):
+    recdata = data.get("RECDATA") or []
+    if recdata and lowest == 0.0:
+        # Debug: print all keys from first campsite to find fee field name
+        first_site = recdata[0]
+        fee_keys = [k for k in first_site.keys() if "fee" in k.lower() or "rate" in k.lower() or "cost" in k.lower() or "price" in k.lower()]
+        if fee_keys:
+            print(f"    Fee fields found: {fee_keys} = {[first_site.get(k) for k in fee_keys]}")
+        else:
+            print(f"    No fee fields. Available keys: {list(first_site.keys())}")
+    for site in recdata:
         # Campsites have a SITEGROUP with fees, or CAMPSITE_FEES directly
         for fee in (site.get("CAMPSITE_FEES") or []):
             try:

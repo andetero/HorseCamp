@@ -1,6 +1,6 @@
 {
-  "generated": "2026-04-03T07:06:00.803392+00:00",
-  "count": 1652,
+  "generated": "2026-04-04T06:53:55.286679+00:00",
+  "count": 1651,
   "sources": [
     "Recreation.gov RIDB",
     "NPS API"
@@ -18613,6 +18613,43 @@
       "source": "RIDB"
     },
     {
+      "id": "google-ChIJA6Lp2W33lIcRt4BVWwd5lyc",
+      "name": "Waubonsie St Park Equestrian Campground",
+      "location": "Sidney, IA",
+      "state": "IA",
+      "latitude": 40.68280379999999,
+      "longitude": -95.67876559999999,
+      "pricePerNight": 0.0,
+      "horseFeePerNight": 0.0,
+      "hookups": [
+        "No Hookups"
+      ],
+      "accommodations": [
+        "Trails"
+      ],
+      "maxRigLength": 55,
+      "stallCount": 0,
+      "paddockCount": 0,
+      "phone": "",
+      "website": "https://iowastateparks.reserveamerica.com/camping/waubonsie-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610131",
+      "description": "Equestrian facility in Sidney, IA. Verify amenities before arrival.",
+      "isVerified": false,
+      "seasonStart": 1,
+      "seasonEnd": 12,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": false,
+      "pullThroughAvailable": false,
+      "rating": 5.0,
+      "reviewCount": 1,
+      "imageColors": [
+        "8B5E3C",
+        "D4A853"
+      ],
+      "source": "Google Places"
+    },
+    {
       "id": "ridb-251899",
       "name": "COPPER BASIN GUARD STATION",
       "location": "Mackay, ID",
@@ -25169,7 +25206,7 @@
       "paddockCount": 0,
       "phone": "",
       "website": "https://www.recreation.gov/camping/campgrounds/251820",
-      "description": "Overview\nBoat Gunnel Group Campground is located in the Daniel Boone National Forest on Cave Run Lake.  Widely known for its scenic beauty and varied outdoor recreation opportunities, Cave Run Lake is home to Kentucky's state record Muskie. This 8,270-acre lake is jointly operated and managed by the U.S. Army Corps of Engineers and the U.S. Forest Service. Recreation\nNearby Twin Knobs Campground offers a boat ramp and beach.\n\nScenic foot trails in the area include the Boat Gunnel Shoreline Trail, the Oak Ridge Trail and the Wildlife Trail.\nFacilities\nBoat Gunnel Group Campground offers a bathhouse with flush toilets and showers, picnic shelter, horseshoe pit and drinking water. The camping area accommodates large groups and is available by reservation only. The picnic shelter is equipped with a grill, serving table and electricity.Natural Features\nThe Daniel Boone National Forest embraces some of the most rugged terrain west of the Appalachian Mountains. The forest lies within the Cumberland Plateau, where steep\nforested slopes, sandstone cliffs and narrow ravines characterize the land in this region.\n\nCave Run Lake is in the Cumberland District in the northernmost part of the forest. The lake is surrounded by the rolling hills of northeastern Kentucky.  \nNearby Attractions\nThe Morehead Office Visitor Center offers information about the Daniel Boone National Forest in addition to interpretive exhibits. A popular attraction within the Daniel Boone National Forest is the Red River Gorge Geological Area, which features more than 100 natural sandstone arches.",
+      "description": "Overview\nBoat Gunnel Group Campground is located in the Daniel Boone National Forest on Cave Run Lake.  Widely known for its scenic beauty and varied outdoor recreation opportunities, Cave Run Lake is home to Kentucky's state record Muskie. This 8,270-acre lake is jointly operated and managed by the U.S. Army Corps of Engineers and the U.S. Forest Service. Recreation\nNearby Twin Knobs Campground offers a boat ramp and beach.\n\nScenic foot trails in the area include the Boat Gunnel Shoreline Trail, the Oak Ridge Trail and the Wildlife Trail.\nFacilities\nBoat Gunnel Group Campground offers a bathhouse with flush toilets and showers, picnic shelter, horseshoe pit and drinking water. The camping area accommodates large groups of up to 100 people and is available by reservation only. The picnic shelter is equipped with a grill, serving table and electricity.Natural Features\nThe Daniel Boone National Forest embraces some of the most rugged terrain west of the Appalachian Mountains. The forest lies within the Cumberland Plateau, where steep\nforested slopes, sandstone cliffs and narrow ravines characterize the land in this region.\n\nCave Run Lake is in the Cumberland District in the northernmost part of the forest. The lake is surrounded by the rolling hills of northeastern Kentucky.  \nNearby Attractions\nThe Morehead Office Visitor Center offers information about the Daniel Boone National Forest in addition to interpretive exhibits. A popular attraction within the Daniel Boone National Forest is the Red River Gorge Geological Area, which features more than 100 natural sandstone arches.",
       "isVerified": true,
       "seasonStart": 1,
       "seasonEnd": 12,
@@ -26738,43 +26775,6 @@
       "pullThroughAvailable": false,
       "rating": 5.0,
       "reviewCount": 1,
-      "imageColors": [
-        "8B5E3C",
-        "D4A853"
-      ],
-      "source": "Google Places"
-    },
-    {
-      "id": "google-ChIJ71wpATvSPIgRvalxJDKhQL4",
-      "name": "Waterloo Equestrian Campground",
-      "location": "Chelsea, MI",
-      "state": "MI",
-      "latitude": 42.3345689,
-      "longitude": -84.1300136,
-      "pricePerNight": 0.0,
-      "horseFeePerNight": 0.0,
-      "hookups": [
-        "No Hookups"
-      ],
-      "accommodations": [
-        "Trails"
-      ],
-      "maxRigLength": 55,
-      "stallCount": 0,
-      "paddockCount": 0,
-      "phone": "",
-      "website": "https://maps.google.com/?cid=13709134502447655357",
-      "description": "Equestrian facility in Chelsea, MI. Verify amenities before arrival.",
-      "isVerified": false,
-      "seasonStart": 1,
-      "seasonEnd": 12,
-      "hasWashRack": false,
-      "hasDumpStation": false,
-      "hasWifi": false,
-      "hasBathhouse": false,
-      "pullThroughAvailable": false,
-      "rating": 4.6,
-      "reviewCount": 7,
       "imageColors": [
         "8B5E3C",
         "D4A853"
@@ -38865,43 +38865,6 @@
       "source": "RIDB"
     },
     {
-      "id": "google-ChIJwbeQ7gMXQIgRMWzN471Ouvc",
-      "name": "Hueston Woods State Park Horse Camp",
-      "location": "Camden, OH",
-      "state": "OH",
-      "latitude": 39.5803909,
-      "longitude": -84.7357483,
-      "pricePerNight": 0.0,
-      "horseFeePerNight": 0.0,
-      "hookups": [
-        "No Hookups"
-      ],
-      "accommodations": [
-        "Trails"
-      ],
-      "maxRigLength": 55,
-      "stallCount": 0,
-      "paddockCount": 0,
-      "phone": "",
-      "website": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hueston-woods-state-park-campground",
-      "description": "Equestrian facility in Camden, OH. Verify amenities before arrival.",
-      "isVerified": false,
-      "seasonStart": 1,
-      "seasonEnd": 12,
-      "hasWashRack": false,
-      "hasDumpStation": false,
-      "hasWifi": false,
-      "hasBathhouse": false,
-      "pullThroughAvailable": false,
-      "rating": 4.5,
-      "reviewCount": 42,
-      "imageColors": [
-        "8B5E3C",
-        "D4A853"
-      ],
-      "source": "Google Places"
-    },
-    {
       "id": "ridb-233430",
       "name": "BLUE CREEK",
       "location": "Claremore, OK",
@@ -44823,43 +44786,6 @@
       "source": "Google Places"
     },
     {
-      "id": "google-ChIJlX9KqNyQv1QRWTDmHuEMZIE",
-      "name": "Santiam horse camp",
-      "location": "Gates, OR",
-      "state": "OR",
-      "latitude": 44.7300164,
-      "longitude": -122.4024009,
-      "pricePerNight": 0.0,
-      "horseFeePerNight": 0.0,
-      "hookups": [
-        "No Hookups"
-      ],
-      "accommodations": [
-        "Trails"
-      ],
-      "maxRigLength": 55,
-      "stallCount": 0,
-      "paddockCount": 0,
-      "phone": "(503) 859-2151",
-      "website": "https://www.reserveamerica.com/explore/santiam-horse-camp/OR/411802/overview",
-      "description": "Equestrian facility in Gates, OR. Verify amenities before arrival.",
-      "isVerified": false,
-      "seasonStart": 1,
-      "seasonEnd": 12,
-      "hasWashRack": false,
-      "hasDumpStation": false,
-      "hasWifi": false,
-      "hasBathhouse": false,
-      "pullThroughAvailable": false,
-      "rating": 4.6,
-      "reviewCount": 27,
-      "imageColors": [
-        "8B5E3C",
-        "D4A853"
-      ],
-      "source": "Google Places"
-    },
-    {
       "id": "google-ChIJGSINLmRtv1QRnMbdbkMOjJw",
       "name": "Big Meadows Horse Camp",
       "location": "Sisters, OR",
@@ -44890,6 +44816,43 @@
       "pullThroughAvailable": false,
       "rating": 4.8,
       "reviewCount": 13,
+      "imageColors": [
+        "8B5E3C",
+        "D4A853"
+      ],
+      "source": "Google Places"
+    },
+    {
+      "id": "google-ChIJlX9KqNyQv1QRWTDmHuEMZIE",
+      "name": "Santiam horse camp",
+      "location": "Gates, OR",
+      "state": "OR",
+      "latitude": 44.7300164,
+      "longitude": -122.4024009,
+      "pricePerNight": 0.0,
+      "horseFeePerNight": 0.0,
+      "hookups": [
+        "No Hookups"
+      ],
+      "accommodations": [
+        "Trails"
+      ],
+      "maxRigLength": 55,
+      "stallCount": 0,
+      "paddockCount": 0,
+      "phone": "(503) 859-2151",
+      "website": "https://www.reserveamerica.com/explore/santiam-horse-camp/OR/411802/overview",
+      "description": "Equestrian facility in Gates, OR. Verify amenities before arrival.",
+      "isVerified": false,
+      "seasonStart": 1,
+      "seasonEnd": 12,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": false,
+      "pullThroughAvailable": false,
+      "rating": 4.6,
+      "reviewCount": 27,
       "imageColors": [
         "8B5E3C",
         "D4A853"
@@ -49548,12 +49511,12 @@
       "source": "Google Places"
     },
     {
-      "id": "google-ChIJ4SlbsRMUAYcRXvX1hOHaEhs",
-      "name": "Equestrian Camp Area",
-      "location": "Canyon, TX",
+      "id": "google-ChIJtcLFns3SVIYR3FiQXPtvKpc",
+      "name": "Big Pond Equestrian Campground",
+      "location": "Quanah, TX",
       "state": "TX",
-      "latitude": 34.9319084,
-      "longitude": -101.634677,
+      "latitude": 34.1168458,
+      "longitude": -99.75551329999999,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
       "hookups": [
@@ -49565,9 +49528,9 @@
       "maxRigLength": 55,
       "stallCount": 0,
       "paddockCount": 0,
-      "phone": "(806) 488-2227",
-      "website": "https://tpwd.texas.gov/state-parks/palo-duro-canyon/fees-facilities/campsites",
-      "description": "Equestrian facility in Canyon, TX. Verify amenities before arrival.",
+      "phone": "(979) 535-7763",
+      "website": "http://www.tpwd.state.tx.us/state-parks/copper-breaks",
+      "description": "Equestrian facility in Quanah, TX. Verify amenities before arrival.",
       "isVerified": false,
       "seasonStart": 1,
       "seasonEnd": 12,
@@ -49576,8 +49539,8 @@
       "hasWifi": false,
       "hasBathhouse": false,
       "pullThroughAvailable": false,
-      "rating": 5.0,
-      "reviewCount": 6,
+      "rating": 4.9,
+      "reviewCount": 14,
       "imageColors": [
         "8B5E3C",
         "D4A853"

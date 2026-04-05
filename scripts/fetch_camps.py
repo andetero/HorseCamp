@@ -509,7 +509,7 @@ def fetch_google_places(existing_camps):
 def fetch_layovers():
     return [
     {
-        "id": "layover-1140081",
+        "id": "layover-8621152",
         "name": "Stable Stay: Horse Hotel & AirBnB",
         "location": "Altoona, AL",
         "state": "AL",
@@ -541,11 +541,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8749829",
+        "id": "layover-9963619",
         "name": "Camp McClellan Horse Trails Campground",
         "location": "Anniston, AL",
         "state": "AL",
@@ -577,11 +580,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3368884",
+        "id": "layover-3262458",
         "name": "Hickory Hill Farm",
         "location": "Brundidge, AL",
         "state": "AL",
@@ -613,11 +619,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8694051",
+        "id": "layover-4184841",
         "name": "Bin Swindled Farm",
         "location": "Cropwell, AL",
         "state": "AL",
@@ -649,11 +658,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4349553",
+        "id": "layover-4796207",
         "name": "RED STONE BED & BARN",
         "location": "Hamilton, AL",
         "state": "AL",
@@ -685,11 +697,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1041228",
+        "id": "layover-3236493",
         "name": "Spyglass Farms",
         "location": "Mobile, AL",
         "state": "AL",
@@ -721,11 +736,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4258308",
+        "id": "layover-4089193",
         "name": "4-R Arena",
         "location": "Ralph, AL",
         "state": "AL",
@@ -757,11 +775,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8633441",
+        "id": "layover-1190007",
         "name": "Rocking \"A\" Ranch",
         "location": "Silverhill, AL",
         "state": "AL",
@@ -793,11 +814,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9564195",
+        "id": "layover-6796834",
         "name": "Caddo Equestrian",
         "location": "Trinity, AL",
         "state": "AL",
@@ -829,47 +853,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7285381",
-        "name": "Tok Line Camp B & B",
-        "location": "Tok, AK",
-        "state": "AK",
-        "latitude": 63.3336,
-        "longitude": -143.03632,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "907-883-5506",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-4629110",
+        "id": "layover-2926832",
         "name": "The Aspen Lodge",
         "location": "Alpine, AZ",
         "state": "AZ",
@@ -901,11 +892,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3531255",
+        "id": "layover-2813119",
         "name": "Christina Dora Equestrian, LLC",
         "location": "Apache Junction, AZ",
         "state": "AZ",
@@ -937,11 +931,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1983805",
+        "id": "layover-8827507",
         "name": "Lazee Day Dairy",
         "location": "Apache Junction, AZ",
         "state": "AZ",
@@ -973,11 +970,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8110604",
+        "id": "layover-9688766",
         "name": "Bobbie McGhee Stables",
         "location": "Apache Junction, AZ",
         "state": "AZ",
@@ -1009,11 +1009,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9387505",
+        "id": "layover-3983834",
         "name": "Nicolls Country Ranch",
         "location": "Ash Fork, AZ",
         "state": "AZ",
@@ -1045,11 +1048,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5050401",
+        "id": "layover-3580587",
         "name": "Spears Ranch",
         "location": "Benson, AZ",
         "state": "AZ",
@@ -1081,11 +1087,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8806349",
+        "id": "layover-4540333",
         "name": "Montezuma Old West Ranch House",
         "location": "Camp Verde, AZ",
         "state": "AZ",
@@ -1117,11 +1126,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4792596",
+        "id": "layover-3953702",
         "name": "ARIZONA Horse Layovers * Nashwa Farms",
         "location": "Camp Verde, AZ",
         "state": "AZ",
@@ -1153,11 +1165,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6571646",
+        "id": "layover-1706733",
         "name": "Stewart Ranch",
         "location": "Cave Creek, AZ",
         "state": "AZ",
@@ -1189,11 +1204,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2455466",
+        "id": "layover-1265422",
         "name": "Cave Creek Ranch",
         "location": "Cave Creek, AZ",
         "state": "AZ",
@@ -1225,11 +1243,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1609564",
+        "id": "layover-4824596",
         "name": "Heidi Inman",
         "location": "Cave Creek, AZ",
         "state": "AZ",
@@ -1261,11 +1282,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3936921",
+        "id": "layover-2647299",
         "name": "Rocky Mt Ranches",
         "location": "Coolidge, AZ",
         "state": "AZ",
@@ -1297,11 +1321,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6493384",
+        "id": "layover-8296149",
         "name": "The Ranch at Trails End, LLC",
         "location": "Cottonwood, AZ",
         "state": "AZ",
@@ -1333,11 +1360,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6183345",
+        "id": "layover-3569979",
         "name": "Jon Ray Ranch",
         "location": "Douglas, AZ",
         "state": "AZ",
@@ -1369,11 +1399,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5167431",
+        "id": "layover-3982148",
         "name": "The Happy Trails Cabin",
         "location": "Elgin, AZ",
         "state": "AZ",
@@ -1405,11 +1438,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9927798",
+        "id": "layover-859921",
         "name": "7 bar M Ranch",
         "location": "Eloy, AZ",
         "state": "AZ",
@@ -1441,11 +1477,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5626333",
+        "id": "layover-8047706",
         "name": "Summer Sage Stables",
         "location": "Flagstaff, AZ",
         "state": "AZ",
@@ -1477,11 +1516,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-335624",
+        "id": "layover-6960329",
         "name": "Sycamore Ranch",
         "location": "Flagstaff, AZ",
         "state": "AZ",
@@ -1513,11 +1555,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-165263",
+        "id": "layover-634488",
         "name": "HAPPY HORSE & DOG PET RESORT",
         "location": "Fredonia, AZ",
         "state": "AZ",
@@ -1549,11 +1594,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3143237",
+        "id": "layover-7915486",
         "name": "Tumbling T Ranch",
         "location": "Goodyear, AZ",
         "state": "AZ",
@@ -1585,11 +1633,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4923584",
+        "id": "layover-9563967",
         "name": "Goodwater Ranch, LLC",
         "location": "Holbrook, AZ",
         "state": "AZ",
@@ -1621,11 +1672,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8769104",
+        "id": "layover-2084153",
         "name": "Blake Ranch RV Park & Horse Motel",
         "location": "Kingman, AZ",
         "state": "AZ",
@@ -1657,11 +1711,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5901091",
+        "id": "layover-4594211",
         "name": "Wild West Town & Ranch",
         "location": "Mesa, AZ",
         "state": "AZ",
@@ -1693,11 +1750,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3398385",
+        "id": "layover-7966415",
         "name": "Wickenburg Horse Motel",
         "location": "Morristown, AZ",
         "state": "AZ",
@@ -1729,11 +1789,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-675381",
+        "id": "layover-8119923",
         "name": "Hale Family Ranch",
         "location": "Payson, AZ",
         "state": "AZ",
@@ -1765,11 +1828,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8941474",
+        "id": "layover-2484185",
         "name": "Lazy Horse Ranch",
         "location": "Pearce, AZ",
         "state": "AZ",
@@ -1801,11 +1867,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5077013",
+        "id": "layover-9253317",
         "name": "Clover Equine",
         "location": "Phoenix, AZ",
         "state": "AZ",
@@ -1837,11 +1906,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8409272",
+        "id": "layover-8298515",
         "name": "Windrush Ranch, LLC",
         "location": "Phoenix, AZ",
         "state": "AZ",
@@ -1873,11 +1945,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-154375",
+        "id": "layover-9933327",
         "name": "Bob's Big City Barn",
         "location": "Phoenix, AZ",
         "state": "AZ",
@@ -1909,11 +1984,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6198038",
+        "id": "layover-4038292",
         "name": "Lost Cowboy Ranch",
         "location": "Scottsdale, AZ",
         "state": "AZ",
@@ -1945,11 +2023,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6148670",
+        "id": "layover-1137905",
         "name": "Rio Rancho Verde",
         "location": "Scottsdale, AZ",
         "state": "AZ",
@@ -1981,11 +2062,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-33914",
+        "id": "layover-927262",
         "name": "Red Rock",
         "location": "Sedona, AZ",
         "state": "AZ",
@@ -2017,11 +2101,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6288798",
+        "id": "layover-5852757",
         "name": "Irbinskas Stables RV Horse Camp",
         "location": "Sonoita, AZ",
         "state": "AZ",
@@ -2053,11 +2140,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-587614",
+        "id": "layover-6842300",
         "name": "Tombstone Livery Stable",
         "location": "Tombstone, AZ",
         "state": "AZ",
@@ -2089,11 +2179,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7066880",
+        "id": "layover-8183136",
         "name": "Stewart Runner's Horse Motel, RV Park and Arena",
         "location": "Tonopah, AZ",
         "state": "AZ",
@@ -2125,11 +2218,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7828185",
+        "id": "layover-2877574",
         "name": "China Cabinet Ranch",
         "location": "Tucson, AZ",
         "state": "AZ",
@@ -2161,11 +2257,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5166130",
+        "id": "layover-6124387",
         "name": "Rocking M Ranch",
         "location": "Tucson, AZ",
         "state": "AZ",
@@ -2197,11 +2296,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9831016",
+        "id": "layover-4958760",
         "name": "Lazy H Bar Desert Outpost Vacation Rental",
         "location": "Tucson, AZ",
         "state": "AZ",
@@ -2233,11 +2335,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9881026",
+        "id": "layover-5596535",
         "name": "Moody Ranch",
         "location": "Tucson, AZ",
         "state": "AZ",
@@ -2269,11 +2374,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6972724",
+        "id": "layover-5683193",
         "name": "Wandering Rose Farm and Stables",
         "location": "Tucson, AZ",
         "state": "AZ",
@@ -2305,11 +2413,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9379132",
+        "id": "layover-9322335",
         "name": "Deseret Akers",
         "location": "Wickenburg, AZ",
         "state": "AZ",
@@ -2341,11 +2452,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4209902",
+        "id": "layover-3204451",
         "name": "Two Bit Ranch",
         "location": "Wickenburg, AZ",
         "state": "AZ",
@@ -2377,11 +2491,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6038896",
+        "id": "layover-2673909",
         "name": "Lainee Shearer Quarter Horses",
         "location": "Wittmann, AZ",
         "state": "AZ",
@@ -2413,11 +2530,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4477636",
+        "id": "layover-8238957",
         "name": "McClure Ranch",
         "location": "Yuma, AZ",
         "state": "AZ",
@@ -2449,11 +2569,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4035405",
+        "id": "layover-3560114",
         "name": "Circle L Equine",
         "location": "Blytheville, AR",
         "state": "AR",
@@ -2485,11 +2608,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6005998",
+        "id": "layover-4349836",
         "name": "Rocking P Stables",
         "location": "Brinkley, AR",
         "state": "AR",
@@ -2521,47 +2647,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3486277",
-        "name": "The Bunkhouse",
-        "location": "AR, Clarksville",
-        "state": "",
-        "latitude": 35.5014444444444,
-        "longitude": -93.4721388888889,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "479-979-7662",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-9394004",
+        "id": "layover-7742304",
         "name": "Hobby Horse Hotel",
         "location": "Conway, AR",
         "state": "AR",
@@ -2593,11 +2686,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1121795",
+        "id": "layover-696084",
         "name": "Blue Line Farm,",
         "location": "Fouke, AR",
         "state": "AR",
@@ -2629,11 +2725,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7419282",
+        "id": "layover-8887848",
         "name": "Shady Trail Horse Motel",
         "location": "Greenbrier, AR",
         "state": "AR",
@@ -2665,11 +2764,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2518511",
+        "id": "layover-818905",
         "name": "Norton Farm Stays",
         "location": "Harrison, AR",
         "state": "AR",
@@ -2701,11 +2803,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9117262",
+        "id": "layover-9854679",
         "name": "Saddle Inn Hazen",
         "location": "Hazen, AR",
         "state": "AR",
@@ -2737,11 +2842,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1255093",
+        "id": "layover-7980438",
         "name": "KS Horse Motel",
         "location": "Mabelvale, AR",
         "state": "AR",
@@ -2773,11 +2881,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8765079",
+        "id": "layover-3321419",
         "name": "I40 Horse Hotel",
         "location": "Mulberry, AR",
         "state": "AR",
@@ -2809,11 +2920,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8723235",
+        "id": "layover-454463",
         "name": "NFC Rodeo",
         "location": "Ozark, AR",
         "state": "AR",
@@ -2845,11 +2959,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1910287",
+        "id": "layover-4261770",
         "name": "2B Farms",
         "location": "Russellville, AR",
         "state": "AR",
@@ -2881,11 +2998,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-654704",
+        "id": "layover-9357856",
         "name": "Buckaroo Ranch",
         "location": "Russellville, AR",
         "state": "AR",
@@ -2917,11 +3037,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2281257",
+        "id": "layover-1093473",
         "name": "Happy Hooves Horse Hotel",
         "location": "Anderson, CA",
         "state": "CA",
@@ -2953,11 +3076,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8058180",
+        "id": "layover-1346329",
         "name": "NorCal Riding Stables",
         "location": "Anderson, CA",
         "state": "CA",
@@ -2989,11 +3115,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1750144",
+        "id": "layover-5179476",
         "name": "Galbraith's End of the Road Ranch",
         "location": "Bakersfield, CA",
         "state": "CA",
@@ -3025,11 +3154,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7070839",
+        "id": "layover-7646970",
         "name": "JKC Ranch",
         "location": "Bakersfield, CA",
         "state": "CA",
@@ -3061,11 +3193,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3096936",
+        "id": "layover-5571845",
         "name": "Happi Ranch",
         "location": "Barstow, CA",
         "state": "CA",
@@ -3097,11 +3232,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3581097",
+        "id": "layover-8031810",
         "name": "Silver Glen Stables",
         "location": "Fresno, CA",
         "state": "CA",
@@ -3133,11 +3271,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8412643",
+        "id": "layover-1499925",
         "name": "Rancho Ruiz",
         "location": "Gilroy, CA",
         "state": "CA",
@@ -3169,11 +3310,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7903157",
+        "id": "layover-3203630",
         "name": "Collins Ranch",
         "location": "Hemet, CA",
         "state": "CA",
@@ -3205,11 +3349,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-154528",
+        "id": "layover-6346050",
         "name": "McGrady Livestock and Roping Arena",
         "location": "Hollister, CA",
         "state": "CA",
@@ -3241,11 +3388,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3988680",
+        "id": "layover-4721888",
         "name": "Bonfire Ranch and Horse Motel",
         "location": "Inyokern, CA",
         "state": "CA",
@@ -3277,11 +3427,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6038838",
+        "id": "layover-4223008",
         "name": "Harris Rustic Ranch",
         "location": "Loomis, CA",
         "state": "CA",
@@ -3313,11 +3466,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3089308",
+        "id": "layover-230467",
         "name": "LAZY LEE RANCH & STAYS",
         "location": "Los Molinos, CA",
         "state": "CA",
@@ -3349,11 +3505,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2444153",
+        "id": "layover-1874002",
         "name": "Fogline Ridge Ranch",
         "location": "McKinleyville, CA",
         "state": "CA",
@@ -3385,11 +3544,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4593858",
+        "id": "layover-9750492",
         "name": "Larry Tarpley Training Center at RET Park Ranch",
         "location": "Norco, CA",
         "state": "CA",
@@ -3421,11 +3583,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6141706",
+        "id": "layover-4187760",
         "name": "RockinCW",
         "location": "Pine Valley, CA",
         "state": "CA",
@@ -3457,11 +3622,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3797307",
+        "id": "layover-8108290",
         "name": "Valley Horse Center",
         "location": "Red Bluff, CA",
         "state": "CA",
@@ -3493,11 +3661,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6695393",
+        "id": "layover-9468483",
         "name": "Rusty Wire Ranch",
         "location": "Red Bluff, CA",
         "state": "CA",
@@ -3529,11 +3700,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6074017",
+        "id": "layover-2906790",
         "name": "2 Bar M Ranch",
         "location": "Red Bluff, CA",
         "state": "CA",
@@ -3565,11 +3739,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1705536",
+        "id": "layover-5115993",
         "name": "FIG TREE RANCH",
         "location": "Riverside, CA",
         "state": "CA",
@@ -3601,11 +3778,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9688158",
+        "id": "layover-7647284",
         "name": "Golden Horse Ranch Boarding",
         "location": "Shadow Hills, CA",
         "state": "CA",
@@ -3637,11 +3817,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2091181",
+        "id": "layover-8603653",
         "name": "Stevinson Ranch and Stables",
         "location": "Stevinson, CA",
         "state": "CA",
@@ -3673,11 +3856,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7994659",
+        "id": "layover-8166313",
         "name": "D'Alonzo Ranch Equestrian Center",
         "location": "Stockton, CA",
         "state": "CA",
@@ -3709,11 +3895,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1189391",
+        "id": "layover-3792420",
         "name": "Bill & Amy Todd",
         "location": "Tehachapi, CA",
         "state": "CA",
@@ -3745,11 +3934,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5465727",
+        "id": "layover-1555783",
         "name": "Hacienda Laubela, LLC",
         "location": "Temecula, CA",
         "state": "CA",
@@ -3781,11 +3973,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5258291",
+        "id": "layover-489797",
         "name": "Gentle Winds Ranch",
         "location": "Templeton, CA",
         "state": "CA",
@@ -3817,11 +4012,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6477568",
+        "id": "layover-6275160",
         "name": "Boswell Kennel & Stable",
         "location": "Three Rivers, CA",
         "state": "CA",
@@ -3853,11 +4051,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7994534",
+        "id": "layover-3754580",
         "name": "Double H Ranch",
         "location": "Yreka, CA",
         "state": "CA",
@@ -3889,11 +4090,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5917532",
+        "id": "layover-201098",
         "name": "Sutter Buttes Polo Club",
         "location": "Yuba City, CA",
         "state": "CA",
@@ -3925,11 +4129,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6420082",
+        "id": "layover-2855354",
         "name": "Parkinson Ranch",
         "location": "Yucaipa, CA",
         "state": "CA",
@@ -3961,11 +4168,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1139630",
+        "id": "layover-5702802",
         "name": "Big Iron Ranch",
         "location": "Aurora/Watkins, CO",
         "state": "CO",
@@ -3997,11 +4207,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-697257",
+        "id": "layover-4976618",
         "name": "Lost Creek Acres Horse Boarding and Hoteling",
         "location": "Bennett, CO",
         "state": "CO",
@@ -4033,11 +4246,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7079329",
+        "id": "layover-449765",
         "name": "Elevate Ranch",
         "location": "Bennett, CO",
         "state": "CO",
@@ -4069,11 +4285,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9330357",
+        "id": "layover-3278289",
         "name": "Andersen Farms",
         "location": "Broomfield, CO",
         "state": "CO",
@@ -4105,47 +4324,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2748931",
-        "name": "Mondorosa Bed & Barn",
-        "location": "CO\u00a0 Canon City",
-        "state": "",
-        "latitude": 38.6575555555556,
-        "longitude": -105.403861111111,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "312-446-4736",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-9211637",
+        "id": "layover-7794762",
         "name": "Higher Ground Horsemanship & Performance Horses",
         "location": "Cimarron, CO",
         "state": "CO",
@@ -4177,11 +4363,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9717032",
+        "id": "layover-1723131",
         "name": "Indigo Winds Farm",
         "location": "Colorado Springs, CO",
         "state": "CO",
@@ -4213,11 +4402,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2935194",
+        "id": "layover-3323343",
         "name": "Double Check Arena",
         "location": "Eaton, CO",
         "state": "CO",
@@ -4249,11 +4441,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3869238",
+        "id": "layover-8580851",
         "name": "Amazing Grace Ranch, LLC",
         "location": "Ellicott, CO",
         "state": "CO",
@@ -4285,11 +4480,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2693612",
+        "id": "layover-9113503",
         "name": "Turtle Creek Farm, LLC",
         "location": "Fort Collins, CO",
         "state": "CO",
@@ -4321,11 +4519,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6543222",
+        "id": "layover-8034680",
         "name": "Salt of the Earth Ranch, LLC",
         "location": "Hesperus, CO",
         "state": "CO",
@@ -4357,11 +4558,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6385292",
+        "id": "layover-9444789",
         "name": "United Country Colorado Brokers/ AirbnB",
         "location": "Hotchkiss, CO",
         "state": "CO",
@@ -4393,11 +4597,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3156161",
+        "id": "layover-2937066",
         "name": "Riding2horses Farm",
         "location": "Loveland, CO",
         "state": "CO",
@@ -4429,11 +4636,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6630171",
+        "id": "layover-8892424",
         "name": "Hobo's Hideout Bed Breakfast and Barn",
         "location": "Mancos, CO",
         "state": "CO",
@@ -4465,11 +4675,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8253366",
+        "id": "layover-6783087",
         "name": "Grand Mesa Stay With Your Horses",
         "location": "Mesa, CO",
         "state": "CO",
@@ -4501,11 +4714,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7320594",
+        "id": "layover-8119956",
         "name": "Elktrace Bed and Breakfast",
         "location": "Pagosa Springs, CO",
         "state": "CO",
@@ -4537,11 +4753,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6677382",
+        "id": "layover-8972920",
         "name": "Mimosa Ridge, LLC",
         "location": "Parker, CO",
         "state": "CO",
@@ -4573,11 +4792,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7026382",
+        "id": "layover-1473852",
         "name": "Sunset Pines",
         "location": "Parker, CO",
         "state": "CO",
@@ -4609,11 +4831,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4330988",
+        "id": "layover-1363704",
         "name": "Greenhorn Horse Hotel",
         "location": "Pueblo, CO",
         "state": "CO",
@@ -4645,11 +4870,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8379534",
+        "id": "layover-8938809",
         "name": "Tally Ho Horse Hotel",
         "location": "Rifle, CO",
         "state": "CO",
@@ -4681,11 +4909,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1703597",
+        "id": "layover-3360344",
         "name": "J Bar Equestrian",
         "location": "Salida, CO",
         "state": "CO",
@@ -4717,11 +4948,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1798815",
+        "id": "layover-7982326",
         "name": "Thor's Horse BnB and Icelandic Rescue",
         "location": "Steamboat Springs, CO",
         "state": "CO",
@@ -4753,11 +4987,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-434183",
+        "id": "layover-7256143",
         "name": "Koda Ranch",
         "location": "Watkins, CO",
         "state": "CO",
@@ -4789,11 +5026,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5366697",
+        "id": "layover-2923531",
         "name": "Interstate Stables",
         "location": "Wellington, CO",
         "state": "CO",
@@ -4825,11 +5065,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8807003",
+        "id": "layover-3991826",
         "name": "Ravens Roost Ranch",
         "location": "Wellington, CO",
         "state": "CO",
@@ -4861,11 +5104,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3436720",
+        "id": "layover-5075441",
         "name": "Ironstar Outpost West",
         "location": "Weston, CO",
         "state": "CO",
@@ -4897,11 +5143,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6245363",
+        "id": "layover-4804662",
         "name": "Aspenwood Stables",
         "location": "Woodland Park, CO",
         "state": "CO",
@@ -4933,11 +5182,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1389126",
+        "id": "layover-406913",
         "name": "Candlelight Farms Inn and the Hangar at Candlelight Farms",
         "location": "New Milford, CT",
         "state": "CT",
@@ -4969,11 +5221,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8697635",
+        "id": "layover-313292",
         "name": "S & A Farm, LLC",
         "location": "Oxford, CT",
         "state": "CT",
@@ -5005,11 +5260,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8183263",
+        "id": "layover-551516",
         "name": "Silver Bear Farm",
         "location": "Windham, CT",
         "state": "CT",
@@ -5041,11 +5299,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6612130",
+        "id": "layover-9765364",
         "name": "Boone's Farm",
         "location": "Greenwood, DE",
         "state": "DE",
@@ -5077,11 +5338,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6845404",
+        "id": "layover-4018340",
         "name": "Iona Stables and Inn",
         "location": "Milford, DE",
         "state": "DE",
@@ -5113,11 +5377,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3569799",
+        "id": "layover-4210144",
         "name": "Dusty Rose Farm",
         "location": "Anthony, FL",
         "state": "FL",
@@ -5149,11 +5416,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4223761",
+        "id": "layover-5390101",
         "name": "Spotted Dance Ranch",
         "location": "Brooksville, FL",
         "state": "FL",
@@ -5185,11 +5455,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1295069",
+        "id": "layover-9886747",
         "name": "Cozy Cabin",
         "location": "Brooksville, FL",
         "state": "FL",
@@ -5221,11 +5494,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8506146",
+        "id": "layover-5214357",
         "name": "Remington Ranch",
         "location": "Dade City, FL",
         "state": "FL",
@@ -5257,11 +5533,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6438617",
+        "id": "layover-5132626",
         "name": "P&V Farms",
         "location": "Defuniak, FL",
         "state": "FL",
@@ -5293,11 +5572,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2027224",
+        "id": "layover-418427",
         "name": "Coastal Haven Stables",
         "location": "Freeport, FL",
         "state": "FL",
@@ -5329,11 +5611,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8599126",
+        "id": "layover-6334039",
         "name": "Durham Farms",
         "location": "McAlpin, FL",
         "state": "FL",
@@ -5365,11 +5650,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4200616",
+        "id": "layover-1017739",
         "name": "Tickety Boo Farm, LLC",
         "location": "Melrose, FL",
         "state": "FL",
@@ -5401,11 +5689,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3737124",
+        "id": "layover-6647502",
         "name": "North Florida Horse Motel at Great Grace Farm",
         "location": "Middleburg, FL",
         "state": "FL",
@@ -5437,11 +5728,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4251741",
+        "id": "layover-4156873",
         "name": "Green Acres Stables",
         "location": "Milton, FL",
         "state": "FL",
@@ -5473,11 +5767,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1815651",
+        "id": "layover-449117",
         "name": "RESTABITFARM",
         "location": "Milton, FL",
         "state": "FL",
@@ -5509,11 +5806,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7857022",
+        "id": "layover-7613892",
         "name": "Flying B Ranch",
         "location": "New Smyrna Beach, FL",
         "state": "FL",
@@ -5545,11 +5845,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6695407",
+        "id": "layover-2778623",
         "name": "Sundry Farm",
         "location": "Ocala, FL",
         "state": "FL",
@@ -5581,11 +5884,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7314462",
+        "id": "layover-3708713",
         "name": "Dunwirkyn Farm, LLC",
         "location": "Ocala, FL",
         "state": "FL",
@@ -5617,11 +5923,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3420655",
+        "id": "layover-965908",
         "name": "HTH Farms",
         "location": "Ocala, FL",
         "state": "FL",
@@ -5653,11 +5962,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6621807",
+        "id": "layover-8102812",
         "name": "Equestrian Training Center of Ocala",
         "location": "Ocala, FL",
         "state": "FL",
@@ -5689,11 +6001,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4312903",
+        "id": "layover-799954",
         "name": "Villa Azure",
         "location": "Ocala, FL",
         "state": "FL",
@@ -5725,11 +6040,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8907639",
+        "id": "layover-4098242",
         "name": "Steel Magnolias Equine and Canine Aquatic Center",
         "location": "Pace, FL",
         "state": "FL",
@@ -5761,11 +6079,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5012483",
+        "id": "layover-7125439",
         "name": "Mandeville Oaks Stables",
         "location": "Pensacola, FL",
         "state": "FL",
@@ -5797,47 +6118,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-968206",
-        "name": "H.E.C.K. Ranch",
-        "location": "FL- Tallahassee",
-        "state": "",
-        "latitude": 30.5287222222222,
-        "longitude": -84.0110833333333,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "850-688-5758",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-8459480",
+        "id": "layover-5171233",
         "name": "Mahan Farm",
         "location": "Tallahassee, FL",
         "state": "FL",
@@ -5869,11 +6157,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4156008",
+        "id": "layover-5849332",
         "name": "E-Bar-W Ranch",
         "location": "Ashburn, GA",
         "state": "GA",
@@ -5905,11 +6196,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5525802",
+        "id": "layover-4370926",
         "name": "Shady Oaks Stables",
         "location": "Brunswick, GA",
         "state": "GA",
@@ -5941,11 +6235,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4427466",
+        "id": "layover-3428892",
         "name": "Golden Isles Riding Academy",
         "location": "Brunswick, GA",
         "state": "GA",
@@ -5977,11 +6274,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3224580",
+        "id": "layover-4964437",
         "name": "Anthem Ranch",
         "location": "Buena Vista, GA",
         "state": "GA",
@@ -6013,11 +6313,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8558799",
+        "id": "layover-4885379",
         "name": "Raise A Glass Ranch",
         "location": "Forsythe, GA",
         "state": "GA",
@@ -6049,11 +6352,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-638455",
+        "id": "layover-6065487",
         "name": "Along for the Ride",
         "location": "Guyton, GA",
         "state": "GA",
@@ -6085,11 +6391,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1417877",
+        "id": "layover-9553431",
         "name": "Alliance Horsemanship, LLC",
         "location": "Homer, GA",
         "state": "GA",
@@ -6121,11 +6430,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9372729",
+        "id": "layover-8920717",
         "name": "Frogcatcher Farm, LLC",
         "location": "Johns Creek, GA",
         "state": "GA",
@@ -6157,11 +6469,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8671861",
+        "id": "layover-1500973",
         "name": "The Horse Motel, Leesburg GA",
         "location": "Leesburg, GA",
         "state": "GA",
@@ -6193,11 +6508,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6425663",
+        "id": "layover-3735525",
         "name": "Goose Chase Farm, LLC",
         "location": "Locust Grove, GA",
         "state": "GA",
@@ -6229,11 +6547,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7609867",
+        "id": "layover-4792058",
         "name": "B&G Stables, Inc.",
         "location": "Madison, GA",
         "state": "GA",
@@ -6265,11 +6586,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4067823",
+        "id": "layover-9796249",
         "name": "Lightning P Ranch",
         "location": "Resaca, GA",
         "state": "GA",
@@ -6301,11 +6625,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9284448",
+        "id": "layover-4959176",
         "name": "The Sky Is Not The Limit Farm",
         "location": "Richland, GA",
         "state": "GA",
@@ -6337,11 +6664,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6248863",
+        "id": "layover-5726059",
         "name": "Friendship Family Farms",
         "location": "Statesboro, GA",
         "state": "GA",
@@ -6373,11 +6703,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5310484",
+        "id": "layover-644743",
         "name": "Copperhill Farm, LLC",
         "location": "Sylvania, GA",
         "state": "GA",
@@ -6409,11 +6742,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7169037",
+        "id": "layover-4633966",
         "name": "Cedar Rock Farm",
         "location": "Thomson, GA",
         "state": "GA",
@@ -6445,11 +6781,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8226596",
+        "id": "layover-4896954",
         "name": "Trickum Creek Ranch",
         "location": "Tyrone, GA",
         "state": "GA",
@@ -6481,11 +6820,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4203280",
+        "id": "layover-6038550",
         "name": "Southeastern Arena, LLC",
         "location": "Unadilla, GA",
         "state": "GA",
@@ -6517,11 +6859,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4173394",
+        "id": "layover-4436493",
         "name": "Windy Willow Stables",
         "location": "Valdosta, GA",
         "state": "GA",
@@ -6553,11 +6898,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1268135",
+        "id": "layover-9913547",
         "name": "Careywood Creek Ranch",
         "location": "Athol, ID",
         "state": "ID",
@@ -6589,11 +6937,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3225956",
+        "id": "layover-3486799",
         "name": "Snake River Arena",
         "location": "Blackfoot, ID",
         "state": "ID",
@@ -6625,11 +6976,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6131442",
+        "id": "layover-9326321",
         "name": "'Ears The Place Equine Inn",
         "location": "Driggs, ID",
         "state": "ID",
@@ -6661,11 +7015,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2416882",
+        "id": "layover-6375983",
         "name": "Mini Acres Farm",
         "location": "Emmett, ID",
         "state": "ID",
@@ -6697,11 +7054,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-514509",
+        "id": "layover-6176851",
         "name": "Elmore County Fairgrounds and Event Center",
         "location": "Glenns Ferry, ID",
         "state": "ID",
@@ -6733,11 +7093,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3964168",
+        "id": "layover-3527670",
         "name": "Ellis Supreme Arabians",
         "location": "Idaho Falls, ID",
         "state": "ID",
@@ -6769,11 +7132,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6969645",
+        "id": "layover-1781970",
         "name": "Cowboy Warrior Ranch",
         "location": "Idaho Falls, ID",
         "state": "ID",
@@ -6805,11 +7171,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5724305",
+        "id": "layover-7458960",
         "name": "Carol's Horse Motel",
         "location": "Kimberly, ID",
         "state": "ID",
@@ -6841,11 +7210,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3487195",
+        "id": "layover-9291161",
         "name": "Hidden Dove Ranch",
         "location": "Lava Hot Springs, ID",
         "state": "ID",
@@ -6877,11 +7249,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1952338",
+        "id": "layover-1957526",
         "name": "Warren Wagon Ranch",
         "location": "McCall, ID",
         "state": "ID",
@@ -6913,11 +7288,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2176360",
+        "id": "layover-5031542",
         "name": "Laughing Horse Ranch",
         "location": "Meridian, ID",
         "state": "ID",
@@ -6949,11 +7327,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4409471",
+        "id": "layover-9093783",
         "name": "Rafter H Arena & Horse Hotel",
         "location": "Meridian, ID",
         "state": "ID",
@@ -6985,11 +7366,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2416377",
+        "id": "layover-8606357",
         "name": "Dunn Rite Ranch",
         "location": "Nampa, ID",
         "state": "ID",
@@ -7021,11 +7405,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4220869",
+        "id": "layover-8490453",
         "name": "L&L Ranch",
         "location": "Rathdrum, ID",
         "state": "ID",
@@ -7057,11 +7444,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9319465",
+        "id": "layover-2756419",
         "name": "Broken H Ranch",
         "location": "Rupert, ID",
         "state": "ID",
@@ -7093,11 +7483,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3013444",
+        "id": "layover-5786552",
         "name": "3X Livestock",
         "location": "Twin Falls, ID",
         "state": "ID",
@@ -7129,11 +7522,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3321829",
+        "id": "layover-254200",
         "name": "High Desert Equestrian Center, LLC",
         "location": "Twin Falls, ID",
         "state": "ID",
@@ -7165,11 +7561,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5539283",
+        "id": "layover-2163546",
         "name": "Campground Stables",
         "location": "Altamont, IL",
         "state": "IL",
@@ -7201,11 +7600,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-364100",
+        "id": "layover-1162072",
         "name": "Klocken Fast Farm",
         "location": "Annawan, IL",
         "state": "IL",
@@ -7237,11 +7639,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-377357",
+        "id": "layover-4453111",
         "name": "Sommers Gate Farms",
         "location": "Bingham, IL",
         "state": "IL",
@@ -7273,11 +7678,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2073383",
+        "id": "layover-4843627",
         "name": "Victory Reigns Ranch Horse Hotel and Bed and Breakfast",
         "location": "Cherry Valley, IL",
         "state": "IL",
@@ -7309,11 +7717,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3839180",
+        "id": "layover-3918266",
         "name": "Horse Motel & Bunkhouse at Cement Hollow Equine Ctr",
         "location": "East Carondelet, IL",
         "state": "IL",
@@ -7345,11 +7756,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5169240",
+        "id": "layover-3122387",
         "name": "Triangle H Farm",
         "location": "Edwardsville, IL",
         "state": "IL",
@@ -7381,11 +7795,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1615887",
+        "id": "layover-4947764",
         "name": "Allen Quarter Horses",
         "location": "Effingham, IL",
         "state": "IL",
@@ -7417,11 +7834,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2971251",
+        "id": "layover-9498448",
         "name": "Pine Tree Stables",
         "location": "Effingham, IL",
         "state": "IL",
@@ -7453,11 +7873,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5360853",
+        "id": "layover-6622382",
         "name": "Wildfire Ranch",
         "location": "Ewing, IL",
         "state": "IL",
@@ -7489,11 +7912,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2578656",
+        "id": "layover-6511239",
         "name": "Dry Creek Performance Horses, LLC",
         "location": "Hampshire, IL",
         "state": "IL",
@@ -7525,11 +7951,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4307239",
+        "id": "layover-7266715",
         "name": "Berndt Racing Stable, Inc.",
         "location": "Manhattan, IL",
         "state": "IL",
@@ -7561,11 +7990,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7250658",
+        "id": "layover-8200022",
         "name": "C & M Clydesdales, LLC",
         "location": "Maple Park, IL",
         "state": "IL",
@@ -7597,11 +8029,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4083660",
+        "id": "layover-5358877",
         "name": "Woodland Meadows, LLC",
         "location": "Marseilles, IL",
         "state": "IL",
@@ -7633,11 +8068,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5166110",
+        "id": "layover-158389",
         "name": "CW Equestrian Center, Inc.",
         "location": "Mascoutah, IL",
         "state": "IL",
@@ -7669,11 +8107,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7630247",
+        "id": "layover-5940103",
         "name": "Rock N 4L Training Center",
         "location": "Mt. Vernon, IL",
         "state": "IL",
@@ -7705,11 +8146,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9956886",
+        "id": "layover-5325500",
         "name": "Jim & Katie Troccoli",
         "location": "Ottawa, IL",
         "state": "IL",
@@ -7741,11 +8185,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-813162",
+        "id": "layover-1022955",
         "name": "Appy Trails",
         "location": "Osgood, IN",
         "state": "IN",
@@ -7777,11 +8224,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-619349",
+        "id": "layover-567361",
         "name": "Breaking Wind Farm",
         "location": "Paw Paw, IL",
         "state": "IL",
@@ -7813,11 +8263,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8188496",
+        "id": "layover-9677027",
         "name": "Gateway Stables",
         "location": "Pontoon Beach, IL",
         "state": "IL",
@@ -7849,11 +8302,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9631446",
+        "id": "layover-5378327",
         "name": "The Running Wilde Ranch",
         "location": "Sandwich, IL",
         "state": "IL",
@@ -7885,11 +8341,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6338060",
+        "id": "layover-2976201",
         "name": "Coyote Creek Stables",
         "location": "Sigel, IL",
         "state": "IL",
@@ -7921,47 +8380,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9310291",
-        "name": "Forest View Farms",
-        "location": "IL- Tinley Park",
-        "state": "",
-        "latitude": 41.587632,
-        "longitude": -87.747463,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "708-560-0306",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-4211737",
+        "id": "layover-165434",
         "name": "Rocky Road Arena",
         "location": "Vienna, IL",
         "state": "IL",
@@ -7993,11 +8419,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9330592",
+        "id": "layover-7839359",
         "name": "Freckled Pony Farm",
         "location": "Watson, IL",
         "state": "IL",
@@ -8029,11 +8458,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9434464",
+        "id": "layover-6923413",
         "name": "Jennifer Ferrell",
         "location": "Angola, IN",
         "state": "IN",
@@ -8065,11 +8497,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8241965",
+        "id": "layover-8855457",
         "name": "Jackspur Ranch",
         "location": "Charlestown, IN",
         "state": "IN",
@@ -8101,11 +8536,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8663246",
+        "id": "layover-937398",
         "name": "3-2-1 Ranch",
         "location": "Chrisney, IN",
         "state": "IN",
@@ -8137,11 +8575,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9127214",
+        "id": "layover-2317443",
         "name": "C Bar C Expo Center, LLC",
         "location": "Cloverdale, IN",
         "state": "IN",
@@ -8173,11 +8614,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6675175",
+        "id": "layover-6357585",
         "name": "Goodestock Ranch",
         "location": "Columbus, IN",
         "state": "IN",
@@ -8209,11 +8653,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6598500",
+        "id": "layover-6021649",
         "name": "JML Arena",
         "location": "Franklin, IN",
         "state": "IN",
@@ -8245,11 +8692,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2078621",
+        "id": "layover-7588487",
         "name": "Barnard Performance Horses AND",
         "location": "Kendalville, IN",
         "state": "IN",
@@ -8281,11 +8731,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1169257",
+        "id": "layover-6038748",
         "name": "Katavela Farms",
         "location": "Lafayette, IN",
         "state": "IN",
@@ -8317,11 +8770,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1949880",
+        "id": "layover-3759362",
         "name": "Hartmeyer Stables",
         "location": "Muncie, IN",
         "state": "IN",
@@ -8353,11 +8809,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8437268",
+        "id": "layover-2550982",
         "name": "Bobbinstone Farm",
         "location": "Oakland City, IN",
         "state": "IN",
@@ -8389,11 +8848,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6482497",
+        "id": "layover-6006906",
         "name": "EAST FORK STABLES",
         "location": "Richmond, IN",
         "state": "IN",
@@ -8425,11 +8887,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2379727",
+        "id": "layover-7306255",
         "name": "Park Elwood Stables",
         "location": "Richmond, IN",
         "state": "IN",
@@ -8461,11 +8926,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6387805",
+        "id": "layover-9454143",
         "name": "Cuttin' Up Stables Horse Motel",
         "location": "Shirley, IN",
         "state": "IN",
@@ -8497,11 +8965,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3560974",
+        "id": "layover-4168381",
         "name": "Copper Rise Ranch",
         "location": "Springport, IN",
         "state": "IN",
@@ -8533,11 +9004,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-10401",
+        "id": "layover-3816409",
         "name": "AmazzingGrace Farm, LLC",
         "location": "Yoder, IN",
         "state": "IN",
@@ -8569,11 +9043,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1690278",
+        "id": "layover-2153688",
         "name": "Alliance Equestrian Center",
         "location": "Yorktown, IN",
         "state": "IN",
@@ -8605,11 +9082,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2074714",
+        "id": "layover-1083344",
         "name": "Westphalen Quarter Horses",
         "location": "Atlantic, IA",
         "state": "IA",
@@ -8641,11 +9121,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4376958",
+        "id": "layover-5305407",
         "name": "MK Equestrian",
         "location": "Cedar Falls, IA",
         "state": "IA",
@@ -8677,11 +9160,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3013158",
+        "id": "layover-4931291",
         "name": "Holley's Boarding Stable",
         "location": "Cedar Rapids, IA",
         "state": "IA",
@@ -8713,11 +9199,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6463010",
+        "id": "layover-6662174",
         "name": "Hidden Creek Ranch",
         "location": "Des Moines, IA",
         "state": "IA",
@@ -8749,11 +9238,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9898527",
+        "id": "layover-3569287",
         "name": "Prairie Rose Arena",
         "location": "Elkhart, IA",
         "state": "IA",
@@ -8785,11 +9277,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-974637",
+        "id": "layover-3496226",
         "name": "A & W Ranch",
         "location": "Grinnell, IA",
         "state": "IA",
@@ -8821,11 +9316,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4146739",
+        "id": "layover-7854442",
         "name": "Winds Reach Farm",
         "location": "Iowa City, IA",
         "state": "IA",
@@ -8857,11 +9355,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-499569",
+        "id": "layover-3268955",
         "name": "Horse Outpost",
         "location": "Logan, IA",
         "state": "IA",
@@ -8893,11 +9394,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2911788",
+        "id": "layover-1412665",
         "name": "Singing Mesa Ranch",
         "location": "Lucas, IA",
         "state": "IA",
@@ -8929,11 +9433,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6069153",
+        "id": "layover-9943560",
         "name": "Charming Corrals",
         "location": "Nora Springs, IA",
         "state": "IA",
@@ -8965,11 +9472,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1841470",
+        "id": "layover-2097270",
         "name": "Red Roof Stable and Farm",
         "location": "Princeton, IA",
         "state": "IA",
@@ -9001,11 +9511,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8612122",
+        "id": "layover-3019724",
         "name": "Turkey Run Ranch",
         "location": "Solon, IA",
         "state": "IA",
@@ -9037,11 +9550,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-161585",
+        "id": "layover-4820150",
         "name": "Pinoak Acres",
         "location": "Walnut, IA",
         "state": "IA",
@@ -9073,11 +9589,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6735573",
+        "id": "layover-883471",
         "name": "Phalen Equestrian Center",
         "location": "Bonner Springs, KS",
         "state": "KS",
@@ -9109,11 +9628,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1310767",
+        "id": "layover-736787",
         "name": "Pretty-Horses.com",
         "location": "Chapman, KS",
         "state": "KS",
@@ -9145,11 +9667,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1698715",
+        "id": "layover-4728220",
         "name": "Wichita Riding Academy, Inc.",
         "location": "Derby, KS",
         "state": "KS",
@@ -9181,11 +9706,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9890262",
+        "id": "layover-7690634",
         "name": "Middle of the Map Horse Hotel",
         "location": "Edgerton, KS",
         "state": "KS",
@@ -9217,11 +9745,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8248912",
+        "id": "layover-8219290",
         "name": "SlideonInn Horse Hotel, LLC",
         "location": "Edson, KS",
         "state": "KS",
@@ -9253,11 +9784,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4928552",
+        "id": "layover-6211515",
         "name": "Five Point Horse Training /",
         "location": "Goodland, KS",
         "state": "KS",
@@ -9289,11 +9823,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3362917",
+        "id": "layover-5360236",
         "name": "Branded 5 Stable",
         "location": "Hays, KS",
         "state": "KS",
@@ -9325,11 +9862,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4545582",
+        "id": "layover-7121793",
         "name": "Triple Eight Equine Center",
         "location": "Hays, KS",
         "state": "KS",
@@ -9361,11 +9901,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-228804",
+        "id": "layover-1210933",
         "name": "North Fork Horse Motel",
         "location": "Oakley, KS",
         "state": "KS",
@@ -9397,11 +9940,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6857605",
+        "id": "layover-2933721",
         "name": "RC Arena & Stables",
         "location": "Park City, KS",
         "state": "KS",
@@ -9433,11 +9979,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7823879",
+        "id": "layover-2092508",
         "name": "Woods Creek Ranch",
         "location": "Silver Lake/Topeka, KS",
         "state": "KS",
@@ -9469,11 +10018,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4106973",
+        "id": "layover-2905336",
         "name": "Hadden Equine Inn",
         "location": "South Haven, KS",
         "state": "KS",
@@ -9505,11 +10057,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6918009",
+        "id": "layover-3262438",
         "name": "Two Pond Farm",
         "location": "Topeka, KS",
         "state": "KS",
@@ -9541,11 +10096,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8864423",
+        "id": "layover-4270941",
         "name": "Wichita Stable Stop",
         "location": "Valley Center, KS",
         "state": "KS",
@@ -9577,11 +10135,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5883858",
+        "id": "layover-4243738",
         "name": "Heartland Ranch",
         "location": "Wakarusa, KS",
         "state": "KS",
@@ -9613,11 +10174,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4758475",
+        "id": "layover-7659696",
         "name": "Broken Spoke Stables",
         "location": "Winfield, KS",
         "state": "KS",
@@ -9649,11 +10213,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9952974",
+        "id": "layover-9858880",
         "name": "Twin Pond Stables",
         "location": "Bloomfield, KY",
         "state": "KY",
@@ -9685,11 +10252,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2781150",
+        "id": "layover-3864875",
         "name": "Misty Ridge Farm, LLC",
         "location": "Camp Springs, KY",
         "state": "KY",
@@ -9721,11 +10291,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4370463",
+        "id": "layover-6995442",
         "name": "Carey Horse Farm",
         "location": "Cave City, KY",
         "state": "KY",
@@ -9757,11 +10330,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6779693",
+        "id": "layover-9338632",
         "name": "The Farm at Grace Hill",
         "location": "Crestwood, KY",
         "state": "KY",
@@ -9793,11 +10369,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-476277",
+        "id": "layover-884132",
         "name": "Robyn's Nest Farm",
         "location": "Georgetown, KY",
         "state": "KY",
@@ -9829,11 +10408,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7387983",
+        "id": "layover-6190914",
         "name": "Muhlenberg County Agriculture Center",
         "location": "Greenville, KY",
         "state": "KY",
@@ -9865,11 +10447,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3084311",
+        "id": "layover-3380160",
         "name": "Hang 'Em High Horse Camp",
         "location": "London, KY",
         "state": "KY",
@@ -9901,11 +10486,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4502572",
+        "id": "layover-993334",
         "name": "Hidden Creek Farm",
         "location": "Monticello, KY",
         "state": "KY",
@@ -9937,11 +10525,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8554944",
+        "id": "layover-1886463",
         "name": "Three16 Ranch",
         "location": "Owenton, KY",
         "state": "KY",
@@ -9973,11 +10564,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6283048",
+        "id": "layover-9519538",
         "name": "The Art Farm Women\u2019s Retreat",
         "location": "Paducah, KY",
         "state": "KY",
@@ -10009,11 +10603,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2390446",
+        "id": "layover-3452277",
         "name": "Painted Pastures Farm",
         "location": "Paducah, KY",
         "state": "KY",
@@ -10045,11 +10642,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5454353",
+        "id": "layover-8299955",
         "name": "Manestream Equestrian and Livestock",
         "location": "Shelbyville, KY",
         "state": "KY",
@@ -10081,11 +10681,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4387344",
+        "id": "layover-8307087",
         "name": "K BAR C West Camp",
         "location": "Versailles, KY",
         "state": "KY",
@@ -10117,11 +10720,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3808980",
+        "id": "layover-8126874",
         "name": "K BAR C RANCH",
         "location": "Wilmore, KY",
         "state": "KY",
@@ -10153,11 +10759,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3689575",
+        "id": "layover-5065232",
         "name": "4-E Horse Motel",
         "location": "Bossier City, LA",
         "state": "LA",
@@ -10189,11 +10798,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8255125",
+        "id": "layover-9515985",
         "name": "Pit Stop Pastures",
         "location": "Calhoun, LA",
         "state": "LA",
@@ -10225,11 +10837,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7413443",
+        "id": "layover-870307",
         "name": "Cypress Creek Farm",
         "location": "Dubach, LA",
         "state": "LA",
@@ -10261,11 +10876,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3004805",
+        "id": "layover-9736777",
         "name": "Reposo Farm & Feeds, LLC",
         "location": "Folsom, LA",
         "state": "LA",
@@ -10297,11 +10915,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7632675",
+        "id": "layover-8787123",
         "name": "The Stables at Le Bocage",
         "location": "Lake Charles, LA",
         "state": "LA",
@@ -10333,83 +10954,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7315062",
-        "name": "Stable 31",
-        "location": "LA-Opelousas",
-        "state": "",
-        "latitude": 30.5025,
-        "longitude": -92.0448333333333,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "225-456-1303",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-8805234",
-        "name": "Marecage Stables",
-        "location": "LA -\u00a0Ponchatoula",
-        "state": "",
-        "latitude": 30.4214444444444,
-        "longitude": -90.4176666666667,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "985-974-1005",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-9368152",
+        "id": "layover-3280790",
         "name": "Northshore Riding club, LLC",
         "location": "Slidell, LA",
         "state": "LA",
@@ -10441,11 +10993,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9608100",
+        "id": "layover-1389013",
         "name": "2 Lazy 2 Stables, LLC",
         "location": "Walker, LA",
         "state": "LA",
@@ -10477,11 +11032,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-163741",
+        "id": "layover-6146519",
         "name": "Hidden Valley Equestrian Center, Inc.",
         "location": "Cornville, ME",
         "state": "ME",
@@ -10513,11 +11071,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5851512",
+        "id": "layover-4196440",
         "name": "Tamarack Farm",
         "location": "Greenwood, ME",
         "state": "ME",
@@ -10549,11 +11110,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4136034",
+        "id": "layover-501922",
         "name": "Camden Hills Equine Inn",
         "location": "Lincolnville, ME",
         "state": "ME",
@@ -10585,11 +11149,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5317805",
+        "id": "layover-6091474",
         "name": "Campbell Horse Farm",
         "location": "Littleton, ME",
         "state": "ME",
@@ -10621,11 +11188,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1739061",
+        "id": "layover-7614284",
         "name": "Taildragger Stables, LLC",
         "location": "New Gloucester, ME",
         "state": "ME",
@@ -10657,11 +11227,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6046490",
+        "id": "layover-1836925",
         "name": "Free Rein Farm, LLC",
         "location": "Gaithersburg, MD",
         "state": "MD",
@@ -10693,11 +11266,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6453495",
+        "id": "layover-8864099",
         "name": "GemStone Stable",
         "location": "Hagerstown, MD",
         "state": "MD",
@@ -10729,11 +11305,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5892515",
+        "id": "layover-2606664",
         "name": "Valley Meadow Farms Trails Getaway and Bed & Barn",
         "location": "Hancock, MD",
         "state": "MD",
@@ -10765,11 +11344,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4690837",
+        "id": "layover-8227662",
         "name": "Fairwinds Farm",
         "location": "North East, MD",
         "state": "MD",
@@ -10801,11 +11383,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3448177",
+        "id": "layover-417375",
         "name": "Karen Brooks",
         "location": "Rising Sun, MD",
         "state": "MD",
@@ -10837,11 +11422,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8144292",
+        "id": "layover-7346237",
         "name": "Ironstar Outpost East",
         "location": "Sykesville, MD",
         "state": "MD",
@@ -10873,11 +11461,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5843678",
+        "id": "layover-5979916",
         "name": "Melissa Harlinski",
         "location": "Upper Marlboro, MD",
         "state": "MD",
@@ -10909,11 +11500,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5385762",
+        "id": "layover-4777975",
         "name": "Muddy Boots Horse Farm and Rescue",
         "location": "Warwick, MD",
         "state": "MD",
@@ -10945,11 +11539,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4379847",
+        "id": "layover-24962",
         "name": "A HORSE HOTEL AT EQUINE BLVD",
         "location": "Agawam, MA",
         "state": "MA",
@@ -10981,11 +11578,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3837925",
+        "id": "layover-4170750",
         "name": "Dream Spirit Farm, LLC",
         "location": "Amesbury, MA",
         "state": "MA",
@@ -11017,11 +11617,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8307722",
+        "id": "layover-1991183",
         "name": "Hidden Creek Homestead",
         "location": "Brimfield, MA",
         "state": "MA",
@@ -11053,11 +11656,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3946807",
+        "id": "layover-6232957",
         "name": "Golden Moon Farm",
         "location": "Douglas, MA",
         "state": "MA",
@@ -11089,11 +11695,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4249712",
+        "id": "layover-25161",
         "name": "Ipswich River Lodge",
         "location": "Ipswitch, MA",
         "state": "MA",
@@ -11125,11 +11734,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8680113",
+        "id": "layover-9761834",
         "name": "Silvershell Inn",
         "location": "Marion, MA",
         "state": "MA",
@@ -11161,11 +11773,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9326732",
+        "id": "layover-9270127",
         "name": "Huntersbrook Stable",
         "location": "Norwell, MA",
         "state": "MA",
@@ -11197,11 +11812,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4687192",
+        "id": "layover-4508171",
         "name": "Oak Lane Equestrian",
         "location": "Bridgeport, MI",
         "state": "MI",
@@ -11233,11 +11851,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3894901",
+        "id": "layover-3686731",
         "name": "Duke Farms",
         "location": "Temperance, MI",
         "state": "MI",
@@ -11269,11 +11890,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9210359",
+        "id": "layover-9570891",
         "name": "Circle J Horse Farm, LLC",
         "location": "White Pigeon, MI",
         "state": "MI",
@@ -11305,11 +11929,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9054989",
+        "id": "layover-263499",
         "name": "Oak Acres Horse Boarding",
         "location": "Albert Lea, MN",
         "state": "MN",
@@ -11341,11 +11968,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9615442",
+        "id": "layover-9330422",
         "name": "Winter Shows Arena",
         "location": "Crookston, MN",
         "state": "MN",
@@ -11377,11 +12007,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3956368",
+        "id": "layover-5124765",
         "name": "Old 27 Ranch",
         "location": "Fergus Falls, MN",
         "state": "MN",
@@ -11413,11 +12046,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3654690",
+        "id": "layover-7412437",
         "name": "Outback Ranch, Inc.",
         "location": "Houston, MN",
         "state": "MN",
@@ -11449,11 +12085,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1407823",
+        "id": "layover-5101051",
         "name": "Clearview Ranch",
         "location": "Jackson, MN",
         "state": "MN",
@@ -11485,11 +12124,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4530089",
+        "id": "layover-7111680",
         "name": "Bryan Stading",
         "location": "Lake Crystal, MN",
         "state": "MN",
@@ -11521,11 +12163,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6054162",
+        "id": "layover-4174367",
         "name": "Faus Farms",
         "location": "Lake Park, MN",
         "state": "MN",
@@ -11557,11 +12202,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6267027",
+        "id": "layover-7571660",
         "name": "Rock Hill Ranch",
         "location": "Milaca, MN",
         "state": "MN",
@@ -11593,11 +12241,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1592576",
+        "id": "layover-8805816",
         "name": "Cardinal Crest Farm, LLC",
         "location": "Monticello, MN",
         "state": "MN",
@@ -11629,11 +12280,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8533283",
+        "id": "layover-2537113",
         "name": "3 GEMS TACK & STABLES, LLC",
         "location": "Moorhead, MN",
         "state": "MN",
@@ -11665,11 +12319,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4188422",
+        "id": "layover-476399",
         "name": "Moon Lake Farm",
         "location": "Belden, MS",
         "state": "MS",
@@ -11701,11 +12358,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1445504",
+        "id": "layover-1286836",
         "name": "Green Woods Stables RV Park",
         "location": "Biloxi, MS",
         "state": "MS",
@@ -11737,47 +12397,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6944962",
-        "name": "Silver Creek Equestrian",
-        "location": "MS -\u00a0Bovina",
-        "state": "",
-        "latitude": 32.314472,
-        "longitude": -90.733667,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "601-618-8826",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-731629",
+        "id": "layover-617150",
         "name": "Band-Aid Barn, LLC",
         "location": "Carriere, MS",
         "state": "MS",
@@ -11809,11 +12436,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3407385",
+        "id": "layover-8190239",
         "name": "Bridgeport Farm",
         "location": "Edwards, MS",
         "state": "MS",
@@ -11845,11 +12475,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4608495",
+        "id": "layover-9601229",
         "name": "Terrebonne Farm",
         "location": "Edwards, MS",
         "state": "MS",
@@ -11881,11 +12514,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4485025",
+        "id": "layover-8495837",
         "name": "Golden Horse Stables",
         "location": "Florence, MS",
         "state": "MS",
@@ -11917,11 +12553,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3976996",
+        "id": "layover-5781335",
         "name": "Sumrall Stables",
         "location": "Gulfport, MS",
         "state": "MS",
@@ -11953,11 +12592,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1634186",
+        "id": "layover-6225758",
         "name": "Lucky 4 Farm",
         "location": "Hernando, MS",
         "state": "MS",
@@ -11989,11 +12631,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2682619",
+        "id": "layover-8644280",
         "name": "Stable Place",
         "location": "Lucedale, MS",
         "state": "MS",
@@ -12025,11 +12670,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9176174",
+        "id": "layover-6442737",
         "name": "Raintree Equestrian Center",
         "location": "Olive Branch, MS",
         "state": "MS",
@@ -12061,11 +12709,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9536014",
+        "id": "layover-2472086",
         "name": "KMC Stables",
         "location": "Pass Christian, MS",
         "state": "MS",
@@ -12097,11 +12748,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9215356",
+        "id": "layover-5948610",
         "name": "Big Hat Ranch MS, LLC",
         "location": "Perkinston, MS",
         "state": "MS",
@@ -12133,11 +12787,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9121331",
+        "id": "layover-9549285",
         "name": "Horse Haven Ranch",
         "location": "Poplarville, MS",
         "state": "MS",
@@ -12169,11 +12826,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3510438",
+        "id": "layover-5743087",
         "name": "Blackwood Stables",
         "location": "Tupelo, MS",
         "state": "MS",
@@ -12205,11 +12865,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3778286",
+        "id": "layover-8986604",
         "name": "Windmill Trails",
         "location": "Tylertown, MS",
         "state": "MS",
@@ -12241,11 +12904,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-278363",
+        "id": "layover-2026624",
         "name": "Sandhill Ranch",
         "location": "Vancleave, MS",
         "state": "MS",
@@ -12277,11 +12943,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8561074",
+        "id": "layover-2902249",
         "name": "Duke's Bed & Board",
         "location": "Americus, MO",
         "state": "MO",
@@ -12313,11 +12982,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8999138",
+        "id": "layover-7426339",
         "name": "Easy E Horse Hotel & Bunkhouse",
         "location": "Archie, MO",
         "state": "MO",
@@ -12349,11 +13021,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8677644",
+        "id": "layover-5520501",
         "name": "Circle B Ranch",
         "location": "Big Spring, MO",
         "state": "MO",
@@ -12385,11 +13060,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7340122",
+        "id": "layover-5080290",
         "name": "Kirkland Performance Horses",
         "location": "Buckner, MO",
         "state": "MO",
@@ -12421,11 +13099,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5732230",
+        "id": "layover-9213176",
         "name": "Civil War Ranch and Arena",
         "location": "Carthage, MO",
         "state": "MO",
@@ -12457,11 +13138,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7575886",
+        "id": "layover-2913658",
         "name": "Lazy S Overnights & Boarding",
         "location": "Carthage, MO",
         "state": "MO",
@@ -12493,11 +13177,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1712852",
+        "id": "layover-6598736",
         "name": "Sunset Hill Stable, LLC",
         "location": "Country Club, MO",
         "state": "MO",
@@ -12529,11 +13216,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2181925",
+        "id": "layover-2421748",
         "name": "JG Arena",
         "location": "Cuba, MO",
         "state": "MO",
@@ -12565,11 +13255,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1871546",
+        "id": "layover-7842554",
         "name": "Story\u2019s Creek Campground",
         "location": "Eminence, MO",
         "state": "MO",
@@ -12601,11 +13294,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3023431",
+        "id": "layover-1785992",
         "name": "Sunny Ridge Stables",
         "location": "Fulton, MO",
         "state": "MO",
@@ -12637,11 +13333,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7908418",
+        "id": "layover-9638368",
         "name": "My Epiphany Stables",
         "location": "Hamilton, MO",
         "state": "MO",
@@ -12673,11 +13372,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8884755",
+        "id": "layover-1258564",
         "name": "M Double O Horse Ranch, LLC",
         "location": "Hollister, MO",
         "state": "MO",
@@ -12709,11 +13411,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3815296",
+        "id": "layover-6020674",
         "name": "GauxPro Performance Horses",
         "location": "Joplin, MO",
         "state": "MO",
@@ -12745,11 +13450,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3957539",
+        "id": "layover-9723283",
         "name": "Newts Nodaway",
         "location": "Leasburg, MO",
         "state": "MO",
@@ -12781,11 +13489,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4810558",
+        "id": "layover-3679801",
         "name": "JAWsome Farm",
         "location": "Lebanon, MO",
         "state": "MO",
@@ -12817,11 +13528,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1076500",
+        "id": "layover-6491235",
         "name": "Triangle A Arena",
         "location": "Leeton, MO",
         "state": "MO",
@@ -12853,11 +13567,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3920071",
+        "id": "layover-351075",
         "name": "Buckskins & Blondes",
         "location": "Montgomery City, MO",
         "state": "MO",
@@ -12889,11 +13606,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2161350",
+        "id": "layover-6035805",
         "name": "Heritage Livestock",
         "location": "Mount Vernon, MO",
         "state": "MO",
@@ -12925,11 +13645,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4829773",
+        "id": "layover-6344216",
         "name": "Diamond M Ranch, LLC",
         "location": "Perry, MO",
         "state": "MO",
@@ -12961,11 +13684,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2179096",
+        "id": "layover-2716520",
         "name": "A Bit of Heaven Equestrian Center",
         "location": "Rolla, MO",
         "state": "MO",
@@ -12997,11 +13723,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2641913",
+        "id": "layover-5452336",
         "name": "Ozark crossing RV Park and cabin",
         "location": "Rolla, MO",
         "state": "MO",
@@ -13033,11 +13762,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8180309",
+        "id": "layover-4885807",
         "name": "Pearl Drive Stables",
         "location": "Saint Peters, MO",
         "state": "MO",
@@ -13069,11 +13801,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4384470",
+        "id": "layover-1104564",
         "name": "WingNit Farms",
         "location": "Stotts City, MO",
         "state": "MO",
@@ -13105,11 +13840,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7011666",
+        "id": "layover-4339074",
         "name": "Tarkio Rodeo",
         "location": "Tarkio, MO",
         "state": "MO",
@@ -13141,11 +13879,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5237690",
+        "id": "layover-7220545",
         "name": "Iron Hill Ranch",
         "location": "Union, MO",
         "state": "MO",
@@ -13177,11 +13918,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7579414",
+        "id": "layover-290305",
         "name": "EQUINE MOTEL - Box T Ranch",
         "location": "Billings, MT",
         "state": "MT",
@@ -13213,11 +13957,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6158539",
+        "id": "layover-622087",
         "name": "Hoods Western Adventures",
         "location": "Alberton, MT",
         "state": "MT",
@@ -13249,11 +13996,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1281853",
+        "id": "layover-8035109",
         "name": "VanGoBoon Bozeman",
         "location": "Bozeman, MT",
         "state": "MT",
@@ -13285,11 +14035,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6684077",
+        "id": "layover-8737969",
         "name": "Baker Horse Ranch",
         "location": "Bozeman, MT",
         "state": "MT",
@@ -13321,11 +14074,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-727254",
+        "id": "layover-7223917",
         "name": "Cornerstone Equine, LLC",
         "location": "Butte, MT",
         "state": "MT",
@@ -13357,11 +14113,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6467172",
+        "id": "layover-5897041",
         "name": "The Paard Yard, LLC",
         "location": "Cascade, MT",
         "state": "MT",
@@ -13393,11 +14152,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1520172",
+        "id": "layover-1648910",
         "name": "Mitchell Farm",
         "location": "Columbia Falls, MT",
         "state": "MT",
@@ -13429,11 +14191,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3842685",
+        "id": "layover-2778093",
         "name": "Mountain View Arena",
         "location": "Deer Lodge, MT",
         "state": "MT",
@@ -13465,11 +14230,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2926052",
+        "id": "layover-9883789",
         "name": "High Prairie Akers",
         "location": "Ennis, MT",
         "state": "MT",
@@ -13501,11 +14269,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4974720",
+        "id": "layover-7328556",
         "name": "Ennis Horse Motel",
         "location": "Ennis, MT",
         "state": "MT",
@@ -13537,11 +14308,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8036627",
+        "id": "layover-862283",
         "name": "Maple Mounten Stables, LLC",
         "location": "Florence, MT",
         "state": "MT",
@@ -13573,11 +14347,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-927618",
+        "id": "layover-9856251",
         "name": "Hummingbird Ranch, LLC",
         "location": "Helena, MT",
         "state": "MT",
@@ -13609,11 +14386,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4365819",
+        "id": "layover-1028842",
         "name": "Rest Awhile Ranch",
         "location": "Kalispell, MT",
         "state": "MT",
@@ -13645,11 +14425,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6894162",
+        "id": "layover-1973364",
         "name": "NFR, Nisbet Family Ranch",
         "location": "Libby, MT",
         "state": "MT",
@@ -13681,11 +14464,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6478320",
+        "id": "layover-2713615",
         "name": "Wineglass Ranch",
         "location": "Livingston, MT",
         "state": "MT",
@@ -13717,11 +14503,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9039072",
+        "id": "layover-2622551",
         "name": "GRIZZLY ROCK RANCH",
         "location": "Manhattan, MT",
         "state": "MT",
@@ -13753,11 +14542,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5972249",
+        "id": "layover-8975441",
         "name": "Schweigert Performance Horses, LLC",
         "location": "Miles City, MT",
         "state": "MT",
@@ -13789,11 +14581,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7133467",
+        "id": "layover-4693170",
         "name": "Grass Valley Stable",
         "location": "Missoula, MT",
         "state": "MT",
@@ -13825,11 +14620,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2598117",
+        "id": "layover-2839266",
         "name": "Kings Grace Restorative Ranch",
         "location": "Polson, MT",
         "state": "MT",
@@ -13861,11 +14659,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9797642",
+        "id": "layover-9578854",
         "name": "Rocking H Ranch",
         "location": "Ramsay, MT",
         "state": "MT",
@@ -13897,11 +14698,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-213628",
+        "id": "layover-7943898",
         "name": "Red Lodge Horse Motel",
         "location": "Roberts, MT",
         "state": "MT",
@@ -13933,11 +14737,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3996872",
+        "id": "layover-2085423",
         "name": "Trout Creek Guest House & Horse Hotel",
         "location": "Trout Creek, MT",
         "state": "MT",
@@ -13969,11 +14776,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8257296",
+        "id": "layover-1858932",
         "name": "406 Arena",
         "location": "Vaughn, MT",
         "state": "MT",
@@ -14005,11 +14815,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1617667",
+        "id": "layover-2959823",
         "name": "Diamond P Ranch Horse Motel",
         "location": "West Yellowstone, MT",
         "state": "MT",
@@ -14041,11 +14854,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2309848",
+        "id": "layover-9899142",
         "name": "Bailey's Bed'n Bale LLC",
         "location": "Whitefish, MT",
         "state": "MT",
@@ -14077,11 +14893,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2410945",
+        "id": "layover-5493990",
         "name": "Whitefish Horse Motel",
         "location": "Whitefish, MT",
         "state": "MT",
@@ -14113,11 +14932,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8749806",
+        "id": "layover-7376322",
         "name": "Bronco Lake Stables",
         "location": "Alliance, NE",
         "state": "NE",
@@ -14149,11 +14971,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8042755",
+        "id": "layover-7469045",
         "name": "NE - Aurora",
         "location": "Aurora, NE",
         "state": "NE",
@@ -14185,11 +15010,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2739872",
+        "id": "layover-5500211",
         "name": "Triple E Equine, LLC",
         "location": "Beaver Crossing, NE",
         "state": "NE",
@@ -14221,11 +15049,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4006182",
+        "id": "layover-4801263",
         "name": "HQH Stables & Campsite",
         "location": "Big Springs, NE",
         "state": "NE",
@@ -14257,11 +15088,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1666866",
+        "id": "layover-9628593",
         "name": "RUJODEN Ranch Horse Motel",
         "location": "Chadron, NE",
         "state": "NE",
@@ -14293,11 +15127,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8241824",
+        "id": "layover-899934",
         "name": "Frederick Ranch",
         "location": "Doniphan, NE",
         "state": "NE",
@@ -14329,11 +15166,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6449253",
+        "id": "layover-9218328",
         "name": "J Bar D Ranch",
         "location": "Geneva, NE",
         "state": "NE",
@@ -14365,11 +15205,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1450011",
+        "id": "layover-5787707",
         "name": "Lazy K Arena",
         "location": "Grand Island, NE",
         "state": "NE",
@@ -14401,11 +15244,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4308819",
+        "id": "layover-2916753",
         "name": "Lazy A Ranch",
         "location": "Hay Springs, NE",
         "state": "NE",
@@ -14437,11 +15283,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2055219",
+        "id": "layover-7879591",
         "name": "Dawson County Fairgrounds",
         "location": "Lexington, NE",
         "state": "NE",
@@ -14473,11 +15322,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8151928",
+        "id": "layover-4678608",
         "name": "K/B Stables",
         "location": "Lincoln, NE",
         "state": "NE",
@@ -14509,11 +15361,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2637477",
+        "id": "layover-6412131",
         "name": "Diesel Rodeo Productions",
         "location": "Nebraska City, NE",
         "state": "NE",
@@ -14545,11 +15400,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7111869",
+        "id": "layover-4272165",
         "name": "Husker Horse Hotel",
         "location": "Norfolk, NE",
         "state": "NE",
@@ -14581,11 +15439,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2234414",
+        "id": "layover-283264",
         "name": "Jump Rope Stables, LLC",
         "location": "Ogallala, NE",
         "state": "NE",
@@ -14617,11 +15478,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5457302",
+        "id": "layover-6313672",
         "name": "Tumbleweed Stables",
         "location": "Sidney, NE",
         "state": "NE",
@@ -14653,11 +15517,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8313683",
+        "id": "layover-8990550",
         "name": "I-80 Equine",
         "location": "Waverly, NE",
         "state": "NE",
@@ -14689,11 +15556,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5724329",
+        "id": "layover-1936998",
         "name": "Diamond B, Inc.",
         "location": "York, NE",
         "state": "NE",
@@ -14725,11 +15595,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8132546",
+        "id": "layover-1046567",
         "name": "Rustic Hart Ranch",
         "location": "Fernley, NV",
         "state": "NV",
@@ -14761,11 +15634,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-119356",
+        "id": "layover-8276584",
         "name": "Fly Again Ranch",
         "location": "Las Vegas, NV",
         "state": "NV",
@@ -14797,11 +15673,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8883948",
+        "id": "layover-7559980",
         "name": "Steel Horse Ranch, LLC",
         "location": "Las Vegas, NV",
         "state": "NV",
@@ -14833,11 +15712,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-566830",
+        "id": "layover-3245603",
         "name": "Hearts & Stars Ranch",
         "location": "Las Vegas, NV",
         "state": "NV",
@@ -14869,11 +15751,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6648042",
+        "id": "layover-2652771",
         "name": "Ti-Rod Ranch Boarding Facility",
         "location": "Pahrump, NV",
         "state": "NV",
@@ -14905,11 +15790,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6279928",
+        "id": "layover-2924401",
         "name": "9 Brothers Ranch",
         "location": "Panaca, NV",
         "state": "NV",
@@ -14941,11 +15829,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8994063",
+        "id": "layover-9060490",
         "name": "N2 Mule Ranch",
         "location": "Reno, NV",
         "state": "NV",
@@ -14977,11 +15868,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5269496",
+        "id": "layover-3107955",
         "name": "Franktown Meadows Equestrian Facility",
         "location": "Washoe Valley, NV",
         "state": "NV",
@@ -15013,11 +15907,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1568065",
+        "id": "layover-6224895",
         "name": "B-M Arena",
         "location": "Wells, NV",
         "state": "NV",
@@ -15049,11 +15946,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5455624",
+        "id": "layover-3751651",
         "name": "Pingree Hill Farm",
         "location": "Auburn, NH",
         "state": "NH",
@@ -15085,11 +15985,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1515273",
+        "id": "layover-4126603",
         "name": "The Spot!",
         "location": "Belmont, NH",
         "state": "NH",
@@ -15121,11 +16024,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3056915",
+        "id": "layover-7883180",
         "name": "Riley's Farm",
         "location": "Epping, NH",
         "state": "NH",
@@ -15157,11 +16063,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2118517",
+        "id": "layover-4905258",
         "name": "Free Spirit Farm",
         "location": "Nottingham, NH",
         "state": "NH",
@@ -15193,11 +16102,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4939979",
+        "id": "layover-7146102",
         "name": "Blairwood Farms, Inc.",
         "location": "Columbus, NJ",
         "state": "NJ",
@@ -15229,11 +16141,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5424526",
+        "id": "layover-7639484",
         "name": "BDR Legacy Farm",
         "location": "Lambertville, NJ",
         "state": "NJ",
@@ -15265,11 +16180,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1767020",
+        "id": "layover-2200022",
         "name": "TK Rest Stop",
         "location": "Monroe, NJ",
         "state": "NJ",
@@ -15301,11 +16219,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7867548",
+        "id": "layover-623458",
         "name": "Broken M Ranch",
         "location": "Albuquerque, NM",
         "state": "NM",
@@ -15337,11 +16258,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5424626",
+        "id": "layover-1145362",
         "name": "Spur Stables, LLC",
         "location": "Albuquerque, NM",
         "state": "NM",
@@ -15373,11 +16297,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2993700",
+        "id": "layover-6440090",
         "name": "Rio Grande Horse Hotel",
         "location": "Algodones, NM",
         "state": "NM",
@@ -15409,11 +16336,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6983289",
+        "id": "layover-7518833",
         "name": "Open Heart G Farms",
         "location": "Anthony, NM",
         "state": "NM",
@@ -15445,11 +16375,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2168587",
+        "id": "layover-7526813",
         "name": "Kiva RV Park and Horse Motel",
         "location": "Bosque, NM",
         "state": "NM",
@@ -15481,11 +16414,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5040686",
+        "id": "layover-3525287",
         "name": "Willow Wells Equine Ranch",
         "location": "Carlsbad, NM",
         "state": "NM",
@@ -15517,11 +16453,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3555655",
+        "id": "layover-2716877",
         "name": "Rocking V Stable Equestrian Facilities",
         "location": "Clayton, NM",
         "state": "NM",
@@ -15553,11 +16492,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3805688",
+        "id": "layover-8809592",
         "name": "Lazy KO Ranch",
         "location": "Deming, NM",
         "state": "NM",
@@ -15589,11 +16531,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5528979",
+        "id": "layover-6804567",
         "name": "Lazy Sue Ranch",
         "location": "Deming, NM",
         "state": "NM",
@@ -15625,11 +16570,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3645308",
+        "id": "layover-6867623",
         "name": "Sweet Melody Farm, LLC",
         "location": "Edgewood, NM",
         "state": "NM",
@@ -15661,11 +16609,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1808347",
+        "id": "layover-4404549",
         "name": "Just Keep Swimming, Inc.",
         "location": "Edgewood, NM",
         "state": "NM",
@@ -15697,11 +16648,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1077290",
+        "id": "layover-822651",
         "name": "Carter's Stables, LLC",
         "location": "Farmington, NM",
         "state": "NM",
@@ -15733,11 +16687,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6060301",
+        "id": "layover-6844667",
         "name": "Slash M Slash Ranch",
         "location": "Grants, NM",
         "state": "NM",
@@ -15769,11 +16726,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9820780",
+        "id": "layover-3419265",
         "name": "Bar Key Horse Motel",
         "location": "Las Vegas, NM",
         "state": "NM",
@@ -15805,11 +16765,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-793069",
+        "id": "layover-4659107",
         "name": "High Country Arena",
         "location": "Mayhill, NM",
         "state": "NM",
@@ -15841,11 +16804,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7297757",
+        "id": "layover-7567715",
         "name": "Turquoise Corral",
         "location": "Quemado, NM",
         "state": "NM",
@@ -15877,11 +16843,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7689474",
+        "id": "layover-1980201",
         "name": "That's Western",
         "location": "Ramah, NM",
         "state": "NM",
@@ -15913,11 +16882,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5359277",
+        "id": "layover-4296017",
         "name": "Wellspring Ranch & Stables",
         "location": "Raton, NM",
         "state": "NM",
@@ -15949,11 +16921,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9695119",
+        "id": "layover-7899726",
         "name": "Caballos de las Estrellas",
         "location": "Rodeo, NM",
         "state": "NM",
@@ -15985,11 +16960,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8338362",
+        "id": "layover-4925976",
         "name": "J BAR C HORSE MOTEL",
         "location": "Roswell, NM",
         "state": "NM",
@@ -16021,11 +16999,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4266356",
+        "id": "layover-8103436",
         "name": "Rockin Horse Ranch",
         "location": "Stanley, NM",
         "state": "NM",
@@ -16057,11 +17038,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1759830",
+        "id": "layover-5451127",
         "name": "Cassetta Critter Care",
         "location": "Tucumcari, NM",
         "state": "NM",
@@ -16093,11 +17077,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1048687",
+        "id": "layover-551289",
         "name": "Blaze-in-Saddle RV Park",
         "location": "Tucumcari, NM",
         "state": "NM",
@@ -16129,11 +17116,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1771269",
+        "id": "layover-6834841",
         "name": "Timber Tree Ranch",
         "location": "Baldwinsville, NY",
         "state": "NY",
@@ -16165,11 +17155,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3191754",
+        "id": "layover-667590",
         "name": "Wilkins Performance Horses",
         "location": "Bath, NY",
         "state": "NY",
@@ -16201,11 +17194,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4705580",
+        "id": "layover-4591875",
         "name": "Red Roan Ranch",
         "location": "Cambridge, NY",
         "state": "NY",
@@ -16237,11 +17233,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-485959",
+        "id": "layover-1184585",
         "name": "Boyd Family Ranch",
         "location": "Cattaraugus, NY",
         "state": "NY",
@@ -16273,11 +17272,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3295393",
+        "id": "layover-1765572",
         "name": "Heritage Ridge Equestrian Center",
         "location": "Corfu, NY",
         "state": "NY",
@@ -16309,11 +17311,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-928580",
+        "id": "layover-338812",
         "name": "Leg Up Stables",
         "location": "Geneseo, NY",
         "state": "NY",
@@ -16345,11 +17350,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9431138",
+        "id": "layover-3113582",
         "name": "Loon Meadow Farm",
         "location": "Greenfield Center, NY",
         "state": "NY",
@@ -16381,11 +17389,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1925681",
+        "id": "layover-8386336",
         "name": "Never Done Farm",
         "location": "Ilion, NY",
         "state": "NY",
@@ -16417,11 +17428,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7824677",
+        "id": "layover-3217381",
         "name": "HH Riders Trail and Riding Club",
         "location": "Port Crane, NY",
         "state": "NY",
@@ -16453,11 +17467,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3196102",
+        "id": "layover-6447880",
         "name": "Traditions Equine Transport- Hotel and Airbnb",
         "location": "Rushville, NY",
         "state": "NY",
@@ -16489,11 +17506,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8964726",
+        "id": "layover-9946221",
         "name": "Corner Haven Farm",
         "location": "Trumansburg, NY",
         "state": "NY",
@@ -16525,11 +17545,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5414384",
+        "id": "layover-213356",
         "name": "KIWY Farm & Wellness Place, LLC",
         "location": "West Chazy, NY",
         "state": "NY",
@@ -16561,11 +17584,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9863732",
+        "id": "layover-4328687",
         "name": "5K Arena",
         "location": "Bladenboro, NC",
         "state": "NC",
@@ -16597,11 +17623,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1006220",
+        "id": "layover-2299632",
         "name": "SFW FARM, LLC",
         "location": "Catawba, NC",
         "state": "NC",
@@ -16633,11 +17662,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-30494",
+        "id": "layover-7188726",
         "name": "Fox Trail Farm",
         "location": "Dobson, NC",
         "state": "NC",
@@ -16669,11 +17701,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5673418",
+        "id": "layover-5144177",
         "name": "Valentine Farm",
         "location": "Dunn, NC",
         "state": "NC",
@@ -16705,11 +17740,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1403588",
+        "id": "layover-5995529",
         "name": "Bird's Nest Bunkies & Barn, LLC",
         "location": "Ellenboro, NC",
         "state": "NC",
@@ -16741,11 +17779,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8875863",
+        "id": "layover-3528123",
         "name": "Cavvietta Quarter Horse & Cattle Co.",
         "location": "Elm City, NC",
         "state": "NC",
@@ -16777,11 +17818,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9354789",
+        "id": "layover-3277957",
         "name": "Bed and Barn Farms, LLC",
         "location": "Forest City, NC",
         "state": "NC",
@@ -16813,11 +17857,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1614279",
+        "id": "layover-7237484",
         "name": "Sugar Ridge Ranch",
         "location": "Frisco, NC",
         "state": "NC",
@@ -16849,11 +17896,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4981182",
+        "id": "layover-4381189",
         "name": "Double Lee Farm",
         "location": "Hollister, NC",
         "state": "NC",
@@ -16885,11 +17935,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2983787",
+        "id": "layover-7456535",
         "name": "Palomino Mountain Ranch",
         "location": "Lowgap, NC",
         "state": "NC",
@@ -16921,11 +17974,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-149567",
+        "id": "layover-4626670",
         "name": "Kingfisher Park Equestrian",
         "location": "Mooresville, NC",
         "state": "NC",
@@ -16957,11 +18013,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4649961",
+        "id": "layover-2628818",
         "name": "Noble Acres",
         "location": "Mooresville, NC",
         "state": "NC",
@@ -16993,11 +18052,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1323493",
+        "id": "layover-3453468",
         "name": "Parkton Place",
         "location": "Parkton, NC",
         "state": "NC",
@@ -17029,11 +18091,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9716782",
+        "id": "layover-6010042",
         "name": "Sally's Ark",
         "location": "Rowland, NC",
         "state": "NC",
@@ -17065,11 +18130,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6535673",
+        "id": "layover-455435",
         "name": "The Regal Roost",
         "location": "Southern Pines, NC",
         "state": "NC",
@@ -17101,11 +18169,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6900118",
+        "id": "layover-3188378",
         "name": "Lil'Aspen Farm",
         "location": "Summerfield, NC",
         "state": "NC",
@@ -17137,11 +18208,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5162080",
+        "id": "layover-2006634",
         "name": "Holbel Farm",
         "location": "Waynesville, NC",
         "state": "NC",
@@ -17173,11 +18247,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5314349",
+        "id": "layover-6576469",
         "name": "JAKS Stables, LLC",
         "location": "Wendell, NC",
         "state": "NC",
@@ -17209,11 +18286,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3237930",
+        "id": "layover-7957657",
         "name": "Lone Hickory Arena",
         "location": "Yadkinville, NC",
         "state": "NC",
@@ -17245,11 +18325,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3996631",
+        "id": "layover-7659458",
         "name": "Coulee Ridge Ranch",
         "location": "Burlington, ND",
         "state": "ND",
@@ -17281,11 +18364,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4614537",
+        "id": "layover-8638875",
         "name": "Heart River Stables",
         "location": "Mandan, ND",
         "state": "ND",
@@ -17317,11 +18403,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-667124",
+        "id": "layover-1860302",
         "name": "Tower City Bed, Breakfast & Horse Motel",
         "location": "Tower City, ND",
         "state": "ND",
@@ -17353,11 +18442,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-630214",
+        "id": "layover-5087803",
         "name": "Sunny Sugarcreek Stables",
         "location": "Bellbrook, OH",
         "state": "OH",
@@ -17389,11 +18481,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7388276",
+        "id": "layover-9338561",
         "name": "Maple Lane Stables",
         "location": "Bluffton, OH",
         "state": "OH",
@@ -17425,11 +18520,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4970852",
+        "id": "layover-1676164",
         "name": "Bellawood Farm",
         "location": "Canal Winchester, OH",
         "state": "OH",
@@ -17461,11 +18559,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-888012",
+        "id": "layover-1346523",
         "name": "Maple Crest Horse Farm, LLC",
         "location": "Castalia, OH",
         "state": "OH",
@@ -17497,11 +18598,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8489789",
+        "id": "layover-2959779",
         "name": "Otter Fork Acres, LLC",
         "location": "Centerburg, OH",
         "state": "OH",
@@ -17533,11 +18637,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3610845",
+        "id": "layover-7604726",
         "name": "CMA Endurance, LLC",
         "location": "Girard, OH",
         "state": "OH",
@@ -17569,11 +18676,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7211478",
+        "id": "layover-7409379",
         "name": "Bit of Heaven Farm",
         "location": "Granville, OH",
         "state": "OH",
@@ -17605,11 +18715,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4005074",
+        "id": "layover-8598964",
         "name": "Rolling Hills Farm and Stables, LLC",
         "location": "Heath, OH",
         "state": "OH",
@@ -17641,11 +18754,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4728679",
+        "id": "layover-3084495",
         "name": "Ashley Moores Stables",
         "location": "Jefferson, OH",
         "state": "OH",
@@ -17677,11 +18793,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3511423",
+        "id": "layover-6768847",
         "name": "Hathaway Hill",
         "location": "Lebanon, OH",
         "state": "OH",
@@ -17713,11 +18832,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7701989",
+        "id": "layover-8415857",
         "name": "Shillelagh Farm",
         "location": "Madison, OH",
         "state": "OH",
@@ -17749,11 +18871,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5154184",
+        "id": "layover-1556870",
         "name": "R/C Stables",
         "location": "Plain City, OH",
         "state": "OH",
@@ -17785,11 +18910,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2603390",
+        "id": "layover-2356558",
         "name": "Plattsburg Equine Center, LLC",
         "location": "South Charleston, OH",
         "state": "OH",
@@ -17821,11 +18949,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6614704",
+        "id": "layover-137704",
         "name": "The Secret Ranch",
         "location": "Van Buren, OH",
         "state": "OH",
@@ -17857,11 +18988,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5935579",
+        "id": "layover-495372",
         "name": "Weathertree Farm",
         "location": "Vermilion, OH",
         "state": "OH",
@@ -17893,11 +19027,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1648457",
+        "id": "layover-764869",
         "name": "McGuire Auctioneers",
         "location": "Windham, OH",
         "state": "OH",
@@ -17929,11 +19066,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6849559",
+        "id": "layover-9052141",
         "name": "I-44 Horse Hotel, LLC",
         "location": "Adair, OK",
         "state": "OK",
@@ -17965,11 +19105,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7501241",
+        "id": "layover-335753",
         "name": "Johnson Performance Horses",
         "location": "Ardmore, OK",
         "state": "OK",
@@ -18001,11 +19144,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2765362",
+        "id": "layover-4372443",
         "name": "Crossroads Equestrian Inn",
         "location": "Blackwell, OK",
         "state": "OK",
@@ -18037,11 +19183,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2592225",
+        "id": "layover-9947938",
         "name": "Crossroads Ranch Ministries",
         "location": "Depew, OK",
         "state": "OK",
@@ -18073,11 +19222,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2046993",
+        "id": "layover-4016988",
         "name": "Black Horse Stables",
         "location": "Elk City, OK",
         "state": "OK",
@@ -18109,11 +19261,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7761055",
+        "id": "layover-8307059",
         "name": "Cross Creek Horse Training, LLC",
         "location": "El Reno, OK",
         "state": "OK",
@@ -18145,11 +19300,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4426046",
+        "id": "layover-4228325",
         "name": "Diamond D Ranch",
         "location": "Guthrie, OK",
         "state": "OK",
@@ -18181,11 +19339,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8251390",
+        "id": "layover-6824961",
         "name": "Cowboy Town Stalls & Rv",
         "location": "Guthrie, OK",
         "state": "OK",
@@ -18217,11 +19378,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2503176",
+        "id": "layover-1552427",
         "name": "KK's Horse Hotel",
         "location": "Guthrie, OK",
         "state": "OK",
@@ -18253,11 +19417,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8423020",
+        "id": "layover-8711763",
         "name": "Harvey\u2019s Horse Pasture",
         "location": "Guthrie, OK",
         "state": "OK",
@@ -18289,11 +19456,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7595963",
+        "id": "layover-2965074",
         "name": "Suncatcher Ranch, LLC",
         "location": "Guthrie, OK",
         "state": "OK",
@@ -18325,11 +19495,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2288917",
+        "id": "layover-698260",
         "name": "Johnson Ranch Horse Motel",
         "location": "Henryetta, OK",
         "state": "OK",
@@ -18361,11 +19534,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1815912",
+        "id": "layover-5965553",
         "name": "Sleepy Deep Fork RV / Horse Hotel",
         "location": "Henryetta, OK",
         "state": "OK",
@@ -18397,11 +19573,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8829072",
+        "id": "layover-6091626",
         "name": "Rock ANN Roll Ranch & Horse Motel",
         "location": "Hugo, OK",
         "state": "OK",
@@ -18433,11 +19612,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8007501",
+        "id": "layover-6111178",
         "name": "New Harmony Ranch & Training Center",
         "location": "Inola, OK",
         "state": "OK",
@@ -18469,11 +19651,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9188571",
+        "id": "layover-232121",
         "name": "Jeff Damphouse Training Center",
         "location": "Jones, OK",
         "state": "OK",
@@ -18505,11 +19690,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2203398",
+        "id": "layover-264012",
         "name": "Knight's Rest Ranch",
         "location": "Luther, OK",
         "state": "OK",
@@ -18541,11 +19729,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8115076",
+        "id": "layover-8688043",
         "name": "Lightning C Arena",
         "location": "McAlester, OK",
         "state": "OK",
@@ -18577,11 +19768,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-604693",
+        "id": "layover-3728111",
         "name": "Burr Oak Farms",
         "location": "Norman, OK",
         "state": "OK",
@@ -18613,11 +19807,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8778979",
+        "id": "layover-7521263",
         "name": "Felker Arena",
         "location": "Okemah, OK",
         "state": "OK",
@@ -18649,11 +19846,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8013273",
+        "id": "layover-3351410",
         "name": "Robinson\u2019s Equestrian Center",
         "location": "Oklahoma City, OK",
         "state": "OK",
@@ -18685,11 +19885,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6249861",
+        "id": "layover-2553257",
         "name": "Circle H Stables",
         "location": "Oklahoma City, OK",
         "state": "OK",
@@ -18721,11 +19924,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4437",
+        "id": "layover-8544658",
         "name": "McGuire Land & Cattle",
         "location": "Perry, OK",
         "state": "OK",
@@ -18757,11 +19963,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2853629",
+        "id": "layover-9031240",
         "name": "Cross Country Stables",
         "location": "Red Oak, OK",
         "state": "OK",
@@ -18793,11 +20002,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4377595",
+        "id": "layover-5412241",
         "name": "Rockin A Ranch",
         "location": "Roff, OK",
         "state": "OK",
@@ -18829,11 +20041,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7049518",
+        "id": "layover-7940237",
         "name": "Circle R Horse Lodge",
         "location": "Sand Springs, OK",
         "state": "OK",
@@ -18865,11 +20080,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8861270",
+        "id": "layover-9535007",
         "name": "Rolling Stones Stables & RV Park",
         "location": "Shawnee, OK",
         "state": "OK",
@@ -18901,11 +20119,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8807324",
+        "id": "layover-1416982",
         "name": "Jett Barrel horses",
         "location": "Wayne, OK",
         "state": "OK",
@@ -18937,11 +20158,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4395929",
+        "id": "layover-3177383",
         "name": "Little Creek Ranch",
         "location": "Ashland, OR",
         "state": "OR",
@@ -18973,11 +20197,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3044578",
+        "id": "layover-2075095",
         "name": "Eastern Slope Ranch",
         "location": "Baker City, OR",
         "state": "OR",
@@ -19009,11 +20236,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2522933",
+        "id": "layover-866236",
         "name": "Christy Hartman at DeCourcey Ranch",
         "location": "Bend, OR",
         "state": "OR",
@@ -19045,11 +20275,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1613173",
+        "id": "layover-4430604",
         "name": "The Barn at Marvin Garden",
         "location": "Bly, OR",
         "state": "OR",
@@ -19081,11 +20314,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5202333",
+        "id": "layover-3736738",
         "name": "Sleepy Horse Hollow, LLC",
         "location": "Central Point, OR",
         "state": "OR",
@@ -19117,11 +20353,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2682723",
+        "id": "layover-6529196",
         "name": "Lazy H Ranch",
         "location": "Coos Bay, OR",
         "state": "OR",
@@ -19153,11 +20392,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4461125",
+        "id": "layover-3804634",
         "name": "Strawberry Hill Stables",
         "location": "Creswell, OR",
         "state": "OR",
@@ -19189,11 +20431,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1256495",
+        "id": "layover-3568965",
         "name": "Hood River Saddle Club",
         "location": "Hood River, OR",
         "state": "OR",
@@ -19225,11 +20470,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7247750",
+        "id": "layover-9807372",
         "name": "Territorial Farm Stay and Stable",
         "location": "Junction City, OR",
         "state": "OR",
@@ -19261,11 +20509,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5306077",
+        "id": "layover-301613",
         "name": "PPR Horse Boarding",
         "location": "La Grande, OR",
         "state": "OR",
@@ -19297,11 +20548,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5069654",
+        "id": "layover-6997441",
         "name": "Hat J Performance Horses and Boarding",
         "location": "Ontario, OR",
         "state": "OR",
@@ -19333,11 +20587,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1131687",
+        "id": "layover-2770562",
         "name": "Gable Stables",
         "location": "Ontario, OR",
         "state": "OR",
@@ -19369,11 +20626,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9873642",
+        "id": "layover-986931",
         "name": "Historic Kirchem Farm",
         "location": "Oregon City, OR",
         "state": "OR",
@@ -19405,11 +20665,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9045585",
+        "id": "layover-7435306",
         "name": "Neigh-bors",
         "location": "Pendleton, OR",
         "state": "OR",
@@ -19441,11 +20704,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9875504",
+        "id": "layover-254411",
         "name": "Triple Crown Farms",
         "location": "Pleasant Hill, OR",
         "state": "OR",
@@ -19477,11 +20743,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6065447",
+        "id": "layover-7816390",
         "name": "Horseman Haven Ranch Oregon",
         "location": "Prineville, OR",
         "state": "OR",
@@ -19513,11 +20782,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1056859",
+        "id": "layover-2100647",
         "name": "SKS Ranch",
         "location": "Riddle, OR",
         "state": "OR",
@@ -19549,11 +20821,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2008059",
+        "id": "layover-3764234",
         "name": "Stabling Solutions, LLC",
         "location": "Rogue River, OR",
         "state": "OR",
@@ -19585,11 +20860,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9652988",
+        "id": "layover-3889839",
         "name": "R & R Ranch",
         "location": "Sisters, OR",
         "state": "OR",
@@ -19621,11 +20899,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5656074",
+        "id": "layover-3102912",
         "name": "M&R Stables",
         "location": "Turner, OR",
         "state": "OR",
@@ -19657,11 +20938,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9909256",
+        "id": "layover-3207725",
         "name": "Broken Arrow Ranch",
         "location": "Winston, OR",
         "state": "OR",
@@ -19693,11 +20977,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8753905",
+        "id": "layover-6740667",
         "name": "Mane Retreat",
         "location": "Abbottstown, PA",
         "state": "PA",
@@ -19729,11 +21016,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1774359",
+        "id": "layover-9342782",
         "name": "Blue Rock Stables",
         "location": "Annville, PA",
         "state": "PA",
@@ -19765,11 +21055,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6295636",
+        "id": "layover-1968903",
         "name": "A Windy Ridge Farm",
         "location": "Bethel, PA",
         "state": "PA",
@@ -19801,11 +21094,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-993400",
+        "id": "layover-5277605",
         "name": "Caliber Stables",
         "location": "Bird in Hand, PA",
         "state": "PA",
@@ -19837,11 +21133,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8741070",
+        "id": "layover-8308647",
         "name": "Broken M, LLC",
         "location": "DuBois, PA",
         "state": "PA",
@@ -19873,11 +21172,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-981469",
+        "id": "layover-2306544",
         "name": "Horses Keep Me Stable",
         "location": "Fairfield, PA",
         "state": "PA",
@@ -19909,11 +21211,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4450881",
+        "id": "layover-5245453",
         "name": "MountainStead Farm",
         "location": "Fredericksburg, PA",
         "state": "PA",
@@ -19945,11 +21250,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9246230",
+        "id": "layover-3909042",
         "name": "Sun and Cricket Bed & Breakfast",
         "location": "Gibsonia, PA",
         "state": "PA",
@@ -19981,11 +21289,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6601432",
+        "id": "layover-9070661",
         "name": "Bella View Farm, LLC",
         "location": "Grantville, PA",
         "state": "PA",
@@ -20017,11 +21328,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7685026",
+        "id": "layover-5013662",
         "name": "Westmoreland Fairgrounds",
         "location": "Greensburg, PA",
         "state": "PA",
@@ -20053,11 +21367,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3716783",
+        "id": "layover-2364966",
         "name": "Fair Haven Farms",
         "location": "Grove City, PA",
         "state": "PA",
@@ -20089,11 +21406,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5173736",
+        "id": "layover-8339254",
         "name": "Mountain View Paradise",
         "location": "Harrisburg, PA",
         "state": "PA",
@@ -20125,11 +21445,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2231894",
+        "id": "layover-5912541",
         "name": "219 Stables Inc.",
         "location": "Lake Aerial, PA",
         "state": "PA",
@@ -20161,11 +21484,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7537764",
+        "id": "layover-460022",
         "name": "Shady Spring Farm",
         "location": "McConnellsburg, PA",
         "state": "PA",
@@ -20197,11 +21523,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8017558",
+        "id": "layover-5232989",
         "name": "County Seat Horse Farm, LLC",
         "location": "Milford, PA",
         "state": "PA",
@@ -20233,11 +21562,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9467902",
+        "id": "layover-5572403",
         "name": "DeCarlo Farm",
         "location": "New Haven, PA",
         "state": "PA",
@@ -20269,11 +21601,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6428270",
+        "id": "layover-5768644",
         "name": "Fox Run Equine",
         "location": "Paradise, PA",
         "state": "PA",
@@ -20305,11 +21640,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1521623",
+        "id": "layover-3555799",
         "name": "Shadow Facs Farm",
         "location": "Waterford, PA",
         "state": "PA",
@@ -20341,11 +21679,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2830375",
+        "id": "layover-2439192",
         "name": "TMR Ranch",
         "location": "Woodland, PA",
         "state": "PA",
@@ -20377,11 +21718,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6128162",
+        "id": "layover-8899486",
         "name": "Heritage Breed Farm",
         "location": "York, PA",
         "state": "PA",
@@ -20413,11 +21757,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2184645",
+        "id": "layover-2760433",
         "name": "Y Legacy Farms",
         "location": "Aiken, SC",
         "state": "SC",
@@ -20449,11 +21796,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8214149",
+        "id": "layover-2140545",
         "name": "A Florence Horse Center",
         "location": "Florence, SC",
         "state": "SC",
@@ -20485,11 +21835,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8880837",
+        "id": "layover-1378826",
         "name": "Turtle Cove Farm",
         "location": "Irmo, SC",
         "state": "SC",
@@ -20521,11 +21874,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1994713",
+        "id": "layover-475555",
         "name": "Delta's Bed & Bale",
         "location": "Liberty, SC",
         "state": "SC",
@@ -20557,11 +21913,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5865998",
+        "id": "layover-5720251",
         "name": "Patient Wait Farms",
         "location": "Piedmont, SC",
         "state": "SC",
@@ -20593,11 +21952,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1129426",
+        "id": "layover-4559111",
         "name": "WC Farm",
         "location": "Seabrook, SC",
         "state": "SC",
@@ -20629,11 +21991,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3890352",
+        "id": "layover-6072713",
         "name": "Tucker Farm Rest N Ride",
         "location": "Seneca, SC",
         "state": "SC",
@@ -20665,11 +22030,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8606670",
+        "id": "layover-6043230",
         "name": "West View Farm",
         "location": "Townville, SC",
         "state": "SC",
@@ -20701,11 +22069,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8174300",
+        "id": "layover-3695980",
         "name": "Equine Heart Healers Ranch",
         "location": "Ware Shoals, SC",
         "state": "SC",
@@ -20737,11 +22108,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-49421",
+        "id": "layover-6923908",
         "name": "38 Special Horse Hotel",
         "location": "Alexandria, SD",
         "state": "SD",
@@ -20773,11 +22147,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8447722",
+        "id": "layover-1243667",
         "name": "Three Arrows, LLC",
         "location": "Belle Fourche, SD",
         "state": "SD",
@@ -20809,11 +22186,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6666624",
+        "id": "layover-7806863",
         "name": "Prairie Hills Paddocks",
         "location": "Belle Fourche, SD",
         "state": "SD",
@@ -20845,11 +22225,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8196159",
+        "id": "layover-9388044",
         "name": "J & J Arena",
         "location": "Box Elder, SD",
         "state": "SD",
@@ -20881,11 +22264,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5033634",
+        "id": "layover-7964410",
         "name": "Clicks Horse Boarding",
         "location": "Box Elder, SD",
         "state": "SD",
@@ -20917,11 +22303,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3030654",
+        "id": "layover-3255075",
         "name": "Too'Shay Tack Horse Motel",
         "location": "Brookings, SD",
         "state": "SD",
@@ -20953,11 +22342,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5921822",
+        "id": "layover-2855656",
         "name": "Hawk Stables",
         "location": "Brookings, SD",
         "state": "SD",
@@ -20989,11 +22381,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4165173",
+        "id": "layover-9688618",
         "name": "Bellehaven Farm",
         "location": "Bellehaven, SC",
         "state": "SC",
@@ -21025,11 +22420,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4201204",
+        "id": "layover-9886678",
         "name": "TC Horse Camp",
         "location": "Custer, SD",
         "state": "SD",
@@ -21061,11 +22459,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6652998",
+        "id": "layover-1935576",
         "name": "Glen Erin Horse Camp",
         "location": "Custer, SD",
         "state": "SD",
@@ -21097,11 +22498,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3353901",
+        "id": "layover-1775606",
         "name": "Meadowlark",
         "location": "Florence, SD",
         "state": "SD",
@@ -21133,11 +22537,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2808603",
+        "id": "layover-4624411",
         "name": "Ghost Canyon Horse Motel",
         "location": "Hermosa, SD",
         "state": "SD",
@@ -21169,11 +22576,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7195585",
+        "id": "layover-8657110",
         "name": "Hobby Horse Overnight Stables",
         "location": "Mitchell, SD",
         "state": "SD",
@@ -21205,11 +22615,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4922791",
+        "id": "layover-3080183",
         "name": "Diamond A Cattle Company",
         "location": "Pukwana, SD",
         "state": "SD",
@@ -21241,11 +22654,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8943149",
+        "id": "layover-6748985",
         "name": "Happy Horse Haus, LLC",
         "location": "Rapid City, SD",
         "state": "SD",
@@ -21277,11 +22693,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5915606",
+        "id": "layover-701382",
         "name": "Buffalo Berry Arena, LLC",
         "location": "Sturgis, SD",
         "state": "SD",
@@ -21313,11 +22732,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1229504",
+        "id": "layover-6305935",
         "name": "Badlands Edge RV",
         "location": "Wall, SD",
         "state": "SD",
@@ -21349,11 +22771,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4455017",
+        "id": "layover-6279274",
         "name": "Shady Creek Ranch",
         "location": "Arlington, TN",
         "state": "TN",
@@ -21385,11 +22810,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2031504",
+        "id": "layover-9681166",
         "name": "THE RED BARN INN",
         "location": "Athens, TN",
         "state": "TN",
@@ -21421,11 +22849,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6442456",
+        "id": "layover-5545564",
         "name": "Circle E Guest Ranch and Campground",
         "location": "Belvidere, TN",
         "state": "TN",
@@ -21457,11 +22888,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6485963",
+        "id": "layover-2267474",
         "name": "Renaissance Farm, LLC",
         "location": "Bulls Gap, TN",
         "state": "TN",
@@ -21493,11 +22927,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9291280",
+        "id": "layover-7309152",
         "name": "Circle L Campsites and Stables",
         "location": "Castalian Springs, TN",
         "state": "TN",
@@ -21529,11 +22966,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2166051",
+        "id": "layover-4520735",
         "name": "Quail Run Farm",
         "location": "Chattanooga, TN",
         "state": "TN",
@@ -21565,11 +23005,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4994070",
+        "id": "layover-4275846",
         "name": "TN - Crossville",
         "location": "Crossville, TN",
         "state": "TN",
@@ -21601,11 +23044,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3239194",
+        "id": "layover-8208514",
         "name": "BK Sports Arena",
         "location": "Culleoka, TN",
         "state": "TN",
@@ -21637,11 +23083,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7675898",
+        "id": "layover-8394747",
         "name": "High Heifer Draft Farm",
         "location": "Estill Springs, TN",
         "state": "TN",
@@ -21673,11 +23122,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7666541",
+        "id": "layover-2563564",
         "name": "Bierly Stables",
         "location": "Fairview, TN",
         "state": "TN",
@@ -21709,11 +23161,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1746676",
+        "id": "layover-1928551",
         "name": "River Runs Thru It",
         "location": "Franklin, TN",
         "state": "TN",
@@ -21745,11 +23200,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2643145",
+        "id": "layover-7081392",
         "name": "Iron Hide Ranch",
         "location": "Greenback, TN",
         "state": "TN",
@@ -21781,11 +23239,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9264177",
+        "id": "layover-784240",
         "name": "Bronson Abbay Acres",
         "location": "Hermitage, TN",
         "state": "TN",
@@ -21817,11 +23278,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5814221",
+        "id": "layover-9062900",
         "name": "Journeys End Stables",
         "location": "Jackson, TN",
         "state": "TN",
@@ -21853,11 +23317,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9014754",
+        "id": "layover-8104714",
         "name": "Southern Star Farm",
         "location": "Jackson, TN",
         "state": "TN",
@@ -21889,11 +23356,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7793380",
+        "id": "layover-316726",
         "name": "Serenity Manor Stables",
         "location": "Lebanon, TN",
         "state": "TN",
@@ -21925,11 +23395,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-194127",
+        "id": "layover-3218557",
         "name": "Rising Glory Farm",
         "location": "Lewisburg, TN",
         "state": "TN",
@@ -21961,11 +23434,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5876751",
+        "id": "layover-2812065",
         "name": "Twisted South Stables",
         "location": "Manchester, TN",
         "state": "TN",
@@ -21997,11 +23473,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3569139",
+        "id": "layover-3232830",
         "name": "McMillan Farms",
         "location": "Mosheim, TN",
         "state": "TN",
@@ -22033,11 +23512,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-519138",
+        "id": "layover-3606600",
         "name": "KINGS RANCH TN",
         "location": "Murfreesboro, TN",
         "state": "TN",
@@ -22069,11 +23551,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3697496",
+        "id": "layover-1506448",
         "name": "Gibson Girls Horse Hotel, LLC",
         "location": "Parrotsville, TN",
         "state": "TN",
@@ -22105,11 +23590,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8792664",
+        "id": "layover-1880862",
         "name": "Twin Oaks Farm",
         "location": "Riceville, TN",
         "state": "TN",
@@ -22141,11 +23629,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7487483",
+        "id": "layover-61677",
         "name": "Pegasus Andalusians",
         "location": "Rossville, TN",
         "state": "TN",
@@ -22177,11 +23668,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9879185",
+        "id": "layover-3240582",
         "name": "Thompson Training Center",
         "location": "Sweetwater, TN",
         "state": "TN",
@@ -22213,11 +23707,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1516258",
+        "id": "layover-9875057",
         "name": "Ted Barnes Cutting Horses",
         "location": "Watertown, TN",
         "state": "TN",
@@ -22249,11 +23746,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9854272",
+        "id": "layover-8433403",
         "name": "Phoenix Farm",
         "location": "Waverly, TN",
         "state": "TN",
@@ -22285,11 +23785,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7403574",
+        "id": "layover-3354052",
         "name": "Lone Star Stables",
         "location": "Abilene, TX",
         "state": "TX",
@@ -22321,11 +23824,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8099622",
+        "id": "layover-4600640",
         "name": "Knight Arabians",
         "location": "Abilene, TX",
         "state": "TX",
@@ -22357,11 +23863,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6592954",
+        "id": "layover-7870167",
         "name": "Happy Tracks Horse Motel",
         "location": "Amarillo, TX",
         "state": "TX",
@@ -22393,11 +23902,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9824950",
+        "id": "layover-5551115",
         "name": "Amarillo Lone Star Bed & Bale",
         "location": "Amarillo, TX",
         "state": "TX",
@@ -22429,11 +23941,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9760701",
+        "id": "layover-244990",
         "name": "Girl Scout Road Horse Hotel, LLC",
         "location": "Amarillo, TX",
         "state": "TX",
@@ -22465,11 +23980,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7072023",
+        "id": "layover-1447260",
         "name": "2T Arena",
         "location": "Amarillo, TX",
         "state": "TX",
@@ -22501,11 +24019,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4146363",
+        "id": "layover-1846888",
         "name": "3CK Ranch",
         "location": "Amarillo, TX",
         "state": "TX",
@@ -22537,11 +24058,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6811816",
+        "id": "layover-1653743",
         "name": "Whitehedge Farm, LLC",
         "location": "Aubrey, TX",
         "state": "TX",
@@ -22573,11 +24097,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-697016",
+        "id": "layover-4070379",
         "name": "Happy Horse Hotel",
         "location": "Austin/Bastrop, TX",
         "state": "TX",
@@ -22609,11 +24136,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2744174",
+        "id": "layover-9085146",
         "name": "R&R Horse Hacienda, LLC",
         "location": "Bandera, TX",
         "state": "TX",
@@ -22645,11 +24175,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6645106",
+        "id": "layover-5789795",
         "name": "Varsch Land and Cattle",
         "location": "Big Spring, TX",
         "state": "TX",
@@ -22681,11 +24214,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5421635",
+        "id": "layover-3693328",
         "name": "Rockin L Horse Motel",
         "location": "Big Spring, TX",
         "state": "TX",
@@ -22717,11 +24253,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4111084",
+        "id": "layover-5418753",
         "name": "Davis Road Stables",
         "location": "Big Spring, TX",
         "state": "TX",
@@ -22753,11 +24292,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4692686",
+        "id": "layover-8508959",
         "name": "Road Rash Ranch on Rust Ranch Road",
         "location": "Blanco, TX",
         "state": "TX",
@@ -22789,11 +24331,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8841376",
+        "id": "layover-6140782",
         "name": "Snowdonia Sport Horse Complex",
         "location": "Brookshire, TX",
         "state": "TX",
@@ -22825,11 +24370,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5234879",
+        "id": "layover-6846523",
         "name": "Texas Cozy Rentals",
         "location": "Bryan, TX",
         "state": "TX",
@@ -22861,11 +24409,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-739932",
+        "id": "layover-3598468",
         "name": "Keen Farms",
         "location": "Burleson, TX",
         "state": "TX",
@@ -22897,11 +24448,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2182023",
+        "id": "layover-8886073",
         "name": "Darren Miller Stables",
         "location": "Canyon, TX",
         "state": "TX",
@@ -22933,11 +24487,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-475599",
+        "id": "layover-6360630",
         "name": "Peach Creek Sporthorses, Inc,",
         "location": "Cleveland, TX",
         "state": "TX",
@@ -22969,11 +24526,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9515997",
+        "id": "layover-8108160",
         "name": "La Chula Hacienda",
         "location": "Collinsville, TX",
         "state": "TX",
@@ -23005,11 +24565,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5817695",
+        "id": "layover-51439",
         "name": "HJK Stables",
         "location": "Corpus Christi, TX",
         "state": "TX",
@@ -23041,11 +24604,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2471917",
+        "id": "layover-6361939",
         "name": "Blackjack Lane Equestrian",
         "location": "Dayton, TX",
         "state": "TX",
@@ -23077,11 +24643,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1343626",
+        "id": "layover-6091489",
         "name": "Wild West Remuda",
         "location": "Decatur, TX",
         "state": "TX",
@@ -23113,11 +24682,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7281994",
+        "id": "layover-2215242",
         "name": "Brazile Quarter Horses",
         "location": "Decatur, TX",
         "state": "TX",
@@ -23149,11 +24721,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5345606",
+        "id": "layover-9622209",
         "name": "Rancho Del Sol Arena",
         "location": "De Kalb, TX",
         "state": "TX",
@@ -23185,11 +24760,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6701157",
+        "id": "layover-738973",
         "name": "Rockin H Ranch",
         "location": "Diana, TX",
         "state": "TX",
@@ -23221,11 +24799,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6482040",
+        "id": "layover-9156462",
         "name": "4x4 Performance Horses",
         "location": "Dike, TX",
         "state": "TX",
@@ -23257,11 +24838,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4628561",
+        "id": "layover-4610807",
         "name": "Cedar Grove Stables",
         "location": "Dripping Springs, TX",
         "state": "TX",
@@ -23293,11 +24877,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3267630",
+        "id": "layover-9890361",
         "name": "Star Burst Ranch",
         "location": "Eastland, TX",
         "state": "TX",
@@ -23329,11 +24916,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4765160",
+        "id": "layover-3164800",
         "name": "FAR WEST HORSE MOTEL",
         "location": "El Paso, TX",
         "state": "TX",
@@ -23365,11 +24955,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-299204",
+        "id": "layover-8170393",
         "name": "Triple C Ranch",
         "location": "Emory, TX",
         "state": "TX",
@@ -23401,11 +24994,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1649714",
+        "id": "layover-3112839",
         "name": "Rockin Horse RV & Stables",
         "location": "Fort Stockton, TX",
         "state": "TX",
@@ -23437,11 +25033,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-168180",
+        "id": "layover-1474365",
         "name": "4Hearts Ranch",
         "location": "Fort Worth, TX",
         "state": "TX",
@@ -23473,11 +25072,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3996411",
+        "id": "layover-2898370",
         "name": "Media Luna Ranch",
         "location": "Fredericksburg, TX",
         "state": "TX",
@@ -23509,11 +25111,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6630230",
+        "id": "layover-9069880",
         "name": "Dean Properties",
         "location": "Gardendale, TX",
         "state": "TX",
@@ -23545,11 +25150,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8982195",
+        "id": "layover-4390374",
         "name": "Bobcat Crossing RV Community/Horse Motel",
         "location": "Hallsville, TX",
         "state": "TX",
@@ -23581,11 +25189,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-545981",
+        "id": "layover-4499936",
         "name": "CK25 Horse Motel",
         "location": "Happy, TX",
         "state": "TX",
@@ -23617,11 +25228,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9096953",
+        "id": "layover-739440",
         "name": "Hall Ranch",
         "location": "Holland, TX",
         "state": "TX",
@@ -23653,11 +25267,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2391509",
+        "id": "layover-7970572",
         "name": "Moore Ranch and Barrel Horses",
         "location": "Johnson City, TX",
         "state": "TX",
@@ -23689,11 +25306,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3048001",
+        "id": "layover-3086714",
         "name": "Katiesplace",
         "location": "Junction, TX",
         "state": "TX",
@@ -23725,11 +25345,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4090447",
+        "id": "layover-1530912",
         "name": "Golden Curls Ranch",
         "location": "Kaufman, TX",
         "state": "TX",
@@ -23761,11 +25384,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-270772",
+        "id": "layover-6021710",
         "name": "Casa Cassel II Arabians",
         "location": "Lindale, TX",
         "state": "TX",
@@ -23797,11 +25423,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8252586",
+        "id": "layover-7451831",
         "name": "The Roaming Roan",
         "location": "Linden, TX",
         "state": "TX",
@@ -23833,11 +25462,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8376562",
+        "id": "layover-5917841",
         "name": "Mustang 2nd Chance Foundation",
         "location": "Lorena, TX",
         "state": "TX",
@@ -23869,11 +25501,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1060720",
+        "id": "layover-8571435",
         "name": "JoMar Farms",
         "location": "Midlothian, TX",
         "state": "TX",
@@ -23905,11 +25540,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1956868",
+        "id": "layover-8028196",
         "name": "Double T Ranch",
         "location": "Millsap, TX",
         "state": "TX",
@@ -23941,11 +25579,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9694749",
+        "id": "layover-446346",
         "name": "Quiet Country RV Park",
         "location": "Millsap, TX",
         "state": "TX",
@@ -23977,11 +25618,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5222538",
+        "id": "layover-976128",
         "name": "Off 82 Horse Hotel",
         "location": "Nocona, TX",
         "state": "TX",
@@ -24013,11 +25657,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8389116",
+        "id": "layover-6115987",
         "name": "Justin Parish Team Roping",
         "location": "Perrin, TX",
         "state": "TX",
@@ -24049,11 +25696,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5655653",
+        "id": "layover-1115272",
         "name": "Mandolynn Hill Farm",
         "location": "Pilot Point, TX",
         "state": "TX",
@@ -24085,11 +25735,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2622650",
+        "id": "layover-1107896",
         "name": "Rock'n N B&B",
         "location": "Plains, TX",
         "state": "TX",
@@ -24121,11 +25774,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4038837",
+        "id": "layover-6645582",
         "name": "13 Points Farm Points Farm - Horse Motel",
         "location": "Port Bolivar, TX",
         "state": "TX",
@@ -24157,11 +25813,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6737718",
+        "id": "layover-7645764",
         "name": "Not Just Horses",
         "location": "Quanah, TX",
         "state": "TX",
@@ -24193,11 +25852,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7968121",
+        "id": "layover-9397096",
         "name": "Hoof Haven, LLC",
         "location": "Quanah, TX",
         "state": "TX",
@@ -24229,11 +25891,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3326934",
+        "id": "layover-7864507",
         "name": "Haby Settlement RV Park",
         "location": "Rio Medina, TX",
         "state": "TX",
@@ -24265,11 +25930,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9445183",
+        "id": "layover-6627818",
         "name": "Windy Mane Ranch",
         "location": "Roanoke, TX",
         "state": "TX",
@@ -24301,11 +25969,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2251188",
+        "id": "layover-2177178",
         "name": "Circle Four T",
         "location": "Rockport, TX",
         "state": "TX",
@@ -24337,11 +26008,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5312030",
+        "id": "layover-1441277",
         "name": "Last Chance Ranch and Horse Hotel",
         "location": "San Angelo, TX",
         "state": "TX",
@@ -24373,11 +26047,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9671614",
+        "id": "layover-6320310",
         "name": "San Antonio Rose Palace",
         "location": "San Antonio, TX",
         "state": "TX",
@@ -24409,11 +26086,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8356839",
+        "id": "layover-4970643",
         "name": "Jim a Dee Ranch",
         "location": "Sanger, TX",
         "state": "TX",
@@ -24445,11 +26125,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7012888",
+        "id": "layover-2021062",
         "name": "M&M Cow Company",
         "location": "Seguin, TX",
         "state": "TX",
@@ -24481,11 +26164,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3694149",
+        "id": "layover-4008764",
         "name": "Lone Mound Ranch",
         "location": "Shamrock, TX",
         "state": "TX",
@@ -24517,11 +26203,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6568307",
+        "id": "layover-9286907",
         "name": "Breezy Acres Horse Farm",
         "location": "Sherman, TX",
         "state": "TX",
@@ -24553,11 +26242,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7060088",
+        "id": "layover-4975323",
         "name": "Silver Creek Stables",
         "location": "Sinton, TX",
         "state": "TX",
@@ -24589,11 +26281,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6523148",
+        "id": "layover-7368447",
         "name": "Quarter Circle Spade Ranch",
         "location": "Springtown, TX",
         "state": "TX",
@@ -24625,11 +26320,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2355168",
+        "id": "layover-5621710",
         "name": "4C'S Rodeo Ranch",
         "location": "Stephenville, TX",
         "state": "TX",
@@ -24661,11 +26359,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-743306",
+        "id": "layover-5283616",
         "name": "LJ Equine",
         "location": "Stephenville, TX",
         "state": "TX",
@@ -24697,11 +26398,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7074042",
+        "id": "layover-5841668",
         "name": "Into the Frontier at Jackass Flats in The Big Bend",
         "location": "Terlingua, TX",
         "state": "TX",
@@ -24733,11 +26437,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-114731",
+        "id": "layover-6651312",
         "name": "VZ Stalls",
         "location": "Van, TX",
         "state": "TX",
@@ -24769,11 +26476,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9030990",
+        "id": "layover-2137229",
         "name": "Wild Heart Ranch Texas",
         "location": "Van, TX",
         "state": "TX",
@@ -24805,11 +26515,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7730882",
+        "id": "layover-1067453",
         "name": "Tin Top Creek Equine Facility",
         "location": "Weatherford, TX",
         "state": "TX",
@@ -24841,11 +26554,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6397592",
+        "id": "layover-9653477",
         "name": "County Line Arena",
         "location": "Wills Point, TX",
         "state": "TX",
@@ -24877,11 +26593,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5006618",
+        "id": "layover-6623705",
         "name": "Falconwood",
         "location": "Winnie, TX",
         "state": "TX",
@@ -24913,11 +26632,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5199226",
+        "id": "layover-96954",
         "name": "13 Points Farm - Horse Motel",
         "location": "Winnie, TX",
         "state": "TX",
@@ -24949,11 +26671,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8946955",
+        "id": "layover-1563578",
         "name": "Boulder Mountain Horse Motel",
         "location": "Bicknell, UT",
         "state": "UT",
@@ -24985,11 +26710,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-787652",
+        "id": "layover-9781433",
         "name": "Iron Horse Enterprises",
         "location": "Cedar City, UT",
         "state": "UT",
@@ -25021,11 +26749,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1010740",
+        "id": "layover-1813604",
         "name": "Sage Hill Ranch",
         "location": "Eagle Mountain, UT",
         "state": "UT",
@@ -25057,11 +26788,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-526691",
+        "id": "layover-8625091",
         "name": "Flying M Clydesdales",
         "location": "Erda, UT",
         "state": "UT",
@@ -25093,11 +26827,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1981747",
+        "id": "layover-3790306",
         "name": "Green River Stable",
         "location": "Green River, UT",
         "state": "UT",
@@ -25129,11 +26866,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9509100",
+        "id": "layover-1015566",
         "name": "9S STABLES",
         "location": "Hurricane, UT",
         "state": "UT",
@@ -25165,11 +26905,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3764809",
+        "id": "layover-1282931",
         "name": "3 Step Hideaway",
         "location": "LaSal, UT",
         "state": "UT",
@@ -25201,11 +26944,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5375408",
+        "id": "layover-9828376",
         "name": "Rocky Ridge Outpost",
         "location": "Manila, UT",
         "state": "UT",
@@ -25237,11 +26983,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9883689",
+        "id": "layover-7598774",
         "name": "Old Spanish Trail Arena",
         "location": "Moab, UT",
         "state": "UT",
@@ -25273,11 +27022,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3159073",
+        "id": "layover-4387300",
         "name": "R/M Stables",
         "location": "Morgan, UT",
         "state": "UT",
@@ -25309,11 +27061,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3731344",
+        "id": "layover-7031979",
         "name": "Wasatch View Ranch, LLC",
         "location": "Ogden, UT",
         "state": "UT",
@@ -25345,11 +27100,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9017055",
+        "id": "layover-1865566",
         "name": "High Desert Stables",
         "location": "Price, UT",
         "state": "UT",
@@ -25381,11 +27139,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-519580",
+        "id": "layover-5845272",
         "name": "Horse Haven Ranch",
         "location": "St. George, UT",
         "state": "UT",
@@ -25417,11 +27178,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4828734",
+        "id": "layover-3776761",
         "name": "Reinmakers Equestrian Park",
         "location": "St George, UT",
         "state": "UT",
@@ -25453,11 +27217,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1991631",
+        "id": "layover-4329498",
         "name": "Oak Hills Stable",
         "location": "Salem, UT",
         "state": "UT",
@@ -25489,11 +27256,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6840183",
+        "id": "layover-9365895",
         "name": "Bed and Barn",
         "location": "Saratoga Springs, UT",
         "state": "UT",
@@ -25525,11 +27295,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7390150",
+        "id": "layover-4989493",
         "name": "At Liberty Ranch",
         "location": "Snowville, UT",
         "state": "UT",
@@ -25561,11 +27334,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4791274",
+        "id": "layover-4565786",
         "name": "Steve McIntyre",
         "location": "South Jordan, UT",
         "state": "UT",
@@ -25597,11 +27373,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9455991",
+        "id": "layover-1264604",
         "name": "Hondoo Rivers & Trails",
         "location": "Torrey, UT",
         "state": "UT",
@@ -25633,11 +27412,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2498469",
+        "id": "layover-7071290",
         "name": "The Triple Crown",
         "location": "West Jordan, UT",
         "state": "UT",
@@ -25669,47 +27451,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8450666",
-        "name": "Cottonwood Stables",
-        "location": "VT -\u00a0Colchester",
-        "state": "",
-        "latitude": 44.5069444444444,
-        "longitude": -73.20175,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-2305453",
+        "id": "layover-7144659",
         "name": "AB Vance Reining Horses",
         "location": "Danville, VT",
         "state": "VT",
@@ -25741,11 +27490,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5604231",
+        "id": "layover-5402771",
         "name": "Fuzzy Muzzles",
         "location": "New Haven, VT",
         "state": "VT",
@@ -25777,11 +27529,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9257518",
+        "id": "layover-6704139",
         "name": "Goose Creek Farm",
         "location": "Bristol, VA",
         "state": "VA",
@@ -25813,11 +27568,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-837652",
+        "id": "layover-3535738",
         "name": "Rustling Meadows Stable @ Roslyn Forest",
         "location": "Charlottesville, VA",
         "state": "VA",
@@ -25849,11 +27607,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4297286",
+        "id": "layover-8726675",
         "name": "Woodcrest Stable",
         "location": "Glasgow, VA",
         "state": "VA",
@@ -25885,11 +27646,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-194136",
+        "id": "layover-3726895",
         "name": "Lake Prince Farm LLC",
         "location": "Gordonsville, VA",
         "state": "VA",
@@ -25921,11 +27685,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9913058",
+        "id": "layover-4511138",
         "name": "RockN K, Inc.",
         "location": "Highland Springs, VA",
         "state": "VA",
@@ -25957,11 +27724,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-877695",
+        "id": "layover-1662800",
         "name": "Marriott Ranch",
         "location": "Hume, VA",
         "state": "VA",
@@ -25993,11 +27763,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8443855",
+        "id": "layover-8349701",
         "name": "RTL All Equestrian Center, LLC",
         "location": "Lawrenceville, VA",
         "state": "VA",
@@ -26029,11 +27802,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-439543",
+        "id": "layover-8776390",
         "name": "Lazy Acres Farm",
         "location": "Lexington, VA",
         "state": "VA",
@@ -26065,11 +27841,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7086895",
+        "id": "layover-9103417",
         "name": "Shenandoah Sporthorses",
         "location": "Lexington, VA",
         "state": "VA",
@@ -26101,11 +27880,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-817469",
+        "id": "layover-9086928",
         "name": "Ridgeway Belgians",
         "location": "Marion, VA",
         "state": "VA",
@@ -26137,11 +27919,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1495382",
+        "id": "layover-504392",
         "name": "LoSapio Farms",
         "location": "Natural Bridge, VA",
         "state": "VA",
@@ -26173,11 +27958,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-88488",
+        "id": "layover-8683096",
         "name": "TuckerBerry Farm",
         "location": "Radiant, VA",
         "state": "VA",
@@ -26209,11 +27997,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3622977",
+        "id": "layover-7060020",
         "name": "Rock Creek Farm at Chateau DuVall",
         "location": "Roanoke, VA",
         "state": "VA",
@@ -26245,11 +28036,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4713222",
+        "id": "layover-7865586",
         "name": "The Lazy R",
         "location": "Ruther Glen, VA",
         "state": "VA",
@@ -26281,11 +28075,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8994754",
+        "id": "layover-582609",
         "name": "Travelers Rest Farm",
         "location": "St. Stephens Church, VA",
         "state": "VA",
@@ -26317,47 +28114,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4981363",
-        "name": "Hidden Meadows Farm",
-        "location": "VA -\u00a0Scotchtown",
-        "state": "",
-        "latitude": 37.84997,
-        "longitude": -77.59197,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "804-651-8092",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-3702515",
+        "id": "layover-1821832",
         "name": "Emmanuel Equine Facility",
         "location": "Strasburg, VA",
         "state": "VA",
@@ -26389,11 +28153,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5292652",
+        "id": "layover-1192481",
         "name": "Nodrog Farm",
         "location": "Winchester, VA",
         "state": "VA",
@@ -26425,11 +28192,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2402627",
+        "id": "layover-4321341",
         "name": "R&R Ranch Horse Motel",
         "location": "Benton City, WA",
         "state": "WA",
@@ -26461,11 +28231,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2890520",
+        "id": "layover-3047280",
         "name": "Jt Ranch",
         "location": "Chattaroy, WA",
         "state": "WA",
@@ -26497,11 +28270,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1249516",
+        "id": "layover-8703425",
         "name": "Willow Lake Equestrian Center",
         "location": "Cheney, WA",
         "state": "WA",
@@ -26533,11 +28309,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2535863",
+        "id": "layover-8081055",
         "name": "Dragonwood Equine Facility",
         "location": "Cle Elum, WA",
         "state": "WA",
@@ -26569,11 +28348,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1126666",
+        "id": "layover-8120535",
         "name": "Evermore Event Center",
         "location": "Deer Park, WA",
         "state": "WA",
@@ -26605,11 +28387,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7268100",
+        "id": "layover-4484814",
         "name": "Ocean Acres B&B Horse Hotel",
         "location": "Grayland, WA",
         "state": "WA",
@@ -26641,11 +28426,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-7936789",
+        "id": "layover-4332791",
         "name": "Beringer House Stables",
         "location": "Kelso, WA",
         "state": "WA",
@@ -26677,11 +28465,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1559553",
+        "id": "layover-3953659",
         "name": "Tulipsprings, LLC",
         "location": "Kennewick, WA",
         "state": "WA",
@@ -26713,11 +28504,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9961087",
+        "id": "layover-9351387",
         "name": "Roosters Stables",
         "location": "Kennewick, WA",
         "state": "WA",
@@ -26749,11 +28543,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6405595",
+        "id": "layover-3941216",
         "name": "Littlerock Stables",
         "location": "Olympia, WA",
         "state": "WA",
@@ -26785,11 +28582,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4255980",
+        "id": "layover-8314679",
         "name": "Farm RV Park",
         "location": "Rochester, WA",
         "state": "WA",
@@ -26821,11 +28621,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4356208",
+        "id": "layover-8737523",
         "name": "Legacy Stables",
         "location": "Roy, WA",
         "state": "WA",
@@ -26857,11 +28660,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1124818",
+        "id": "layover-6969254",
         "name": "Craterview Horse Park",
         "location": "Silver Creek, WA",
         "state": "WA",
@@ -26893,11 +28699,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3473150",
+        "id": "layover-3141123",
         "name": "The Spokane Equestrian Center",
         "location": "Spokane, WA",
         "state": "WA",
@@ -26929,11 +28738,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3572253",
+        "id": "layover-2757030",
         "name": "Showtime Arena, LLC",
         "location": "Deerfield, WI",
         "state": "WI",
@@ -26965,11 +28777,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9524123",
+        "id": "layover-1067393",
         "name": "Triple Z Quarter Horses",
         "location": "De Pere, WI",
         "state": "WI",
@@ -27001,11 +28816,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4408642",
+        "id": "layover-7600412",
         "name": "Lone Tree Farm Horse Training",
         "location": "Eau Claire, WI",
         "state": "WI",
@@ -27037,11 +28855,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6510386",
+        "id": "layover-4380024",
         "name": "Pakes Farm",
         "location": "Janesville, WI",
         "state": "WI",
@@ -27073,11 +28894,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8273524",
+        "id": "layover-3834360",
         "name": "The Sunrise Ranch",
         "location": "Mason, WI",
         "state": "WI",
@@ -27109,11 +28933,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-6669823",
+        "id": "layover-9371100",
         "name": "Holiday Hilltop Ranch",
         "location": "Tomah, WI",
         "state": "WI",
@@ -27145,11 +28972,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-235511",
+        "id": "layover-2927141",
         "name": "Spring Willow Farm",
         "location": "Union Grove, WI",
         "state": "WI",
@@ -27181,11 +29011,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2167042",
+        "id": "layover-2591829",
         "name": "Royal Mountain Stables",
         "location": "Beckley, WV",
         "state": "WV",
@@ -27217,11 +29050,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8574992",
+        "id": "layover-454873",
         "name": "Sunday Stables",
         "location": "St. Albans, WV",
         "state": "WV",
@@ -27253,11 +29089,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8410304",
+        "id": "layover-1811575",
         "name": "JC Stage Stop Resort",
         "location": "Aladdin, WY",
         "state": "WY",
@@ -27289,11 +29128,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-768353",
+        "id": "layover-4832854",
         "name": "The Soaring H",
         "location": "Casper, WY",
         "state": "WY",
@@ -27325,11 +29167,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8053828",
+        "id": "layover-3335999",
         "name": "Terry Bison Ranch Resorts",
         "location": "Cheyenne, WY",
         "state": "WY",
@@ -27361,11 +29206,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3296069",
+        "id": "layover-2029735",
         "name": "Overnight/Short Term Horse Motel",
         "location": "Cody, WY",
         "state": "WY",
@@ -27397,11 +29245,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5260965",
+        "id": "layover-7799961",
         "name": "Canyon Camp Horse Hotel",
         "location": "Cokeville, WY",
         "state": "WY",
@@ -27433,11 +29284,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2847386",
+        "id": "layover-6668517",
         "name": "Rocky Mountain Lodge",
         "location": "Dubois, WY",
         "state": "WY",
@@ -27469,11 +29323,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1623410",
+        "id": "layover-2222512",
         "name": "Platte Ridge Equestrian Center",
         "location": "Evansville, WY",
         "state": "WY",
@@ -27505,47 +29362,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2546191",
-        "name": "Kluz Performance Horses",
-        "location": "WY- Gillette",
-        "state": "",
-        "latitude": 44.17825,
-        "longitude": -105.636898,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "307-660-8062",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-2215957",
+        "id": "layover-9670026",
         "name": "Valar Horse Facility",
         "location": "Jackson, WY",
         "state": "WY",
@@ -27577,11 +29401,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3780410",
+        "id": "layover-8291859",
         "name": "HAMIC RANCH",
         "location": "Powell, WY",
         "state": "WY",
@@ -27613,11 +29440,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-9010688",
+        "id": "layover-7389163",
         "name": "Paradise S Ranch",
         "location": "Riverton, WY",
         "state": "WY",
@@ -27649,11 +29479,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-4207108",
+        "id": "layover-5764050",
         "name": "Diamonds and Twine Equine, LLC",
         "location": "Riverton, WY",
         "state": "WY",
@@ -27685,11 +29518,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-5091200",
+        "id": "layover-7693430",
         "name": "7L Horse Boarding",
         "location": "Saratoga, WY",
         "state": "WY",
@@ -27721,11 +29557,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1374709",
+        "id": "layover-2122815",
         "name": "Boyer YL Ranch",
         "location": "Savery, WY",
         "state": "WY",
@@ -27757,11 +29596,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-2479457",
+        "id": "layover-315607",
         "name": "W/D Hossienda",
         "location": "Sheridan, WY",
         "state": "WY",
@@ -27793,11 +29635,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-1417191",
+        "id": "layover-8781328",
         "name": "Sings With The Eagle",
         "location": "Sheridan, WY",
         "state": "WY",
@@ -27829,11 +29674,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3812246",
+        "id": "layover-5245554",
         "name": "Ten Sleep RV Park, Cabins and Horse Hotel",
         "location": "Ten Sleep, WY",
         "state": "WY",
@@ -27865,11 +29713,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-8673837",
+        "id": "layover-3279518",
         "name": "Rand Creek Ranch, LLC",
         "location": "Wapiti, WY",
         "state": "WY",
@@ -27901,11 +29752,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
+        "imageColors": [
+            "D4803A",
+            "D4A853"
+        ],
         "source": "Layover"
     },
     {
-        "id": "layover-3722132",
+        "id": "layover-1891841",
         "name": "Cottonwood Creek Ranch",
         "location": "Wheatland, WY",
         "state": "WY",
@@ -27937,1450 +29791,14 @@ def fetch_layovers():
         "pullThroughAvailable": False,
         "rating": 0.0,
         "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-6138311",
-        "name": "Spur West Arena",
-        "location": "Alhambra",
-        "state": "",
-        "latitude": 52.322369,
-        "longitude": -114.673366,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
+        "imageColors": [
+            "D4803A",
+            "D4A853"
         ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "403-357-9010",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-3987999",
-        "name": "Silver Sage Community Corral",
-        "location": "Brooks",
-        "state": "",
-        "latitude": 50.542721,
-        "longitude": -111.899791,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "403-362-2262",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-4329607",
-        "name": "Rocking Heart Ranch",
-        "location": "Cardston County",
-        "state": "",
-        "latitude": 49.1321944444444,
-        "longitude": -113.821194444444,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "403-894-1005",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-3519883",
-        "name": "Hamilton Lane Equestrian",
-        "location": "Foothills",
-        "state": "",
-        "latitude": 50.8449722222222,
-        "longitude": -114.371861111111,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "780-966-1227",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-9526559",
-        "name": "Foothills Horse Motel",
-        "location": "Foorhills",
-        "state": "",
-        "latitude": 50.81287,
-        "longitude": -113.86011,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "403-988-5313",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-3060853",
-        "name": "Rough Diamond Ranch Alberta",
-        "location": "Rocky View County",
-        "state": "",
-        "latitude": 51.4362222222222,
-        "longitude": -114.634805555556,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "403-615-9060",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-6033675",
-        "name": "ML Arena at Spring Point",
-        "location": "Spring Creek",
-        "state": "",
-        "latitude": 49.6769166666667,
-        "longitude": -113.795555555556,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "403-315-4480",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-4873861",
-        "name": "Hammer Hill Stables",
-        "location": "Strathmore",
-        "state": "",
-        "latitude": 51.0378523,
-        "longitude": -113.4002873,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "403-888-2102",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-2178381",
-        "name": "Iron Creek Community",
-        "location": "Viking",
-        "state": "",
-        "latitude": 53.0960793,
-        "longitude": -111.7764533,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "780-336-3335",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-3767355",
-        "name": "Honey Field Farm",
-        "location": "Abbotsford",
-        "state": "",
-        "latitude": 49.115433,
-        "longitude": -122.404413,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "778-840-9657",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-1882251",
-        "name": "Hylee Training",
-        "location": "Prince George",
-        "state": "",
-        "latitude": 53.7213333333333,
-        "longitude": -122.58475,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "604-785-9953",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-7037750",
-        "name": "L&S Farm",
-        "location": "Rosedale",
-        "state": "",
-        "latitude": 49.18375,
-        "longitude": -121.785833333333,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "604-793-3378",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-4670930",
-        "name": "Blessings at the Creek",
-        "location": "Elm Creek",
-        "state": "",
-        "latitude": 49.717982,
-        "longitude": -97.900324,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "204-218-6064",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-8587407",
-        "name": "Scott MacKenzie Show Horses",
-        "location": "Navin",
-        "state": "",
-        "latitude": 49.8476666666667,
-        "longitude": -97.0041111111111,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "204-890-7675",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-922515",
-        "name": "Bar 16 Stables",
-        "location": "Strathclair",
-        "state": "",
-        "latitude": 50.492756,
-        "longitude": -100.918704,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "431-541-1351",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-3208518",
-        "name": "J L Farm Stable",
-        "location": "Winnipeg",
-        "state": "",
-        "latitude": 49.778389,
-        "longitude": -97.045806,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "204-981-5867",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-6044262",
-        "name": "Off Grid Adventure",
-        "location": "NB-Canada- Anagance",
-        "state": "",
-        "latitude": 45.871,
-        "longitude": -65.2515277777778,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "506-688-2831",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-5921051",
-        "name": "Balance With Hooves",
-        "location": "NB-Canada-Ste-Anne-de-Madawaska",
-        "state": "",
-        "latitude": 47.252553,
-        "longitude": -68.015053,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "506-253-7303",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-6654052",
-        "name": "Pleasant Valley Equestrain Center",
-        "location": "Green Creek",
-        "state": "",
-        "latitude": 45.2456111111111,
-        "longitude": -63.3703888888889,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "902-499-2191",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-7968890",
-        "name": "Molinaro Ranch",
-        "location": "Acton",
-        "state": "",
-        "latitude": 43.604052,
-        "longitude": -80.029989,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "519-831-4178",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-5801452",
-        "name": "Nooyen Farms",
-        "location": "Blenheim",
-        "state": "",
-        "latitude": 42.417059,
-        "longitude": -82.010181,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "905-355-1592",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-8289",
-        "name": "Perre & Nicole Bovay",
-        "location": "Brighton",
-        "state": "",
-        "latitude": 44.0155,
-        "longitude": -77.8225,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "905-355-1592",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-1885554",
-        "name": "Safe At Last Stables",
-        "location": "Cameron",
-        "state": "",
-        "latitude": 44.438156,
-        "longitude": -78.773345,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "647-327-6993",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-4845409",
-        "name": "Circle 8 Ranch",
-        "location": "Drumbo",
-        "state": "",
-        "latitude": 43.2576388888889,
-        "longitude": -80.5007777777778,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "519-404-5959",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-6709482",
-        "name": "Horse Country Campground",
-        "location": "Forresters Falls",
-        "state": "",
-        "latitude": 45.665639,
-        "longitude": -76.725056,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "613-867-0585",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-8396231",
-        "name": "Angolly\u2019s Ranch",
-        "location": "Hearst",
-        "state": "",
-        "latitude": 49.622575,
-        "longitude": -83.765596,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "705-372-8388",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-966765",
-        "name": "Candy Hill Farms",
-        "location": "Kakabeka Falls",
-        "state": "",
-        "latitude": 48.333833,
-        "longitude": -89.553361,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "807-473-9579",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-1408888",
-        "name": "The Island Ranch",
-        "location": "Richard's Landing",
-        "state": "",
-        "latitude": 46.2477222222222,
-        "longitude": -84.0422777777778,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "705-325-5858",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-7217044",
-        "name": "Foxton Road Farm",
-        "location": "Roslin",
-        "state": "",
-        "latitude": 44.347889,
-        "longitude": -77.335417,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "613-391-4146",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-388737",
-        "name": "SCR",
-        "location": "Scotland",
-        "state": "",
-        "latitude": 43.011,
-        "longitude": -80.323833,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "519-717-1226",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-3128592",
-        "name": "King Air and Bale",
-        "location": "Warren",
-        "state": "",
-        "latitude": 46.4210555555556,
-        "longitude": -80.3608888888889,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "705-303-5529",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-9394461",
-        "name": "Waylor Farm",
-        "location": "Wellington North",
-        "state": "",
-        "latitude": 43.918944,
-        "longitude": -80.461639,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "519-994-3412",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-2193086",
-        "name": "Maefield Horse Farm Lodge & Livery",
-        "location": "Wyoming",
-        "state": "",
-        "latitude": 43.003861,
-        "longitude": -82.10475,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "519-899-2167",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-8719319",
-        "name": "Ferme G. Guillemette Inc.",
-        "location": "B\u00e9cancour",
-        "state": "",
-        "latitude": 46.2630555555556,
-        "longitude": -72.5179166666667,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "819-371-4154",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-4356788",
-        "name": "Ranch du p'tit Ch\u00e2teau",
-        "location": "Ste-Justine-De-Newton",
-        "state": "",
-        "latitude": 45.3848333333333,
-        "longitude": -74.4347777777778,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "450-377-6986",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-5358259",
-        "name": "\u00c9curie Heartford Stables",
-        "location": "Ste Marthe",
-        "state": "",
-        "latitude": 45.3998055555556,
-        "longitude": -74.2507777777778,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "438-889-7303",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-3118212",
-        "name": "Ferme Di-nou enr",
-        "location": "Saint-Val\u00e9rien-de-Milton",
-        "state": "",
-        "latitude": 45.592306,
-        "longitude": -72.774611,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "450-793-4228",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-4888393",
-        "name": "K & K Training Stables",
-        "location": "Mortlach",
-        "state": "",
-        "latitude": 50.452639,
-        "longitude": -106.096722,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "306-355-2599",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-8384207",
-        "name": "Vickis EAL and Photography",
-        "location": "Prud'Homme",
-        "state": "",
-        "latitude": 52.340151,
-        "longitude": -105.890542,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "306-417-9022",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
-        "source": "Layover"
-    },
-    {
-        "id": "layover-6991137",
-        "name": "GCJ Stables, Ltd",
-        "location": "Regina",
-        "state": "",
-        "latitude": 50.601194,
-        "longitude": -104.581083,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": [
-            "30A"
-        ],
-        "accommodations": [
-            "Stalls",
-            "Corrals",
-            "Trails"
-        ],
-        "maxRigLength": 60,
-        "stallCount": 0,
-        "paddockCount": 0,
-        "phone": "306-525-6922",
-        "website": "",
-        "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
-        "isVerified": False,
-        "seasonStart": 1,
-        "seasonEnd": 12,
-        "hasWashRack": False,
-        "hasDumpStation": False,
-        "hasWifi": False,
-        "hasBathhouse": False,
-        "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
-        "imageColors": ["D4803A", "D4A853"],
         "source": "Layover"
     }
 ]
+
 
 # ── MAIN ───────────────────────────────────────────────────────────────
 def main():

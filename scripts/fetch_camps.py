@@ -15,7 +15,6 @@ from datetime import datetime, timezone
 
 RIDB_KEY   = os.environ.get("RIDB_API_KEY", "")
 NPS_KEY    = os.environ.get("NPS_API_KEY", "")
-GOOGLE_KEY = os.environ.get("GOOGLE_PLACES_KEY", "")
 
 RIDB_BASE = "https://ridb.recreation.gov/api/v1"
 NPS_BASE  = "https://developer.nps.gov/api/v1"
@@ -341,18 +340,15 @@ def fetch_nps_state(state):
 
 
 
-# ── GOOGLE PLACES ──────────────────────────────────────────────────────
-def fetch_google_places(existing_camps):
+# ── OPENSTREETMAP ────────────────────────────────────────────
+def fetch_osm(existing_camps):
     """
-    Fetches equestrian camps from Google Places API.
-    Deduplicates against existing RIDB/NPS camps by proximity (500m radius).
-    Requires GOOGLE_PLACES_KEY secret in GitHub.
+    Fetches horse-friendly campsites from OpenStreetMap via Overpass API.
+    Uses the horse=yes tag which is explicitly set by OSM contributors.
+    Deduplicates against existing RIDB/NPS/Layover camps by proximity (500m).
+    Free, no API key required.
     """
-    if not GOOGLE_KEY:
-        print("  GOOGLE_PLACES_KEY not set — skipping Google Places")
-        return []
-
-    import math
+    import math, urllib.request, urllib.parse
 
     def haversine_meters(lat1, lon1, lat2, lon2):
         R = 6371000
@@ -368,138 +364,138 @@ def fetch_google_places(existing_camps):
                 return True
         return False
 
-    queries = [
-        "equestrian campground",
-        "horse camp overnight",
-        "horse corral camping",
-        "equestrian park camping",
-    ]
+    # Overpass query — all camp_sites with horse=yes in US bounding box
+    # Bounding box: south=24, west=-127, north=50, east=-65
+    query = """
+[out:json][timeout:60];
+(
+  node["tourism"="camp_site"]["horse"="yes"](24,-127,50,-65);
+  way["tourism"="camp_site"]["horse"="yes"](24,-127,50,-65);
+  node["leisure"="horse_riding"]["access"="yes"](24,-127,50,-65);
+);
+out center;
+"""
+    url = "https://overpass-api.de/api/interpreter"
+    try:
+        encoded = urllib.parse.urlencode({"data": query}).encode()
+        req = urllib.request.Request(url, data=encoded, method="POST")
+        req.add_header("User-Agent", "HorseCamp/1.0 (horsecampfinder.com)")
+        with urllib.request.urlopen(req, timeout=90) as r:
+            data = json.loads(r.read().decode())
+    except Exception as e:
+        print(f"  OSM fetch error: {e}")
+        return []
 
-    # Google Places Text Search covers the whole US
-    # We search nationally and let proximity dedup handle overlap
-    base_url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
+    STATES_BY_BBOX = {
+        "AL":(30.1,84.9,35.0,88.5),"AK":(54.0,130.0,72.0,172.0),
+        "AZ":(31.3,109.1,37.0,114.8),"AR":(33.0,89.6,36.5,94.6),
+        "CA":(32.5,114.1,42.0,124.5),"CO":(36.9,102.0,41.0,109.1),
+        "CT":(40.9,71.8,42.1,73.7),"DE":(38.4,75.0,39.8,75.8),
+        "FL":(24.4,79.9,31.0,87.6),"GA":(30.4,80.8,35.0,85.6),
+        "HI":(18.9,154.8,22.2,160.2),"ID":(41.9,111.0,49.0,117.2),
+        "IL":(36.9,87.5,42.5,91.5),"IN":(37.8,84.8,41.8,88.1),
+        "IA":(40.4,90.1,43.5,96.6),"KS":(36.9,94.6,40.0,102.1),
+        "KY":(36.5,81.9,39.1,89.6),"LA":(28.9,88.8,33.0,94.1),
+        "ME":(43.0,66.9,47.5,71.1),"MD":(37.9,74.9,39.7,79.5),
+        "MA":(41.2,69.9,42.9,73.5),"MI":(41.7,82.1,48.3,90.4),
+        "MN":(43.5,89.5,49.4,97.2),"MS":(30.1,88.1,35.0,91.7),
+        "MO":(35.9,89.1,40.6,95.8),"MT":(44.4,104.0,49.0,116.1),
+        "NE":(40.0,95.3,43.0,104.1),"NV":(35.0,114.0,42.0,120.0),
+        "NH":(42.7,70.7,45.3,72.6),"NJ":(38.9,73.9,41.4,75.6),
+        "NM":(31.3,103.0,37.0,109.1),"NY":(40.5,71.8,45.0,79.8),
+        "NC":(33.8,75.5,36.6,84.3),"ND":(45.9,96.6,49.0,104.1),
+        "OH":(38.4,80.5,42.3,84.8),"OK":(33.6,94.4,37.0,103.0),
+        "OR":(41.9,116.5,46.3,124.7),"PA":(39.7,74.7,42.3,80.5),
+        "RI":(41.1,71.2,42.0,71.9),"SC":(32.0,78.5,35.2,83.4),
+        "SD":(42.5,96.4,45.9,104.1),"TN":(34.9,81.6,36.7,90.3),
+        "TX":(25.8,93.5,36.5,106.7),"UT":(36.9,109.0,42.0,114.1),
+        "VT":(42.7,71.5,45.0,73.4),"VA":(36.5,75.2,39.5,83.7),
+        "WA":(45.5,116.9,49.0,124.8),"WV":(37.2,77.7,40.6,82.6),
+        "WI":(42.5,86.8,47.1,92.9),"WY":(40.9,104.0,45.0,111.1),
+    }
+
+    def guess_state(lat, lng):
+        for state, (slat, slng, nlat, nlng) in STATES_BY_BBOX.items():
+            if slat <= lat <= nlat and slng <= abs(lng) <= nlng:
+                return state
+        return ""
+
     camps = {}
-    seen = set()
+    skipped_dup = 0
 
-    for query in queries:
-        params = {
-            "query": query,
-            "type": "campground",
-            "key": GOOGLE_KEY,
-            "region": "us",
+    for element in data.get("elements", []):
+        # Get coordinates
+        if element["type"] == "node":
+            lat = element.get("lat", 0)
+            lng = element.get("lon", 0)
+        else:
+            center = element.get("center", {})
+            lat = center.get("lat", 0)
+            lng = center.get("lon", 0)
+
+        if not lat or not lng:
+            continue
+
+        if is_duplicate(lat, lng):
+            skipped_dup += 1
+            continue
+
+        tags = element.get("tags", {})
+        name = tags.get("name", "")
+        if not name:
+            continue
+
+        phone = tags.get("phone", tags.get("contact:phone", ""))
+        website = tags.get("website", tags.get("contact:website", ""))
+        state = guess_state(lat, lng)
+
+        # Build hookups from OSM tags
+        hookups = []
+        if tags.get("electric_hookup") == "yes" or tags.get("power_supply") == "yes":
+            hookups.append("30A")
+        if not hookups:
+            hookups = ["No Hookups"]
+
+        # Build accommodations
+        accommodations = ["Trails"]
+        if tags.get("horse") == "yes":
+            accommodations.insert(0, "Corrals")
+
+        eid = f"osm-{element['id']}"
+        camps[eid] = {
+            "id":                  eid,
+            "name":                name,
+            "location":            f"{state}".strip(", "),
+            "state":               state,
+            "latitude":            lat,
+            "longitude":           lng,
+            "pricePerNight":       0.0,
+            "horseFeePerNight":    0.0,
+            "hookups":             hookups,
+            "accommodations":      list(dict.fromkeys(accommodations)),
+            "maxRigLength":        55,
+            "stallCount":          0,
+            "paddockCount":        0,
+            "phone":               phone,
+            "website":             website,
+            "description":         f"Horse-friendly campsite. Verify amenities before arrival.",
+            "isVerified":          False,
+            "seasonStart":         1,
+            "seasonEnd":           12,
+            "hasWashRack":         False,
+            "hasDumpStation":      tags.get("sanitary_dump_station") == "yes",
+            "hasWifi":             tags.get("internet_access") == "yes",
+            "hasBathhouse":        tags.get("shower") == "yes",
+            "pullThroughAvailable": False,
+            "rating":              0.0,
+            "reviewCount":         0,
+            "imageColors":         ["8B5E3C", "D4A853"],
+            "source":              "OSM",
         }
-        page_token = None
-        pages = 0
-
-        while pages < 3:  # Google returns max 3 pages (60 results) per query
-            if page_token:
-                params = {"pagetoken": page_token, "key": GOOGLE_KEY}
-                time.sleep(2)  # Google requires 2s delay between page_token requests
-
-            data = safe_get(base_url, params=params)
-            if not data or data.get("status") not in ("OK", "ZERO_RESULTS"):
-                break
-
-            for place in data.get("results", []):
-                pid = place.get("place_id", "")
-                if not pid or pid in seen:
-                    continue
-                seen.add(pid)
-
-                loc = place.get("geometry", {}).get("location", {})
-                lat = loc.get("lat", 0)
-                lng = loc.get("lng", 0)
-                if not lat or not lng:
-                    continue
-
-                # Skip if too close to an existing RIDB/NPS camp
-                if is_duplicate(lat, lng):
-                    continue
-
-                name = place.get("name", "")
-                if not name or not is_equestrian(name + " " + " ".join(place.get("types", []))):
-                    continue
-
-                # Fetch place details for phone, website, address
-                detail_data = safe_get(
-                    "https://maps.googleapis.com/maps/api/place/details/json",
-                    params={
-                        "place_id": pid,
-                        "fields": "name,formatted_address,formatted_phone_number,website,url",
-                        "key": GOOGLE_KEY,
-                    }
-                )
-                detail = detail_data.get("result", {}) if detail_data else {}
-
-                address = detail.get("formatted_address", place.get("formatted_address", ""))
-                # Extract state from address (last part before ZIP)
-                parts = [p.strip() for p in address.split(",")]
-                state = ""
-                for part in reversed(parts):
-                    # State abbreviation is 2 uppercase letters
-                    words = part.strip().split()
-                    for w in words:
-                        if len(w) == 2 and w.isupper():
-                            state = w
-                            break
-                    if state:
-                        break
-
-                # Only include US camps
-                if not state or state not in [
-                    "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID",
-                    "IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS",
-                    "MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK",
-                    "OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
-                ]:
-                    continue
-
-                city = parts[-3] if len(parts) >= 3 else ""
-
-                camps[pid] = {
-                    "id":                  f"google-{pid}",
-                    "name":                name,
-                    "location":            f"{city}, {state}".strip(", "),
-                    "state":               state,
-                    "latitude":            lat,
-                    "longitude":           lng,
-                    "pricePerNight":       0.0,
-                    "horseFeePerNight":    0.0,
-                    "hookups":             ["No Hookups"],
-                    "accommodations":      ["Trails"],
-                    "maxRigLength":        55,
-                    "stallCount":          0,
-                    "paddockCount":        0,
-                    "phone":               detail.get("formatted_phone_number", ""),
-                    "website":             detail.get("website", detail.get("url", "")),
-                    "description":         f"Equestrian facility in {city}, {state}. Verify amenities before arrival.",
-                    "isVerified":          False,
-                    "seasonStart":         1,
-                    "seasonEnd":           12,
-                    "hasWashRack":         False,
-                    "hasDumpStation":      False,
-                    "hasWifi":             False,
-                    "hasBathhouse":        False,
-                    "pullThroughAvailable": False,
-                    "rating":              float(place.get("rating", 0)),
-                    "reviewCount":         place.get("user_ratings_total", 0),
-                    "imageColors":         ["8B5E3C", "D4A853"],
-                    "source":              "Google Places",
-                }
-
-            next_token = data.get("next_page_token")
-            if not next_token:
-                break
-            page_token = next_token
-            pages += 1
-
-        time.sleep(0.5)
 
     result = list(camps.values())
-    print(f"  Google Places: {len(result)} new camps (not in RIDB/NPS within 500m)")
+    print(f"  OSM: {len(result)} new camps ({skipped_dup} duplicates skipped)")
     return result
-
-
 
 
 # ── LAYOVER LISTINGS ───────────────────────────────────────────────────
@@ -29805,7 +29801,6 @@ def main():
     print(f"HorseCamp data fetch starting — {datetime.now(timezone.utc).isoformat()}")
     print(f"RIDB key present: {'Yes' if RIDB_KEY else 'NO — set RIDB_API_KEY secret'}")
     print(f"NPS key present:  {'Yes' if NPS_KEY  else 'NO — set NPS_API_KEY secret'}")
-    print(f"Google key present: {'Yes' if GOOGLE_KEY else 'NO — set GOOGLE_PLACES_KEY secret'}")
 
     all_camps = {}
     total_ridb = 0
@@ -29851,10 +29846,10 @@ def main():
                 layover_new += 1
     print(f"  Layovers: {layover_new} new listings added")
 
-    # Google Places — deduplicated against RIDB/NPS by proximity
-    print("\nFetching from Google Places (deduplication against existing camps)...")
-    google_camps = fetch_google_places(all_camps)
-    for camp in google_camps:
+    # OpenStreetMap — horse-friendly campsites with horse=yes tag
+    print("\nFetching from OpenStreetMap...")
+    osm_camps = fetch_osm(all_camps)
+    for camp in osm_camps:
         cid = camp["id"]
         if cid not in all_camps:
             all_camps[cid] = camp
@@ -29872,13 +29867,13 @@ def main():
     with open("camps.json", "w") as f:
         json.dump(output, f, indent=2)
 
-    google_count   = sum(1 for c in camps_list if c.get("source") == "Google Places")
+    osm_count      = sum(1 for c in camps_list if c.get("source") == "OSM")
     layover_count  = sum(1 for c in camps_list if c.get("source") == "Layover")
     print(f"\nDone. {len(camps_list)} total camps written to camps.json")
     print(f"  RIDB:         {total_ridb}")
     print(f"  NPS:          {total_nps}")
     print(f"  Layovers:     {layover_count}")
-    print(f"  Google Places:{google_count}")
+    print(f"  OSM:          {osm_count}")
     print(f"  Unique total: {len(camps_list)}")
 
 

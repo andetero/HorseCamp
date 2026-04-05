@@ -362,7 +362,7 @@ def fetch_ridb_state(state):
 
                     "website":             f.get("FacilityReservationURL", "") or f"https://www.recreation.gov/camping/campgrounds/{fid}",
                     "description":         desc[:2000],
-                    "isVerified":          True,
+                    "isVerified":          False,
                      "seasonStart":         season_start,
                      "seasonEnd":           season_end,
                     "hasWashRack":         "wash rack" in blob_lower,
@@ -454,7 +454,7 @@ def fetch_nps_state(state):
             "phone":               phone,
             "website":             c.get("url", f"https://www.nps.gov/{c.get('parkCode', '')}/"),
             "description":         desc[:2000],
-            "isVerified":          True,
+            "isVerified":          False,
             "seasonStart":         1,
             "seasonEnd":           12,
             "hasWashRack":         False,

@@ -109,6 +109,9 @@
       '</div>';
 
     document.getElementById('open-btn').addEventListener('click', function() {
+      var url = 'horsecamp://trip?d=' + rawD;
+      // Show debug info
+      alert('Attempting: ' + url.substring(0, 100) + '...');
       openInApp(rawD);
     });
   }

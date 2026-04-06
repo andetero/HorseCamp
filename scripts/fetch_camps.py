@@ -463,8 +463,11 @@ def fetch_nps_state(state):
             try: fee = float(fees[0].get("cost", 0))
             except: pass
 
+        # Hookups — read all three hookup types NPS provides
         hookups = []
         if amenities.get("electricalHookups") == "Yes": hookups.append("30A")
+        if amenities.get("waterHookups")      == "Yes": hookups.append("Water")
+        if amenities.get("sewerHookups")      == "Yes": hookups.append("Sewer")
         if not hookups: hookups.append("No Hookups")
 
         accommodations = []
@@ -475,6 +478,22 @@ def fetch_nps_state(state):
         contacts = c.get("contacts", {})
         phones   = contacts.get("phoneNumbers", [])
         phone    = phones[0].get("phoneNumber", "") if phones else ""
+
+        # Season — read from operatingHours if available
+        season_start, season_end = 0, 0
+        for oh in (c.get("operatingHours") or []):
+            for period in (oh.get("exceptions") or []):
+                pass  # skip exceptions
+            # Standard hours have startDate/endDate
+            start_str = oh.get("startDate", "") or ""
+            end_str   = oh.get("endDate",   "") or ""
+            try:
+                if "-" in start_str: season_start = int(start_str.split("-")[1])
+                if "-" in end_str:   season_end   = int(end_str.split("-")[1])
+                if season_start > 0 and season_end > 0:
+                    break
+            except:
+                pass
 
         camps.append({
             "id":                  f"nps-{c['id']}",
@@ -494,13 +513,13 @@ def fetch_nps_state(state):
             "website":             c.get("url", f"https://www.nps.gov/{c.get('parkCode', '')}/"),
             "description":         desc[:2000],
             "isVerified":          False,
-            "seasonStart":         1,
-            "seasonEnd":           12,
+            "seasonStart":         season_start,
+            "seasonEnd":           season_end,
             "hasWashRack":         False,
             "hasDumpStation":      amenities.get("dumpStation") == "Yes",
             "hasWifi":             amenities.get("internetConnectivity") == "Yes",
             "hasBathhouse":        "shower" in str(amenities.get("showers", "") or "").lower(),
-            "pullThroughAvailable": False,
+            "pullThroughAvailable": amenities.get("pullThroughCampsites") == "Yes",
             "rating":              0.0,
             "reviewCount":         0,
             "imageColors":         ["4A7FA5", "5C7A4E"],
@@ -510,6 +529,20 @@ def fetch_nps_state(state):
     return camps
 
 
+
+def _parse_osm_fee(tags):
+    """Parse fee from OSM charge/fee tags. Returns 0.0 if unknown."""
+    charge = tags.get("charge", "") or tags.get("fee:amount", "") or ""
+    if charge:
+        # Extract numeric value e.g. "5 USD", "10", "$5"
+        import re
+        match = re.search(r"[0-9]+(?:\.[0-9]+)?", charge.replace(",", "."))
+        if match:
+            try:
+                return float(match.group())
+            except:
+                pass
+    return 0.0
 
 # ── OPENSTREETMAP ────────────────────────────────────────────
 def fetch_osm(existing_camps):
@@ -637,6 +670,8 @@ out center;
         hookups = []
         if tags.get("electric_hookup") == "yes" or tags.get("power_supply") == "yes":
             hookups.append("30A")
+        if tags.get("water_point") == "yes" or tags.get("drinking_water") == "yes":
+            hookups.append("Water")
         if not hookups:
             hookups = ["No Hookups"]
 
@@ -657,7 +692,7 @@ out center;
             "state":               state,
             "latitude":            lat,
             "longitude":           lng,
-            "pricePerNight":       0.0,
+            "pricePerNight":       _parse_osm_fee(tags),
             "horseFeePerNight":    0.0,
             "hookups":             hookups,
             "accommodations":      list(dict.fromkeys(accommodations)),
@@ -668,8 +703,8 @@ out center;
             "website":             website,
             "description":         f"Horse-friendly campsite. Verify amenities before arrival.",
             "isVerified":          False,
-            "seasonStart":         1,
-            "seasonEnd":           12,
+            "seasonStart":         0,
+            "seasonEnd":           0,
             "hasWashRack":         False,
             "hasDumpStation":      tags.get("sanitary_dump_station") == "yes",
             "hasWifi":             tags.get("internet_access") == "yes",

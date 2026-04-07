@@ -18,8 +18,6 @@ NPS_KEY    = os.environ.get("NPS_API_KEY", "")
 
 RIDB_BASE = "https://ridb.recreation.gov/api/v1"
 NPS_BASE  = "https://developer.nps.gov/api/v1"
-NWS_BASE  = "https://api.weather.gov"
-FIRE_BASE = "https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Incident_Locations_Current/FeatureServer/0/query"
 
 STATES = [
     "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID",
@@ -27815,7 +27813,7 @@ def main():
     output = {
         "generated":  datetime.now(timezone.utc).isoformat(),
         "count":      len(camps_list),
-        "sources":    ["Recreation.gov RIDB", "NPS API"],
+        "sources":    ["Recreation.gov RIDB", "NPS API", "OpenStreetMap", "Layover"],
         "camps":      camps_list,
     }
 

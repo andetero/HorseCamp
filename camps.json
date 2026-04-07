@@ -1,6 +1,6 @@
 {
-  "generated": "2026-04-07T02:51:03.764579+00:00",
-  "count": 2097,
+  "generated": "2026-04-07T03:01:04.548753+00:00",
+  "count": 2096,
   "sources": [
     "Recreation.gov RIDB",
     "NPS API",
@@ -1586,7 +1586,7 @@
       "pricePerNight": 20.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -1601,7 +1601,7 @@
       "hasWashRack": false,
       "hasDumpStation": false,
       "hasWifi": false,
-      "hasBathhouse": false,
+      "hasBathhouse": true,
       "pullThroughAvailable": false,
       "rating": 0.0,
       "reviewCount": 0,
@@ -12618,7 +12618,7 @@
       "pricePerNight": 50.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -12653,7 +12653,7 @@
       "pricePerNight": 35.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -12666,9 +12666,9 @@
       "seasonStart": 0,
       "seasonEnd": 0,
       "hasWashRack": false,
-      "hasDumpStation": false,
-      "hasWifi": false,
-      "hasBathhouse": false,
+      "hasDumpStation": true,
+      "hasWifi": true,
+      "hasBathhouse": true,
       "pullThroughAvailable": false,
       "rating": 0.0,
       "reviewCount": 0,
@@ -12723,7 +12723,7 @@
       "pricePerNight": 30.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -12758,7 +12758,7 @@
       "pricePerNight": 30.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -12793,7 +12793,7 @@
       "pricePerNight": 20.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -12898,7 +12898,7 @@
       "pricePerNight": 30.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -12968,7 +12968,7 @@
       "pricePerNight": 50.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -12981,9 +12981,9 @@
       "seasonStart": 0,
       "seasonEnd": 0,
       "hasWashRack": false,
-      "hasDumpStation": false,
+      "hasDumpStation": true,
       "hasWifi": false,
-      "hasBathhouse": false,
+      "hasBathhouse": true,
       "pullThroughAvailable": false,
       "rating": 0.0,
       "reviewCount": 0,
@@ -13003,7 +13003,7 @@
       "pricePerNight": 50.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -13016,9 +13016,9 @@
       "seasonStart": 0,
       "seasonEnd": 0,
       "hasWashRack": false,
-      "hasDumpStation": false,
+      "hasDumpStation": true,
       "hasWifi": false,
-      "hasBathhouse": false,
+      "hasBathhouse": true,
       "pullThroughAvailable": false,
       "rating": 0.0,
       "reviewCount": 0,
@@ -13038,7 +13038,7 @@
       "pricePerNight": 30.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -14122,39 +14122,6 @@
       "stallCount": 0,
       "paddockCount": 0,
       "phone": "",
-      "website": "",
-      "description": "Horse-friendly campsite. Verify amenities before arrival.",
-      "isVerified": false,
-      "seasonStart": 0,
-      "seasonEnd": 0,
-      "hasWashRack": false,
-      "hasDumpStation": false,
-      "hasWifi": false,
-      "hasBathhouse": false,
-      "pullThroughAvailable": false,
-      "rating": 0.0,
-      "reviewCount": 0,
-      "imageColors": [
-        "8B5E3C",
-        "D4A853"
-      ],
-      "source": "OSM"
-    },
-    {
-      "id": "osm-1466668476",
-      "name": "Bort Meadow Group Camp",
-      "location": "CA",
-      "state": "CA",
-      "latitude": 37.7796531,
-      "longitude": -122.130023,
-      "pricePerNight": 0.0,
-      "horseFeePerNight": 0.0,
-      "hookups": [],
-      "accommodations": [],
-      "maxRigLength": 0,
-      "stallCount": 0,
-      "paddockCount": 0,
-      "phone": "+1 18883272",
       "website": "",
       "description": "Horse-friendly campsite. Verify amenities before arrival.",
       "isVerified": false,
@@ -16786,7 +16753,7 @@
       "pricePerNight": 20.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -16821,7 +16788,7 @@
       "pricePerNight": 14.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -24266,7 +24233,7 @@
       "pricePerNight": 28.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -24279,9 +24246,9 @@
       "seasonStart": 0,
       "seasonEnd": 0,
       "hasWashRack": false,
-      "hasDumpStation": false,
+      "hasDumpStation": true,
       "hasWifi": false,
-      "hasBathhouse": false,
+      "hasBathhouse": true,
       "pullThroughAvailable": false,
       "rating": 0.0,
       "reviewCount": 0,
@@ -24301,7 +24268,7 @@
       "pricePerNight": 20.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -28457,7 +28424,7 @@
       "pricePerNight": 28.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -28470,9 +28437,9 @@
       "seasonStart": 0,
       "seasonEnd": 0,
       "hasWashRack": false,
-      "hasDumpStation": false,
+      "hasDumpStation": true,
       "hasWifi": false,
-      "hasBathhouse": false,
+      "hasBathhouse": true,
       "pullThroughAvailable": false,
       "rating": 0.0,
       "reviewCount": 0,
@@ -28492,7 +28459,7 @@
       "pricePerNight": 50.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -28527,7 +28494,7 @@
       "pricePerNight": 28.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -28540,9 +28507,9 @@
       "seasonStart": 0,
       "seasonEnd": 0,
       "hasWashRack": false,
-      "hasDumpStation": false,
-      "hasWifi": false,
-      "hasBathhouse": false,
+      "hasDumpStation": true,
+      "hasWifi": true,
+      "hasBathhouse": true,
       "pullThroughAvailable": false,
       "rating": 0.0,
       "reviewCount": 0,
@@ -29778,7 +29745,7 @@
       "pricePerNight": 80.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -29791,9 +29758,9 @@
       "seasonStart": 0,
       "seasonEnd": 0,
       "hasWashRack": false,
-      "hasDumpStation": false,
+      "hasDumpStation": true,
       "hasWifi": false,
-      "hasBathhouse": false,
+      "hasBathhouse": true,
       "pullThroughAvailable": false,
       "rating": 0.0,
       "reviewCount": 0,
@@ -38876,7 +38843,7 @@
       "pricePerNight": 35.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -38889,9 +38856,9 @@
       "seasonStart": 0,
       "seasonEnd": 0,
       "hasWashRack": false,
-      "hasDumpStation": false,
+      "hasDumpStation": true,
       "hasWifi": false,
-      "hasBathhouse": false,
+      "hasBathhouse": true,
       "pullThroughAvailable": false,
       "rating": 0.0,
       "reviewCount": 0,
@@ -42739,7 +42706,7 @@
       "pricePerNight": 70.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -47476,8 +47443,8 @@
       "name": "Great Seal State Park Campground",
       "location": "OH",
       "state": "OH",
-      "latitude": 39.4026728,
-      "longitude": -82.9408163,
+      "latitude": 39.4026884,
+      "longitude": -82.9407908,
       "pricePerNight": 22.0,
       "horseFeePerNight": 0.0,
       "hookups": [
@@ -59081,7 +59048,7 @@
       "pricePerNight": 20.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -70550,7 +70517,7 @@
     },
     {
       "id": "osm-1943591429",
-      "name": "Devil's Creek Campground",
+      "name": "Devil's Creek",
       "location": "WA",
       "state": "WA",
       "latitude": 48.8382138,
@@ -70913,7 +70880,7 @@
     },
     {
       "id": "osm-3468946816",
-      "name": "Hidden Hand Campground",
+      "name": "Hidden Hand",
       "location": "WA",
       "state": "WA",
       "latitude": 48.7283403,
@@ -70946,7 +70913,7 @@
     },
     {
       "id": "osm-3468946916",
-      "name": "May Creek Hiker Campground",
+      "name": "May Creek Hiker",
       "location": "WA",
       "state": "WA",
       "latitude": 48.7879504,
@@ -73839,7 +73806,7 @@
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
       "hookups": [
-        "No Hookups"
+        "Water"
       ],
       "accommodations": [],
       "maxRigLength": 0,
@@ -73852,9 +73819,9 @@
       "seasonStart": 0,
       "seasonEnd": 0,
       "hasWashRack": false,
-      "hasDumpStation": false,
+      "hasDumpStation": true,
       "hasWifi": false,
-      "hasBathhouse": false,
+      "hasBathhouse": true,
       "pullThroughAvailable": false,
       "rating": 0.0,
       "reviewCount": 0,

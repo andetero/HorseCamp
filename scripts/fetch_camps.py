@@ -191,36 +191,24 @@ MONTH_MAP = {
 }
 
 def parse_season(facility):
-    """Extract real open/close months from FACILITYSEASON array or description."""
+    """Extract real open/close months from FACILITYSEASON array.
+    Returns (0, 0) if no reliable data found — app shows no season status."""
     seasons = facility.get("FACILITYSEASON") or []
-    start_month, end_month = 1, 12  # fallback to year-round when unknown
 
     for season in seasons:
         start_str = season.get("StartDate", "") or ""
         end_str   = season.get("EndDate", "")   or ""
-        # Dates come as "YYYY-MM-DD" or "MM/DD" or month names
         try:
-            if "-" in start_str:
+            if "-" in start_str and "-" in end_str:
                 start_month = int(start_str.split("-")[1])
-            if "-" in end_str:
-                end_month = int(end_str.split("-")[1])
-            break
+                end_month   = int(end_str.split("-")[1])
+                if 1 <= start_month <= 12 and 1 <= end_month <= 12:
+                    if not (start_month == 1 and end_month == 12):
+                        return start_month, end_month
         except:
             pass
 
-    # Also try the description text as fallback
-    if start_month == 5 and end_month == 10:
-        desc = (facility.get("FacilitySeasonDescription") or "").lower()
-        for name, num in MONTH_MAP.items():
-            if name in desc:
-                # First month mentioned = start, last = end
-                if num < start_month or start_month == 5:
-                    start_month = num
-                if num > end_month or end_month == 10:
-                    end_month = num
-
-    return max(1, min(12, start_month)), max(1, min(12, end_month))
-
+    return 0, 0  # Unknown — no data is better than wrong data
 def parse_rig_length(facility):
     """Extract max rig length from PERMITTEDEQUIPMENT on campsites."""
     campsites = facility.get("CAMPSITE") or []

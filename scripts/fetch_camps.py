@@ -433,6 +433,10 @@ def fetch_nps_state(state):
         if not is_equestrian(blob):
             continue
 
+        # TEMPORARY DEBUG — remove after one run
+        print("NPS_AMENITIES_DEBUG:", amenities)
+        # END DEBUG
+
         try:
             lat = float(c.get("latitude", 0))
             lng = float(c.get("longitude", 0))

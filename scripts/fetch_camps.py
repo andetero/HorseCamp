@@ -377,6 +377,7 @@ def fetch_ridb_state(state):
                     accommodations.append("Highlines")
                 if "paddock"  in blob_lower: accommodations.append("Paddocks")
                 if "trail" in blob_lower or "hiking" in blob_lower: accommodations.append("Trails")
+                if "cabin" in blob_lower: accommodations.append("Cabins")
 
                 season_start, season_end = parse_season(f)
                 camps[fid] = {
@@ -678,6 +679,8 @@ out center;
             accommodations.append("Corrals")
         if tags.get("horse_trail") == "yes" or tags.get("hiking") == "yes":
             accommodations.append("Trails")
+        if tags.get("cabin") == "yes" or tags.get("tourism") == "cabin":
+            accommodations.append("Cabins")
 
         eid = f"osm-{element['id']}"
         camps[eid] = {

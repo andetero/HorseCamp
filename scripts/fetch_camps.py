@@ -173,7 +173,7 @@ def apply_overrides(camps_dict):
             if row.get("description", "").strip():
                 camp["description"] = row["description"].strip()
             if row.get("photoURL", "").strip():
-                camp["photoURL"] = row["photoURL"].strip()
+                camp["photoURLs"] = [row["photoURL"].strip()]
 
             camp["isVerified"] = True
             camps_dict[cid] = camp
@@ -293,16 +293,18 @@ def parse_ridb_fee(facility):
     return 0.0
 
 # ── RIDB HELPERS ──────────────────────────────────────────────────────
-def parse_ridb_photo(facility):
-    """Extract best photo URL from MEDIA array."""
+def parse_ridb_photos(facility):
+    """Extract all photo URLs from MEDIA array, primary first."""
     media = facility.get("MEDIA") or []
-    images = [m for m in media if m.get("MediaType") == "Image"]
+    images = [m for m in media if m.get("MediaType") == "Image" and m.get("URL")]
     if not images:
-        return ""
-    primary = next((m for m in images if m.get("IsPrimary")), None)
-    gallery = next((m for m in images if m.get("IsGallery")), None)
-    best = primary or gallery or images[0]
-    return best.get("URL", "")
+        return []
+    # Primary first, then gallery images, then rest
+    primary = [m for m in images if m.get("IsPrimary")]
+    gallery = [m for m in images if not m.get("IsPrimary") and m.get("IsGallery")]
+    rest    = [m for m in images if not m.get("IsPrimary") and not m.get("IsGallery")]
+    ordered = primary + gallery + rest
+    return [m["URL"] for m in ordered[:6]]  # cap at 6 photos
 
 # ── RIDB ───────────────────────────────────────────────────────────────
 def fetch_ridb_state(state):
@@ -409,7 +411,7 @@ def fetch_ridb_state(state):
                     "rating":              0.0,
                     "reviewCount":         0,
                     "imageColors":         ["5C7A4E", "D4A853"],
-                    "photoURL":            parse_ridb_photo(f),
+                    "photoURLs":           parse_ridb_photos(f),
                     "source":              "RIDB",
                 }
 
@@ -516,7 +518,7 @@ def fetch_nps_state(state):
             "rating":              0.0,
             "reviewCount":         0,
             "imageColors":         ["4A7FA5", "5C7A4E"],
-            "photoURL":            next((img["url"] for img in (c.get("images") or []) if img.get("url")), ""),
+            "photoURLs":           [img["url"] for img in (c.get("images") or []) if img.get("url")][:6],
             "source":              "NPS",
         })
 
@@ -707,7 +709,7 @@ out center;
             "rating":              0.0,
             "reviewCount":         0,
             "imageColors":         ["8B5E3C", "D4A853"],
-            "photoURL":            "",
+            "photoURLs":           [],
             "source":              "OSM",
         }
 
@@ -756,7 +758,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -793,7 +795,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -830,7 +832,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -867,7 +869,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -904,7 +906,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -941,7 +943,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -978,7 +980,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1015,7 +1017,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1052,7 +1054,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1089,7 +1091,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1126,7 +1128,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1163,7 +1165,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1200,7 +1202,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1237,7 +1239,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1274,7 +1276,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1311,7 +1313,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1348,7 +1350,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1385,7 +1387,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1422,7 +1424,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1459,7 +1461,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1496,7 +1498,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1533,7 +1535,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1570,7 +1572,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1607,7 +1609,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1644,7 +1646,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1681,7 +1683,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1718,7 +1720,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1755,7 +1757,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1792,7 +1794,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1829,7 +1831,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1866,7 +1868,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1903,7 +1905,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1940,7 +1942,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -1977,7 +1979,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2014,7 +2016,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2051,7 +2053,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2088,7 +2090,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2125,7 +2127,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2162,7 +2164,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2199,7 +2201,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2236,7 +2238,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2273,7 +2275,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2310,7 +2312,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2347,7 +2349,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2384,7 +2386,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2421,7 +2423,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2458,7 +2460,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2495,7 +2497,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2532,7 +2534,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2569,7 +2571,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2606,7 +2608,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2643,7 +2645,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2680,7 +2682,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2717,7 +2719,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2754,7 +2756,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2791,7 +2793,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2828,7 +2830,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2865,7 +2867,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2902,7 +2904,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2939,7 +2941,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -2976,7 +2978,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3013,7 +3015,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3050,7 +3052,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3087,7 +3089,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3124,7 +3126,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3161,7 +3163,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3198,7 +3200,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3235,7 +3237,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3272,7 +3274,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3309,7 +3311,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3346,7 +3348,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3383,7 +3385,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3420,7 +3422,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3457,7 +3459,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3494,7 +3496,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3531,7 +3533,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3568,7 +3570,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3605,7 +3607,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3642,7 +3644,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3679,7 +3681,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3716,7 +3718,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3753,7 +3755,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3790,7 +3792,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3827,7 +3829,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3864,7 +3866,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3901,7 +3903,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3938,7 +3940,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -3975,7 +3977,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4012,7 +4014,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4049,7 +4051,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4086,7 +4088,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4123,7 +4125,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4160,7 +4162,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4197,7 +4199,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4234,7 +4236,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4271,7 +4273,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4308,7 +4310,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4345,7 +4347,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4382,7 +4384,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4419,7 +4421,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4456,7 +4458,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4493,7 +4495,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4530,7 +4532,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4567,7 +4569,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4604,7 +4606,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4641,7 +4643,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4678,7 +4680,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4715,7 +4717,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4752,7 +4754,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4789,7 +4791,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4826,7 +4828,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4863,7 +4865,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4900,7 +4902,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4937,7 +4939,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -4974,7 +4976,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5011,7 +5013,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5048,7 +5050,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5085,7 +5087,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5122,7 +5124,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5159,7 +5161,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5196,7 +5198,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5233,7 +5235,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5270,7 +5272,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5307,7 +5309,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5344,7 +5346,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5381,7 +5383,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5418,7 +5420,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5455,7 +5457,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5492,7 +5494,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5529,7 +5531,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5566,7 +5568,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5603,7 +5605,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5640,7 +5642,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5677,7 +5679,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5714,7 +5716,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5751,7 +5753,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5788,7 +5790,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5825,7 +5827,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5862,7 +5864,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5899,7 +5901,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5936,7 +5938,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -5973,7 +5975,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6010,7 +6012,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6047,7 +6049,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6084,7 +6086,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6121,7 +6123,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6158,7 +6160,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6195,7 +6197,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6232,7 +6234,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6269,7 +6271,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6306,7 +6308,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6343,7 +6345,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6380,7 +6382,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6417,7 +6419,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6454,7 +6456,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6491,7 +6493,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6528,7 +6530,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6565,7 +6567,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6602,7 +6604,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6639,7 +6641,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6676,7 +6678,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6713,7 +6715,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6750,7 +6752,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6787,7 +6789,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6824,7 +6826,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6861,7 +6863,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6898,7 +6900,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6935,7 +6937,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -6972,7 +6974,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7009,7 +7011,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7046,7 +7048,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7083,7 +7085,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7120,7 +7122,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7157,7 +7159,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7194,7 +7196,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7231,7 +7233,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7268,7 +7270,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7305,7 +7307,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7342,7 +7344,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7379,7 +7381,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7416,7 +7418,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7453,7 +7455,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7490,7 +7492,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7527,7 +7529,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7564,7 +7566,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7601,7 +7603,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7638,7 +7640,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7675,7 +7677,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7712,7 +7714,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7749,7 +7751,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7786,7 +7788,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7823,7 +7825,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7860,7 +7862,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7897,7 +7899,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7934,7 +7936,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -7971,7 +7973,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8008,7 +8010,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8045,7 +8047,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8082,7 +8084,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8119,7 +8121,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8156,7 +8158,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8193,7 +8195,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8230,7 +8232,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8267,7 +8269,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8304,7 +8306,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8341,7 +8343,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8378,7 +8380,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8415,7 +8417,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8452,7 +8454,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8489,7 +8491,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8526,7 +8528,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8563,7 +8565,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8600,7 +8602,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8637,7 +8639,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8674,7 +8676,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8711,7 +8713,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8748,7 +8750,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8785,7 +8787,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8822,7 +8824,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8859,7 +8861,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8896,7 +8898,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8933,7 +8935,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -8970,7 +8972,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9007,7 +9009,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9044,7 +9046,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9081,7 +9083,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9118,7 +9120,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9155,7 +9157,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9192,7 +9194,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9229,7 +9231,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9266,7 +9268,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9303,7 +9305,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9340,7 +9342,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9377,7 +9379,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9414,7 +9416,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9451,7 +9453,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9488,7 +9490,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9525,7 +9527,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9562,7 +9564,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9599,7 +9601,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9636,7 +9638,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9673,7 +9675,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9710,7 +9712,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9747,7 +9749,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9784,7 +9786,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9821,7 +9823,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9858,7 +9860,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9895,7 +9897,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9932,7 +9934,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -9969,7 +9971,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10006,7 +10008,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10043,7 +10045,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10080,7 +10082,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10117,7 +10119,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10154,7 +10156,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10191,7 +10193,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10228,7 +10230,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10265,7 +10267,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10302,7 +10304,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10339,7 +10341,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10376,7 +10378,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10413,7 +10415,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10450,7 +10452,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10487,7 +10489,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10524,7 +10526,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10561,7 +10563,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10598,7 +10600,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10635,7 +10637,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10672,7 +10674,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10709,7 +10711,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10746,7 +10748,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10783,7 +10785,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10820,7 +10822,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10857,7 +10859,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10894,7 +10896,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10931,7 +10933,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -10968,7 +10970,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11005,7 +11007,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11042,7 +11044,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11079,7 +11081,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11116,7 +11118,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11153,7 +11155,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11190,7 +11192,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11227,7 +11229,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11264,7 +11266,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11301,7 +11303,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11338,7 +11340,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11375,7 +11377,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11412,7 +11414,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11449,7 +11451,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11486,7 +11488,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11523,7 +11525,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11560,7 +11562,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11597,7 +11599,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11634,7 +11636,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11671,7 +11673,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11708,7 +11710,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11745,7 +11747,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11782,7 +11784,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11819,7 +11821,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11856,7 +11858,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11893,7 +11895,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11930,7 +11932,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -11967,7 +11969,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12004,7 +12006,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12041,7 +12043,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12078,7 +12080,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12115,7 +12117,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12152,7 +12154,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12189,7 +12191,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12226,7 +12228,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12263,7 +12265,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12300,7 +12302,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12337,7 +12339,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12374,7 +12376,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12411,7 +12413,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12448,7 +12450,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12485,7 +12487,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12522,7 +12524,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12559,7 +12561,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12596,7 +12598,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12633,7 +12635,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12670,7 +12672,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12707,7 +12709,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12744,7 +12746,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12781,7 +12783,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12818,7 +12820,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12855,7 +12857,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12892,7 +12894,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12929,7 +12931,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -12966,7 +12968,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13003,7 +13005,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13040,7 +13042,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13077,7 +13079,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13114,7 +13116,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13151,7 +13153,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13188,7 +13190,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13225,7 +13227,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13262,7 +13264,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13299,7 +13301,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13336,7 +13338,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13373,7 +13375,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13410,7 +13412,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13447,7 +13449,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13484,7 +13486,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13521,7 +13523,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13558,7 +13560,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13595,7 +13597,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13632,7 +13634,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13669,7 +13671,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13706,7 +13708,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13743,7 +13745,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13780,7 +13782,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13817,7 +13819,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13854,7 +13856,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13891,7 +13893,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13928,7 +13930,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -13965,7 +13967,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14002,7 +14004,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14039,7 +14041,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14076,7 +14078,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14113,7 +14115,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14150,7 +14152,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14187,7 +14189,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14224,7 +14226,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14261,7 +14263,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14298,7 +14300,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14335,7 +14337,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14372,7 +14374,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14409,7 +14411,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14446,7 +14448,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14483,7 +14485,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14520,7 +14522,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14557,7 +14559,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14594,7 +14596,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14631,7 +14633,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14668,7 +14670,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14705,7 +14707,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14742,7 +14744,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14779,7 +14781,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14816,7 +14818,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14853,7 +14855,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14890,7 +14892,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14927,7 +14929,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -14964,7 +14966,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15001,7 +15003,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15038,7 +15040,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15075,7 +15077,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15112,7 +15114,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15149,7 +15151,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15186,7 +15188,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15223,7 +15225,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15260,7 +15262,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15297,7 +15299,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15334,7 +15336,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15371,7 +15373,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15408,7 +15410,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15445,7 +15447,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15482,7 +15484,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15519,7 +15521,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15556,7 +15558,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15593,7 +15595,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15630,7 +15632,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15667,7 +15669,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15704,7 +15706,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15741,7 +15743,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15778,7 +15780,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15815,7 +15817,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15852,7 +15854,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15889,7 +15891,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15926,7 +15928,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -15963,7 +15965,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16000,7 +16002,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16037,7 +16039,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16074,7 +16076,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16111,7 +16113,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16148,7 +16150,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16185,7 +16187,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16222,7 +16224,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16259,7 +16261,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16296,7 +16298,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16333,7 +16335,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16370,7 +16372,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16407,7 +16409,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16444,7 +16446,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16481,7 +16483,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16518,7 +16520,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16555,7 +16557,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16592,7 +16594,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16629,7 +16631,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16666,7 +16668,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16703,7 +16705,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16740,7 +16742,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16777,7 +16779,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16814,7 +16816,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16851,7 +16853,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16888,7 +16890,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16925,7 +16927,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16962,7 +16964,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -16999,7 +17001,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17036,7 +17038,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17073,7 +17075,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17110,7 +17112,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17147,7 +17149,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17184,7 +17186,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17221,7 +17223,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17258,7 +17260,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17295,7 +17297,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17332,7 +17334,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17369,7 +17371,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17406,7 +17408,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17443,7 +17445,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17480,7 +17482,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17517,7 +17519,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17554,7 +17556,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17591,7 +17593,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17628,7 +17630,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17665,7 +17667,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17702,7 +17704,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17739,7 +17741,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17776,7 +17778,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17813,7 +17815,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17850,7 +17852,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17887,7 +17889,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17924,7 +17926,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17961,7 +17963,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -17998,7 +18000,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18035,7 +18037,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18072,7 +18074,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18109,7 +18111,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18146,7 +18148,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18183,7 +18185,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18220,7 +18222,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18257,7 +18259,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18294,7 +18296,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18331,7 +18333,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18368,7 +18370,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18405,7 +18407,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18442,7 +18444,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18479,7 +18481,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18516,7 +18518,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18553,7 +18555,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18590,7 +18592,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18627,7 +18629,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18664,7 +18666,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18701,7 +18703,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18738,7 +18740,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18775,7 +18777,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18812,7 +18814,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18849,7 +18851,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18886,7 +18888,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18923,7 +18925,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18960,7 +18962,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -18997,7 +18999,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19034,7 +19036,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19071,7 +19073,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19108,7 +19110,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19145,7 +19147,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19182,7 +19184,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19219,7 +19221,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19256,7 +19258,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19293,7 +19295,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19330,7 +19332,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19367,7 +19369,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19404,7 +19406,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19441,7 +19443,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19478,7 +19480,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19515,7 +19517,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19552,7 +19554,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19589,7 +19591,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19626,7 +19628,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19663,7 +19665,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19700,7 +19702,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19737,7 +19739,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19774,7 +19776,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19811,7 +19813,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19848,7 +19850,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19885,7 +19887,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19922,7 +19924,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19959,7 +19961,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -19996,7 +19998,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20033,7 +20035,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20070,7 +20072,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20107,7 +20109,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20144,7 +20146,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20181,7 +20183,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20218,7 +20220,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20255,7 +20257,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20292,7 +20294,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20329,7 +20331,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20366,7 +20368,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20403,7 +20405,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20440,7 +20442,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20477,7 +20479,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20514,7 +20516,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20551,7 +20553,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20588,7 +20590,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20625,7 +20627,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20662,7 +20664,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20699,7 +20701,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20736,7 +20738,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20773,7 +20775,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20810,7 +20812,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20847,7 +20849,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20884,7 +20886,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20921,7 +20923,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20958,7 +20960,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -20995,7 +20997,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21032,7 +21034,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21069,7 +21071,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21106,7 +21108,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21143,7 +21145,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21180,7 +21182,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21217,7 +21219,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21254,7 +21256,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21291,7 +21293,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21328,7 +21330,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21365,7 +21367,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21402,7 +21404,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21439,7 +21441,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21476,7 +21478,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21513,7 +21515,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21550,7 +21552,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21587,7 +21589,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21624,7 +21626,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21661,7 +21663,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21698,7 +21700,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21735,7 +21737,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21772,7 +21774,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21809,7 +21811,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21846,7 +21848,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21883,7 +21885,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21920,7 +21922,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21957,7 +21959,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -21994,7 +21996,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22031,7 +22033,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22068,7 +22070,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22105,7 +22107,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22142,7 +22144,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22179,7 +22181,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22216,7 +22218,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22253,7 +22255,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22290,7 +22292,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22327,7 +22329,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22364,7 +22366,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22401,7 +22403,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22438,7 +22440,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22475,7 +22477,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22512,7 +22514,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22549,7 +22551,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22586,7 +22588,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22623,7 +22625,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22660,7 +22662,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22697,7 +22699,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22734,7 +22736,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22771,7 +22773,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22808,7 +22810,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22845,7 +22847,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22882,7 +22884,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22919,7 +22921,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22956,7 +22958,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -22993,7 +22995,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23030,7 +23032,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23067,7 +23069,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23104,7 +23106,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23141,7 +23143,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23178,7 +23180,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23215,7 +23217,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23252,7 +23254,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23289,7 +23291,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23326,7 +23328,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23363,7 +23365,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23400,7 +23402,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23437,7 +23439,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23474,7 +23476,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23511,7 +23513,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23548,7 +23550,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23585,7 +23587,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23622,7 +23624,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23659,7 +23661,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23696,7 +23698,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23733,7 +23735,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23770,7 +23772,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23807,7 +23809,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23844,7 +23846,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23881,7 +23883,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23918,7 +23920,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23955,7 +23957,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -23992,7 +23994,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24029,7 +24031,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24066,7 +24068,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24103,7 +24105,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24140,7 +24142,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24177,7 +24179,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24214,7 +24216,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24251,7 +24253,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24288,7 +24290,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24325,7 +24327,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24362,7 +24364,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24399,7 +24401,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24436,7 +24438,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24473,7 +24475,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24510,7 +24512,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24547,7 +24549,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24584,7 +24586,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24621,7 +24623,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24658,7 +24660,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24695,7 +24697,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24732,7 +24734,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24769,7 +24771,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24806,7 +24808,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24843,7 +24845,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24880,7 +24882,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24917,7 +24919,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24954,7 +24956,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -24991,7 +24993,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25028,7 +25030,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25065,7 +25067,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25102,7 +25104,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25139,7 +25141,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25176,7 +25178,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25213,7 +25215,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25250,7 +25252,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25287,7 +25289,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25324,7 +25326,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25361,7 +25363,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25398,7 +25400,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25435,7 +25437,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25472,7 +25474,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25509,7 +25511,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25546,7 +25548,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25583,7 +25585,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25620,7 +25622,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25657,7 +25659,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25694,7 +25696,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25731,7 +25733,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25768,7 +25770,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25805,7 +25807,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25842,7 +25844,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25879,7 +25881,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25916,7 +25918,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25953,7 +25955,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -25990,7 +25992,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26027,7 +26029,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26064,7 +26066,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26101,7 +26103,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26138,7 +26140,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26175,7 +26177,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26212,7 +26214,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26249,7 +26251,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26286,7 +26288,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26323,7 +26325,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26360,7 +26362,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26397,7 +26399,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26434,7 +26436,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26471,7 +26473,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26508,7 +26510,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26545,7 +26547,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26582,7 +26584,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26619,7 +26621,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26656,7 +26658,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26693,7 +26695,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26730,7 +26732,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26767,7 +26769,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26804,7 +26806,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26841,7 +26843,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26878,7 +26880,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26915,7 +26917,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26952,7 +26954,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -26989,7 +26991,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27026,7 +27028,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27063,7 +27065,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27100,7 +27102,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27137,7 +27139,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27174,7 +27176,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27211,7 +27213,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27248,7 +27250,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27285,7 +27287,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27322,7 +27324,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27359,7 +27361,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27396,7 +27398,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27433,7 +27435,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27470,7 +27472,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27507,7 +27509,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27544,7 +27546,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27581,7 +27583,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27618,7 +27620,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27655,7 +27657,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27692,7 +27694,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27729,7 +27731,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27766,7 +27768,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27803,7 +27805,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27840,7 +27842,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27877,7 +27879,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27914,7 +27916,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27951,7 +27953,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -27988,7 +27990,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28025,7 +28027,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28062,7 +28064,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28099,7 +28101,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28136,7 +28138,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28173,7 +28175,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28210,7 +28212,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28247,7 +28249,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28284,7 +28286,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28321,7 +28323,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28358,7 +28360,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28395,7 +28397,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28432,7 +28434,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28469,7 +28471,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     },
     {
@@ -28506,7 +28508,7 @@ def fetch_layovers():
             "D4803A",
             "D4A853"
         ],
-        "photoURL":            "",
+        "photoURLs":           [],
         "source": "Layover"
     }
 ]

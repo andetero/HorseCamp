@@ -540,6 +540,145 @@ def _parse_osm_fee(tags):
                 pass
     return 0.0
 
+
+# ── CALIFORNIA STATE PARKS ─────────────────────────────────────────────
+CA_STATE_PARKS_BASE = "https://services2.arcgis.com/AhxrK3F6WM8ECvDi/arcgis/rest/services/Campgrounds/FeatureServer/0/query"
+CA_STATE_PARKS_KEYWORDS = [
+    "horse", "equestrian", "bridle", "bridle trail", "stock",
+    "corral", "stall", "tie rail", "highline", "paddock", "equine", "mule"
+]
+
+def _is_ca_state_park_equestrian(attrs):
+    text_blob = " ".join(str(attrs.get(k, "") or "") for k in [
+        "Campground", "TYPE", "SUBTYPE", "DETAIL", "UNITNAME"
+    ]).lower()
+    return any(k in text_blob for k in CA_STATE_PARKS_KEYWORDS)
+
+def _ca_state_park_accommodations(attrs):
+    text_blob = " ".join(str(attrs.get(k, "") or "") for k in [
+        "Campground", "TYPE", "SUBTYPE", "DETAIL", "UNITNAME"
+    ]).lower()
+
+    accommodations = []
+    if "stall" in text_blob:
+        accommodations.append("Stalls")
+    if any(k in text_blob for k in ["corral", "paddock", "tie rail", "highline"]):
+        accommodations.append("Corrals")
+    if any(k in text_blob for k in ["trail", "bridle", "horse", "equestrian"]):
+        accommodations.append("Trails")
+
+    return list(dict.fromkeys(accommodations)) or ["Trails"]
+
+def fetch_ca_state_parks():
+    """Fetch California State Parks campgrounds from the official ArcGIS layer.
+
+    The public dataset covers all state park campgrounds, so this importer keeps
+    only equestrian-relevant rows using campground/unit/type/detail keyword
+    matching. That makes the first pass conservative while staying fully on
+    official machine-readable data.
+    """
+    camps = []
+    seen_ids = set()
+    offset = 0
+    page_size = 2000
+
+    while True:
+        params = {
+            "where": "1=1",
+            "outFields": "FID,Campground,GISID,TYPE,SUBTYPE,DETAIL,UNITNAME,WHAT3WORD_ADDRESS",
+            "returnGeometry": "true",
+            "outSR": "4326",
+            "resultOffset": offset,
+            "resultRecordCount": page_size,
+            "f": "json",
+        }
+        data = safe_get(CA_STATE_PARKS_BASE, params=params)
+        if not data:
+            break
+
+        features = data.get("features", [])
+        if not features:
+            break
+
+        for feature in features:
+            attrs = feature.get("attributes") or {}
+            geom = feature.get("geometry") or {}
+            lat = geom.get("y")
+            lng = geom.get("x")
+
+            try:
+                lat = float(lat)
+                lng = float(lng)
+            except (TypeError, ValueError):
+                continue
+
+            if abs(lat) < 0.1 or abs(lng) < 0.1:
+                continue
+            if not _is_ca_state_park_equestrian(attrs):
+                continue
+
+            gisid = str(attrs.get("GISID") or attrs.get("FID") or "").strip()
+            campground = str(attrs.get("Campground") or "").strip()
+            unit_name = str(attrs.get("UNITNAME") or "").strip()
+            type_name = str(attrs.get("TYPE") or "").strip()
+            subtype = str(attrs.get("SUBTYPE") or "").strip()
+            detail = str(attrs.get("DETAIL") or "").strip()
+
+            cid = f"ca-sp-{gisid or f'{lat:.5f},{lng:.5f}'}"
+            if cid in seen_ids:
+                continue
+            seen_ids.add(cid)
+
+            name = campground or unit_name or "California State Park Campground"
+            location = f"{unit_name}, CA" if unit_name else "CA"
+
+            detail_parts = [p for p in [type_name, subtype, detail] if p]
+            detail_text = " • ".join(detail_parts)
+            desc = f"California State Parks campground in {unit_name}." if unit_name else "California State Parks campground."
+            if detail_text:
+                desc += f" {detail_text}."
+            desc += " Imported from the official California State Parks Campgrounds layer; verify horse amenities before arrival."
+
+            camps.append({
+                "id": cid,
+                "name": name,
+                "location": location,
+                "state": "CA",
+                "latitude": lat,
+                "longitude": lng,
+                "pricePerNight": 0.0,
+                "horseFeePerNight": 0.0,
+                "hookups": [],
+                "accommodations": _ca_state_park_accommodations(attrs),
+                "maxRigLength": 0,
+                "stallCount": 0,
+                "paddockCount": 0,
+                "phone": "",
+                "website": "",
+                "description": desc[:2000],
+                "isVerified": False,
+                "seasonStart": 0,
+                "seasonEnd": 0,
+                "hasWashRack": False,
+                "hasDumpStation": False,
+                "hasWifi": False,
+                "hasBathhouse": False,
+                "pullThroughAvailable": False,
+                "rating": 0.0,
+                "reviewCount": 0,
+                "imageColors": ["5C7A4E", "D4A853"],
+                "photoURLs": [],
+                "source": "CA State Parks",
+            })
+
+        if len(features) < page_size:
+            break
+        offset += page_size
+        time.sleep(0.3)
+
+    print(f"  CA State Parks: {len(camps)} equestrian candidates")
+    return camps
+
 # ── OPENSTREETMAP ────────────────────────────────────────────
 def fetch_osm(existing_camps):
     """
@@ -28523,6 +28662,7 @@ def main():
     all_camps = {}
     total_ridb = 0
     total_nps  = 0
+    total_ca_state_parks = 0
 
     for i, state in enumerate(STATES):
         print(f"[{i+1}/{len(STATES)}] {state}...", end=" ", flush=True)
@@ -28542,6 +28682,17 @@ def main():
         print(f"{len(ridb_camps)} RIDB + {len(nps_camps)} NPS = {state_new} new")
 
         time.sleep(0.5)  # be polite to APIs
+
+    print("\nFetching California State Parks...")
+    ca_state_camps = fetch_ca_state_parks()
+    ca_state_new = 0
+    for camp in ca_state_camps:
+        cid = camp["id"]
+        if cid not in all_camps:
+            all_camps[cid] = camp
+            ca_state_new += 1
+    total_ca_state_parks = len(ca_state_camps)
+    print(f"  CA State Parks: {ca_state_new} new listings added")
 
     # Layover listings — deduplicated by proximity against all existing camps
     print("\nMerging layover listings...")
@@ -28585,7 +28736,7 @@ def main():
     output = {
         "generated":  datetime.now(timezone.utc).isoformat(),
         "count":      len(camps_list),
-        "sources":    ["Recreation.gov RIDB", "NPS API", "OpenStreetMap", "Layover"],
+        "sources":    ["Recreation.gov RIDB", "NPS API", "California State Parks Open Data", "OpenStreetMap", "Layover"],
         "camps":      camps_list,
     }
 

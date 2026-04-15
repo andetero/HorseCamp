@@ -28961,6 +28961,17 @@ def main():
     total_ca_state_parks = len(ca_state_camps)
     print(f"  CA State Parks: {ca_state_new} new listings added")
 
+    print("\nFetching Illinois State Parks...")
+    il_state_camps = fetch_il_state_parks()
+    il_state_new = 0
+    for camp in il_state_camps:
+        cid = camp["id"]
+        if cid not in all_camps:
+            all_camps[cid] = camp
+            il_state_new += 1
+    total_il_state_parks = len(il_state_camps)
+    print(f"  IL State Parks: {il_state_new} new listings added")
+
     # Layover listings — deduplicated by proximity against all existing camps
     print("\nMerging layover listings...")
     import math as _math

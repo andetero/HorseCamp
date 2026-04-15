@@ -668,7 +668,8 @@ def fetch_ca_state_parks():
                 "reviewCount": 0,
                 "imageColors": ["5C7A4E", "D4A853"],
                 "photoURLs": [],
-                "source": "CA State Parks",
+                "source": "State Parks",
+                "sourceDetail": "CA State Parks",
             })
 
         if len(features) < page_size:
@@ -939,7 +940,8 @@ def fetch_il_state_parks():
             "reviewCount": 0,
             "imageColors": ["B5543A", "E3A18B"],
             "photoURLs": [],
-            "source": "IL State Parks",
+            "source": "State Parks",
+            "sourceDetail": "IL State Parks",
         })
 
     print(f"  Illinois State Parks: {len(camps)} official equestrian-camping listings")

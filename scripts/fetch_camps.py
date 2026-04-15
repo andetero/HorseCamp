@@ -816,51 +816,76 @@ def _il_accommodations(text):
 def fetch_il_state_parks():
     """Fetch Illinois official equestrian-camping sites from IDNR.
 
-    Uses the statewide IDNR horseback-riding page as the authoritative list for
-    which sites have Equestrian Camping = Yes, then enriches each site from its
-    official park pages when available.
+    The statewide IDNR horseback-riding page is not a clean HTML table, so this
+    parser uses the official park links plus the nearby Yes/No text that follows
+    each site name on the page.
     """
     html = _fetch_text(IL_HORSEBACK_URL)
     if not html:
         print("  Illinois State Parks: statewide page unavailable")
         return []
 
-    rows = re.findall(r"<tr[^>]*>([\s\S]*?)</tr>", html, flags=re.I)
     yes_sites = []
-    for row in rows:
-        cols = re.findall(r"<t[dh][^>]*>([\s\S]*?)</t[dh]>", row, flags=re.I)
-        cols = [_strip_html_basic(c) for c in cols]
-        if len(cols) >= 4 and cols[2].strip().lower() == "yes":
-            yes_sites.append(cols[1].strip())
+    anchor_re = re.compile(r"<a[^>]+href=['\"]([^'\"]+)['\"][^>]*>([^<]+)</a>", flags=re.I)
+    for m in anchor_re.finditer(html):
+        href, site_name = m.group(1), _strip_html_basic(m.group(2)).strip()
+        low_name = site_name.lower()
+        if not site_name or low_name in ("horseback riding", "contact us", "illinois.gov"):
+            continue
+        if not any(k in low_name for k in ["state park", "state forest", "state trail", "state recreation area", "state fish", "wildlife area", "state natural area"]):
+            continue
+        tail = _strip_html_basic(html[m.end():m.end()+220])
+        tail = re.sub(r'\s+', ' ', tail).strip().lower()
+        if not tail.startswith('yes'):
+            continue
+        full_href = href if href.startswith('http') else ('https://dnr.illinois.gov' + href)
+        yes_sites.append((site_name, full_href))
+
+    # Deduplicate while preserving order.
+    seen = set()
+    deduped_sites = []
+    for site_name, full_href in yes_sites:
+        key = site_name.lower()
+        if key not in seen:
+            seen.add(key)
+            deduped_sites.append((site_name, full_href))
 
     camps = []
-    for site_name in yes_sites:
-        main_url = about_url = act_url = camp_url = ""
-        main_text = about_text = act_text = camp_text = ""
-        phone = ""
-        lat = lng = None
+    for site_name, main_url in deduped_sites:
+        main_text = _fetch_text(main_url)
+        if not main_text:
+            continue
 
-        for slug in _il_slug_candidates(site_name):
-            for url in [
-                f"https://dnr.illinois.gov/parks/park.{slug}.html",
-                f"https://dnr.illinois.gov/parks/park.{slug}",
-            ]:
-                main_text = _fetch_text(url)
-                if main_text:
-                    main_url = url
-                    phone, lat, lng, _ = _il_extract_phone_coords(main_text)
-                    break
-            if main_text:
-                about_url = f"https://dnr.illinois.gov/parks/about/park.{slug}.html"
-                act_url = f"https://dnr.illinois.gov/parks/activity/park.{slug}.html"
-                camp_url = f"https://dnr.illinois.gov/parks/camp/park.{slug}.html"
-                about_text = _fetch_text(about_url)
-                act_text = _fetch_text(act_url)
-                camp_text = _fetch_text(camp_url)
-                break
+        phone, lat, lng, main_plain = _il_extract_phone_coords(main_text)
+
+        slug = ""
+        mslug = re.search(r'/park(?:s/(?:about|activity|camp))?/park\.([a-z0-9\-]+)\.html', main_url, flags=re.I)
+        if mslug:
+            slug = mslug.group(1)
+        else:
+            candidates = _il_slug_candidates(site_name)
+            slug = candidates[0] if candidates else ""
+
+        about_url = act_url = camp_url = ""
+        about_text = act_text = camp_text = ""
+        if slug:
+            about_url = f"https://dnr.illinois.gov/parks/about/park.{slug}.html"
+            act_url = f"https://dnr.illinois.gov/parks/activity/park.{slug}.html"
+            camp_url = f"https://dnr.illinois.gov/parks/camp/park.{slug}.html"
+            about_text = _fetch_text(about_url)
+            act_text = _fetch_text(act_url)
+            camp_text = _fetch_text(camp_url)
+
+            # Some direct links already point to the activity/camp page; fill the
+            # missing main page using the standard park path when possible.
+            if (lat is None or lng is None) and slug:
+                fallback_main = _fetch_text(f"https://dnr.illinois.gov/parks/park.{slug}.html")
+                if fallback_main:
+                    main_text = fallback_main
+                    phone, lat, lng, main_plain = _il_extract_phone_coords(fallback_main)
+                    main_url = f"https://dnr.illinois.gov/parks/park.{slug}.html"
 
         if lat is None or lng is None:
-            # Without coordinates the app cannot map it reliably.
             continue
 
         combined_text = " ".join([_strip_html_basic(x) for x in [main_text, about_text, act_text, camp_text] if x])
@@ -874,6 +899,8 @@ def fetch_il_state_parks():
             site_type = "Illinois State Trail"
         elif "recreation area" in site_name.lower():
             site_type = "Illinois State Recreation Area"
+        elif "state natural area" in site_name.lower():
+            site_type = "Illinois State Natural Area"
 
         season_start, season_end = 0, 0
         if "may 1" in lower and ("october 31" in lower or "november" in lower):

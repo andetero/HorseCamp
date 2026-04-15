@@ -781,8 +781,8 @@ def _il_extract_phone_coords(page_text):
 
     # Prefer explicitly labeled coordinates. Some IL DNR pages present longitude
     # as a positive number with a trailing W, which must be negated.
-    mlat = re.search(r"Latitude:\s*([0-9]+(?:\.[0-9]+)?)\s*([NS])?", text, flags=re.I)
-    mlng = re.search(r"Longitude:\s*([0-9]+(?:\.[0-9]+)?)\s*([EW])?", text, flags=re.I)
+    mlat = re.search(r"(?:Park\s+)?Latitude[:\s]*([0-9]+(?:\.[0-9]+)?)\s*([NS])?", text, flags=re.I)
+    mlng = re.search(r"(?:Park\s+)?Longitude[:\s]*(-?[0-9]+(?:\.[0-9]+)?)\s*([EW])?", text, flags=re.I)
     if mlat and mlng:
         lat = float(mlat.group(1))
         lng = float(mlng.group(1))
@@ -803,6 +803,11 @@ def _il_extract_phone_coords(page_text):
             vals = [float(x) for x in coords[-2:]]
             if -90 <= vals[0] <= 90 and -180 <= vals[1] <= 180:
                 lat, lng = vals[0], vals[1]
+
+    # Illinois park pages usually refer to west longitudes; if we parsed a positive
+    # longitude in the normal Illinois range, flip it to west as a safety net.
+    if lat is not None and lng is not None and 36 <= lat <= 43 and 87 <= lng <= 92:
+        lng = -lng
 
     return phone, lat, lng, text
 

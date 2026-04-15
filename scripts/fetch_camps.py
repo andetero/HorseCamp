@@ -822,10 +822,30 @@ def _il_extract_price(text):
 def _il_hookups(text):
     low = text.lower()
     hookups = []
-    if "electric" in low or "electrical" in low:
+
+    # Be conservative for Illinois. Generic mentions of electricity on a park page
+    # do not reliably mean the equestrian campground has 30A hookups.
+    power_terms = [
+        "30 amp", "30-amp", "30a",
+        "electrical hookup", "electrical hookups",
+        "electric hookup", "electric hookups",
+        "rv hookups", "hookups with electricity",
+        "water and electricity", "water & electricity",
+        "electric campsites", "electric sites",
+    ]
+    if any(term in low for term in power_terms):
         hookups.append("30A")
-    if "water" in low or "hydrant" in low:
+
+    water_terms = [
+        "water hookup", "water hookups", "hydrant", "hydrants",
+        "water available", "potable water", "drinking water",
+        "water spigot", "water spigots", "water at campground",
+        "water at the campground", "water in campground",
+        "water in the campground",
+    ]
+    if any(term in low for term in water_terms):
         hookups.append("Water")
+
     return hookups
 
 

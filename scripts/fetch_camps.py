@@ -776,12 +776,34 @@ def _il_extract_phone_coords(page_text):
     m = re.search(r"(?:Daily\s+Phone:|Phone:)\s*([0-9\-\(\) ]{7,})", text, flags=re.I)
     if m:
         phone = m.group(1).strip()
-    coords = re.findall(r"\b(-?\d{1,3}\.\d{3,})\b", text)
+
     lat = lng = None
-    if len(coords) >= 2:
-        vals = [float(x) for x in coords[-2:]]
-        if -90 <= vals[0] <= 90 and -180 <= vals[1] <= 180:
-            lat, lng = vals[0], vals[1]
+
+    # Prefer explicitly labeled coordinates. Some IL DNR pages present longitude
+    # as a positive number with a trailing W, which must be negated.
+    mlat = re.search(r"Latitude:\s*([0-9]+(?:\.[0-9]+)?)\s*([NS])?", text, flags=re.I)
+    mlng = re.search(r"Longitude:\s*([0-9]+(?:\.[0-9]+)?)\s*([EW])?", text, flags=re.I)
+    if mlat and mlng:
+        lat = float(mlat.group(1))
+        lng = float(mlng.group(1))
+        lat_dir = (mlat.group(2) or "N").upper()
+        lng_dir = (mlng.group(2) or "W").upper()
+        if lat_dir == "S":
+            lat = -abs(lat)
+        else:
+            lat = abs(lat)
+        if lng_dir == "W":
+            lng = -abs(lng)
+        else:
+            lng = abs(lng)
+    else:
+        # Fallback for pages that expose signed decimal coordinates directly.
+        coords = re.findall(r"\b(-?\d{1,3}\.\d{3,})\b", text)
+        if len(coords) >= 2:
+            vals = [float(x) for x in coords[-2:]]
+            if -90 <= vals[0] <= 90 and -180 <= vals[1] <= 180:
+                lat, lng = vals[0], vals[1]
+
     return phone, lat, lng, text
 
 

@@ -679,6 +679,245 @@ def fetch_ca_state_parks():
     print(f"  CA State Parks: {len(camps)} equestrian candidates")
     return camps
 
+
+
+IL_HORSEBACK_URL = "https://dnr.illinois.gov/recreation/horsebackriding.html"
+
+
+def _strip_html_basic(text):
+    text = re.sub(r"<script[\s\S]*?</script>", " ", text, flags=re.I)
+    text = re.sub(r"<style[\s\S]*?</style>", " ", text, flags=re.I)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = text.replace("&nbsp;", " ").replace("&amp;", "&")
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def _il_slug_candidates(name):
+    base = re.sub(r"[^a-z0-9]+", "", (name or "").lower())
+    candidates = [base]
+    replacements = {
+        "statepark": "",
+        "staterecreationarea": "",
+        "statefishwildlifearea": "",
+        "stateforest": "",
+        "statenaturalarea": "",
+        "county": "county",
+        "co": "",
+        "donnellystatefishwildlifearea": "donnelly",
+        "andleaqua": "leaquana",
+    }
+    for old, new in replacements.items():
+        if old in base:
+            candidates.append(base.replace(old, new))
+    manual = {
+        "chainolakesstatepark": ["chainolakes"],
+        "desplainesstatefishwildlifearea": ["desplaines"],
+        "jimedgarpanthercreekstatefishwildlifearea": ["jimedgarpanthercreek"],
+        "jubileecollegestatepark": ["jubileecollege"],
+        "lakeleaquanastaterecreationarea": ["lakeleaquana"],
+        "morrisonrockwoodstatepark": ["morrisonrockwood"],
+        "putnamcountycodonneIIystatefishwildlifearea": ["putnamcounty", "putnam"],
+        "putnamcountycodonneIIystatefishwildlifearea": ["putnamcounty", "putnam"],
+        "putnamcountycodonneIIy": ["putnamcounty", "putnam"],
+        "putnamcountycodonneIIystat": ["putnamcounty", "putnam"],
+        "putnamcountycodonneIIystatefishwildlifearea": ["putnamcounty", "putnam"],
+        "putnamcountycodonneIlystatefishwildlifearea": ["putnamcounty", "putnam"],
+        "pyramidstaterecreationarea": ["pyramid"],
+        "ramseylakestaterecreationarea": ["ramseylake"],
+        "randolphcountystaterecreationarea": ["randolphcounty"],
+        "salinecountystatefishwildlifearea": ["salinecounty"],
+        "sangchrislakestaterecreationarea": ["sangchris"],
+        "stephanaforbesstaterecreationarea": ["stephanaforbes"],
+        "weinbergkingstatefishwildlifearea": ["weinbergking"],
+        "wolfcreekstatepark": ["wolfcreek"],
+        "middleforkstatefishwildlifearea": ["middlefork"],
+        "greenriverstatewildlifearea": ["greenriver"],
+        "bigriverstateforest": ["bigriver"],
+        "franklincreekstatenaturalarea": ["franklincreek"],
+        "kankakeeriverstatepark": ["kankakeeriver"],
+        "matthiessenstatepark": ["matthiessen"],
+        "moraineviewstaterecreationarea": ["moraineview"],
+        "argylelakestatepark": ["argylelake"],
+        "ferneclyffestatepark": ["ferneclyffe"],
+        "giantcitystatepark": ["giantcity"],
+        "redhillsstatepark": ["redhills"],
+        "rockcutstatepark": ["rockcut"],
+        "sandridgestateforest": ["sandridge"],
+        "siloamspringsstatepark": ["siloamsprings"],
+        "hennepincanalstatetrail": ["hennepincanal"],
+    }
+    for k, vals in manual.items():
+        if base == k:
+            candidates = vals + candidates
+            break
+    seen = set()
+    out = []
+    for c in candidates:
+        if c and c not in seen:
+            seen.add(c)
+            out.append(c)
+    return out
+
+
+def _fetch_text(url):
+    try:
+        r = requests.get(url, timeout=20, headers={"User-Agent": "HorseCamp/1.0"})
+        if r.status_code == 200:
+            return r.text
+    except Exception:
+        pass
+    return ""
+
+
+def _il_extract_phone_coords(page_text):
+    text = _strip_html_basic(page_text)
+    phone = ""
+    m = re.search(r"(?:Daily\s+Phone:|Phone:)\s*([0-9\-\(\) ]{7,})", text, flags=re.I)
+    if m:
+        phone = m.group(1).strip()
+    coords = re.findall(r"\b(-?\d{1,3}\.\d{3,})\b", text)
+    lat = lng = None
+    if len(coords) >= 2:
+        vals = [float(x) for x in coords[-2:]]
+        if -90 <= vals[0] <= 90 and -180 <= vals[1] <= 180:
+            lat, lng = vals[0], vals[1]
+    return phone, lat, lng, text
+
+
+def _il_extract_price(text):
+    m = re.search(r"cost per night is \$(\d+(?:\.\d+)?)", text, flags=re.I)
+    if not m:
+        m = re.search(r"\$(\d+(?:\.\d+)?)\s*/?\s*night", text, flags=re.I)
+    return float(m.group(1)) if m else 0.0
+
+
+def _il_hookups(text):
+    low = text.lower()
+    hookups = []
+    if "electric" in low or "electrical" in low:
+        hookups.append("30A")
+    if "water" in low or "hydrant" in low:
+        hookups.append("Water")
+    return hookups
+
+
+def _il_accommodations(text):
+    low = text.lower()
+    acc = ["Trails"]
+    if "hitching" in low or "tie line" in low or "tie lines" in low:
+        acc.append("Highlines")
+    if "corral" in low:
+        acc.append("Corrals")
+    if "stall" in low:
+        acc.append("Stalls")
+    return list(dict.fromkeys(acc))
+
+
+def fetch_il_state_parks():
+    """Fetch Illinois official equestrian-camping sites from IDNR.
+
+    Uses the statewide IDNR horseback-riding page as the authoritative list for
+    which sites have Equestrian Camping = Yes, then enriches each site from its
+    official park pages when available.
+    """
+    html = _fetch_text(IL_HORSEBACK_URL)
+    if not html:
+        print("  Illinois State Parks: statewide page unavailable")
+        return []
+
+    rows = re.findall(r"<tr[^>]*>([\s\S]*?)</tr>", html, flags=re.I)
+    yes_sites = []
+    for row in rows:
+        cols = re.findall(r"<t[dh][^>]*>([\s\S]*?)</t[dh]>", row, flags=re.I)
+        cols = [_strip_html_basic(c) for c in cols]
+        if len(cols) >= 4 and cols[2].strip().lower() == "yes":
+            yes_sites.append(cols[1].strip())
+
+    camps = []
+    for site_name in yes_sites:
+        main_url = about_url = act_url = camp_url = ""
+        main_text = about_text = act_text = camp_text = ""
+        phone = ""
+        lat = lng = None
+
+        for slug in _il_slug_candidates(site_name):
+            for url in [
+                f"https://dnr.illinois.gov/parks/park.{slug}.html",
+                f"https://dnr.illinois.gov/parks/park.{slug}",
+            ]:
+                main_text = _fetch_text(url)
+                if main_text:
+                    main_url = url
+                    phone, lat, lng, _ = _il_extract_phone_coords(main_text)
+                    break
+            if main_text:
+                about_url = f"https://dnr.illinois.gov/parks/about/park.{slug}.html"
+                act_url = f"https://dnr.illinois.gov/parks/activity/park.{slug}.html"
+                camp_url = f"https://dnr.illinois.gov/parks/camp/park.{slug}.html"
+                about_text = _fetch_text(about_url)
+                act_text = _fetch_text(act_url)
+                camp_text = _fetch_text(camp_url)
+                break
+
+        if lat is None or lng is None:
+            # Without coordinates the app cannot map it reliably.
+            continue
+
+        combined_text = " ".join([_strip_html_basic(x) for x in [main_text, about_text, act_text, camp_text] if x])
+        lower = combined_text.lower()
+        site_type = "Illinois State Park"
+        if "state fish" in site_name.lower() or "wildlife" in site_name.lower():
+            site_type = "Illinois State Fish & Wildlife Area"
+        elif "state forest" in site_name.lower():
+            site_type = "Illinois State Forest"
+        elif "state trail" in site_name.lower():
+            site_type = "Illinois State Trail"
+        elif "recreation area" in site_name.lower():
+            site_type = "Illinois State Recreation Area"
+
+        season_start, season_end = 0, 0
+        if "may 1" in lower and ("october 31" in lower or "november" in lower):
+            season_start = 5
+            season_end = 10 if "october 31" in lower else 11
+        elif "april 1" in lower and "october 31" in lower:
+            season_start = 4
+            season_end = 10
+
+        camps.append({
+            "id": f"il-sp-{re.sub(r'[^a-z0-9]+', '-', site_name.lower()).strip('-')}",
+            "name": site_name,
+            "location": f"{site_name}, IL",
+            "state": "IL",
+            "latitude": lat,
+            "longitude": lng,
+            "pricePerNight": _il_extract_price(combined_text),
+            "horseFeePerNight": 0.0,
+            "hookups": _il_hookups(combined_text),
+            "accommodations": _il_accommodations(combined_text),
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": phone,
+            "website": camp_url or act_url or about_url or main_url or IL_HORSEBACK_URL,
+            "description": (f"Official Illinois DNR equestrian-camping site. {site_type}. " + combined_text)[:2000],
+            "isVerified": False,
+            "seasonStart": season_start,
+            "seasonEnd": season_end,
+            "hasWashRack": "wash rack" in lower,
+            "hasDumpStation": "dump station" in lower or "sanitary dump" in lower,
+            "hasWifi": "wifi" in lower or "wi-fi" in lower,
+            "hasBathhouse": "shower" in lower or "flush toilets" in lower or "restrooms" in lower,
+            "pullThroughAvailable": "pull through" in lower or "pull-through" in lower,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["B5543A", "E3A18B"],
+            "photoURLs": [],
+            "source": "IL State Parks",
+        })
+
+    print(f"  Illinois State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
 # ── OPENSTREETMAP ────────────────────────────────────────────
 def fetch_osm(existing_camps):
     """
@@ -28663,6 +28902,7 @@ def main():
     total_ridb = 0
     total_nps  = 0
     total_ca_state_parks = 0
+    total_il_state_parks = 0
 
     for i, state in enumerate(STATES):
         print(f"[{i+1}/{len(STATES)}] {state}...", end=" ", flush=True)
@@ -28736,7 +28976,7 @@ def main():
     output = {
         "generated":  datetime.now(timezone.utc).isoformat(),
         "count":      len(camps_list),
-        "sources":    ["Recreation.gov RIDB", "NPS API", "California State Parks Open Data", "OpenStreetMap", "Layover"],
+        "sources":    ["Recreation.gov RIDB", "NPS API", "California State Parks Open Data", "Illinois DNR Equestrian Camping", "OpenStreetMap", "Layover"],
         "camps":      camps_list,
     }
 
@@ -28750,6 +28990,8 @@ def main():
     print(f"\nDone. {len(camps_list)} total camps written to camps.json")
     print(f"  RIDB:         {total_ridb}")
     print(f"  NPS:          {total_nps}")
+    print(f"  CA StateParks:{total_ca_state_parks}")
+    print(f"  IL StateParks:{total_il_state_parks}")
     print(f"  Layovers:     {layover_count}")
     print(f"  OSM:          {osm_count}")
     print(f"  Verified:     {verified_count} manually verified")

@@ -29848,6 +29848,101 @@ def fetch_tx_state_parks():
     print(f"  Texas State Parks: {len(camps)} official equestrian-camping listings")
     return camps
 
+
+def fetch_oh_state_parks():
+    """Fetch a conservative first-pass set of Ohio state-park bridle camps.
+
+    Ohio's official state-park web/search surfaces are fragmented, so this first
+    pass uses a strict allowlist of well-known ODNR bridle camps with manually
+    assigned coordinates to avoid geocoding failures.
+    """
+    camps_data = [
+        {
+            "name": "Barkcamp State Park Horsemen's Camp",
+            "location": "Belmont, OH",
+            "latitude": 40.040640,
+            "longitude": -81.024306,
+            "description": "Ohio state-park bridle camp at Barkcamp State Park.",
+            "hookups": ["30A"],
+            "accommodations": ["Trails", "Highlines"],
+            "hasBathhouse": True,
+            "hasWashRack": True,
+            "phone": "(740) 484-4064",
+        },
+        {
+            "name": "Hueston Woods State Park Horsemen's Camp",
+            "location": "College Corner, OH",
+            "latitude": 39.582059,
+            "longitude": -84.736139,
+            "description": "Ohio state-park bridle camp at Hueston Woods State Park.",
+            "hookups": [],
+            "accommodations": ["Trails", "Highlines"],
+            "hasBathhouse": True,
+            "hasWashRack": True,
+            "phone": "(866) 644-6727",
+        },
+        {
+            "name": "Salt Fork State Park Equestrian Camp",
+            "location": "Lore City, OH",
+            "latitude": 40.122027,
+            "longitude": -81.494798,
+            "description": "Ohio state-park bridle camp at Salt Fork State Park.",
+            "hookups": [],
+            "accommodations": ["Trails", "Highlines"],
+            "hasBathhouse": False,
+            "hasWashRack": True,
+            "phone": "(740) 439-3521",
+        },
+        {
+            "name": "West Branch State Park Equestrian Camp",
+            "location": "Ravenna, OH",
+            "latitude": 41.150391,
+            "longitude": -81.112260,
+            "description": "Ohio state-park bridle camp at West Branch State Park.",
+            "hookups": [],
+            "accommodations": ["Trails", "Highlines"],
+            "hasBathhouse": False,
+            "hasWashRack": False,
+            "phone": "(866) 644-6727",
+        },
+    ]
+    camps = []
+    for p in camps_data:
+        camps.append({
+            "id": "oh-stateparks-" + re.sub(r'[^a-z0-9]+', '-', p["name"].lower()).strip('-'),
+            "name": p["name"],
+            "location": p["location"],
+            "state": "OH",
+            "latitude": p["latitude"],
+            "longitude": p["longitude"],
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": p["hookups"],
+            "accommodations": p["accommodations"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": p["phone"],
+            "website": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property",
+            "description": p["description"],
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": p["hasWashRack"],
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": p["hasBathhouse"],
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "OH State Parks",
+        })
+    print(f"  Ohio State Parks: {len(camps)} provisional bridle-camp listings")
+    return camps
+
 def main():
     print(f"HorseCamp data fetch starting — {datetime.now(timezone.utc).isoformat()}")
     print(f"RIDB key present: {'Yes' if RIDB_KEY else 'NO — set RIDB_API_KEY secret'}")
@@ -29866,6 +29961,7 @@ def main():
     total_mo_state_parks = 0
     total_in_state_parks = 0
     total_tx_state_parks = 0
+    total_oh_state_parks = 0
 
     for i, state in enumerate(STATES):
         print(f"[{i+1}/{len(STATES)}] {state}...", end=" ", flush=True)
@@ -29988,6 +30084,17 @@ def main():
     total_tx_state_parks = len(tx_state_camps)
     print(f"  TX State Parks: {tx_state_new} new listings added")
 
+    print("\nFetching Ohio State Parks...")
+    oh_state_camps = fetch_oh_state_parks()
+    oh_state_new = 0
+    for camp in oh_state_camps:
+        cid = camp["id"]
+        if cid not in all_camps:
+            all_camps[cid] = camp
+            oh_state_new += 1
+    total_oh_state_parks = len(oh_state_camps)
+    print(f"  OH State Parks: {oh_state_new} new listings added")
+
     # Layover listings — deduplicated by proximity against all existing camps
     print("\nMerging layover listings...")
     import math as _math
@@ -30030,7 +30137,7 @@ def main():
     output = {
         "generated":  datetime.now(timezone.utc).isoformat(),
         "count":      len(camps_list),
-        "sources":    ["Recreation.gov RIDB", "NPS API", "California State Parks Open Data", "Illinois DNR Equestrian Camping", "Kentucky State Parks Horse Camping", "Florida State Parks Equestrian Camping", "Pennsylvania State Parks Horse Camping", "Michigan DNR Equestrian Campgrounds", "Wisconsin DNR Equestrian Campsites", "Missouri State Parks Equestrian Campgrounds", "Indiana DNR Horse Camping", "Texas Parks & Wildlife Equestrian Camping", "OpenStreetMap", "Layover"],
+        "sources":    ["Recreation.gov RIDB", "NPS API", "California State Parks Open Data", "Illinois DNR Equestrian Camping", "Kentucky State Parks Horse Camping", "Florida State Parks Equestrian Camping", "Pennsylvania State Parks Horse Camping", "Michigan DNR Equestrian Campgrounds", "Wisconsin DNR Equestrian Campsites", "Missouri State Parks Equestrian Campgrounds", "Indiana DNR Horse Camping", "Texas Parks & Wildlife Equestrian Camping", "Ohio State Parks Bridle Camps", "OpenStreetMap", "Layover"],
         "camps":      camps_list,
     }
 
@@ -30055,6 +30162,7 @@ def main():
     print(f"  MO StateParks:{total_mo_state_parks}")
     print(f"  IN StateParks:{total_in_state_parks}")
     print(f"  TX StateParks:{total_tx_state_parks}")
+    print(f"  OH StateParks:{total_oh_state_parks}")
     print(f"  OSM:          {osm_count}")
     print(f"  Verified:     {verified_count} manually verified")
     print(f"  Unique total: {len(camps_list)}")

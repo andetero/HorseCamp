@@ -994,6 +994,768 @@ def fetch_il_state_parks():
     print(f"  Illinois State Parks: {len(camps)} official equestrian-camping listings")
     return camps
 
+def fetch_tn_state_parks():
+    """Fetch a conservative first-pass set of Tennessee state-park horse-camping listings.
+
+    Tennessee's official state-park web surfaces are fragmented. This first pass
+    includes only parks where official Tennessee State Parks reservation pages
+    explicitly support both horseback riding and overnight camping in the same
+    park.
+    """
+    camps_data = [
+        {
+            "name": "Natchez Trace State Park Horse Camp",
+            "location": "Wildersville, TN",
+            "latitude": 35.5316,
+            "longitude": -88.2820,
+            "description": "Official Tennessee State Parks listing where Natchez Trace State Park offers both horseback riding and camping.",
+            "hookups": [],
+            "accommodations": ["Trails", "Highlines"],
+            "phone": "(731) 968-3742",
+            "hasBathhouse": True,
+            "hasWashRack": False,
+        },
+        {
+            "name": "Rocky Fork State Park Horse Camp",
+            "location": "Flag Pond, TN",
+            "latitude": 36.0743,
+            "longitude": -82.6068,
+            "description": "Official Tennessee State Parks listing where Rocky Fork State Park offers horseback riding and backcountry camping.",
+            "hookups": [],
+            "accommodations": ["Trails", "Primitive Camping"],
+            "phone": "(423) 271-1233",
+            "hasBathhouse": False,
+            "hasWashRack": False,
+        },
+    ]
+
+    camps = []
+    for i, c in enumerate(camps_data, start=1):
+        camps.append({
+            "id": f"tnsp-{i}",
+            "name": c["name"],
+            "location": c["location"],
+            "state": "TN",
+            "latitude": c["latitude"],
+            "longitude": c["longitude"],
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": c.get("hookups", []),
+            "accommodations": c.get("accommodations", ["Trails"]),
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": c.get("phone", ""),
+            "website": "https://reserve.tnstateparks.com/",
+            "description": c["description"],
+            "isVerified": False,
+            "seasonStart": 0,
+            "seasonEnd": 0,
+            "hasWashRack": c.get("hasWashRack", False),
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": c.get("hasBathhouse", False),
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "E3A18B"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "TN State Parks",
+        })
+
+    print(f"  Tennessee State Parks: {len(camps)} provisional overnight horse-camping listings")
+    return camps
+
+def fetch_ar_state_parks():
+    """Fetch a conservative first-pass set of Arkansas state-park horse camps.
+
+    Based on official Arkansas State Parks sources, the parks with clear
+    overnight equestrian camping signals are Village Creek (equestrian
+    campground), Devil's Den (horse campground), and Mount Magazine
+    (Horse Camp gateway to Huckleberry trail). Hobbs is excluded because the
+    official article says it does not have equestrian campgrounds, and Lake
+    Catherine is excluded because visitors cannot bring their own horses.
+    """
+    camps_data = [
+        {
+            "name": "Village Creek State Park Horse Camp",
+            "location": "Wynne, AR",
+            "latitude": 35.1292,
+            "longitude": -90.7890,
+            "description": "Arkansas State Parks equestrian campground with stable facilities and Class B campsites at Village Creek State Park.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Stalls", "Trails"],
+            "stallCount": 66,
+            "hasBathhouse": True,
+            "hasWashRack": True,
+            "phone": "(870) 238-9406",
+            "website": "https://www.arkansasstateparks.com/parks/village-creek-state-park",
+        },
+        {
+            "name": "Devil's Den State Park Horse Campground",
+            "location": "West Fork, AR",
+            "latitude": 35.7806,
+            "longitude": -94.2497,
+            "description": "Arkansas State Parks horse campground with hookups, bathhouse, and direct access to horse trails at Devil's Den State Park.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Highlines", "Trails"],
+            "hasBathhouse": True,
+            "phone": "(479) 761-3325",
+            "website": "https://www.arkansasstateparks.com/parks/devils-den-state-park",
+        },
+        {
+            "name": "Mount Magazine State Park Horse Camp",
+            "location": "Paris, AR",
+            "latitude": 35.1678,
+            "longitude": -93.6455,
+            "description": "Arkansas State Parks Horse Camp at Mount Magazine State Park, used as a gateway to the Huckleberry Mountain Horse Trail.",
+            "hookups": [],
+            "accommodations": ["Trails", "Highlines"],
+            "phone": "(479) 963-8502",
+            "website": "https://www.arkansasstateparks.com/parks/mount-magazine-state-park/things-to-do/horseback-riding",
+        },
+    ]
+
+    camps = []
+    for i, item in enumerate(camps_data, 1):
+        camps.append({
+            "id": f"arstate-{i}",
+            "name": item["name"],
+            "location": item["location"],
+            "state": "AR",
+            "latitude": item["latitude"],
+            "longitude": item["longitude"],
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": item["hookups"],
+            "accommodations": item["accommodations"],
+            "maxRigLength": 0,
+            "stallCount": item.get("stallCount", 0),
+            "paddockCount": item.get("paddockCount", 0),
+            "phone": item.get("phone", ""),
+            "website": item.get("website", ""),
+            "description": item["description"],
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": item.get("hasWashRack", False),
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": item.get("hasBathhouse", False),
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "AR State Parks",
+        })
+
+    print(f"  Arkansas State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
+def fetch_va_state_parks():
+    """Fetch official Virginia State Parks horse-camping locations.
+
+    Virginia State Parks officially says six parks offer horse camping.
+    Uses a strict fixed allowlist with fixed coordinates to avoid geocoding failures.
+    """
+    camps_data = [
+        {
+            "name": "Douthat State Park Equestrian Campground",
+            "location": "Millboro, VA",
+            "latitude": 37.8960,
+            "longitude": -79.8036,
+            "description": "Virginia State Parks equestrian campground at Douthat State Park.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Trails", "Stalls"],
+            "hasBathhouse": True,
+            "hasWashRack": False,
+            "phone": "(540) 862-8100",
+        },
+        {
+            "name": "Fairy Stone State Park Equestrian Campground",
+            "location": "Stuart, VA",
+            "latitude": 36.7772,
+            "longitude": -80.1124,
+            "description": "Virginia State Parks equestrian campground at Fairy Stone State Park.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Trails", "Stalls"],
+            "hasBathhouse": False,
+            "hasWashRack": False,
+            "phone": "(276) 930-2424",
+        },
+        {
+            "name": "Grayson Highlands State Park Equestrian Camp",
+            "location": "Mouth of Wilson, VA",
+            "latitude": 36.6280,
+            "longitude": -81.5014,
+            "description": "Virginia State Parks equestrian campground at Grayson Highlands State Park.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Trails", "Stalls"],
+            "hasBathhouse": False,
+            "hasWashRack": False,
+            "phone": "(276) 579-7092",
+        },
+        {
+            "name": "James River State Park Equestrian Campground",
+            "location": "Gladstone, VA",
+            "latitude": 37.6257,
+            "longitude": -78.8308,
+            "description": "Virginia State Parks equestrian campground at James River State Park.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Trails", "Stalls"],
+            "hasBathhouse": True,
+            "hasWashRack": False,
+            "phone": "(434) 933-4355",
+        },
+        {
+            "name": "Occoneechee State Park Equestrian Campground",
+            "location": "Clarksville, VA",
+            "latitude": 36.6206,
+            "longitude": -78.5415,
+            "description": "Virginia State Parks equestrian campground at Occoneechee State Park.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Trails", "Stalls"],
+            "hasBathhouse": False,
+            "hasWashRack": False,
+            "phone": "(434) 374-2210",
+        },
+        {
+            "name": "Staunton River State Park Equestrian Campground",
+            "location": "Scottsburg, VA",
+            "latitude": 36.6866,
+            "longitude": -78.6691,
+            "description": "Virginia State Parks equestrian campground at Staunton River State Park.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Trails", "Stalls"],
+            "hasBathhouse": True,
+            "hasWashRack": False,
+            "phone": "(434) 572-4623",
+        },
+    ]
+    camps = []
+    for p in camps_data:
+        camps.append({
+            "id": "va-stateparks-" + re.sub(r'[^a-z0-9]+', '-', p["name"].lower()).strip('-'),
+            "name": p["name"],
+            "location": p["location"],
+            "state": "VA",
+            "latitude": p["latitude"],
+            "longitude": p["longitude"],
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": p["hookups"],
+            "accommodations": p["accommodations"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": p["phone"],
+            "website": "https://www.dcr.virginia.gov/state-parks/horse-camping-trails",
+            "description": p["description"],
+            "isVerified": False,
+            "seasonStart": 3,
+            "seasonEnd": 11,
+            "hasWashRack": p["hasWashRack"],
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": p["hasBathhouse"],
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "VA State Parks",
+        })
+    print(f"  Virginia State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
+def fetch_ga_state_parks():
+    """Fetch official Georgia State Parks equestrian-camping locations.
+
+    Georgia State Parks officially says equestrian campsites and stables are
+    available at A.H. Stephens, Hard Labor Creek, and Watson Mill Bridge.
+    Uses a strict fixed allowlist with fixed coordinates to avoid geocoding failures.
+    """
+    camps_data = [
+        {
+            "name": "A.H. Stephens State Park Equestrian Campground",
+            "location": "Crawfordville, GA",
+            "latitude": 33.5687,
+            "longitude": -82.8813,
+            "description": "Georgia State Parks equestrian campsites and horse stalls at A.H. Stephens State Park.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Stalls", "Trails"],
+            "stallCount": 20,
+            "hasBathhouse": True,
+            "hasWashRack": False,
+            "phone": "(706) 456-2602",
+            "website": "https://gastateparks.org/AHStephens",
+        },
+        {
+            "name": "Hard Labor Creek State Park Equestrian Campground",
+            "location": "Rutledge, GA",
+            "latitude": 33.6269,
+            "longitude": -83.6204,
+            "description": "Georgia State Parks equestrian campsites and horse stalls at Hard Labor Creek State Park.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Stalls", "Trails"],
+            "stallCount": 11,
+            "hasBathhouse": True,
+            "hasWashRack": False,
+            "phone": "(706) 557-3001",
+            "website": "https://gastateparks.org/HardLaborCreek",
+        },
+        {
+            "name": "Watson Mill Bridge State Park Equestrian Campground",
+            "location": "Comer, GA",
+            "latitude": 34.0435,
+            "longitude": -83.0942,
+            "description": "Georgia State Parks equestrian campsites and horse stalls at Watson Mill Bridge State Park.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Stalls", "Trails"],
+            "stallCount": 11,
+            "hasBathhouse": True,
+            "hasWashRack": False,
+            "phone": "(706) 783-5349",
+            "website": "https://gastateparks.org/WatsonMillBridge",
+        },
+    ]
+
+    camps = []
+    for i, c in enumerate(camps_data, start=1):
+        camps.append({
+            "id": f"ga-statepark-{i}",
+            "name": c["name"],
+            "location": c["location"],
+            "state": "GA",
+            "latitude": c["latitude"],
+            "longitude": c["longitude"],
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": c["hookups"],
+            "accommodations": c["accommodations"],
+            "maxRigLength": 0,
+            "stallCount": c["stallCount"],
+            "paddockCount": 0,
+            "phone": c["phone"],
+            "website": c["website"],
+            "description": c["description"][:2000],
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": c["hasWashRack"],
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": c["hasBathhouse"],
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "GA State Parks",
+        })
+    print(f"  Georgia State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
+def fetch_nc_state_parks():
+    """Fetch a conservative first-pass set of North Carolina State Parks equestrian camps.
+
+    Official NC State Parks equestrian-camping catalog currently surfaces South Mountains
+    State Park – Jacob Fork Access and Medoc Mountain State Park as equestrian-camping parks.
+    Uses fixed coordinates to avoid geocoding/rate-limit issues.
+    """
+    camps_data = [
+        {
+            "name": "South Mountains State Park – Jacob Fork Equestrian Campground",
+            "location": "Connelly Springs, NC",
+            "latitude": 35.6358,
+            "longitude": -81.7391,
+            "description": "North Carolina State Parks equestrian camping at South Mountains State Park – Jacob Fork Access.",
+            "hookups": [],
+            "accommodations": ["Trails", "Highlines"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "hasDumpStation": False,
+            "hasBathhouse": True,
+            "hasWashRack": False,
+            "pullThroughAvailable": False,
+            "phone": "(828) 433-4772",
+            "website": "https://www.ncparks.gov/catalog-category/equestrian-camping",
+        },
+        {
+            "name": "Medoc Mountain State Park Equestrian Campground",
+            "location": "Hollister, NC",
+            "latitude": 36.2527,
+            "longitude": -77.8864,
+            "description": "North Carolina State Parks primitive equestrian camping at Medoc Mountain State Park.",
+            "hookups": [],
+            "accommodations": ["Trails", "Highlines"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "hasDumpStation": True,
+            "hasBathhouse": True,
+            "hasWashRack": False,
+            "pullThroughAvailable": False,
+            "phone": "(252) 586-6588",
+            "website": "https://www.ncparks.gov/state-parks/medoc-mountain-state-park",
+        },
+    ]
+
+    camps = []
+    for i, c in enumerate(camps_data, start=1):
+        camps.append({
+            "id": f"nc-statepark-{i}",
+            "name": c["name"],
+            "location": c["location"],
+            "state": "NC",
+            "latitude": c["latitude"],
+            "longitude": c["longitude"],
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": c["hookups"],
+            "accommodations": c["accommodations"],
+            "maxRigLength": c["maxRigLength"],
+            "stallCount": c["stallCount"],
+            "paddockCount": c["paddockCount"],
+            "phone": c["phone"],
+            "website": c["website"],
+            "description": c["description"],
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": c["hasWashRack"],
+            "hasDumpStation": c["hasDumpStation"],
+            "hasWifi": False,
+            "hasBathhouse": c["hasBathhouse"],
+            "pullThroughAvailable": c["pullThroughAvailable"],
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "NC State Parks",
+        })
+
+    print(f"  North Carolina State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
+def fetch_az_state_parks():
+    """Fetch official Arizona State Parks equestrian-camping locations.
+
+    Arizona State Parks does not appear to publish a statewide equestrian-camping
+    allowlist. Catalina State Park is officially confirmed to offer an
+    equestrian staging and camping area with 16 pens, first-come first-served,
+    water, corrals, hitching posts, restroom, and overnight camping fees.
+    """
+    camps = []
+    camps.append({
+        "id": "az-state-catalina-equestrian-center",
+        "name": "Catalina State Park Equestrian Center",
+        "location": "Tucson, AZ",
+        "state": "AZ",
+        "latitude": 32.4237,
+        "longitude": -110.9106,
+        "pricePerNight": 25.0,
+        "horseFeePerNight": 0.0,
+        "hookups": ["Water"],
+        "accommodations": ["Corrals", "Trails"],
+        "maxRigLength": 0,
+        "stallCount": 16,
+        "paddockCount": 0,
+        "phone": "520-628-5798",
+        "website": "https://azstateparks.com/catalina/explore/facility-information",
+        "description": "Arizona State Parks equestrian staging and camping area at Catalina State Park. First-come, first-served with 16 pens, water, restroom, hitching posts, fire pits, and shared-use trail access.",
+        "isVerified": False,
+        "seasonStart": 1,
+        "seasonEnd": 12,
+        "hasWashRack": False,
+        "hasDumpStation": False,
+        "hasWifi": False,
+        "hasBathhouse": False,
+        "pullThroughAvailable": False,
+        "rating": 0.0,
+        "reviewCount": 0,
+        "imageColors": ["C0392B", "E3A18B"],
+        "photoURLs": [],
+        "source": "State Parks",
+        "sourceDetail": "AZ State Parks",
+    })
+    print(f"  Arizona State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
+def fetch_ny_state_parks():
+    """Fetch official New York State Parks equestrian-camping locations.
+
+    New York does not appear to publish a clean statewide equestrian-camping
+    allowlist. This first pass keeps NY conservative and only includes
+    Allegany State Park, where official state park planning documents describe
+    an equestrian camping/staging area near Camp 10 with campsites and support
+    facilities.
+    """
+    camps = []
+    camps.append({
+        "id": "ny-state-allegany-equestrian-camp",
+        "name": "Allegany State Park Equestrian Camp",
+        "location": "Salamanca, NY",
+        "state": "NY",
+        "latitude": 42.0828,
+        "longitude": -78.7434,
+        "pricePerNight": 0.0,
+        "horseFeePerNight": 0.0,
+        "hookups": [],
+        "accommodations": ["Trails", "Highlines"],
+        "maxRigLength": 0,
+        "stallCount": 0,
+        "paddockCount": 0,
+        "phone": "(716) 354-9101",
+        "website": "https://parks.ny.gov/regions/Allegany/default.aspx",
+        "description": "Conservative New York State Parks first pass based on official Allegany State Park planning material describing an equestrian camping and staging area near Camp 10.",
+        "isVerified": False,
+        "seasonStart": 1,
+        "seasonEnd": 12,
+        "hasWashRack": False,
+        "hasDumpStation": False,
+        "hasWifi": False,
+        "hasBathhouse": False,
+        "pullThroughAvailable": False,
+        "rating": 0.0,
+        "reviewCount": 0,
+        "imageColors": ["C0392B", "E3A18B"],
+        "photoURLs": [],
+        "source": "State Parks",
+        "sourceDetail": "NY State Parks",
+    })
+    print(f"  New York State Parks: {len(camps)} conservative equestrian-camping listings")
+    return camps
+
+def fetch_mn_state_parks():
+    """Fetch official Minnesota DNR horse campgrounds.
+
+    Minnesota's official DNR state forest camping page explicitly lists six state
+    forests with horse campgrounds: Beltrami Island, George Washington,
+    Huntersville, Richard J. Dorer Memorial Hardwood, Sand Dunes, and St. Croix.
+    This first pass uses a strict fixed allowlist with stable coordinates.
+    """
+    camps_data = [
+        {
+            "id": "mn-state-beltrami-island-horse-camp",
+            "name": "Beltrami Island State Forest Horse Camp",
+            "location": "Wannaska, MN",
+            "latitude": 48.6508,
+            "longitude": -95.3214,
+            "phone": "(218) 308-2372",
+        },
+        {
+            "id": "mn-state-george-washington-horse-camp",
+            "name": "George Washington State Forest Horse Camp",
+            "location": "Outing, MN",
+            "latitude": 46.8454,
+            "longitude": -93.9864,
+            "phone": "(218) 372-3182",
+        },
+        {
+            "id": "mn-state-huntersville-horse-camp",
+            "name": "Huntersville State Forest Horse Camp",
+            "location": "Menahga, MN",
+            "latitude": 46.7390,
+            "longitude": -95.1084,
+            "phone": "(218) 732-3296",
+        },
+        {
+            "id": "mn-state-richard-dorer-horse-camp",
+            "name": "Richard J. Dorer Memorial Hardwood State Forest Horse Camp",
+            "location": "Altura, MN",
+            "latitude": 44.0512,
+            "longitude": -91.9178,
+            "phone": "(507) 932-3007",
+        },
+        {
+            "id": "mn-state-sand-dunes-horse-camp",
+            "name": "Sand Dunes State Forest Horse Camp",
+            "location": "Zimmerman, MN",
+            "latitude": 45.4796,
+            "longitude": -93.6140,
+            "phone": "(763) 689-7101",
+        },
+        {
+            "id": "mn-state-st-croix-horse-camp",
+            "name": "St. Croix State Forest Horse Camp",
+            "location": "Hinckley, MN",
+            "latitude": 46.0204,
+            "longitude": -92.9297,
+            "phone": "(320) 384-7721",
+        },
+    ]
+
+    camps = []
+    for d in camps_data:
+        camps.append({
+            "id": d["id"],
+            "name": d["name"],
+            "location": d["location"],
+            "state": "MN",
+            "latitude": d["latitude"],
+            "longitude": d["longitude"],
+            "pricePerNight": 22.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Highlines"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": d["phone"],
+            "website": "https://www.dnr.state.mn.us/state_forests/camping.html",
+            "description": "Official Minnesota DNR horse campground in a state forest. Minnesota DNR lists horse campgrounds in Beltrami Island, George Washington, Huntersville, Richard J. Dorer Memorial Hardwood, Sand Dunes, and St. Croix state forests.",
+            "isVerified": False,
+            "seasonStart": 5,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "E3A18B"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "MN State Parks",
+        })
+    print(f"  Minnesota State Parks: {len(camps)} official horse-camp listings")
+    return camps
+
+
+# ── MAIN ───────────────────────────────────────────────────────────────
+
+def fetch_ut_state_parks():
+    """Utah State Parks entries with official equestrian camping evidence.
+    Conservative fixed allowlist with fixed coordinates; no live geocoding.
+    Official evidence includes:
+    - Antelope Island State Park: official camping page says two equestrian sites are available.
+    - Goblin Valley State Park: official primitive camping page says Site 5 is great for equestrian camping and Crack Canyon is designated for equestrian camping.
+    """
+    parks = [
+        {
+            "id": "ut-stateparks-antelope-island-equestrian",
+            "name": "Antelope Island State Park Equestrian Sites",
+            "location": "Syracuse, UT",
+            "state": "UT",
+            "latitude": 41.0582,
+            "longitude": -112.2216,
+            "pricePerNight": 40.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "1-800-322-3770",
+            "website": "https://stateparks.utah.gov/parks/antelope-island/camping-opportunities/",
+            "description": "Official Utah State Parks camping page says Antelope Island has two equestrian sites available in White Rock Bay. No water or electricity at the sites.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "E57373"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "UT State Parks",
+        },
+        {
+            "id": "ut-stateparks-goblin-valley-equestrian",
+            "name": "Goblin Valley State Park Equestrian Camping",
+            "location": "Green River, UT",
+            "state": "UT",
+            "latitude": 38.5744,
+            "longitude": -110.7073,
+            "pricePerNight": 15.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "435-259-3710",
+            "website": "https://stateparks.utah.gov/parks/goblin-valley/dispersed-camping/",
+            "description": "Official Utah State Parks primitive camping page says Site 5 at Behind the Butte East is great for equestrian camping and Crack Canyon Access is designated for equestrian camping.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "E57373"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "UT State Parks",
+        },
+    ]
+    print(f"  Utah State Parks: {len(parks)} official equestrian-camping listings")
+    return parks
+
+
+
+def fetch_sc_state_parks():
+    """Fetch South Carolina State Parks equestrian camping from an official allowlist."""
+    parks = [
+        {"id": "sc-stateparks-croft", "name": "Croft State Park Equestrian Campground", "location": "Spartanburg, SC", "state": "SC", "latitude": 34.9492, "longitude": -81.9136, "website": "https://southcarolinaparks.com/camping-and-lodging/camping/equestrian", "phone": "864-585-1283", "description": "Official South Carolina State Parks equestrian camping location at Croft State Park.", "hookups": [], "accommodations": ["Trails", "Corrals"], "hasBathhouse": True, "seasonStart": 1, "seasonEnd": 12},
+        {"id": "sc-stateparks-h-cooper-black", "name": "H. Cooper Black Jr. Memorial Field Trial Area Equestrian Campground", "location": "Cheraw, SC", "state": "SC", "latitude": 34.6815, "longitude": -80.0186, "website": "https://southcarolinaparks.com/camping-and-lodging/camping/equestrian", "phone": "843-378-1555", "description": "Official South Carolina State Parks equestrian camping location at H. Cooper Black Jr. Memorial Field Trial Area.", "hookups": ["Water"], "accommodations": ["Trails", "Corrals", "Stalls"], "hasBathhouse": True, "seasonStart": 1, "seasonEnd": 12},
+        {"id": "sc-stateparks-kings-mountain", "name": "Kings Mountain State Park Equestrian Campground", "location": "Blacksburg, SC", "state": "SC", "latitude": 35.1390, "longitude": -81.3902, "website": "https://southcarolinaparks.com/camping-and-lodging/camping/equestrian", "phone": "864-936-7921", "description": "Official South Carolina State Parks equestrian camping location at Kings Mountain State Park.", "hookups": ["Water"], "accommodations": ["Trails", "Corrals"], "hasBathhouse": True, "seasonStart": 1, "seasonEnd": 12},
+        {"id": "sc-stateparks-lee", "name": "Lee State Park Equestrian Campground", "location": "Bishopville, SC", "state": "SC", "latitude": 34.1703, "longitude": -80.2484, "website": "https://southcarolinaparks.com/camping-and-lodging/camping/equestrian", "phone": "803-428-5307", "description": "Official South Carolina State Parks equestrian camping location at Lee State Park.", "hookups": ["Water"], "accommodations": ["Trails", "Corrals"], "hasBathhouse": True, "seasonStart": 1, "seasonEnd": 12},
+    ]
+    camps = []
+    for p in parks:
+        camps.append({
+            "id": p["id"], "name": p["name"], "location": p["location"], "state": p["state"],
+            "latitude": p["latitude"], "longitude": p["longitude"], "pricePerNight": 0.0, "horseFeePerNight": 0.0,
+            "hookups": p["hookups"], "accommodations": p["accommodations"], "maxRigLength": 0, "stallCount": 0,
+            "paddockCount": 0, "phone": p["phone"], "website": p["website"], "description": p["description"],
+            "isVerified": False, "seasonStart": p["seasonStart"], "seasonEnd": p["seasonEnd"], "hasWashRack": False,
+            "hasDumpStation": False, "hasWifi": False, "hasBathhouse": p["hasBathhouse"], "pullThroughAvailable": False,
+            "rating": 0.0, "reviewCount": 0, "imageColors": ["C0392B", "F1948A"], "photoURLs": [],
+            "source": "State Parks", "sourceDetail": "SC State Parks",
+        })
+    print(f"  South Carolina State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
+
+def fetch_al_state_parks():
+    """Fetch Alabama State Parks equestrian camping from a conservative allowlist."""
+    parks = [
+        {"id": "al-stateparks-oak-mountain", "name": "Oak Mountain State Park Equestrian Campground", "location": "Pelham, AL", "state": "AL", "latitude": 33.3301, "longitude": -86.7562, "website": "https://www.alapark.com/parks/oak-mountain-state-park", "phone": "205-620-2520", "description": "Official Alabama State Parks equestrian camping location at Oak Mountain State Park.", "hookups": ["Water", "30A"], "accommodations": ["Trails", "Corrals", "Stalls"], "hasBathhouse": True, "seasonStart": 1, "seasonEnd": 12},
+        {"id": "al-stateparks-cheaha", "name": "Cheaha State Park Equestrian Camp Area", "location": "Delta, AL", "state": "AL", "latitude": 33.4334, "longitude": -85.8083, "website": "https://www.alapark.com/parks/cheaha-state-park", "phone": "256-488-5111", "description": "Official Alabama State Parks equestrian camping location at Cheaha State Park.", "hookups": [], "accommodations": ["Trails", "Corrals"], "hasBathhouse": True, "seasonStart": 1, "seasonEnd": 12},
+    ]
+    camps = []
+    for p in parks:
+        camps.append({
+            "id": p["id"], "name": p["name"], "location": p["location"], "state": p["state"],
+            "latitude": p["latitude"], "longitude": p["longitude"], "pricePerNight": 0.0, "horseFeePerNight": 0.0,
+            "hookups": p["hookups"], "accommodations": p["accommodations"], "maxRigLength": 0, "stallCount": 0,
+            "paddockCount": 0, "phone": p["phone"], "website": p["website"], "description": p["description"],
+            "isVerified": False, "seasonStart": p["seasonStart"], "seasonEnd": p["seasonEnd"], "hasWashRack": False,
+            "hasDumpStation": False, "hasWifi": False, "hasBathhouse": p["hasBathhouse"], "pullThroughAvailable": False,
+            "rating": 0.0, "reviewCount": 0, "imageColors": ["C0392B", "F1948A"], "photoURLs": [],
+            "source": "State Parks", "sourceDetail": "AL State Parks",
+        })
+    print(f"  Alabama State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
 # ── OPENSTREETMAP ────────────────────────────────────────────
 def fetch_osm(existing_camps):
     """
@@ -29373,16 +30135,17 @@ def fetch_mi_state_parks():
 
 
 def fetch_wi_state_parks():
-    """Fetch Wisconsin State Park System equestrian campsites conservatively.
+    """Fetch Wisconsin DNR equestrian campsites using a fixed official allowlist.
 
-    Uses the official Wisconsin DNR campsite types page as an allowlist of five properties
-    with equestrian campsites, then geocodes each property name conservatively.
+    Uses the official Wisconsin DNR equestrian-camping list, but avoids live geocoding
+    so nightly runs are deterministic and do not come back as zero when geocoding fails.
     """
-    properties = [
+    camps_data = [
         {
             "name": "Governor Dodge State Park Equestrian Campground",
-            "query": "Governor Dodge State Park equestrian campground Wisconsin",
             "location": "Dodgeville, WI",
+            "latitude": 43.0176,
+            "longitude": -90.1238,
             "website": "https://dnr.wisconsin.gov/topic/parks/govdodge/recreation/horse",
             "description": "Official Wisconsin DNR equestrian campground at Governor Dodge State Park for overnight stays adjacent to bridle trails.",
             "hookups": ["30A"],
@@ -29392,8 +30155,9 @@ def fetch_wi_state_parks():
         },
         {
             "name": "Governor Knowles State Forest Equestrian Campground",
-            "query": "Governor Knowles State Forest equestrian campground Wisconsin",
             "location": "Grantsburg, WI",
+            "latitude": 45.7865,
+            "longitude": -92.6141,
             "website": "https://dnr.wisconsin.gov/topic/parks/camping/types.html",
             "description": "Official Wisconsin DNR equestrian campsites at Governor Knowles State Forest adjacent to equestrian riding trails.",
             "hookups": [],
@@ -29403,8 +30167,9 @@ def fetch_wi_state_parks():
         },
         {
             "name": "Kettle Moraine State Forest - Northern Unit New Prospect Horse Riders Campground",
-            "query": "New Prospect Horse Riders Campground Wisconsin",
             "location": "Campbellsport, WI",
+            "latitude": 43.6570,
+            "longitude": -88.1353,
             "website": "https://dnr.wisconsin.gov/topic/parks/kmn/recreation/horse",
             "description": "Official Wisconsin DNR equestrian camping at the New Prospect Horse Riders Campground in the Kettle Moraine State Forest - Northern Unit.",
             "hookups": [],
@@ -29414,8 +30179,9 @@ def fetch_wi_state_parks():
         },
         {
             "name": "Kettle Moraine State Forest - Southern Unit Equestrian Campground",
-            "query": "Kettle Moraine State Forest Southern Unit equestrian campground Wisconsin",
             "location": "Eagle, WI",
+            "latitude": 42.8313,
+            "longitude": -88.4616,
             "website": "https://dnr.wisconsin.gov/topic/parks/camping/types.html",
             "description": "Official Wisconsin DNR equestrian campsites in the Kettle Moraine State Forest - Southern Unit adjacent to horse trails.",
             "hookups": [],
@@ -29425,8 +30191,9 @@ def fetch_wi_state_parks():
         },
         {
             "name": "Wildcat Mountain State Park Horse Campground",
-            "query": "Wildcat Mountain State Park horse campground Wisconsin",
             "location": "Ontario, WI",
+            "latitude": 43.7422,
+            "longitude": -90.5969,
             "website": "https://dnr.wisconsin.gov/topic/parks/wildcat/recreation/camping",
             "description": "Official Wisconsin DNR horse campground at Wildcat Mountain State Park with reservable sites for people with horses.",
             "hookups": [],
@@ -29437,17 +30204,14 @@ def fetch_wi_state_parks():
     ]
 
     camps = []
-    for p in properties:
-        lat, lng = geocode_nominatim(p["query"])
-        if not lat or not lng:
-            lat, lng = geocode_nominatim(f'{p["name"]}, {p["location"]}')
+    for p in camps_data:
         camps.append({
             "id": "wi-stateparks-" + re.sub(r'[^a-z0-9]+', '-', p["name"].lower()).strip('-'),
             "name": p["name"],
             "location": p["location"],
             "state": "WI",
-            "latitude": lat,
-            "longitude": lng,
+            "latitude": p["latitude"],
+            "longitude": p["longitude"],
             "pricePerNight": 0.0,
             "horseFeePerNight": 0.0,
             "hookups": p["hookups"],
@@ -29475,8 +30239,6 @@ def fetch_wi_state_parks():
         })
     print(f"  Wisconsin State Parks: {len(camps)} official equestrian-camping listings")
     return camps
-
-
 def fetch_mo_state_parks():
     """Fetch Missouri State Parks equestrian campgrounds conservatively.
 
@@ -29665,160 +30427,159 @@ def fetch_in_state_parks():
 
 
 def fetch_tx_state_parks():
-    """Fetch Texas state parks with official overnight equestrian camping.
+    """Fetch Texas Parks & Wildlife overnight equestrian camping using fixed coordinates.
 
-    Uses the official Texas Parks & Wildlife horseback-riding page, specifically
-    the "Parks With Overnight and Day-use Facilities" section, plus selected
-    official campsite/facility pages for stronger confirmation and basic amenity
-    enrichment. This is intentionally conservative: only parks with explicit
-    overnight equestrian camping language are included.
+    Uses the official Texas statewide equestrian page as an allowlist, but avoids live
+    geocoding so nightly runs are deterministic and do not rate-limit out.
     """
-    parks = [
+    camps_data = [
         {
-            "name": "Big Bend Ranch State Park",
+            "name": "Big Bend Ranch State Park Equestrian Camp",
             "location": "Presidio, TX",
-            "query": "Big Bend Ranch State Park equestrian campsites Texas",
-            "description": "Official Texas Parks & Wildlife equestrian camping at Big Bend Ranch State Park with four equestrian campsites, most with corrals.",
+            "latitude": 29.4868,
+            "longitude": -104.1510,
+            "description": "Official Texas Parks & Wildlife overnight equestrian camping at Big Bend Ranch State Park.",
             "hookups": [],
-            "accommodations": ["Corrals", "Trails"],
+            "accommodations": ["Trails", "Highlines"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
             "hasDumpStation": False,
             "hasBathhouse": False,
             "pullThroughAvailable": False,
-            "maxRigLength": 0,
-            "stallCount": 0,
-            "paddockCount": 0,
         },
         {
-            "name": "Caprock Canyons State Park & Trailway",
+            "name": "Caprock Canyons State Park & Trailway Equestrian Camp",
             "location": "Quitaque, TX",
-            "query": "Caprock Canyons State Park equestrian campsites Texas",
-            "description": "Official Texas Parks & Wildlife equestrian campsites at Caprock Canyons State Park & Trailway with overnight and day-use horseback riding access.",
+            "latitude": 34.4338,
+            "longitude": -101.0824,
+            "description": "Official Texas Parks & Wildlife overnight equestrian camping at Caprock Canyons State Park & Trailway.",
             "hookups": [],
-            "accommodations": ["Trails"],
-            "hasDumpStation": False,
-            "hasBathhouse": True,
-            "pullThroughAvailable": False,
+            "accommodations": ["Trails", "Highlines"],
             "maxRigLength": 0,
             "stallCount": 0,
             "paddockCount": 0,
+            "hasDumpStation": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
         },
         {
-            "name": "Cooper State Park (South Sulphur Unit)",
-            "location": "Sulphur Springs, TX",
-            "query": "Cooper State Park South Sulphur Unit Buggy Whip camping area Texas",
-            "description": "Official Texas Parks & Wildlife Buggy Whip equestrian camping area with water and electricity and tether cable access to equestrian trails.",
-            "hookups": ["Water", "30A"],
+            "name": "Cooper State Park (South Sulphur Unit) Equestrian Camp",
+            "location": "Cooper, TX",
+            "latitude": 33.3726,
+            "longitude": -95.6835,
+            "description": "Official Texas Parks & Wildlife overnight equestrian camping at Cooper State Park South Sulphur Unit.",
+            "hookups": ["30A", "Water"],
             "accommodations": ["Trails", "Highlines"],
-            "hasDumpStation": False,
-            "hasBathhouse": True,
-            "pullThroughAvailable": False,
-            "maxRigLength": 55,
+            "maxRigLength": 0,
             "stallCount": 0,
             "paddockCount": 0,
+            "hasDumpStation": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
         },
         {
-            "name": "Copper Breaks State Park",
+            "name": "Copper Breaks State Park Equestrian Camp",
             "location": "Quanah, TX",
-            "query": "Copper Breaks State Park equestrian camping Texas",
-            "description": "Official Texas Parks & Wildlife equestrian camping area with six campsites, tying rail, water faucets nearby, and restroom access.",
+            "latitude": 34.1110,
+            "longitude": -99.7488,
+            "description": "Official Texas Parks & Wildlife overnight equestrian camping at Copper Breaks State Park.",
             "hookups": ["Water"],
             "accommodations": ["Trails", "Highlines"],
-            "hasDumpStation": False,
-            "hasBathhouse": True,
-            "pullThroughAvailable": False,
             "maxRigLength": 0,
             "stallCount": 0,
             "paddockCount": 0,
+            "hasDumpStation": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
         },
         {
-            "name": "Davis Mountains State Park",
+            "name": "Davis Mountains State Park Equestrian Camp",
             "location": "Fort Davis, TX",
-            "query": "Davis Mountains State Park primitive equestrian campsites Texas",
-            "description": "Official Texas Parks & Wildlife primitive equestrian campsites near Limpia Canyon Primitive Area with non-potable water and horse access.",
+            "latitude": 30.5970,
+            "longitude": -103.9387,
+            "description": "Official Texas Parks & Wildlife overnight equestrian camping at Davis Mountains State Park.",
             "hookups": [],
-            "accommodations": ["Trails"],
-            "hasDumpStation": False,
-            "hasBathhouse": False,
-            "pullThroughAvailable": False,
+            "accommodations": ["Trails", "Highlines"],
             "maxRigLength": 0,
             "stallCount": 0,
             "paddockCount": 0,
+            "hasDumpStation": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
         },
         {
-            "name": "Fort Richardson State Park",
+            "name": "Fort Richardson State Park Equestrian Camp",
             "location": "Jacksboro, TX",
-            "query": "Fort Richardson State Park equestrian campsites Texas",
-            "description": "Official Texas Parks & Wildlife equestrian campsites with water, 20/30/50-amp electric hookups, portable pen, picnic table, and fire ring.",
-            "hookups": ["Water", "30A", "50A"],
-            "accommodations": ["Stalls", "Trails"],
-            "hasDumpStation": False,
-            "hasBathhouse": True,
-            "pullThroughAvailable": False,
+            "latitude": 33.2199,
+            "longitude": -98.1632,
+            "description": "Official Texas Parks & Wildlife overnight equestrian camping at Fort Richardson State Park.",
+            "hookups": ["20A", "30A", "50A", "Water"],
+            "accommodations": ["Trails", "Highlines"],
             "maxRigLength": 0,
             "stallCount": 0,
             "paddockCount": 0,
-        },
-        {
-            "name": "Hill Country State Natural Area",
-            "location": "Bandera, TX",
-            "query": "Hill Country State Natural Area equestrian group camping Texas",
-            "description": "Official Texas Parks & Wildlife equestrian camping at Chapa's Camp and Trailhead Campground with stalls, pens, water, and electric hookups.",
-            "hookups": ["Water", "30A"],
-            "accommodations": ["Stalls", "Corrals", "Trails"],
             "hasDumpStation": False,
             "hasBathhouse": False,
-            "pullThroughAvailable": True,
-            "maxRigLength": 40,
+            "pullThroughAvailable": False,
+        },
+        {
+            "name": "Hill Country State Natural Area Equestrian Camp",
+            "location": "Bandera, TX",
+            "latitude": 29.6748,
+            "longitude": -99.0737,
+            "description": "Official Texas Parks & Wildlife overnight equestrian camping at Hill Country State Natural Area.",
+            "hookups": ["30A", "Water"],
+            "accommodations": ["Trails", "Stalls"],
+            "maxRigLength": 0,
             "stallCount": 9,
             "paddockCount": 0,
-        },
-        {
-            "name": "Lake Mineral Wells State Park & Trailway",
-            "location": "Mineral Wells, TX",
-            "query": "Lake Mineral Wells State Park equestrian campsites Texas",
-            "description": "Official Texas Parks & Wildlife equestrian campsites at Lake Mineral Wells State Park & Trailway.",
-            "hookups": ["Water"],
-            "accommodations": ["Trails"],
-            "hasDumpStation": False,
-            "hasBathhouse": True,
-            "pullThroughAvailable": False,
-            "maxRigLength": 0,
-            "stallCount": 0,
-            "paddockCount": 0,
-        },
-        {
-            "name": "Pedernales Falls State Park",
-            "location": "Johnson City, TX",
-            "query": "Pedernales Falls State Park equestrian group campsite Texas",
-            "description": "Official Texas Parks & Wildlife equestrian group campsite at Pedernales Falls State Park.",
-            "hookups": [],
-            "accommodations": ["Trails"],
             "hasDumpStation": False,
             "hasBathhouse": False,
             "pullThroughAvailable": False,
+        },
+        {
+            "name": "Lake Mineral Wells State Park & Trailway Equestrian Camp",
+            "location": "Mineral Wells, TX",
+            "latitude": 32.8088,
+            "longitude": -98.0565,
+            "description": "Official Texas Parks & Wildlife overnight equestrian camping at Lake Mineral Wells State Park & Trailway.",
+            "hookups": [],
+            "accommodations": ["Trails", "Highlines"],
             "maxRigLength": 0,
             "stallCount": 0,
             "paddockCount": 0,
+            "hasDumpStation": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+        },
+        {
+            "name": "Pedernales Falls State Park Equestrian Camp",
+            "location": "Johnson City, TX",
+            "latitude": 30.3089,
+            "longitude": -98.2485,
+            "description": "Official Texas Parks & Wildlife overnight equestrian camping at Pedernales Falls State Park.",
+            "hookups": [],
+            "accommodations": ["Trails", "Paddocks"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "hasDumpStation": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
         },
     ]
 
     camps = []
-    for p in parks:
-        lat, lng = geocode_nominatim(p["query"])
-        if not lat and not lng:
-            lat, lng = geocode_nominatim(f'{p["name"]}, {p["location"]}')
-        if not lat or not lng:
-            print(f'  Texas geocode failed for {p["name"]}')
-            continue
-
+    for p in camps_data:
         cid = "txsp-" + re.sub(r'[^a-z0-9]+', '-', p["name"].lower()).strip("-")
         camps.append({
             "id": cid,
             "name": p["name"],
             "location": p["location"],
             "state": "TX",
-            "latitude": lat,
-            "longitude": lng,
+            "latitude": p["latitude"],
+            "longitude": p["longitude"],
             "pricePerNight": 0.0,
             "horseFeePerNight": 0.0,
             "hookups": p["hookups"],
@@ -29826,8 +30587,8 @@ def fetch_tx_state_parks():
             "maxRigLength": p["maxRigLength"],
             "stallCount": p["stallCount"],
             "paddockCount": p["paddockCount"],
-            "phone": "",
-            "website": "",
+            "phone": "512-389-8900",
+            "website": "https://tpwd.texas.gov/state-parks/parks/things-to-do/equestrian",
             "description": p["description"],
             "isVerified": False,
             "seasonStart": 0,
@@ -29847,8 +30608,6 @@ def fetch_tx_state_parks():
 
     print(f"  Texas State Parks: {len(camps)} official equestrian-camping listings")
     return camps
-
-
 def fetch_oh_state_parks():
     """Fetch a conservative first-pass set of Ohio state-park bridle camps.
 
@@ -29962,140 +30721,130 @@ def main():
     total_in_state_parks = 0
     total_tx_state_parks = 0
     total_oh_state_parks = 0
+    total_tn_state_parks = 0
+    total_ar_state_parks = 0
+    total_va_state_parks = 0
+    total_ga_state_parks = 0
+    total_nc_state_parks = 0
+    total_az_state_parks = 0
+    total_ny_state_parks = 0
+    total_mn_state_parks = 0
+    total_ut_state_parks = 0
+    total_sc_state_parks = 0
+    total_al_state_parks = 0
 
     for i, state in enumerate(STATES):
         print(f"[{i+1}/{len(STATES)}] {state}...", end=" ", flush=True)
-
         ridb_camps = fetch_ridb_state(state) if RIDB_KEY else []
         nps_camps  = fetch_nps_state(state)  if NPS_KEY  else []
-
         state_new = 0
         for camp in ridb_camps + nps_camps:
             cid = camp["id"]
             if cid not in all_camps:
                 all_camps[cid] = camp
                 state_new += 1
-
         total_ridb += len(ridb_camps)
         total_nps  += len(nps_camps)
         print(f"{len(ridb_camps)} RIDB + {len(nps_camps)} NPS = {state_new} new")
+        time.sleep(0.5)
 
-        time.sleep(0.5)  # be polite to APIs
+    def merge_state(camps):
+        new_count = 0
+        for camp in camps:
+            cid = camp["id"]
+            if cid not in all_camps:
+                all_camps[cid] = camp
+                new_count += 1
+        return new_count
 
     print("\nFetching California State Parks...")
-    ca_state_camps = fetch_ca_state_parks()
-    ca_state_new = 0
-    for camp in ca_state_camps:
-        cid = camp["id"]
-        if cid not in all_camps:
-            all_camps[cid] = camp
-            ca_state_new += 1
-    total_ca_state_parks = len(ca_state_camps)
-    print(f"  CA State Parks: {ca_state_new} new listings added")
+    ca_state_camps = fetch_ca_state_parks(); total_ca_state_parks = len(ca_state_camps)
+    print(f"  CA State Parks: {merge_state(ca_state_camps)} new listings added")
 
     print("\nFetching Illinois State Parks...")
-    il_state_camps = fetch_il_state_parks()
-    il_state_new = 0
-    for camp in il_state_camps:
-        cid = camp["id"]
-        if cid not in all_camps:
-            all_camps[cid] = camp
-            il_state_new += 1
-    total_il_state_parks = len(il_state_camps)
-    print(f"  IL State Parks: {il_state_new} new listings added")
+    il_state_camps = fetch_il_state_parks(); total_il_state_parks = len(il_state_camps)
+    print(f"  IL State Parks: {merge_state(il_state_camps)} new listings added")
 
     print("\nFetching Kentucky State Parks...")
-    ky_state_camps = fetch_ky_state_parks()
-    ky_state_new = 0
-    for camp in ky_state_camps:
-        cid = camp["id"]
-        if cid not in all_camps:
-            all_camps[cid] = camp
-            ky_state_new += 1
-    total_ky_state_parks = len(ky_state_camps)
-    print(f"  KY State Parks: {ky_state_new} new listings added")
+    ky_state_camps = fetch_ky_state_parks(); total_ky_state_parks = len(ky_state_camps)
+    print(f"  KY State Parks: {merge_state(ky_state_camps)} new listings added")
 
     print("\nFetching Florida State Parks...")
-    fl_state_camps = fetch_fl_state_parks()
-    fl_state_new = 0
-    for camp in fl_state_camps:
-        cid = camp["id"]
-        if cid not in all_camps:
-            all_camps[cid] = camp
-            fl_state_new += 1
-    total_fl_state_parks = len(fl_state_camps)
-    print(f"  FL State Parks: {fl_state_new} new listings added")
+    fl_state_camps = fetch_fl_state_parks(); total_fl_state_parks = len(fl_state_camps)
+    print(f"  FL State Parks: {merge_state(fl_state_camps)} new listings added")
 
     print("\nFetching Pennsylvania State Parks...")
-    pa_state_camps = fetch_pa_state_parks()
-    pa_state_new = 0
-    for camp in pa_state_camps:
-        cid = camp["id"]
-        if cid not in all_camps:
-            all_camps[cid] = camp
-            pa_state_new += 1
-    total_pa_state_parks = len(pa_state_camps)
-    print(f"  PA State Parks: {pa_state_new} new listings added")
+    pa_state_camps = fetch_pa_state_parks(); total_pa_state_parks = len(pa_state_camps)
+    print(f"  PA State Parks: {merge_state(pa_state_camps)} new listings added")
 
     print("\nFetching Michigan State Parks...")
-    mi_state_camps = fetch_mi_state_parks()
-    mi_state_new = 0
-    for camp in mi_state_camps:
-        cid = camp["id"]
-        if cid not in all_camps:
-            all_camps[cid] = camp
-            mi_state_new += 1
-    total_mi_state_parks = len(mi_state_camps)
-    print(f"  MI State Parks: {mi_state_new} new listings added")
+    mi_state_camps = fetch_mi_state_parks(); total_mi_state_parks = len(mi_state_camps)
+    print(f"  MI State Parks: {merge_state(mi_state_camps)} new listings added")
 
-
+    print("\nFetching Wisconsin State Parks...")
+    wi_state_camps = fetch_wi_state_parks(); total_wi_state_parks = len(wi_state_camps)
+    print(f"  WI State Parks: {merge_state(wi_state_camps)} new listings added")
 
     print("\nFetching Missouri State Parks...")
-    mo_state_camps = fetch_mo_state_parks()
-    mo_state_new = 0
-    for camp in mo_state_camps:
-        cid = camp["id"]
-        if cid not in all_camps:
-            all_camps[cid] = camp
-            mo_state_new += 1
-    total_mo_state_parks = len(mo_state_camps)
-    print(f"  MO State Parks: {mo_state_new} new listings added")
+    mo_state_camps = fetch_mo_state_parks(); total_mo_state_parks = len(mo_state_camps)
+    print(f"  MO State Parks: {merge_state(mo_state_camps)} new listings added")
 
     print("\nFetching Indiana State Parks...")
-    in_state_camps = fetch_in_state_parks()
-    in_state_new = 0
-    for camp in in_state_camps:
-        cid = camp["id"]
-        if cid not in all_camps:
-            all_camps[cid] = camp
-            in_state_new += 1
-    total_in_state_parks = len(in_state_camps)
-    print(f"  IN State Parks: {in_state_new} new listings added")
-
+    in_state_camps = fetch_in_state_parks(); total_in_state_parks = len(in_state_camps)
+    print(f"  IN State Parks: {merge_state(in_state_camps)} new listings added")
 
     print("\nFetching Texas State Parks...")
-    tx_state_camps = fetch_tx_state_parks()
-    tx_state_new = 0
-    for camp in tx_state_camps:
-        cid = camp["id"]
-        if cid not in all_camps:
-            all_camps[cid] = camp
-            tx_state_new += 1
-    total_tx_state_parks = len(tx_state_camps)
-    print(f"  TX State Parks: {tx_state_new} new listings added")
+    tx_state_camps = fetch_tx_state_parks(); total_tx_state_parks = len(tx_state_camps)
+    print(f"  TX State Parks: {merge_state(tx_state_camps)} new listings added")
 
     print("\nFetching Ohio State Parks...")
-    oh_state_camps = fetch_oh_state_parks()
-    oh_state_new = 0
-    for camp in oh_state_camps:
-        cid = camp["id"]
-        if cid not in all_camps:
-            all_camps[cid] = camp
-            oh_state_new += 1
-    total_oh_state_parks = len(oh_state_camps)
-    print(f"  OH State Parks: {oh_state_new} new listings added")
+    oh_state_camps = fetch_oh_state_parks(); total_oh_state_parks = len(oh_state_camps)
+    print(f"  OH State Parks: {merge_state(oh_state_camps)} new listings added")
 
-    # Layover listings — deduplicated by proximity against all existing camps
+    print("\nFetching Tennessee State Parks...")
+    tn_state_camps = fetch_tn_state_parks(); total_tn_state_parks = len(tn_state_camps)
+    print(f"  TN State Parks: {merge_state(tn_state_camps)} new listings added")
+
+    print("\nFetching Arkansas State Parks...")
+    ar_state_camps = fetch_ar_state_parks(); total_ar_state_parks = len(ar_state_camps)
+    print(f"  AR State Parks: {merge_state(ar_state_camps)} new listings added")
+
+    print("\nFetching Virginia State Parks...")
+    va_state_camps = fetch_va_state_parks(); total_va_state_parks = len(va_state_camps)
+    print(f"  VA State Parks: {merge_state(va_state_camps)} new listings added")
+
+    print("\nFetching Georgia State Parks...")
+    ga_state_camps = fetch_ga_state_parks(); total_ga_state_parks = len(ga_state_camps)
+    print(f"  GA State Parks: {merge_state(ga_state_camps)} new listings added")
+
+    print("\nFetching North Carolina State Parks...")
+    nc_state_camps = fetch_nc_state_parks(); total_nc_state_parks = len(nc_state_camps)
+    print(f"  NC State Parks: {merge_state(nc_state_camps)} new listings added")
+
+    print("\nFetching Arizona State Parks...")
+    az_state_camps = fetch_az_state_parks(); total_az_state_parks = len(az_state_camps)
+    print(f"  AZ State Parks: {merge_state(az_state_camps)} new listings added")
+
+    print("\nFetching New York State Parks...")
+    ny_state_camps = fetch_ny_state_parks(); total_ny_state_parks = len(ny_state_camps)
+    print(f"  NY State Parks: {merge_state(ny_state_camps)} new listings added")
+
+    print("\nFetching Minnesota State Parks...")
+    mn_state_camps = fetch_mn_state_parks(); total_mn_state_parks = len(mn_state_camps)
+    print(f"  MN State Parks: {merge_state(mn_state_camps)} new listings added")
+
+    print("\nFetching Utah State Parks...")
+    ut_state_camps = fetch_ut_state_parks(); total_ut_state_parks = len(ut_state_camps)
+    print(f"  UT State Parks: {merge_state(ut_state_camps)} new listings added")
+
+    print("\nFetching South Carolina State Parks...")
+    sc_state_camps = fetch_sc_state_parks(); total_sc_state_parks = len(sc_state_camps)
+    print(f"  SC State Parks: {merge_state(sc_state_camps)} new listings added")
+
+    print("\nFetching Alabama State Parks...")
+    al_state_camps = fetch_al_state_parks(); total_al_state_parks = len(al_state_camps)
+    print(f"  AL State Parks: {merge_state(al_state_camps)} new listings added")
+
     print("\nMerging layover listings...")
     import math as _math
     layover_new = 0
@@ -30116,7 +30865,6 @@ def main():
                 layover_new += 1
     print(f"  Layovers: {layover_new} new listings added")
 
-    # OpenStreetMap — horse-friendly campsites with horse=yes tag
     print("\nFetching from OpenStreetMap...")
     osm_camps = fetch_osm(all_camps)
     for camp in osm_camps:
@@ -30124,7 +30872,6 @@ def main():
         if cid not in all_camps:
             all_camps[cid] = camp
 
-    # Apply verified overrides — or generate template if first run
     print("\nChecking verified overrides...")
     if not os.path.exists(OVERRIDE_FILE):
         print(f"  {OVERRIDE_FILE} not found — generating template for verification")
@@ -30133,21 +30880,31 @@ def main():
         apply_overrides(all_camps)
 
     camps_list = sorted(all_camps.values(), key=lambda c: c["state"])
-
     output = {
-        "generated":  datetime.now(timezone.utc).isoformat(),
-        "count":      len(camps_list),
-        "sources":    ["Recreation.gov RIDB", "NPS API", "California State Parks Open Data", "Illinois DNR Equestrian Camping", "Kentucky State Parks Horse Camping", "Florida State Parks Equestrian Camping", "Pennsylvania State Parks Horse Camping", "Michigan DNR Equestrian Campgrounds", "Wisconsin DNR Equestrian Campsites", "Missouri State Parks Equestrian Campgrounds", "Indiana DNR Horse Camping", "Texas Parks & Wildlife Equestrian Camping", "Ohio State Parks Bridle Camps", "OpenStreetMap", "Layover"],
-        "camps":      camps_list,
+        "generated": datetime.now(timezone.utc).isoformat(),
+        "count": len(camps_list),
+        "sources": [
+            "Recreation.gov RIDB", "NPS API", "California State Parks Open Data",
+            "Illinois DNR Equestrian Camping", "Kentucky State Parks Horse Camping",
+            "Florida State Parks Equestrian Camping", "Pennsylvania State Parks Horse Camping",
+            "Michigan DNR Equestrian Campgrounds", "Wisconsin DNR Equestrian Campsites",
+            "Missouri State Parks Equestrian Campgrounds", "Indiana DNR Horse Camping",
+            "Texas Parks & Wildlife Equestrian Camping", "Ohio State Parks Bridle Camps",
+            "Tennessee State Parks Horse Camping", "Arkansas State Parks Horse Camping",
+            "Virginia State Parks Horse Camping", "Georgia State Parks Equestrian Camping",
+            "North Carolina State Parks Equestrian Camping", "Arizona State Parks Equestrian Camping",
+            "New York State Parks Equestrian Camping", "Minnesota DNR Horse Campgrounds",
+            "Utah State Parks Equestrian Camping", "South Carolina State Parks Equestrian Camping",
+            "Alabama State Parks Equestrian Camping", "OpenStreetMap", "Layover"
+        ],
+        "camps": camps_list,
     }
-
-    # Write to root so GitHub Pages serves it at horsecampfinder.com/camps.json
     with open("camps.json", "w") as f:
         json.dump(output, f, indent=2)
 
-    osm_count      = sum(1 for c in camps_list if c.get("source") == "OSM")
-    layover_count  = sum(1 for c in camps_list if c.get("source") == "Layover")
-    verified_count = sum(1 for c in camps_list if c.get("isVerified") and c.get("source") in ("Layover","OSM"))
+    osm_count = sum(1 for c in camps_list if c.get("source") == "OSM")
+    layover_count = sum(1 for c in camps_list if c.get("source") == "Layover")
+    verified_count = sum(1 for c in camps_list if c.get("isVerified") and c.get("source") in ("Layover", "OSM"))
     print(f"\nDone. {len(camps_list)} total camps written to camps.json")
     print(f"  RIDB:         {total_ridb}")
     print(f"  NPS:          {total_nps}")
@@ -30156,13 +30913,24 @@ def main():
     print(f"  KY StateParks:{total_ky_state_parks}")
     print(f"  FL StateParks:{total_fl_state_parks}")
     print(f"  PA StateParks:{total_pa_state_parks}")
-    print(f"  Layovers:     {layover_count}")
     print(f"  MI StateParks:{total_mi_state_parks}")
     print(f"  WI StateParks:{total_wi_state_parks}")
     print(f"  MO StateParks:{total_mo_state_parks}")
     print(f"  IN StateParks:{total_in_state_parks}")
     print(f"  TX StateParks:{total_tx_state_parks}")
     print(f"  OH StateParks:{total_oh_state_parks}")
+    print(f"  TN StateParks:{total_tn_state_parks}")
+    print(f"  AR StateParks:{total_ar_state_parks}")
+    print(f"  VA StateParks:{total_va_state_parks}")
+    print(f"  GA StateParks:{total_ga_state_parks}")
+    print(f"  NC StateParks:{total_nc_state_parks}")
+    print(f"  AZ StateParks:{total_az_state_parks}")
+    print(f"  NY StateParks:{total_ny_state_parks}")
+    print(f"  MN StateParks:{total_mn_state_parks}")
+    print(f"  UT StateParks:{total_ut_state_parks}")
+    print(f"  SC StateParks:{total_sc_state_parks}")
+    print(f"  AL StateParks:{total_al_state_parks}")
+    print(f"  Layovers:     {layover_count}")
     print(f"  OSM:          {osm_count}")
     print(f"  Verified:     {verified_count} manually verified")
     print(f"  Unique total: {len(camps_list)}")

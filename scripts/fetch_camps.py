@@ -33875,61 +33875,14 @@ def main():
 
     all_camps = {}
     total_ridb = 0
-    total_nps  = 0
-    total_ca_state_parks = 0
-    total_il_state_parks = 0
-    total_ky_state_parks = 0
-    total_fl_state_parks = 0
-    total_pa_state_parks = 0
-    total_mi_state_parks = 0
-    total_wi_state_parks = 0
-    total_mo_state_parks = 0
-    total_in_state_parks = 0
-    total_tx_state_parks = 0
-    total_oh_state_parks = 0
-    total_tn_state_parks = 0
-    total_ar_state_parks = 0
-    total_va_state_parks = 0
-    total_ga_state_parks = 0
-    total_nc_state_parks = 0
-    total_az_state_parks = 0
-    total_ny_state_parks = 0
-    total_mn_state_parks = 0
-    total_ut_state_parks = 0
-    total_sc_state_parks = 0
-    total_al_state_parks = 0
-    total_co_state_parks = 0
-    total_id_state_parks = 0
-    total_wa_state_parks = 0
-    total_nv_state_parks = 0
-    total_or_state_parks = 0
-    total_ne_state_parks = 0
-    total_ok_state_parks = 0
-    total_ks_state_parks = 0
-    total_sd_state_parks = 0
-    total_wy_state_parks = 0
-    total_mt_state_parks = 0
-    total_de_state_parks = 0
-    total_ms_state_parks = 0
-    total_vt_state_parks = 0
-    total_wv_state_parks = 0
-    total_md_state_parks = 0
-    total_ak_state_parks = 0
-    total_ct_state_parks = 0
-    total_ia_state_parks = 0
-    total_la_state_parks = 0
-    total_hi_state_parks = 0
-    total_nj_state_parks = 0
-    total_ri_state_parks = 0
-    total_nh_state_parks = 0
-    total_me_state_parks = 0
-    total_ma_state_parks = 0
-    total_nd_state_parks = 0
+    total_nps = 0
 
+    # Primary RIDB/NPS pass already runs alphabetically because STATES is alphabetical.
     for i, state in enumerate(STATES):
+        state_started = time.time()
         print(f"[{i+1}/{len(STATES)}] {state}...", end=" ", flush=True)
         ridb_camps = fetch_ridb_state(state) if RIDB_KEY else []
-        nps_camps  = fetch_nps_state(state)  if NPS_KEY  else []
+        nps_camps = fetch_nps_state(state) if NPS_KEY else []
         state_new = 0
         for camp in ridb_camps + nps_camps:
             cid = camp["id"]
@@ -33937,8 +33890,9 @@ def main():
                 all_camps[cid] = camp
                 state_new += 1
         total_ridb += len(ridb_camps)
-        total_nps  += len(nps_camps)
-        print(f"{len(ridb_camps)} RIDB + {len(nps_camps)} NPS = {state_new} new")
+        total_nps += len(nps_camps)
+        elapsed = time.time() - state_started
+        print(f"{len(ridb_camps)} RIDB + {len(nps_camps)} NPS = {state_new} new [{elapsed:.1f}s]")
         time.sleep(0.5)
 
     def merge_state(camps):
@@ -33950,205 +33904,70 @@ def main():
                 new_count += 1
         return new_count
 
-    print("\nFetching California State Parks...")
-    ca_state_camps = fetch_ca_state_parks(); total_ca_state_parks = len(ca_state_camps)
-    print(f"  CA State Parks: {merge_state(ca_state_camps)} new listings added")
+    state_park_jobs = [
+        ("AK", "Alaska", fetch_ak_state_parks, "Alaska State Parks Equestrian Camping"),
+        ("AL", "Alabama", fetch_al_state_parks, "Alabama State Parks Equestrian Camping"),
+        ("AR", "Arkansas", fetch_ar_state_parks, "Arkansas State Parks Horse Camping"),
+        ("AZ", "Arizona", fetch_az_state_parks, "Arizona State Parks Equestrian Camping"),
+        ("CA", "California", fetch_ca_state_parks, "California State Parks Open Data"),
+        ("CO", "Colorado", fetch_co_state_parks, "Colorado State Parks Equestrian Camping"),
+        ("CT", "Connecticut", fetch_ct_state_parks, "Connecticut State Parks Equestrian Camping"),
+        ("DE", "Delaware", fetch_de_state_parks, "Delaware State Parks Equestrian Camping"),
+        ("FL", "Florida", fetch_fl_state_parks, "Florida State Parks Equestrian Camping"),
+        ("GA", "Georgia", fetch_ga_state_parks, "Georgia State Parks Equestrian Camping"),
+        ("HI", "Hawaii", fetch_hi_state_parks, "Hawaii State Parks Equestrian Camping"),
+        ("IA", "Iowa", fetch_ia_state_parks, "Iowa State Parks Equestrian Camping"),
+        ("ID", "Idaho", fetch_id_state_parks, "Idaho State Parks Equestrian Camping"),
+        ("IL", "Illinois", fetch_il_state_parks, "Illinois DNR Equestrian Camping"),
+        ("IN", "Indiana", fetch_in_state_parks, "Indiana DNR Horse Camping"),
+        ("KS", "Kansas", fetch_ks_state_parks, "Kansas State Parks Equestrian Camping"),
+        ("KY", "Kentucky", fetch_ky_state_parks, "Kentucky State Parks Horse Camping"),
+        ("LA", "Louisiana", fetch_la_state_parks, "Louisiana State Parks Equestrian Camping"),
+        ("MA", "Massachusetts", fetch_ma_state_parks, "Massachusetts State Parks Equestrian Camping"),
+        ("MD", "Maryland", fetch_md_state_parks, "Maryland State Parks Equestrian Camping"),
+        ("ME", "Maine", fetch_me_state_parks, "Maine State Parks Equestrian Camping"),
+        ("MI", "Michigan", fetch_mi_state_parks, "Michigan DNR Equestrian Campgrounds"),
+        ("MN", "Minnesota", fetch_mn_state_parks, "Minnesota DNR Horse Campgrounds"),
+        ("MO", "Missouri", fetch_mo_state_parks, "Missouri State Parks Equestrian Campgrounds"),
+        ("MS", "Mississippi", fetch_ms_state_parks, "Mississippi State Parks Equestrian Camping"),
+        ("MT", "Montana", fetch_mt_state_parks, "Montana State Parks Equestrian Camping"),
+        ("NC", "North Carolina", fetch_nc_state_parks, "North Carolina State Parks Equestrian Camping"),
+        ("ND", "North Dakota", fetch_nd_state_parks, "North Dakota State Parks Equestrian Camping"),
+        ("NE", "Nebraska", fetch_ne_state_parks, "Nebraska State Parks Equestrian Camping"),
+        ("NH", "New Hampshire", fetch_nh_state_parks, "New Hampshire State Parks Equestrian Camping"),
+        ("NJ", "New Jersey", fetch_nj_state_parks, "New Jersey State Parks Equestrian Camping"),
+        ("NM", "New Mexico", fetch_nm_state_parks, "New Mexico State Parks Equestrian Camping"),
+        ("NV", "Nevada", fetch_nv_state_parks, "Nevada State Parks Equestrian Camping"),
+        ("NY", "New York", fetch_ny_state_parks, "New York State Parks Equestrian Camping"),
+        ("OH", "Ohio", fetch_oh_state_parks, "Ohio State Parks Bridle Camps"),
+        ("OK", "Oklahoma", fetch_ok_state_parks, "Oklahoma State Parks Equestrian Camping"),
+        ("OR", "Oregon", fetch_or_state_parks, "Oregon State Parks Equestrian Camping"),
+        ("PA", "Pennsylvania", fetch_pa_state_parks, "Pennsylvania State Parks Horse Camping"),
+        ("RI", "Rhode Island", fetch_ri_state_parks, "Rhode Island State Parks Equestrian Camping"),
+        ("SC", "South Carolina", fetch_sc_state_parks, "South Carolina State Parks Equestrian Camping"),
+        ("SD", "South Dakota", fetch_sd_state_parks, "South Dakota State Parks Equestrian Camping"),
+        ("TN", "Tennessee", fetch_tn_state_parks, "Tennessee State Parks Horse Camping"),
+        ("TX", "Texas", fetch_tx_state_parks, "Texas Parks & Wildlife Equestrian Camping"),
+        ("UT", "Utah", fetch_ut_state_parks, "Utah State Parks Equestrian Camping"),
+        ("VA", "Virginia", fetch_va_state_parks, "Virginia State Parks Horse Camping"),
+        ("VT", "Vermont", fetch_vt_state_parks, "Vermont State Parks Equestrian Camping"),
+        ("WA", "Washington", fetch_wa_state_parks, "Washington State Parks Equestrian Camping"),
+        ("WI", "Wisconsin", fetch_wi_state_parks, "Wisconsin DNR Equestrian Campsites"),
+        ("WV", "West Virginia", fetch_wv_state_parks, "West Virginia State Parks Equestrian Camping"),
+        ("WY", "Wyoming", fetch_wy_state_parks, "Wyoming State Parks Equestrian Camping"),
+    ]
 
-    print("\nFetching Illinois State Parks...")
-    il_state_camps = fetch_il_state_parks(); total_il_state_parks = len(il_state_camps)
-    print(f"  IL State Parks: {merge_state(il_state_camps)} new listings added")
-
-    print("\nFetching Kentucky State Parks...")
-    ky_state_camps = fetch_ky_state_parks(); total_ky_state_parks = len(ky_state_camps)
-    print(f"  KY State Parks: {merge_state(ky_state_camps)} new listings added")
-
-    print("\nFetching Florida State Parks...")
-    fl_state_camps = fetch_fl_state_parks(); total_fl_state_parks = len(fl_state_camps)
-    print(f"  FL State Parks: {merge_state(fl_state_camps)} new listings added")
-
-    print("\nFetching Pennsylvania State Parks...")
-    pa_state_camps = fetch_pa_state_parks(); total_pa_state_parks = len(pa_state_camps)
-    print(f"  PA State Parks: {merge_state(pa_state_camps)} new listings added")
-
-    print("\nFetching Michigan State Parks...")
-    mi_state_camps = fetch_mi_state_parks(); total_mi_state_parks = len(mi_state_camps)
-    print(f"  MI State Parks: {merge_state(mi_state_camps)} new listings added")
-
-    print("\nFetching Wisconsin State Parks...")
-    wi_state_camps = fetch_wi_state_parks(); total_wi_state_parks = len(wi_state_camps)
-    print(f"  WI State Parks: {merge_state(wi_state_camps)} new listings added")
-
-    print("\nFetching Missouri State Parks...")
-    mo_state_camps = fetch_mo_state_parks(); total_mo_state_parks = len(mo_state_camps)
-    print(f"  MO State Parks: {merge_state(mo_state_camps)} new listings added")
-
-    print("\nFetching Indiana State Parks...")
-    in_state_camps = fetch_in_state_parks(); total_in_state_parks = len(in_state_camps)
-    print(f"  IN State Parks: {merge_state(in_state_camps)} new listings added")
-
-    print("\nFetching Texas State Parks...")
-    tx_state_camps = fetch_tx_state_parks(); total_tx_state_parks = len(tx_state_camps)
-    print(f"  TX State Parks: {merge_state(tx_state_camps)} new listings added")
-
-    print("\nFetching Ohio State Parks...")
-    oh_state_camps = fetch_oh_state_parks(); total_oh_state_parks = len(oh_state_camps)
-    print(f"  OH State Parks: {merge_state(oh_state_camps)} new listings added")
-
-    print("\nFetching Tennessee State Parks...")
-    tn_state_camps = fetch_tn_state_parks(); total_tn_state_parks = len(tn_state_camps)
-    print(f"  TN State Parks: {merge_state(tn_state_camps)} new listings added")
-
-    print("\nFetching Arkansas State Parks...")
-    ar_state_camps = fetch_ar_state_parks(); total_ar_state_parks = len(ar_state_camps)
-    print(f"  AR State Parks: {merge_state(ar_state_camps)} new listings added")
-
-    print("\nFetching Virginia State Parks...")
-    va_state_camps = fetch_va_state_parks(); total_va_state_parks = len(va_state_camps)
-    print(f"  VA State Parks: {merge_state(va_state_camps)} new listings added")
-
-    print("\nFetching Georgia State Parks...")
-    ga_state_camps = fetch_ga_state_parks(); total_ga_state_parks = len(ga_state_camps)
-    print(f"  GA State Parks: {merge_state(ga_state_camps)} new listings added")
-
-    print("\nFetching North Carolina State Parks...")
-    nc_state_camps = fetch_nc_state_parks(); total_nc_state_parks = len(nc_state_camps)
-    print(f"  NC State Parks: {merge_state(nc_state_camps)} new listings added")
-
-    print("\nFetching Arizona State Parks...")
-    az_state_camps = fetch_az_state_parks(); total_az_state_parks = len(az_state_camps)
-    print(f"  AZ State Parks: {merge_state(az_state_camps)} new listings added")
-
-    print("\nFetching New York State Parks...")
-    ny_state_camps = fetch_ny_state_parks(); total_ny_state_parks = len(ny_state_camps)
-    print(f"  NY State Parks: {merge_state(ny_state_camps)} new listings added")
-
-    print("\nFetching Minnesota State Parks...")
-    mn_state_camps = fetch_mn_state_parks(); total_mn_state_parks = len(mn_state_camps)
-    print(f"  MN State Parks: {merge_state(mn_state_camps)} new listings added")
-
-    print("\nFetching Colorado State Parks...")
-    co_state_camps = fetch_co_state_parks(); total_co_state_parks = len(co_state_camps)
-    print(f"  CO State Parks: {merge_state(co_state_camps)} new listings added")
-
-    print("\nFetching Idaho State Parks...")
-    id_state_camps = fetch_id_state_parks(); total_id_state_parks = len(id_state_camps)
-    print(f"  ID State Parks: {merge_state(id_state_camps)} new listings added")
-
-    print("\nFetching New Mexico State Parks...")
-    nm_state_camps = fetch_nm_state_parks(); total_nm_state_parks = len(nm_state_camps)
-    print(f"  NM State Parks: {merge_state(nm_state_camps)} new listings added")
-
-    print("\nFetching Nevada State Parks...")
-    nv_state_camps = fetch_nv_state_parks(); total_nv_state_parks = len(nv_state_camps)
-    print(f"  NV State Parks: {merge_state(nv_state_camps)} new listings added")
-
-    print("\nFetching Oregon State Parks...")
-    or_state_camps = fetch_or_state_parks(); total_or_state_parks = len(or_state_camps)
-    print(f"  OR State Parks: {merge_state(or_state_camps)} new listings added")
-
-    print("\nFetching Nebraska State Parks...")
-    ne_state_camps = fetch_ne_state_parks(); total_ne_state_parks = len(ne_state_camps)
-    print(f"  NE State Parks: {merge_state(ne_state_camps)} new listings added")
-
-    print("\nFetching Oklahoma State Parks...")
-    ok_state_camps = fetch_ok_state_parks(); total_ok_state_parks = len(ok_state_camps)
-    print(f"  OK State Parks: {merge_state(ok_state_camps)} new listings added")
-
-    print("\nFetching Kansas State Parks...")
-    ks_state_camps = fetch_ks_state_parks(); total_ks_state_parks = len(ks_state_camps)
-    print(f"  KS State Parks: {merge_state(ks_state_camps)} new listings added")
-
-    print("\nFetching South Dakota State Parks...")
-    sd_state_camps = fetch_sd_state_parks(); total_sd_state_parks = len(sd_state_camps)
-    print(f"  SD State Parks: {merge_state(sd_state_camps)} new listings added")
-
-    print("\nFetching Wyoming State Parks...")
-    wy_state_camps = fetch_wy_state_parks(); total_wy_state_parks = len(wy_state_camps)
-    print(f"  WY State Parks: {merge_state(wy_state_camps)} new listings added")
-
-    print("\nFetching Montana State Parks...")
-    mt_state_camps = fetch_mt_state_parks(); total_mt_state_parks = len(mt_state_camps)
-    print(f"  MT State Parks: {merge_state(mt_state_camps)} new listings added")
-
-    print("\nFetching Washington State Parks...")
-    wa_state_camps = fetch_wa_state_parks(); total_wa_state_parks = len(wa_state_camps)
-    print(f"  WA State Parks: {merge_state(wa_state_camps)} new listings added")
-
-    print("\nFetching Utah State Parks...")
-    ut_state_camps = fetch_ut_state_parks(); total_ut_state_parks = len(ut_state_camps)
-    print(f"  UT State Parks: {merge_state(ut_state_camps)} new listings added")
-
-    print("\nFetching South Carolina State Parks...")
-    sc_state_camps = fetch_sc_state_parks(); total_sc_state_parks = len(sc_state_camps)
-    print(f"  SC State Parks: {merge_state(sc_state_camps)} new listings added")
-
-    print("\nFetching Alabama State Parks...")
-    al_state_camps = fetch_al_state_parks(); total_al_state_parks = len(al_state_camps)
-    print(f"  AL State Parks: {merge_state(al_state_camps)} new listings added")
-
-    print("\nFetching Delaware State Parks...")
-    de_state_camps = fetch_de_state_parks(); total_de_state_parks = len(de_state_camps)
-    print(f"  DE State Parks: {merge_state(de_state_camps)} new listings added")
-
-    print("\nFetching Mississippi State Parks...")
-    ms_state_camps = fetch_ms_state_parks(); total_ms_state_parks = len(ms_state_camps)
-    print(f"  MS State Parks: {merge_state(ms_state_camps)} new listings added")
-
-    print("\nFetching Vermont State Parks...")
-    vt_state_camps = fetch_vt_state_parks(); total_vt_state_parks = len(vt_state_camps)
-    print(f"  VT State Parks: {merge_state(vt_state_camps)} new listings added")
-
-    print("\nFetching West Virginia State Parks...")
-    wv_state_camps = fetch_wv_state_parks(); total_wv_state_parks = len(wv_state_camps)
-    print(f"  WV State Parks: {merge_state(wv_state_camps)} new listings added")
-
-    print("\nFetching Maryland State Parks...")
-    md_state_camps = fetch_md_state_parks(); total_md_state_parks = len(md_state_camps)
-    print(f"  MD State Parks: {merge_state(md_state_camps)} new listings added")
-
-    print("\nFetching Alaska State Parks...")
-    ak_state_camps = fetch_ak_state_parks(); total_ak_state_parks = len(ak_state_camps)
-    print(f"  AK State Parks: {merge_state(ak_state_camps)} new listings added")
-
-    print("\nFetching Connecticut State Parks...")
-    ct_state_camps = fetch_ct_state_parks(); total_ct_state_parks = len(ct_state_camps)
-    print(f"  CT State Parks: {merge_state(ct_state_camps)} new listings added")
-
-    print("\nFetching Iowa State Parks...")
-    ia_state_camps = fetch_ia_state_parks(); total_ia_state_parks = len(ia_state_camps)
-    print(f"  IA State Parks: {merge_state(ia_state_camps)} new listings added")
-
-    print("\nFetching Louisiana State Parks...")
-    la_state_camps = fetch_la_state_parks(); total_la_state_parks = len(la_state_camps)
-    print(f"  LA State Parks: {merge_state(la_state_camps)} new listings added")
-
-    print("\nFetching Hawaii State Parks...")
-    hi_state_camps = fetch_hi_state_parks(); total_hi_state_parks = len(hi_state_camps)
-    print(f"  HI State Parks: {merge_state(hi_state_camps)} new listings added")
-
-    print("\nFetching New Jersey State Parks...")
-    nj_state_camps = fetch_nj_state_parks(); total_nj_state_parks = len(nj_state_camps)
-    print(f"  NJ State Parks: {merge_state(nj_state_camps)} new listings added")
-
-    print("\nFetching Rhode Island State Parks...")
-    ri_state_camps = fetch_ri_state_parks(); total_ri_state_parks = len(ri_state_camps)
-    print(f"  RI State Parks: {merge_state(ri_state_camps)} new listings added")
-
-    print("\nFetching New Hampshire State Parks...")
-    nh_state_camps = fetch_nh_state_parks(); total_nh_state_parks = len(nh_state_camps)
-    print(f"  NH State Parks: {merge_state(nh_state_camps)} new listings added")
-
-    print("\nFetching Maine State Parks...")
-    me_state_camps = fetch_me_state_parks(); total_me_state_parks = len(me_state_camps)
-    print(f"  ME State Parks: {merge_state(me_state_camps)} new listings added")
-
-    print("\nFetching Massachusetts State Parks...")
-    ma_state_camps = fetch_ma_state_parks(); total_ma_state_parks = len(ma_state_camps)
-    print(f"  MA State Parks: {merge_state(ma_state_camps)} new listings added")
-
-    print("\nFetching North Dakota State Parks...")
-    nd_state_camps = fetch_nd_state_parks(); total_nd_state_parks = len(nd_state_camps)
-    print(f"  ND State Parks: {merge_state(nd_state_camps)} new listings added")
+    state_park_totals = {}
+    state_park_sources = []
+    for abbr, state_name, fetcher, source_label in state_park_jobs:
+        print(f"\nFetching {state_name} State Parks...")
+        started = time.time()
+        state_camps = fetcher()
+        state_park_totals[abbr] = len(state_camps)
+        state_park_sources.append(source_label)
+        merged = merge_state(state_camps)
+        elapsed = time.time() - started
+        print(f"  {abbr} State Parks: {merged} new listings added [{elapsed:.1f}s]")
 
     print("\nMerging layover listings...")
     import math as _math
@@ -34188,34 +34007,7 @@ def main():
     output = {
         "generated": datetime.now(timezone.utc).isoformat(),
         "count": len(camps_list),
-        "sources": [
-            "Recreation.gov RIDB", "NPS API", "California State Parks Open Data",
-            "Illinois DNR Equestrian Camping", "Kentucky State Parks Horse Camping",
-            "Florida State Parks Equestrian Camping", "Pennsylvania State Parks Horse Camping",
-            "Michigan DNR Equestrian Campgrounds", "Wisconsin DNR Equestrian Campsites",
-            "Missouri State Parks Equestrian Campgrounds", "Indiana DNR Horse Camping",
-            "Texas Parks & Wildlife Equestrian Camping", "Ohio State Parks Bridle Camps",
-            "Tennessee State Parks Horse Camping", "Arkansas State Parks Horse Camping",
-            "Virginia State Parks Horse Camping", "Georgia State Parks Equestrian Camping",
-            "North Carolina State Parks Equestrian Camping", "Arizona State Parks Equestrian Camping",
-            "New York State Parks Equestrian Camping", "Minnesota DNR Horse Campgrounds",
-            "Colorado State Parks Equestrian Camping", "Idaho State Parks Equestrian Camping",
-            "New Mexico State Parks Equestrian Camping", "Nevada State Parks Equestrian Camping",
-            "Oregon State Parks Equestrian Camping", "Nebraska State Parks Equestrian Camping",
-            "Oklahoma State Parks Equestrian Camping", "Kansas State Parks Equestrian Camping",
-            "South Dakota State Parks Equestrian Camping", "Wyoming State Parks Equestrian Camping",
-            "Montana State Parks Equestrian Camping", "Washington State Parks Equestrian Camping",
-            "Utah State Parks Equestrian Camping", "South Carolina State Parks Equestrian Camping",
-            "Alabama State Parks Equestrian Camping", "Delaware State Parks Equestrian Camping",
-            "Mississippi State Parks Equestrian Camping", "Vermont State Parks Equestrian Camping",
-            "West Virginia State Parks Equestrian Camping", "Maryland State Parks Equestrian Camping",
-            "Alaska State Parks Equestrian Camping", "Connecticut State Parks Equestrian Camping",
-            "Iowa State Parks Equestrian Camping", "Louisiana State Parks Equestrian Camping",
-            "Hawaii State Parks Equestrian Camping", "New Jersey State Parks Equestrian Camping",
-            "Rhode Island State Parks Equestrian Camping", "New Hampshire State Parks Equestrian Camping",
-            "Maine State Parks Equestrian Camping", "Massachusetts State Parks Equestrian Camping",
-            "North Dakota State Parks Equestrian Camping", "OpenStreetMap", "Layover"
-        ],
+        "sources": ["Recreation.gov RIDB", "NPS API"] + state_park_sources + ["OpenStreetMap", "Layover"],
         "camps": camps_list,
     }
     with open("camps.json", "w") as f:
@@ -34227,56 +34019,8 @@ def main():
     print(f"\nDone. {len(camps_list)} total camps written to camps.json")
     print(f"  RIDB:         {total_ridb}")
     print(f"  NPS:          {total_nps}")
-    print(f"  CA StateParks:{total_ca_state_parks}")
-    print(f"  IL StateParks:{total_il_state_parks}")
-    print(f"  KY StateParks:{total_ky_state_parks}")
-    print(f"  FL StateParks:{total_fl_state_parks}")
-    print(f"  PA StateParks:{total_pa_state_parks}")
-    print(f"  MI StateParks:{total_mi_state_parks}")
-    print(f"  WI StateParks:{total_wi_state_parks}")
-    print(f"  MO StateParks:{total_mo_state_parks}")
-    print(f"  IN StateParks:{total_in_state_parks}")
-    print(f"  TX StateParks:{total_tx_state_parks}")
-    print(f"  OH StateParks:{total_oh_state_parks}")
-    print(f"  TN StateParks:{total_tn_state_parks}")
-    print(f"  AR StateParks:{total_ar_state_parks}")
-    print(f"  VA StateParks:{total_va_state_parks}")
-    print(f"  GA StateParks:{total_ga_state_parks}")
-    print(f"  NC StateParks:{total_nc_state_parks}")
-    print(f"  AZ StateParks:{total_az_state_parks}")
-    print(f"  NY StateParks:{total_ny_state_parks}")
-    print(f"  MN StateParks:{total_mn_state_parks}")
-    print(f"  CO StateParks:{total_co_state_parks}")
-    print(f"  ID StateParks:{total_id_state_parks}")
-    print(f"  NM StateParks:{total_nm_state_parks}")
-    print(f"  NV StateParks:{total_nv_state_parks}")
-    print(f"  OR StateParks:{total_or_state_parks}")
-    print(f"  NE StateParks:{total_ne_state_parks}")
-    print(f"  OK StateParks:{total_ok_state_parks}")
-    print(f"  KS StateParks:{total_ks_state_parks}")
-    print(f"  SD StateParks:{total_sd_state_parks}")
-    print(f"  WY StateParks:{total_wy_state_parks}")
-    print(f"  MT StateParks:{total_mt_state_parks}")
-    print(f"  WA StateParks:{total_wa_state_parks}")
-    print(f"  UT StateParks:{total_ut_state_parks}")
-    print(f"  SC StateParks:{total_sc_state_parks}")
-    print(f"  AL StateParks:{total_al_state_parks}")
-    print(f"  DE StateParks:{total_de_state_parks}")
-    print(f"  MS StateParks:{total_ms_state_parks}")
-    print(f"  VT StateParks:{total_vt_state_parks}")
-    print(f"  WV StateParks:{total_wv_state_parks}")
-    print(f"  MD StateParks:{total_md_state_parks}")
-    print(f"  AK StateParks:{total_ak_state_parks}")
-    print(f"  CT StateParks:{total_ct_state_parks}")
-    print(f"  IA StateParks:{total_ia_state_parks}")
-    print(f"  LA StateParks:{total_la_state_parks}")
-    print(f"  HI StateParks:{total_hi_state_parks}")
-    print(f"  NJ StateParks:{total_nj_state_parks}")
-    print(f"  RI StateParks:{total_ri_state_parks}")
-    print(f"  NH StateParks:{total_nh_state_parks}")
-    print(f"  ME StateParks:{total_me_state_parks}")
-    print(f"  MA StateParks:{total_ma_state_parks}")
-    print(f"  ND StateParks:{total_nd_state_parks}")
+    for abbr in sorted(state_park_totals):
+        print(f"  {abbr} StateParks:{state_park_totals[abbr]}")
     print(f"  Layovers:     {layover_count}")
     print(f"  OSM:          {osm_count}")
     print(f"  Verified:     {verified_count} manually verified")

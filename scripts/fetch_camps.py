@@ -1713,6 +1713,83 @@ def fetch_co_state_parks():
 
 
 
+def fetch_ct_state_parks():
+    """Fetch conservative Connecticut state-park horse-camping locations.
+
+    Connecticut has limited dedicated overnight horse-camping inventory, so this
+    first pass stays strict and only includes official CT DEEP forests where
+    horseback riding and overnight camping are both clearly supported.
+    """
+    parks = [
+        {
+            "id": "ct-stateparks-pachaug-green-falls",
+            "name": "Pachaug State Forest Green Falls Horse Camp",
+            "location": "Voluntown, CT",
+            "state": "CT",
+            "latitude": 41.5908,
+            "longitude": -71.8396,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Primitive Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "860-424-3200",
+            "website": "https://portal.ct.gov/deep/state-parks/forests/pachaug-state-forest",
+            "description": "Official CT DEEP Pachaug State Forest page lists Green Falls Campground for camping and the forest is a major horseback-riding destination with designated horse trails and camp access to ride-in areas.",
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "CT State Parks",
+        },
+        {
+            "id": "ct-stateparks-natchaug-horse-camp",
+            "name": "Natchaug State Forest Horse Camp Area",
+            "location": "Eastford, CT",
+            "state": "CT",
+            "latitude": 41.8945,
+            "longitude": -72.1246,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Primitive Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "860-424-3200",
+            "website": "https://portal.ct.gov/deep/state-parks/forests/natchaug-state-forest",
+            "description": "Conservative Connecticut first pass. Official CT DEEP Natchaug State Forest information supports horseback riding and dispersed/primitive camping use in the forest, making it a reasonable horse-camping entry to verify before arrival.",
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "CT State Parks",
+        },
+    ]
+    print(f"  Connecticut State Parks: {len(parks)} conservative equestrian-camping listings")
+    return parks
+
+
 # ── MAIN ───────────────────────────────────────────────────────────────
 
 
@@ -2608,6 +2685,732 @@ def fetch_ms_state_parks():
         },
     ]
     print(f"  Mississippi State Parks: {len(parks)} conservative equestrian-camping listings")
+    return parks
+
+
+
+def fetch_ak_state_parks():
+    """Fetch conservative Alaska State Parks horse-friendly camping locations.
+
+    Alaska has limited centralized equestrian-camping data, so this first pass
+    stays strict and only includes official Alaska State Parks units whose pages
+    clearly list both camping and horseback riding among supported activities.
+    """
+    parks = [
+        {
+            "id": "ak-stateparks-eklutna-lake",
+            "name": "Eklutna Lake Campground Horse Access",
+            "location": "Chugiak, AK",
+            "state": "AK",
+            "latitude": 61.4148,
+            "longitude": -149.1457,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": ["Water"],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "907-345-5014",
+            "website": "https://dnr.alaska.gov/parks/aspunits/chugach/eklutnalkcamp.htm",
+            "description": "Official Alaska State Parks Eklutna Lake Campground page lists both camping and horseback riding among park activities.",
+            "isVerified": False,
+            "seasonStart": 5,
+            "seasonEnd": 9,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "AK State Parks",
+        },
+        {
+            "id": "ak-stateparks-matanuska-lakes",
+            "name": "Matanuska Lakes State Recreation Area Horse Access Camping",
+            "location": "Palmer, AK",
+            "state": "AK",
+            "latitude": 61.5998,
+            "longitude": -149.2586,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "907-745-3975",
+            "website": "https://dnr.alaska.gov/parks/aspunits/matsu/keplerbradlksra.htm",
+            "description": "Official Alaska State Parks Matanuska Lakes State Recreation Area page says camping and horseback riding are dominant activities in the park.",
+            "isVerified": False,
+            "seasonStart": 5,
+            "seasonEnd": 9,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "AK State Parks",
+        },
+    ]
+    print(f"  Alaska State Parks: {len(parks)} conservative equestrian-camping listings")
+    return parks
+
+
+def fetch_ia_state_parks():
+    """Fetch official Iowa DNR equestrian camping locations.
+
+    Iowa DNR's overnight-camping guidance explicitly lists designated equestrian
+    campgrounds. This first pass uses a conservative fixed allowlist built from
+    the statewide Iowa DNR list plus park pages with clear equestrian-camping
+    amenities.
+    """
+    parks = [
+        {
+            "id": "ia-stateparks-brushy-creek",
+            "name": "Brushy Creek State Recreation Area Equestrian Campgrounds",
+            "location": "Lehigh, IA",
+            "state": "IA",
+            "latitude": 42.3919,
+            "longitude": -93.9847,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 4.0,
+            "hookups": ["30A"],
+            "accommodations": ["Trails", "Highlines"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "515-543-8298",
+            "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/brushy-creek-state-recreation-area",
+            "description": "Official Iowa DNR page says Brushy Creek has north and south equestrian campgrounds with electric and non-electric sites, a horse-wash area, hitch rails, and modern shower/restroom facilities.",
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": True,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "IA State Parks",
+        },
+        {
+            "id": "ia-stateparks-elk-rock",
+            "name": "Elk Rock State Park Equestrian Campground",
+            "location": "Knoxville, IA",
+            "state": "IA",
+            "latitude": 41.3783,
+            "longitude": -93.2629,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 4.0,
+            "hookups": ["30A"],
+            "accommodations": ["Trails", "Stalls", "Highlines"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "641-842-6008",
+            "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/elk-rock-state-park",
+            "description": "Official Iowa DNR page says Elk Rock's equestrian campground has electric and non-electric sites, a shower building, horse stalls, hitching rails, and a riding arena.",
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "IA State Parks",
+        },
+        {
+            "id": "ia-stateparks-lake-of-three-fires",
+            "name": "Lake of Three Fires State Park Equestrian Campground",
+            "location": "Bedford, IA",
+            "state": "IA",
+            "latitude": 40.7116,
+            "longitude": -94.6902,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 4.0,
+            "hookups": ["30A"],
+            "accommodations": ["Trails", "Corrals", "Highlines"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "712-523-2700",
+            "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/lake-three-fires-state-park",
+            "description": "Official Iowa DNR page says the equestrian campground has electric and non-electric sites, restrooms, corrals, hitching posts, and holding pens.",
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "IA State Parks",
+        },
+        {
+            "id": "ia-stateparks-waubonsie",
+            "name": "Waubonsie State Park Equestrian Campground",
+            "location": "Hamburg, IA",
+            "state": "IA",
+            "latitude": 40.6614,
+            "longitude": -95.6869,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 4.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Corrals", "Highlines"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "712-382-2786",
+            "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/waubonsie-state-park",
+            "description": "Official Iowa DNR page says Waubonsie's primitive equestrian campground contains non-electric sites with hitching rails, pens, and pit vault toilets.",
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "IA State Parks",
+        },
+        {
+            "id": "ia-stateparks-nine-eagles",
+            "name": "Nine Eagles State Park Equestrian Campsites",
+            "location": "Davis City, IA",
+            "state": "IA",
+            "latitude": 40.5984,
+            "longitude": -93.7701,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 4.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Highlines"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "641-442-2855",
+            "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/nine-eagles-state-park",
+            "description": "Official Iowa DNR page says primitive equestrian campsites contain fire rings, pit toilets, water, and hitching rails.",
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "IA State Parks",
+        },
+        {
+            "id": "ia-stateparks-volga-river",
+            "name": "Volga River State Recreation Area Albany Equestrian Campground",
+            "location": "Fayette, IA",
+            "state": "IA",
+            "latitude": 42.8989,
+            "longitude": -91.7711,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 4.0,
+            "hookups": ["30A"],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "563-425-4161",
+            "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/volga-river-state-recreation-area",
+            "description": "Official Iowa DNR page says the Albany Campground has equestrian sites with electricity.",
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "IA State Parks",
+        },
+        {
+            "id": "ia-stateparks-shimek",
+            "name": "Shimek State Forest Lick Creek Equestrian Campgrounds",
+            "location": "Farmington, IA",
+            "state": "IA",
+            "latitude": 40.6425,
+            "longitude": -91.7118,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 4.0,
+            "hookups": ["Water"],
+            "accommodations": ["Trails", "Stalls", "Highlines"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "319-878-3811",
+            "website": "https://www.iowadnr.gov/places-go/state-forests/shimek-state-forest",
+            "description": "Official Iowa DNR page says the Lower and Upper Campgrounds in the Lick Creek Unit are designed for equestrian use, with open-air stalls for overnight stabling, hitching posts, and a water hydrant.",
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "IA State Parks",
+        },
+    ]
+    print(f"  Iowa State Parks: {len(parks)} official equestrian-camping listings")
+    return parks
+
+
+def fetch_hi_state_parks():
+    """Fetch a conservative first-pass set of Hawaiʻi state-park horse camping locations.
+
+    Hawaiʻi has limited official overnight equestrian inventory, so this pass stays
+    conservative and only includes areas where official DLNR park/recreation pages
+    clearly surface both camping and horseback riding access.
+    """
+    parks = [
+        {
+            "id": "hi-stateparks-kokee-nualolo",
+            "name": "Kōkeʻe State Park Nualolo Horse Camping Access",
+            "location": "Waimea, HI",
+            "state": "HI",
+            "latitude": 22.1412,
+            "longitude": -159.6606,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Primitive Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "808-274-3444",
+            "website": "https://dlnr.hawaii.gov/dsp/parks/kauai/kokee-state-park/",
+            "description": "Conservative Hawaiʻi DLNR first pass. Kōkeʻe State Park is an official camping area with trail access into a region used for horseback riding; verify current equestrian rules before arrival.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "HI State Parks",
+        },
+        {
+            "id": "hi-stateparks-polipoli-spring",
+            "name": "Polipoli Spring State Recreation Area Horse Camping Access",
+            "location": "Kula, HI",
+            "state": "HI",
+            "latitude": 20.6550,
+            "longitude": -156.3070,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Primitive Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "808-984-8109",
+            "website": "https://dlnr.hawaii.gov/dsp/parks/maui/polipoli-spring-state-recreation-area/",
+            "description": "Conservative Hawaiʻi DLNR first pass. Polipoli Spring State Recreation Area is an official camping area in a region with horseback riding access; verify current equestrian rules before arrival.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "HI State Parks",
+        },
+    ]
+    print(f"  Hawaii State Parks: {len(parks)} conservative equestrian-camping listings")
+    return parks
+
+
+def fetch_nj_state_parks():
+    """Fetch a conservative first-pass set of New Jersey State Parks horse-camping locations.
+
+    New Jersey does not appear to publish a clean statewide equestrian-camping allowlist.
+    This pass stays conservative and only includes parks/forests where official NJDEP pages
+    clearly support both overnight camping and horseback riding in the same park/forest.
+    """
+    parks = [
+        {
+            "id": "nj-stateparks-wharton-atsion-horse-camp",
+            "name": "Wharton State Forest Atsion Horse Camping Access",
+            "location": "Shamong, NJ",
+            "state": "NJ",
+            "latitude": 39.7427,
+            "longitude": -74.7269,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Primitive Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "609-561-0024",
+            "website": "https://dep.nj.gov/parksandforests/state-park/wharton-state-forest/",
+            "description": "Conservative New Jersey first pass. Official NJDEP pages for Wharton State Forest and Atsion Recreation Area surface both camping and horseback riding in the same forest/recreation area, so this is included as a horse-friendly overnight option to verify before arrival.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "NJ State Parks",
+        },
+    ]
+    print(f"  New Jersey State Parks: {len(parks)} conservative equestrian-camping listings")
+    return parks
+
+
+def fetch_ri_state_parks():
+    """Fetch a conservative first-pass set of Rhode Island State Parks equestrian camping.
+
+    Rhode Island DEM appears to separate campground inventory from equestrian-use parks.
+    This pass stays strict and currently returns no listings until an official RI state
+    page clearly surfaces both overnight camping and horseback riding at the same park.
+    """
+    parks = []
+    print(f"  Rhode Island State Parks: {len(parks)} conservative equestrian-camping listings")
+    return parks
+
+
+def fetch_nh_state_parks():
+    """Fetch a conservative first-pass set of New Hampshire State Parks equestrian camping.
+
+    New Hampshire does not appear to publish a dedicated statewide horse-camping allowlist.
+    This pass stays conservative and only includes parks where official NH State Parks pages
+    clearly surface both camping and equestrian trail use within the same park.
+    """
+    parks = [
+        {
+            "id": "nh-stateparks-bear-brook",
+            "name": "Bear Brook State Park Horse Camping Access",
+            "location": "Allenstown, NH",
+            "state": "NH",
+            "latitude": 43.1440,
+            "longitude": -71.3570,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "603-485-9869",
+            "website": "https://www.nhstateparks.org/find-parks-trails/bear-brook-state-park",
+            "description": "Conservative New Hampshire first pass. Official NH State Parks information for Bear Brook surfaces campground lodging and over 40 miles of trails for hikers, mountain bikers and equestrians in the same park, so it is included as a horse-friendly overnight option to verify before arrival.",
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "NH State Parks",
+        },
+    ]
+    print(f"  New Hampshire State Parks: {len(parks)} conservative equestrian-camping listings")
+    return parks
+
+
+def fetch_me_state_parks():
+    """Fetch a conservative first-pass set of Maine State Parks equestrian camping.
+
+    Maine does not appear to publish a statewide horse-camping allowlist. This pass stays
+    conservative and only includes parks where official Maine DACF materials clearly show
+    both overnight camping and horseback riding or trail riding at the same park.
+    """
+    parks = [
+        {
+            "id": "me-stateparks-mount-blue",
+            "name": "Mount Blue State Park Horse Camping Access",
+            "location": "Weld, ME",
+            "state": "ME",
+            "latitude": 44.681737,
+            "longitude": -70.449439,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "207-585-2347",
+            "website": "https://www.maine.gov/mountblue",
+            "description": "Conservative Maine first pass. Official Maine DACF guide material says Mount Blue has a 136-site campground at Webb Beach and 18 miles of multi-use trails for mountain bikers and equestrians, so it is included as a horse-friendly overnight option to verify before arrival.",
+            "isVerified": False,
+            "seasonStart": 5,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "ME State Parks",
+        },
+    ]
+    print(f"  Maine State Parks: {len(parks)} conservative equestrian-camping listings")
+    return parks
+
+
+def fetch_ma_state_parks():
+    """Fetch official Massachusetts State Parks equestrian camping locations.
+
+    Massachusetts DCR directly identifies horse camping at Charge Pond within Myles Standish
+    State Forest, so this pass uses a small fixed allowlist built from the official park page,
+    trail map, and campground metadata.
+    """
+    parks = [
+        {
+            "id": "ma-stateparks-myles-standish-charge-pond",
+            "name": "Myles Standish State Forest Charge Pond Horse Camp",
+            "location": "Carver, MA",
+            "state": "MA",
+            "latitude": 41.8176,
+            "longitude": -70.6756,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "508-866-2526",
+            "website": "https://www.mass.gov/locations/myles-standish-state-forest",
+            "description": "Official Massachusetts DCR information says Charge Pond at Myles Standish State Forest has an area set aside for horse camping, and the forest also offers extensive equestrian trails.",
+            "isVerified": False,
+            "seasonStart": 5,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "MA State Parks",
+        },
+    ]
+    print(f"  Massachusetts State Parks: {len(parks)} official equestrian-camping listings")
+    return parks
+
+
+def fetch_nd_state_parks():
+    """Fetch official North Dakota horse-park camping locations.
+
+    North Dakota Parks and Recreation publishes both a statewide horseback-riding overview
+    and detailed park pages for designated horse parks. This pass uses a conservative fixed
+    allowlist built from those official horse-park pages.
+    """
+    parks = [
+        {
+            "id": "nd-stateparks-fort-ransom-horse-camp",
+            "name": "Fort Ransom State Park Horse Campgrounds",
+            "location": "Fort Ransom, ND",
+            "state": "ND",
+            "latitude": 46.54556,
+            "longitude": -97.92972,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 6.0,
+            "hookups": ["Electric", "Water"],
+            "accommodations": ["Trails", "Corrals", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 68,
+            "phone": "701-973-4331",
+            "website": "https://www.parkrec.nd.gov/fort-ransom-state-park",
+            "description": "Official North Dakota Parks and Recreation information says Fort Ransom State Park is a designated horse park with 24 modern horse campsites, 9 primitive horse campsites, 68 corrals, showers, a dump station, and extensive horseback-riding trails.",
+            "isVerified": False,
+            "seasonStart": 5,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "ND State Parks",
+        },
+        {
+            "id": "nd-stateparks-fort-abraham-lincoln-horse-camp",
+            "name": "Fort Abraham Lincoln State Park Horse Campground",
+            "location": "Mandan, ND",
+            "state": "ND",
+            "latitude": 46.7594,
+            "longitude": -100.8443,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 6.0,
+            "hookups": ["Water"],
+            "accommodations": ["Trails", "Corrals", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 8,
+            "phone": "701-667-6340",
+            "website": "https://www.parkrec.nd.gov/fort-abraham-lincoln-state-park",
+            "description": "Official North Dakota Parks and Recreation information says Fort Abraham Lincoln State Park offers 4 primitive horse campsites, 8 corrals, showers, a sewage dump station, and nearly 20 miles of trails open to horseback riding.",
+            "isVerified": False,
+            "seasonStart": 5,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "ND State Parks",
+        },
+        {
+            "id": "nd-stateparks-rough-rider-horse-camp",
+            "name": "Rough Rider State Park Horse Campgrounds",
+            "location": "Medora, ND",
+            "state": "ND",
+            "latitude": 46.892634,
+            "longitude": -103.538254,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 6.0,
+            "hookups": ["Electric", "Water"],
+            "accommodations": ["Trails", "Corrals", "Horse Camping", "Group Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 66,
+            "phone": "701-623-2024",
+            "website": "https://www.parkrec.nd.gov/rough-rider-state-park",
+            "description": "Official North Dakota Parks and Recreation information says Rough Rider State Park is a designated horse park with standard and group horse campsites, 66 corrals, a round pen, a dump station, shower house, and direct access to the Maah Daah Hey Trail.",
+            "isVerified": False,
+            "seasonStart": 5,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "ND State Parks",
+        },
+        {
+            "id": "nd-stateparks-little-missouri-horse-camp",
+            "name": "Little Missouri State Park Horse Campgrounds",
+            "location": "Killdeer, ND",
+            "state": "ND",
+            "latitude": 47.5075,
+            "longitude": -102.50083,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 6.0,
+            "hookups": ["Electric"],
+            "accommodations": ["Trails", "Corrals", "Horse Camping", "Group Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 81,
+            "phone": "701-764-5256",
+            "website": "https://www.parkrec.nd.gov/little-missouri-state-park-0",
+            "description": "Official North Dakota Parks and Recreation information says Little Missouri State Park is a designated horse park with modern and primitive campsites, 81 corrals, a round pen, a pay shower house, RV dump station, and over 40 miles of trails open to horseback riding.",
+            "isVerified": False,
+            "seasonStart": 5,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "ND State Parks",
+        },
+    ]
+    print(f"  North Dakota State Parks: {len(parks)} official equestrian-camping listings")
     return parks
 
 # ── OPENSTREETMAP ────────────────────────────────────────────
@@ -31006,6 +31809,315 @@ def fetch_ks_state_parks():
     print(f"  Kansas State Parks: {len(parks)} official equestrian-camping listings")
     return parks
 
+
+
+
+
+def fetch_md_state_parks():
+    """Fetch conservative Maryland equestrian camping locations from official DNR sources.
+
+    This first pass includes only Maryland public lands where official DNR pages
+    clearly indicate both equestrian access and overnight camping with horses.
+    """
+    parks = [
+        {
+            "id": "md-stateparks-fair-hill-race-barn",
+            "name": "Fair Hill NRMA Race Barn Equestrian Camping Facility",
+            "location": "Elkton, MD",
+            "state": "MD",
+            "latitude": 39.7108,
+            "longitude": -75.8656,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "410-398-1246",
+            "website": "https://dnr.maryland.gov/publiclands/pages/central/fairhill/camping.aspx",
+            "description": "Official Maryland DNR equestrian camping at Fair Hill Natural Resources Management Area. The camping page says equestrian camping facilities are available by reservation only at the Race Barn facility.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "MD State Parks",
+        },
+        {
+            "id": "md-stateparks-savage-river-margraff",
+            "name": "Savage River State Forest Margraff Plantation Horse Camp",
+            "location": "Grantsville, MD",
+            "state": "MD",
+            "latitude": 39.6437,
+            "longitude": -79.1484,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Primitive Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "301-895-5759",
+            "website": "https://dnr.maryland.gov/forests/documents/srsf-horseback-riding-brochure.pdf",
+            "description": "Official Maryland DNR Savage River State Forest horse brochure says visitors camping with horses should use the campsites located at the Margraff Plantation, making it a conservative overnight horse-camping entry.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "MD State Parks",
+        },
+    ]
+    print(f"  Maryland State Parks: {len(parks)} official equestrian-camping listings")
+    return parks
+
+def fetch_vt_state_parks():
+    """Fetch a conservative first-pass set of Vermont horse-camping locations.
+
+    Vermont has limited state-managed horse-camping inventory. This pass stays
+    conservative and only includes locations with a clear public horse-camping
+    signal associated with state park / state forest recreation areas.
+    """
+    parks = [
+        {
+            "id": "vt-stateparks-new-discovery",
+            "name": "New Discovery State Park Horse Camp",
+            "location": "Groton, VT",
+            "state": "VT",
+            "latitude": 44.2893,
+            "longitude": -72.2420,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": ["Water"],
+            "accommodations": ["Corrals", "Trails"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 8,
+            "phone": "802-584-3822",
+            "website": "https://vtstateparks.com/newdiscovery.html",
+            "description": "Conservative Vermont horse-camping entry for New Discovery State Park in Groton State Forest, a known equestrian camping area with horse campsites/corrals and trail access.",
+            "isVerified": False,
+            "seasonStart": 5,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "E3A18B"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "VT State Parks",
+        },
+        {
+            "id": "vt-stateparks-camp-plymouth",
+            "name": "Camp Plymouth State Park Horse Camp",
+            "location": "Plymouth, VT",
+            "state": "VT",
+            "latitude": 43.4797,
+            "longitude": -72.7403,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Horse Camping", "Trails"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "802-672-3612",
+            "website": "https://vtstateparks.com/plymouth.html",
+            "description": "Conservative Vermont horse-camping entry for Camp Plymouth State Park, a state park commonly described with group and horse camping facilities.",
+            "isVerified": False,
+            "seasonStart": 5,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "E3A18B"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "VT State Parks",
+        },
+    ]
+    print(f"  Vermont State Parks: {len(parks)} conservative horse-camping listings")
+    return parks
+
+def fetch_wv_state_parks():
+    """Fetch official West Virginia State Parks equestrian camping locations.
+
+    Conservative fixed allowlist using official West Virginia State Parks pages
+    with explicit equestrian-camping language.
+    """
+    parks = [
+        {
+            "id": "wv-stateparks-camp-creek-double-c",
+            "name": "Camp Creek State Park Double C Horse and Rider Campground",
+            "location": "Camp Creek, WV",
+            "state": "WV",
+            "latitude": 37.5168,
+            "longitude": -81.1486,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "304-425-9481",
+            "website": "https://wvstateparks.com/parks/camp-creek-state-park-and-forest/lodging/camping-at-camp-creek-state-park/",
+            "description": "Official West Virginia State Parks equestrian campground at Camp Creek State Park and Forest. The Double C Horse and Rider Campground is designed for visitors traveling with horses and the park activities page says equestrian camping is available.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "WV State Parks",
+        },
+        {
+            "id": "wv-stateparks-holly-river-equestrian",
+            "name": "Holly River State Park Equestrian Campsites",
+            "location": "Hacker Valley, WV",
+            "state": "WV",
+            "latitude": 38.7146,
+            "longitude": -80.2951,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": ["30A"],
+            "accommodations": ["Trails", "Corrals"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 3,
+            "phone": "304-493-6353",
+            "website": "https://wvstateparks.com/parks/holly-river-state-park/activities/",
+            "description": "Official West Virginia State Parks equestrian campsites at Holly River State Park. The park activities page says overnight camping with horses is available by reservation for campsites 79, 80 and 81, and corrals are included in the campsite reservation.",
+            "isVerified": False,
+            "seasonStart": 4,
+            "seasonEnd": 10,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": True,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "WV State Parks",
+        },
+    ]
+    print(f"  West Virginia State Parks: {len(parks)} official equestrian-camping listings")
+    return parks
+
+
+
+def fetch_la_state_parks():
+    """Fetch conservative Louisiana State Parks equestrian camping locations.
+
+    Louisiana State Parks officially surfaces horseback riding at a small set of
+    parks, and those park pages also advertise overnight camping. This first pass
+    stays conservative and only includes parks with clear official horseback-riding
+    plus camping signals.
+    """
+    parks = [
+        {
+            "id": "la-stateparks-bogue-chitto",
+            "name": "Bogue Chitto State Park Equestrian Area Campground",
+            "location": "Franklinton, LA",
+            "state": "LA",
+            "latitude": 30.7907,
+            "longitude": -89.8834,
+            "pricePerNight": 33.0,
+            "horseFeePerNight": 3.0,
+            "hookups": ["30A", "Water", "Sewer"],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "985-839-5707",
+            "website": "https://www.lastateparks.com/parks-preserves/bogue-chitto-state-park",
+            "description": "Official Louisiana State Parks page lists an Equestrian Area Campground with seven premium sites that include sewer, water, and electrical hookups, along with equestrian trail riding in the park.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "LA State Parks",
+        },
+        {
+            "id": "la-stateparks-lake-bistineau",
+            "name": "Lake Bistineau State Park Horse Trail Camping",
+            "location": "Doyline, LA",
+            "state": "LA",
+            "latitude": 32.6430,
+            "longitude": -93.4177,
+            "pricePerNight": 22.0,
+            "horseFeePerNight": 3.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "318-745-3503",
+            "website": "https://www.lastateparks.com/parks-preserves/lake-bistineau-state-park",
+            "description": "Official Louisiana State Parks page says Lake Bistineau has an equestrian trail and notes that overnight campsites can be rented at parks offering equestrian trails.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "rating": 0.0,
+            "reviewCount": 0,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+            "sourceDetail": "LA State Parks",
+        },
+    ]
+    print(f"  Louisiana State Parks: {len(parks)} conservative equestrian-camping listings")
+    return parks
+
 # ── MAIN ───────────────────────────────────────────────────────────────
 
 
@@ -32796,6 +33908,23 @@ def main():
     total_ks_state_parks = 0
     total_sd_state_parks = 0
     total_wy_state_parks = 0
+    total_mt_state_parks = 0
+    total_de_state_parks = 0
+    total_ms_state_parks = 0
+    total_vt_state_parks = 0
+    total_wv_state_parks = 0
+    total_md_state_parks = 0
+    total_ak_state_parks = 0
+    total_ct_state_parks = 0
+    total_ia_state_parks = 0
+    total_la_state_parks = 0
+    total_hi_state_parks = 0
+    total_nj_state_parks = 0
+    total_ri_state_parks = 0
+    total_nh_state_parks = 0
+    total_me_state_parks = 0
+    total_ma_state_parks = 0
+    total_nd_state_parks = 0
 
     for i, state in enumerate(STATES):
         print(f"[{i+1}/{len(STATES)}] {state}...", end=" ", flush=True)
@@ -32965,6 +34094,62 @@ def main():
     ms_state_camps = fetch_ms_state_parks(); total_ms_state_parks = len(ms_state_camps)
     print(f"  MS State Parks: {merge_state(ms_state_camps)} new listings added")
 
+    print("\nFetching Vermont State Parks...")
+    vt_state_camps = fetch_vt_state_parks(); total_vt_state_parks = len(vt_state_camps)
+    print(f"  VT State Parks: {merge_state(vt_state_camps)} new listings added")
+
+    print("\nFetching West Virginia State Parks...")
+    wv_state_camps = fetch_wv_state_parks(); total_wv_state_parks = len(wv_state_camps)
+    print(f"  WV State Parks: {merge_state(wv_state_camps)} new listings added")
+
+    print("\nFetching Maryland State Parks...")
+    md_state_camps = fetch_md_state_parks(); total_md_state_parks = len(md_state_camps)
+    print(f"  MD State Parks: {merge_state(md_state_camps)} new listings added")
+
+    print("\nFetching Alaska State Parks...")
+    ak_state_camps = fetch_ak_state_parks(); total_ak_state_parks = len(ak_state_camps)
+    print(f"  AK State Parks: {merge_state(ak_state_camps)} new listings added")
+
+    print("\nFetching Connecticut State Parks...")
+    ct_state_camps = fetch_ct_state_parks(); total_ct_state_parks = len(ct_state_camps)
+    print(f"  CT State Parks: {merge_state(ct_state_camps)} new listings added")
+
+    print("\nFetching Iowa State Parks...")
+    ia_state_camps = fetch_ia_state_parks(); total_ia_state_parks = len(ia_state_camps)
+    print(f"  IA State Parks: {merge_state(ia_state_camps)} new listings added")
+
+    print("\nFetching Louisiana State Parks...")
+    la_state_camps = fetch_la_state_parks(); total_la_state_parks = len(la_state_camps)
+    print(f"  LA State Parks: {merge_state(la_state_camps)} new listings added")
+
+    print("\nFetching Hawaii State Parks...")
+    hi_state_camps = fetch_hi_state_parks(); total_hi_state_parks = len(hi_state_camps)
+    print(f"  HI State Parks: {merge_state(hi_state_camps)} new listings added")
+
+    print("\nFetching New Jersey State Parks...")
+    nj_state_camps = fetch_nj_state_parks(); total_nj_state_parks = len(nj_state_camps)
+    print(f"  NJ State Parks: {merge_state(nj_state_camps)} new listings added")
+
+    print("\nFetching Rhode Island State Parks...")
+    ri_state_camps = fetch_ri_state_parks(); total_ri_state_parks = len(ri_state_camps)
+    print(f"  RI State Parks: {merge_state(ri_state_camps)} new listings added")
+
+    print("\nFetching New Hampshire State Parks...")
+    nh_state_camps = fetch_nh_state_parks(); total_nh_state_parks = len(nh_state_camps)
+    print(f"  NH State Parks: {merge_state(nh_state_camps)} new listings added")
+
+    print("\nFetching Maine State Parks...")
+    me_state_camps = fetch_me_state_parks(); total_me_state_parks = len(me_state_camps)
+    print(f"  ME State Parks: {merge_state(me_state_camps)} new listings added")
+
+    print("\nFetching Massachusetts State Parks...")
+    ma_state_camps = fetch_ma_state_parks(); total_ma_state_parks = len(ma_state_camps)
+    print(f"  MA State Parks: {merge_state(ma_state_camps)} new listings added")
+
+    print("\nFetching North Dakota State Parks...")
+    nd_state_camps = fetch_nd_state_parks(); total_nd_state_parks = len(nd_state_camps)
+    print(f"  ND State Parks: {merge_state(nd_state_camps)} new listings added")
+
     print("\nMerging layover listings...")
     import math as _math
     layover_new = 0
@@ -33017,10 +34202,19 @@ def main():
             "Colorado State Parks Equestrian Camping", "Idaho State Parks Equestrian Camping",
             "New Mexico State Parks Equestrian Camping", "Nevada State Parks Equestrian Camping",
             "Oregon State Parks Equestrian Camping", "Nebraska State Parks Equestrian Camping",
-            "Oklahoma State Parks Equestrian Camping", "Kansas State Parks Equestrian Camping", "Wyoming State Parks Equestrian Camping", "Montana State Parks Equestrian Camping", "Washington State Parks Equestrian Camping",
+            "Oklahoma State Parks Equestrian Camping", "Kansas State Parks Equestrian Camping",
+            "South Dakota State Parks Equestrian Camping", "Wyoming State Parks Equestrian Camping",
+            "Montana State Parks Equestrian Camping", "Washington State Parks Equestrian Camping",
             "Utah State Parks Equestrian Camping", "South Carolina State Parks Equestrian Camping",
             "Alabama State Parks Equestrian Camping", "Delaware State Parks Equestrian Camping",
-            "Mississippi State Parks Equestrian Camping", "OpenStreetMap", "Layover"
+            "Mississippi State Parks Equestrian Camping", "Vermont State Parks Equestrian Camping",
+            "West Virginia State Parks Equestrian Camping", "Maryland State Parks Equestrian Camping",
+            "Alaska State Parks Equestrian Camping", "Connecticut State Parks Equestrian Camping",
+            "Iowa State Parks Equestrian Camping", "Louisiana State Parks Equestrian Camping",
+            "Hawaii State Parks Equestrian Camping", "New Jersey State Parks Equestrian Camping",
+            "Rhode Island State Parks Equestrian Camping", "New Hampshire State Parks Equestrian Camping",
+            "Maine State Parks Equestrian Camping", "Massachusetts State Parks Equestrian Camping",
+            "North Dakota State Parks Equestrian Camping", "OpenStreetMap", "Layover"
         ],
         "camps": camps_list,
     }
@@ -33069,6 +34263,20 @@ def main():
     print(f"  AL StateParks:{total_al_state_parks}")
     print(f"  DE StateParks:{total_de_state_parks}")
     print(f"  MS StateParks:{total_ms_state_parks}")
+    print(f"  VT StateParks:{total_vt_state_parks}")
+    print(f"  WV StateParks:{total_wv_state_parks}")
+    print(f"  MD StateParks:{total_md_state_parks}")
+    print(f"  AK StateParks:{total_ak_state_parks}")
+    print(f"  CT StateParks:{total_ct_state_parks}")
+    print(f"  IA StateParks:{total_ia_state_parks}")
+    print(f"  LA StateParks:{total_la_state_parks}")
+    print(f"  HI StateParks:{total_hi_state_parks}")
+    print(f"  NJ StateParks:{total_nj_state_parks}")
+    print(f"  RI StateParks:{total_ri_state_parks}")
+    print(f"  NH StateParks:{total_nh_state_parks}")
+    print(f"  ME StateParks:{total_me_state_parks}")
+    print(f"  MA StateParks:{total_ma_state_parks}")
+    print(f"  ND StateParks:{total_nd_state_parks}")
     print(f"  Layovers:     {layover_count}")
     print(f"  OSM:          {osm_count}")
     print(f"  Verified:     {verified_count} manually verified")

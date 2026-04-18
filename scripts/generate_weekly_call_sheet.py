@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 STATE_PARKS_DIR = DATA_DIR / "state_parks"
 LAYOVERS_PATH = DATA_DIR / "layovers.json"
+PRIVATE_CAMPS_PATH = DATA_DIR / "private_camps.json"
 PROGRESS_PATH = DATA_DIR / "call_sheet_progress.json"
 OUTPUT_DIR = ROOT / "generated"
 OUTPUT_PDF = OUTPUT_DIR / "weekly_call_sheet.pdf"
@@ -81,6 +82,9 @@ def load_manual_listings() -> list[Listing]:
     for record in load_json(LAYOVERS_PATH, []):
         listings.append(listing_from_record(record, "Layover"))
 
+    for record in load_json(PRIVATE_CAMPS_PATH, []):
+        listings.append(listing_from_record(record, "Private Camp"))
+
     if STATE_PARKS_DIR.exists():
         for path in sorted(STATE_PARKS_DIR.glob("*.json")):
             for record in load_json(path, []):
@@ -101,7 +105,7 @@ def build_state_groups(listings: Iterable[Listing]) -> dict[str, list[Listing]]:
 def pick_batch(grouped: dict[str, list[Listing]], progress: dict[str, Any], batch_size: int) -> tuple[str, list[Listing], dict[str, Any]]:
     states = [s for s, rows in grouped.items() if rows]
     if not states:
-        raise RuntimeError("No manual listings were found in data/layovers.json or data/state_parks/*.json")
+        raise RuntimeError("No manual listings were found in data/layovers.json, data/private_camps.json, or data/state_parks/*.json")
 
     progress.setdefault("states", {})
 

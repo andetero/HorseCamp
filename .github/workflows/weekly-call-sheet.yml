@@ -2,66 +2,55 @@ name: Weekly Call Sheet
 
 on:
   schedule:
-    - cron: '0 8 * * 1'
-      timezone: 'America/Denver'
+    - cron: '0 14 * * 1'
   workflow_dispatch:
-    inputs:
-      batch_size:
-        description: 'How many listings to include'
-        required: false
-        default: '30'
-      send_email:
-        description: 'Send the email after generating the files'
-        required: false
-        default: 'true'
-
-permissions:
-  contents: write
 
 jobs:
   weekly-call-sheet:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    env:
+      TZ: America/Denver
+      BATCH_SIZE: 20
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+      PRINTER_EMAIL: ${{ secrets.PRINTER_EMAIL }}
+    permissions:
+      contents: write
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v6
+      - name: Check out repository
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install reportlab
-
-      - name: Generate weekly call sheet
         run: |
-          python scripts/generate_weekly_call_sheet.py --batch-size "${{ github.event.inputs.batch_size || '30' }}"
+          python -m pip install --upgrade pip
+          pip install reportlab
 
-      - name: Upload call sheet artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: weekly-call-sheet
-          path: |
-            out/weekly_call_sheet/weekly_call_sheet.pdf
-            out/weekly_call_sheet/weekly_call_sheet.csv
-            out/weekly_call_sheet/manifest.json
+      - name: Generate weekly call sheet PDF
+        run: python scripts/generate_weekly_call_sheet.py
 
-      - name: Send to printer email
-        if: ${{ github.event_name == 'schedule' || github.event.inputs.send_email != 'false' }}
-        env:
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
-          TO_EMAIL: ${{ secrets.PRINTER_EMAIL }}
+      - name: Email PDF to Epson printer
         run: python scripts/send_weekly_call_sheet.py
 
-      - name: Commit rotation progress
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-call-sheet-pdf
+          path: |
+            generated/weekly_call_sheet.pdf
+            generated/weekly_call_sheet_manifest.json
+
+      - name: Commit updated progress tracker
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/call_sheet_progress.json
-          git diff --staged --quiet || git commit -m "chore: advance weekly call sheet $(date -u '+%Y-%m-%d')"
+          git diff --cached --quiet || git commit -m "Update weekly call sheet progress"
           git push

@@ -1,0 +1,78 @@
+[
+  {
+    "id": "co-stateparks-golden-gate-canyon",
+    "name": "Golden Gate Canyon State Park Equestrian Campsites",
+    "location": "Golden, CO",
+    "state": "CO",
+    "latitude": 39.8351,
+    "longitude": -105.4047,
+    "pricePerNight": 41.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "303-582-3707",
+    "website": "https://cpw.state.co.us/state-parks/golden-gate-canyon-state-park/golden-gate-canyon-state-park-camping-lodging",
+    "description": "Colorado Parks & Wildlife says campsites 15 and 16 at Golden Gate Canyon State Park are equestrian campsites and can accommodate horses.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "CO State Parks"
+  },
+  {
+    "id": "co-stateparks-mueller",
+    "name": "Mueller State Park Equestrian Campsites",
+    "location": "Divide, CO",
+    "state": "CO",
+    "latitude": 38.8766,
+    "longitude": -105.1681,
+    "pricePerNight": 36.0,
+    "horseFeePerNight": 10.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "719-687-2366",
+    "website": "https://cpw.state.co.us/state-parks/mueller-state-park/mueller-state-park-camping-lodging",
+    "description": "Colorado Parks & Wildlife says campsites 133 and 134 at Mueller State Park are equestrian sites and gives an equestrian campsite fee of $36 plus $10 per animal, per night.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "CO State Parks"
+  }
+]

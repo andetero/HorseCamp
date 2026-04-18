@@ -1,0 +1,40 @@
+[
+  {
+    "id": "ma-stateparks-myles-standish-charge-pond",
+    "name": "Myles Standish State Forest Charge Pond Horse Camp",
+    "location": "Carver, MA",
+    "state": "MA",
+    "latitude": 41.8176,
+    "longitude": -70.6756,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "508-866-2526",
+    "website": "https://www.mass.gov/locations/myles-standish-state-forest",
+    "description": "Official Massachusetts DCR information says Charge Pond at Myles Standish State Forest has an area set aside for horse camping, and the forest also offers extensive equestrian trails.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "MA State Parks"
+  }
+]

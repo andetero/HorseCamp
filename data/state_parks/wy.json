@@ -1,0 +1,119 @@
+[
+  {
+    "id": "wy-stateparks-curt-gowdy-aspen-grove",
+    "name": "Curt Gowdy State Park Aspen Grove Horse Camp Area",
+    "location": "Cheyenne, WY",
+    "state": "WY",
+    "latitude": 41.1738,
+    "longitude": -105.231,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Corrals",
+      "Pasture"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "307-632-7946",
+    "website": "https://wyoparks.wyo.gov/index.php/places-to-go/curt-gowdy",
+    "description": "Official Wyoming State Parks page says Aspen Grove Campground is next to a free public horse corral, and the horseback-riding page says a horse corral for public use and a large fenced pasture area are located near Aspen Grove Campground.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 9,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "WY State Parks"
+  },
+  {
+    "id": "wy-stateparks-keyhole-homestead-horse-sites",
+    "name": "Keyhole State Park Homestead Horse Corral Sites",
+    "location": "Moorcroft, WY",
+    "state": "WY",
+    "latitude": 44.3346,
+    "longitude": -104.78,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 3,
+    "phone": "307-756-3596",
+    "website": "https://wyoparks.wyo.gov/index.php/activities-amenities-keyhole/horse-facility-keyhole",
+    "description": "Official Wyoming State Parks horse-facility page says Keyhole State Park has three reservable horse corral sites at Homestead sites 44, 45, and 46, with attached water containers and riding access just behind the corrals.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 9,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "WY State Parks"
+  },
+  {
+    "id": "wy-stateparks-medicine-lodge-group-campsites",
+    "name": "Medicine Lodge Archaeological Site Horse Corrals and Group Campsites",
+    "location": "Hyattville, WY",
+    "state": "WY",
+    "latitude": 44.2744,
+    "longitude": -107.6097,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Corrals",
+      "Group Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 5,
+    "phone": "307-469-2234",
+    "website": "https://wyoparks.wyo.gov/index.php/activities-amenities-medicine-lodge/horse-facility-medicine-lodge",
+    "description": "Official Wyoming State Parks Medicine Lodge horse-facility page says public corrals are available next to the main parking area, and the fees page lists a group shelter with campsites, making this a conservative overnight horse-camping entry.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "WY State Parks"
+  }
+]

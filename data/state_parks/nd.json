@@ -1,0 +1,170 @@
+[
+  {
+    "id": "nd-stateparks-fort-ransom-horse-camp",
+    "name": "Fort Ransom State Park Horse Campgrounds",
+    "location": "Fort Ransom, ND",
+    "state": "ND",
+    "latitude": 46.54556,
+    "longitude": -97.92972,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 6.0,
+    "hookups": [
+      "Electric",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 68,
+    "phone": "701-973-4331",
+    "website": "https://www.parkrec.nd.gov/fort-ransom-state-park",
+    "description": "Official North Dakota Parks and Recreation information says Fort Ransom State Park is a designated horse park with 24 modern horse campsites, 9 primitive horse campsites, 68 corrals, showers, a dump station, and extensive horseback-riding trails.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "ND State Parks"
+  },
+  {
+    "id": "nd-stateparks-fort-abraham-lincoln-horse-camp",
+    "name": "Fort Abraham Lincoln State Park Horse Campground",
+    "location": "Mandan, ND",
+    "state": "ND",
+    "latitude": 46.7594,
+    "longitude": -100.8443,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 6.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 8,
+    "phone": "701-667-6340",
+    "website": "https://www.parkrec.nd.gov/fort-abraham-lincoln-state-park",
+    "description": "Official North Dakota Parks and Recreation information says Fort Abraham Lincoln State Park offers 4 primitive horse campsites, 8 corrals, showers, a sewage dump station, and nearly 20 miles of trails open to horseback riding.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "ND State Parks"
+  },
+  {
+    "id": "nd-stateparks-rough-rider-horse-camp",
+    "name": "Rough Rider State Park Horse Campgrounds",
+    "location": "Medora, ND",
+    "state": "ND",
+    "latitude": 46.892634,
+    "longitude": -103.538254,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 6.0,
+    "hookups": [
+      "Electric",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals",
+      "Horse Camping",
+      "Group Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 66,
+    "phone": "701-623-2024",
+    "website": "https://www.parkrec.nd.gov/rough-rider-state-park",
+    "description": "Official North Dakota Parks and Recreation information says Rough Rider State Park is a designated horse park with standard and group horse campsites, 66 corrals, a round pen, a dump station, shower house, and direct access to the Maah Daah Hey Trail.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "ND State Parks"
+  },
+  {
+    "id": "nd-stateparks-little-missouri-horse-camp",
+    "name": "Little Missouri State Park Horse Campgrounds",
+    "location": "Killdeer, ND",
+    "state": "ND",
+    "latitude": 47.5075,
+    "longitude": -102.50083,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 6.0,
+    "hookups": [
+      "Electric"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals",
+      "Horse Camping",
+      "Group Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 81,
+    "phone": "701-764-5256",
+    "website": "https://www.parkrec.nd.gov/little-missouri-state-park-0",
+    "description": "Official North Dakota Parks and Recreation information says Little Missouri State Park is a designated horse park with modern and primitive campsites, 81 corrals, a round pen, a pay shower house, RV dump station, and over 40 miles of trails open to horseback riding.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "ND State Parks"
+  }
+]

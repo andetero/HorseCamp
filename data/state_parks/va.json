@@ -1,0 +1,248 @@
+[
+  {
+    "id": "va-stateparks-douthat-state-park-equestrian-campground",
+    "name": "Douthat State Park Equestrian Campground",
+    "location": "Millboro, VA",
+    "state": "VA",
+    "latitude": 37.896,
+    "longitude": -79.8036,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Stalls"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(540) 862-8100",
+    "website": "https://www.dcr.virginia.gov/state-parks/horse-camping-trails",
+    "description": "Virginia State Parks equestrian campground at Douthat State Park.",
+    "isVerified": false,
+    "seasonStart": 3,
+    "seasonEnd": 11,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "VA State Parks"
+  },
+  {
+    "id": "va-stateparks-fairy-stone-state-park-equestrian-campground",
+    "name": "Fairy Stone State Park Equestrian Campground",
+    "location": "Stuart, VA",
+    "state": "VA",
+    "latitude": 36.7772,
+    "longitude": -80.1124,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Stalls"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(276) 930-2424",
+    "website": "https://www.dcr.virginia.gov/state-parks/horse-camping-trails",
+    "description": "Virginia State Parks equestrian campground at Fairy Stone State Park.",
+    "isVerified": false,
+    "seasonStart": 3,
+    "seasonEnd": 11,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "VA State Parks"
+  },
+  {
+    "id": "va-stateparks-grayson-highlands-state-park-equestrian-camp",
+    "name": "Grayson Highlands State Park Equestrian Camp",
+    "location": "Mouth of Wilson, VA",
+    "state": "VA",
+    "latitude": 36.628,
+    "longitude": -81.5014,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Stalls"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(276) 579-7092",
+    "website": "https://www.dcr.virginia.gov/state-parks/horse-camping-trails",
+    "description": "Virginia State Parks equestrian campground at Grayson Highlands State Park.",
+    "isVerified": false,
+    "seasonStart": 3,
+    "seasonEnd": 11,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "VA State Parks"
+  },
+  {
+    "id": "va-stateparks-james-river-state-park-equestrian-campground",
+    "name": "James River State Park Equestrian Campground",
+    "location": "Gladstone, VA",
+    "state": "VA",
+    "latitude": 37.6257,
+    "longitude": -78.8308,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Stalls"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(434) 933-4355",
+    "website": "https://www.dcr.virginia.gov/state-parks/horse-camping-trails",
+    "description": "Virginia State Parks equestrian campground at James River State Park.",
+    "isVerified": false,
+    "seasonStart": 3,
+    "seasonEnd": 11,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "VA State Parks"
+  },
+  {
+    "id": "va-stateparks-occoneechee-state-park-equestrian-campground",
+    "name": "Occoneechee State Park Equestrian Campground",
+    "location": "Clarksville, VA",
+    "state": "VA",
+    "latitude": 36.6206,
+    "longitude": -78.5415,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Stalls"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(434) 374-2210",
+    "website": "https://www.dcr.virginia.gov/state-parks/horse-camping-trails",
+    "description": "Virginia State Parks equestrian campground at Occoneechee State Park.",
+    "isVerified": false,
+    "seasonStart": 3,
+    "seasonEnd": 11,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "VA State Parks"
+  },
+  {
+    "id": "va-stateparks-staunton-river-state-park-equestrian-campground",
+    "name": "Staunton River State Park Equestrian Campground",
+    "location": "Scottsburg, VA",
+    "state": "VA",
+    "latitude": 36.6866,
+    "longitude": -78.6691,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Stalls"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(434) 572-4623",
+    "website": "https://www.dcr.virginia.gov/state-parks/horse-camping-trails",
+    "description": "Virginia State Parks equestrian campground at Staunton River State Park.",
+    "isVerified": false,
+    "seasonStart": 3,
+    "seasonEnd": 11,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "VA State Parks"
+  }
+]

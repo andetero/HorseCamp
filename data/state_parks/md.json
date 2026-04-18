@@ -1,0 +1,78 @@
+[
+  {
+    "id": "md-stateparks-fair-hill-race-barn",
+    "name": "Fair Hill NRMA Race Barn Equestrian Camping Facility",
+    "location": "Elkton, MD",
+    "state": "MD",
+    "latitude": 39.7108,
+    "longitude": -75.8656,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "410-398-1246",
+    "website": "https://dnr.maryland.gov/publiclands/pages/central/fairhill/camping.aspx",
+    "description": "Official Maryland DNR equestrian camping at Fair Hill Natural Resources Management Area. The camping page says equestrian camping facilities are available by reservation only at the Race Barn facility.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "MD State Parks"
+  },
+  {
+    "id": "md-stateparks-savage-river-margraff",
+    "name": "Savage River State Forest Margraff Plantation Horse Camp",
+    "location": "Grantsville, MD",
+    "state": "MD",
+    "latitude": 39.6437,
+    "longitude": -79.1484,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Primitive Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "301-895-5759",
+    "website": "https://dnr.maryland.gov/forests/documents/srsf-horseback-riding-brochure.pdf",
+    "description": "Official Maryland DNR Savage River State Forest horse brochure says visitors camping with horses should use the campsites located at the Margraff Plantation, making it a conservative overnight horse-camping entry.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "MD State Parks"
+  }
+]

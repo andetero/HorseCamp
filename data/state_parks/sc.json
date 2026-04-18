@@ -1,0 +1,161 @@
+[
+  {
+    "id": "sc-stateparks-croft",
+    "name": "Croft State Park Equestrian Campground",
+    "location": "Spartanburg, SC",
+    "state": "SC",
+    "latitude": 34.9492,
+    "longitude": -81.9136,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Corrals"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "864-585-1283",
+    "website": "https://southcarolinaparks.com/camping-and-lodging/camping/equestrian",
+    "description": "Official South Carolina State Parks equestrian camping location at Croft State Park.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "SC State Parks"
+  },
+  {
+    "id": "sc-stateparks-h-cooper-black",
+    "name": "H. Cooper Black Jr. Memorial Field Trial Area Equestrian Campground",
+    "location": "Cheraw, SC",
+    "state": "SC",
+    "latitude": 34.6815,
+    "longitude": -80.0186,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals",
+      "Stalls"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "843-378-1555",
+    "website": "https://southcarolinaparks.com/camping-and-lodging/camping/equestrian",
+    "description": "Official South Carolina State Parks equestrian camping location at H. Cooper Black Jr. Memorial Field Trial Area.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "SC State Parks"
+  },
+  {
+    "id": "sc-stateparks-kings-mountain",
+    "name": "Kings Mountain State Park Equestrian Campground",
+    "location": "Blacksburg, SC",
+    "state": "SC",
+    "latitude": 35.139,
+    "longitude": -81.3902,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "864-936-7921",
+    "website": "https://southcarolinaparks.com/camping-and-lodging/camping/equestrian",
+    "description": "Official South Carolina State Parks equestrian camping location at Kings Mountain State Park.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "SC State Parks"
+  },
+  {
+    "id": "sc-stateparks-lee",
+    "name": "Lee State Park Equestrian Campground",
+    "location": "Bishopville, SC",
+    "state": "SC",
+    "latitude": 34.1703,
+    "longitude": -80.2484,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "803-428-5307",
+    "website": "https://southcarolinaparks.com/camping-and-lodging/camping/equestrian",
+    "description": "Official South Carolina State Parks equestrian camping location at Lee State Park.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "SC State Parks"
+  }
+]

@@ -1,0 +1,78 @@
+[
+  {
+    "id": "nc-statepark-1",
+    "name": "South Mountains State Park \u2013 Jacob Fork Equestrian Campground",
+    "location": "Connelly Springs, NC",
+    "state": "NC",
+    "latitude": 35.6358,
+    "longitude": -81.7391,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(828) 433-4772",
+    "website": "https://www.ncparks.gov/catalog-category/equestrian-camping",
+    "description": "North Carolina State Parks equestrian camping at South Mountains State Park \u2013 Jacob Fork Access.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "NC State Parks"
+  },
+  {
+    "id": "nc-statepark-2",
+    "name": "Medoc Mountain State Park Equestrian Campground",
+    "location": "Hollister, NC",
+    "state": "NC",
+    "latitude": 36.2527,
+    "longitude": -77.8864,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(252) 586-6588",
+    "website": "https://www.ncparks.gov/state-parks/medoc-mountain-state-park",
+    "description": "North Carolina State Parks primitive equestrian camping at Medoc Mountain State Park.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "NC State Parks"
+  }
+]

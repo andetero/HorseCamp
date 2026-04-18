@@ -1,0 +1,162 @@
+[
+  {
+    "id": "ky-stateparks-dale-hollow",
+    "name": "Dale Hollow Lake State Resort Park Equestrian Campground",
+    "location": "Burkesville, KY",
+    "state": "KY",
+    "latitude": 36.6386215,
+    "longitude": -85.2981537,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "270-433-7431",
+    "website": "https://parks.ky.gov/parks/find-a-park/dale-hollow-lake-state-resort-park-7787",
+    "description": "Official Kentucky State Parks equestrian-friendly campground at Dale Hollow Lake State Resort Park.",
+    "isVerified": false,
+    "seasonStart": 3,
+    "seasonEnd": 11,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "KY State Parks"
+  },
+  {
+    "id": "ky-stateparks-pennyrile-forest",
+    "name": "Pennyrile Forest State Resort Park Equestrian Campground",
+    "location": "Dawson Springs, KY",
+    "state": "KY",
+    "latitude": 37.0728172,
+    "longitude": -87.6637,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "270-797-3421",
+    "website": "https://parks.ky.gov/parks/find-a-park/pennyrile-forest-state-resort-park-7798",
+    "description": "Official Kentucky State Parks equestrian-friendly campground at Pennyrile Forest State Resort Park.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": true,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "KY State Parks"
+  },
+  {
+    "id": "ky-stateparks-taylorsville-lake",
+    "name": "Taylorsville Lake State Park Equestrian Campground",
+    "location": "Mount Eden, KY",
+    "state": "KY",
+    "latitude": 38.0292,
+    "longitude": -85.25576,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "502-477-8713",
+    "website": "https://parks.ky.gov/parks/find-a-park/taylorsville-lake-state-park-7810",
+    "description": "Official Kentucky State Parks equestrian-friendly campground at Taylorsville Lake State Park.",
+    "isVerified": false,
+    "seasonStart": 3,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": true,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "KY State Parks"
+  },
+  {
+    "id": "ky-stateparks-carter-caves",
+    "name": "Carter Caves State Resort Park Equestrian Campground",
+    "location": "Olive Hill, KY",
+    "state": "KY",
+    "latitude": 38.3717468,
+    "longitude": -83.1185085,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "606-286-4411",
+    "website": "https://parks.ky.gov/parks/find-a-park/carter-caves-state-resort-park-7785",
+    "description": "Official Kentucky State Parks equestrian-friendly campground at Carter Caves State Resort Park.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "KY State Parks"
+  }
+]

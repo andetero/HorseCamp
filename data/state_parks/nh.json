@@ -1,0 +1,40 @@
+[
+  {
+    "id": "nh-stateparks-bear-brook",
+    "name": "Bear Brook State Park Horse Camping Access",
+    "location": "Allenstown, NH",
+    "state": "NH",
+    "latitude": 43.144,
+    "longitude": -71.357,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "603-485-9869",
+    "website": "https://www.nhstateparks.org/find-parks-trails/bear-brook-state-park",
+    "description": "Conservative New Hampshire first pass. Official NH State Parks information for Bear Brook surfaces campground lodging and over 40 miles of trails for hikers, mountain bikers and equestrians in the same park, so it is included as a horse-friendly overnight option to verify before arrival.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "NH State Parks"
+  }
+]

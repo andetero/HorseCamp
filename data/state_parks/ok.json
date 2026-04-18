@@ -1,0 +1,85 @@
+[
+  {
+    "id": "ok-stateparks-foss-equestrian-camp",
+    "name": "Foss State Park Equestrian Camp",
+    "location": "Foss, OK",
+    "state": "OK",
+    "latitude": 35.5667,
+    "longitude": -99.2198,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "50A",
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "580-592-4433",
+    "website": "https://www.travelok.com/state-parks/foss-state-park",
+    "description": "Official Oklahoma State Parks page says Foss State Park offers an equestrian camp featuring a multi-purpose trail for horseback riding, hiking and mountain biking.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "OK State Parks"
+  },
+  {
+    "id": "ok-stateparks-salt-plains-equestrian-camp",
+    "name": "Salt Plains State Park Equestrian Campgrounds",
+    "location": "Jet, OK",
+    "state": "OK",
+    "latitude": 36.7431,
+    "longitude": -98.1323,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "580-626-4731",
+    "website": "https://www.travelok.com/state-parks/salt-plains-state-park",
+    "description": "Official Oklahoma State Parks page says Salt Plains State Park has equestrian campgrounds available, including Nathan Boone Equestrian Camp and more primitive sites at George Sibley Equestrian Area.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "OK State Parks"
+  }
+]

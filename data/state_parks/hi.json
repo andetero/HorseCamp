@@ -1,0 +1,78 @@
+[
+  {
+    "id": "hi-stateparks-kokee-nualolo",
+    "name": "K\u014dke\u02bbe State Park Nualolo Horse Camping Access",
+    "location": "Waimea, HI",
+    "state": "HI",
+    "latitude": 22.1412,
+    "longitude": -159.6606,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Primitive Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "808-274-3444",
+    "website": "https://dlnr.hawaii.gov/dsp/parks/kauai/kokee-state-park/",
+    "description": "Conservative Hawai\u02bbi DLNR first pass. K\u014dke\u02bbe State Park is an official camping area with trail access into a region used for horseback riding; verify current equestrian rules before arrival.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "HI State Parks"
+  },
+  {
+    "id": "hi-stateparks-polipoli-spring",
+    "name": "Polipoli Spring State Recreation Area Horse Camping Access",
+    "location": "Kula, HI",
+    "state": "HI",
+    "latitude": 20.655,
+    "longitude": -156.307,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Primitive Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "808-984-8109",
+    "website": "https://dlnr.hawaii.gov/dsp/parks/maui/polipoli-spring-state-recreation-area/",
+    "description": "Conservative Hawai\u02bbi DLNR first pass. Polipoli Spring State Recreation Area is an official camping area in a region with horseback riding access; verify current equestrian rules before arrival.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "HI State Parks"
+  }
+]

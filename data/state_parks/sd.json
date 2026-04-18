@@ -1,0 +1,279 @@
+[
+  {
+    "id": "sd-stateparks-custer-french-creek-horse-camp",
+    "name": "Custer State Park \u2013 French Creek Horse Camp",
+    "location": "Custer, SD",
+    "state": "SD",
+    "latitude": 43.7668,
+    "longitude": -103.4596,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Corrals",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "605-394-2693",
+    "website": "https://gfp.sd.gov/parks/detail/custer-state-park/",
+    "description": "Official South Dakota Game, Fish and Parks page says Custer State Park includes a horse camp, horse trails, dump station, showers, drinking water, electrical campsites elsewhere in the park, and maps for French Creek Horse Camp.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": true,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "SD State Parks"
+  },
+  {
+    "id": "sd-stateparks-newton-hills-horse-camp",
+    "name": "Newton Hills State Park Horse Camp",
+    "location": "Canton, SD",
+    "state": "SD",
+    "latitude": 43.302,
+    "longitude": -96.6087,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 10,
+    "phone": "605-987-2263",
+    "website": "https://gfp.sd.gov/parks/detail/newton-hills-state-park/",
+    "description": "Official South Dakota Game, Fish and Parks page says Newton Hills State Park has 10 horse campsites plus horse trails, drinking water, dump station, flush toilets, and showers.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "SD State Parks"
+  },
+  {
+    "id": "sd-stateparks-union-grove-horse-camp",
+    "name": "Union Grove State Park Horse Camp",
+    "location": "Beresford, SD",
+    "state": "SD",
+    "latitude": 43.0024,
+    "longitude": -96.7807,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 4,
+    "phone": "605-987-2263",
+    "website": "https://gfp.sd.gov/parks/detail/union-grove-state-park/",
+    "description": "Official South Dakota Game, Fish and Parks page says Union Grove State Park includes 4 horse campsites and horse-friendly multi-use trails. South Dakota tourism also describes electrical hookups, water, and corrals at the horse camp.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "SD State Parks"
+  },
+  {
+    "id": "sd-stateparks-sheps-canyon-horse-camp",
+    "name": "Sheps Canyon Recreation Area Horse Camp",
+    "location": "Hot Springs, SD",
+    "state": "SD",
+    "latitude": 43.3462,
+    "longitude": -103.4875,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 11,
+    "phone": "605-745-6996",
+    "website": "https://gfp.sd.gov/parks/detail/sheps-canyon-recreation-area/",
+    "description": "Official South Dakota Game, Fish and Parks page says Sheps Canyon Recreation Area has 11 horse campsites. South Dakota's horseback-riding page says the horse camp has 11 non-electrical campsites, water, and corrals.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "SD State Parks"
+  },
+  {
+    "id": "sd-stateparks-bear-butte-horse-camp",
+    "name": "Bear Butte State Park Horse Camp",
+    "location": "Sturgis, SD",
+    "state": "SD",
+    "latitude": 44.5088,
+    "longitude": -103.4286,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Corrals",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 4,
+    "phone": "605-347-5243",
+    "website": "https://gfp.sd.gov/parks/detail/bear-butte-state-park/",
+    "description": "Official South Dakota Game, Fish and Parks page says Bear Butte State Park has 4 non-electric horse campsites and horse trails.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "SD State Parks"
+  },
+  {
+    "id": "sd-stateparks-pease-creek-horse-camp",
+    "name": "Pease Creek Recreation Area Horse Camp",
+    "location": "Geddes, SD",
+    "state": "SD",
+    "latitude": 43.2903,
+    "longitude": -98.5565,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 5,
+    "phone": "605-773-8239",
+    "website": "https://gfp.sd.gov/parks/detail/pease-creek-recreation-area/",
+    "description": "Official South Dakota Game, Fish and Parks page says Pease Creek Recreation Area has 5 horse campsites. South Dakota's horseback-riding page says the horse camp offers primitive camping, water, corrals, and vault toilets.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "SD State Parks"
+  },
+  {
+    "id": "sd-stateparks-oakwood-lakes-horse-camp",
+    "name": "Oakwood Lakes State Park Horse Camp",
+    "location": "Bruce, SD",
+    "state": "SD",
+    "latitude": 44.4726,
+    "longitude": -96.9139,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 6,
+    "phone": "605-627-5671",
+    "website": "https://gfp.sd.gov/parks/detail/oakwood-lakes-state-park/",
+    "description": "Official South Dakota Game, Fish and Parks page says Oakwood Lakes State Park has 6 horse campsites. South Dakota's horseback-riding page says the horse camp offers primitive sites, water, hitching posts, and corrals.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "SD State Parks"
+  }
+]

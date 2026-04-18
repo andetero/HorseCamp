@@ -1,0 +1,40 @@
+[
+  {
+    "id": "nj-stateparks-wharton-atsion-horse-camp",
+    "name": "Wharton State Forest Atsion Horse Camping Access",
+    "location": "Shamong, NJ",
+    "state": "NJ",
+    "latitude": 39.7427,
+    "longitude": -74.7269,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Primitive Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "609-561-0024",
+    "website": "https://dep.nj.gov/parksandforests/state-park/wharton-state-forest/",
+    "description": "Conservative New Jersey first pass. Official NJDEP pages for Wharton State Forest and Atsion Recreation Area surface both camping and horseback riding in the same forest/recreation area, so this is included as a horse-friendly overnight option to verify before arrival.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "NJ State Parks"
+  }
+]

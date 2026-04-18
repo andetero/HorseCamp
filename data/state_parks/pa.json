@@ -1,0 +1,39 @@
+[
+  {
+    "id": "pa-stateparks-kettle-creek",
+    "name": "Kettle Creek State Park Equestrian Trailhead Camp",
+    "location": "Renovo, PA",
+    "state": "PA",
+    "latitude": 41.3632,
+    "longitude": -77.9166,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "570-923-6000",
+    "website": "https://www.pa.gov/agencies/dcnr/recreation/where-to-go/state-parks/find-a-park/kettle-creek-state-park/horseback-riding.html",
+    "description": "Official Pennsylvania DCNR horseback-riding trailhead at Kettle Creek State Park. Overnight camping at the trailhead is by permit only.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "PA State Parks"
+  }
+]

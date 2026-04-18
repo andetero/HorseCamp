@@ -1,0 +1,78 @@
+[
+  {
+    "id": "tnsp-1",
+    "name": "Natchez Trace State Park Horse Camp",
+    "location": "Wildersville, TN",
+    "state": "TN",
+    "latitude": 35.5316,
+    "longitude": -88.282,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(731) 968-3742",
+    "website": "https://reserve.tnstateparks.com/",
+    "description": "Official Tennessee State Parks listing where Natchez Trace State Park offers both horseback riding and camping.",
+    "isVerified": false,
+    "seasonStart": 0,
+    "seasonEnd": 0,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "TN State Parks"
+  },
+  {
+    "id": "tnsp-2",
+    "name": "Rocky Fork State Park Horse Camp",
+    "location": "Flag Pond, TN",
+    "state": "TN",
+    "latitude": 36.0743,
+    "longitude": -82.6068,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Primitive Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(423) 271-1233",
+    "website": "https://reserve.tnstateparks.com/",
+    "description": "Official Tennessee State Parks listing where Rocky Fork State Park offers horseback riding and backcountry camping.",
+    "isVerified": false,
+    "seasonStart": 0,
+    "seasonEnd": 0,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "TN State Parks"
+  }
+]

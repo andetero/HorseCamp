@@ -1,0 +1,80 @@
+[
+  {
+    "id": "wv-stateparks-camp-creek-double-c",
+    "name": "Camp Creek State Park Double C Horse and Rider Campground",
+    "location": "Camp Creek, WV",
+    "state": "WV",
+    "latitude": 37.5168,
+    "longitude": -81.1486,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "304-425-9481",
+    "website": "https://wvstateparks.com/parks/camp-creek-state-park-and-forest/lodging/camping-at-camp-creek-state-park/",
+    "description": "Official West Virginia State Parks equestrian campground at Camp Creek State Park and Forest. The Double C Horse and Rider Campground is designed for visitors traveling with horses and the park activities page says equestrian camping is available.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "WV State Parks"
+  },
+  {
+    "id": "wv-stateparks-holly-river-equestrian",
+    "name": "Holly River State Park Equestrian Campsites",
+    "location": "Hacker Valley, WV",
+    "state": "WV",
+    "latitude": 38.7146,
+    "longitude": -80.2951,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 3,
+    "phone": "304-493-6353",
+    "website": "https://wvstateparks.com/parks/holly-river-state-park/activities/",
+    "description": "Official West Virginia State Parks equestrian campsites at Holly River State Park. The park activities page says overnight camping with horses is available by reservation for campsites 79, 80 and 81, and corrals are included in the campsite reservation.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": true,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "WV State Parks"
+  }
+]

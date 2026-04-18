@@ -1,0 +1,78 @@
+[
+  {
+    "id": "de-stateparks-lums-pond",
+    "name": "Lums Pond State Park Equestrian Camping Area",
+    "location": "Bear, DE",
+    "state": "DE",
+    "latitude": 39.5794,
+    "longitude": -75.6948,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "302-368-6989",
+    "website": "https://www.destateparks.com/park/lums-pond/",
+    "description": "Conservative Delaware State Parks first pass. Official Lums Pond State Park information surfaces both equestrian trails and camping at the park, so it is included as a likely horse-friendly overnight option to verify before arrival.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "DE State Parks"
+  },
+  {
+    "id": "de-stateparks-trap-pond",
+    "name": "Trap Pond State Park Equestrian Camping Area",
+    "location": "Laurel, DE",
+    "state": "DE",
+    "latitude": 38.5202,
+    "longitude": -75.4713,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "302-875-5153",
+    "website": "https://www.destateparks.com/park/trap-pond/",
+    "description": "Conservative Delaware State Parks first pass. Official Trap Pond State Park information surfaces equestrian use and family camping at the park, so it is included as a likely horse-friendly overnight option to verify before arrival.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "DE State Parks"
+  }
+]

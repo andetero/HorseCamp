@@ -1,0 +1,121 @@
+[
+  {
+    "id": "id-stateparks-farragut",
+    "name": "Farragut State Park Equestrian Campsites",
+    "location": "Athol, ID",
+    "state": "ID",
+    "latitude": 47.95139,
+    "longitude": -116.60222,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water",
+      "30A"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(208) 262-4444",
+    "website": "https://parksandrecreation.idaho.gov/state-park/farragut-state-park/",
+    "description": "Official Idaho State Parks equestrian camping at Farragut State Park. The park page lists 6 equestrian sites and equestrian campsites among amenities.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "ID State Parks"
+  },
+  {
+    "id": "id-stateparks-bruneau-dunes",
+    "name": "Bruneau Dunes State Park Equestrian Campground",
+    "location": "Mountain Home, ID",
+    "state": "ID",
+    "latitude": 42.91,
+    "longitude": -115.70972,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(208) 366-7919",
+    "website": "https://parksandrecreation.idaho.gov/state-park/bruneau-dunes-state-park/",
+    "description": "Official Idaho State Parks equestrian campground at Bruneau Dunes State Park. The park page says the equestrian area has corrals, water spigots, a vault toilet, a shelter, and 19 non-reservable campsites.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "ID State Parks"
+  },
+  {
+    "id": "id-stateparks-heyburn",
+    "name": "Heyburn State Park Equestrian Trailhead Campsites",
+    "location": "Plummer, ID",
+    "state": "ID",
+    "latitude": 47.35333,
+    "longitude": -116.77194,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Paddocks"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(208) 686-1308",
+    "website": "https://parksandrecreation.idaho.gov/state-park/heyburn-state-park/",
+    "description": "Official Idaho State Parks equestrian camping at Heyburn State Park. The park page says campsites are available at the South Side and North Side trailheads with paddocks for livestock.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "ID State Parks"
+  }
+]

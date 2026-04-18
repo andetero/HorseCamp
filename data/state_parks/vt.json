@@ -1,0 +1,80 @@
+[
+  {
+    "id": "vt-stateparks-new-discovery",
+    "name": "New Discovery State Park Horse Camp",
+    "location": "Groton, VT",
+    "state": "VT",
+    "latitude": 44.2893,
+    "longitude": -72.242,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 8,
+    "phone": "802-584-3822",
+    "website": "https://vtstateparks.com/newdiscovery.html",
+    "description": "Conservative Vermont horse-camping entry for New Discovery State Park in Groton State Forest, a known equestrian camping area with horse campsites/corrals and trail access.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "VT State Parks"
+  },
+  {
+    "id": "vt-stateparks-camp-plymouth",
+    "name": "Camp Plymouth State Park Horse Camp",
+    "location": "Plymouth, VT",
+    "state": "VT",
+    "latitude": 43.4797,
+    "longitude": -72.7403,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Horse Camping",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "802-672-3612",
+    "website": "https://vtstateparks.com/plymouth.html",
+    "description": "Conservative Vermont horse-camping entry for Camp Plymouth State Park, a state park commonly described with group and horse camping facilities.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "VT State Parks"
+  }
+]

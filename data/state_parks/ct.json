@@ -1,0 +1,78 @@
+[
+  {
+    "id": "ct-stateparks-pachaug-green-falls",
+    "name": "Pachaug State Forest Green Falls Horse Camp",
+    "location": "Voluntown, CT",
+    "state": "CT",
+    "latitude": 41.5908,
+    "longitude": -71.8396,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Primitive Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "860-424-3200",
+    "website": "https://portal.ct.gov/deep/state-parks/forests/pachaug-state-forest",
+    "description": "Official CT DEEP Pachaug State Forest page lists Green Falls Campground for camping and the forest is a major horseback-riding destination with designated horse trails and camp access to ride-in areas.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "CT State Parks"
+  },
+  {
+    "id": "ct-stateparks-natchaug-horse-camp",
+    "name": "Natchaug State Forest Horse Camp Area",
+    "location": "Eastford, CT",
+    "state": "CT",
+    "latitude": 41.8945,
+    "longitude": -72.1246,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Primitive Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "860-424-3200",
+    "website": "https://portal.ct.gov/deep/state-parks/forests/natchaug-state-forest",
+    "description": "Conservative Connecticut first pass. Official CT DEEP Natchaug State Forest information supports horseback riding and dispersed/primitive camping use in the forest, making it a reasonable horse-camping entry to verify before arrival.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "CT State Parks"
+  }
+]

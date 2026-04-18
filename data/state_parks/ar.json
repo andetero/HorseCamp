@@ -1,0 +1,122 @@
+[
+  {
+    "id": "arstate-1",
+    "name": "Village Creek State Park Horse Camp",
+    "location": "Wynne, AR",
+    "state": "AR",
+    "latitude": 35.1292,
+    "longitude": -90.789,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Stalls",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 66,
+    "paddockCount": 0,
+    "phone": "(870) 238-9406",
+    "website": "https://www.arkansasstateparks.com/parks/village-creek-state-park",
+    "description": "Arkansas State Parks equestrian campground with stable facilities and Class B campsites at Village Creek State Park.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": true,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "AR State Parks"
+  },
+  {
+    "id": "arstate-2",
+    "name": "Devil's Den State Park Horse Campground",
+    "location": "West Fork, AR",
+    "state": "AR",
+    "latitude": 35.7806,
+    "longitude": -94.2497,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Highlines",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(479) 761-3325",
+    "website": "https://www.arkansasstateparks.com/parks/devils-den-state-park",
+    "description": "Arkansas State Parks horse campground with hookups, bathhouse, and direct access to horse trails at Devil's Den State Park.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "AR State Parks"
+  },
+  {
+    "id": "arstate-3",
+    "name": "Mount Magazine State Park Horse Camp",
+    "location": "Paris, AR",
+    "state": "AR",
+    "latitude": 35.1678,
+    "longitude": -93.6455,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "(479) 963-8502",
+    "website": "https://www.arkansasstateparks.com/parks/mount-magazine-state-park/things-to-do/horseback-riding",
+    "description": "Arkansas State Parks Horse Camp at Mount Magazine State Park, used as a gateway to the Huckleberry Mountain Horse Trail.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "AR State Parks"
+  }
+]

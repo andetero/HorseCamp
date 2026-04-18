@@ -1,0 +1,80 @@
+[
+  {
+    "id": "ak-stateparks-eklutna-lake",
+    "name": "Eklutna Lake Campground Horse Access",
+    "location": "Chugiak, AK",
+    "state": "AK",
+    "latitude": 61.4148,
+    "longitude": -149.1457,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "907-345-5014",
+    "website": "https://dnr.alaska.gov/parks/aspunits/chugach/eklutnalkcamp.htm",
+    "description": "Official Alaska State Parks Eklutna Lake Campground page lists both camping and horseback riding among park activities.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 9,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "AK State Parks"
+  },
+  {
+    "id": "ak-stateparks-matanuska-lakes",
+    "name": "Matanuska Lakes State Recreation Area Horse Access Camping",
+    "location": "Palmer, AK",
+    "state": "AK",
+    "latitude": 61.5998,
+    "longitude": -149.2586,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "907-745-3975",
+    "website": "https://dnr.alaska.gov/parks/aspunits/matsu/keplerbradlksra.htm",
+    "description": "Official Alaska State Parks Matanuska Lakes State Recreation Area page says camping and horseback riding are dominant activities in the park.",
+    "isVerified": false,
+    "seasonStart": 5,
+    "seasonEnd": 9,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "AK State Parks"
+  }
+]

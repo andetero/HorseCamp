@@ -1,0 +1,89 @@
+[
+  {
+    "id": "ms-stateparks-trace",
+    "name": "Trace State Park Equestrian Camping Area",
+    "location": "Belden, MS",
+    "state": "MS",
+    "latitude": 34.2418,
+    "longitude": -88.9264,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "50A",
+      "Water",
+      "Sewer"
+    ],
+    "accommodations": [
+      "Trails",
+      "Stalls",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "662-489-2958",
+    "website": "https://www.mdwfp.com/parks-destinations/park/trace-state-park",
+    "description": "Official Mississippi State Parks page says Trace State Park offers 35 miles of combined equestrian trail use and a horse barn for overnight accommodations; the park also offers developed RV camping.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "MS State Parks"
+  },
+  {
+    "id": "ms-stateparks-lake-lowndes",
+    "name": "Lake Lowndes State Park Equestrian Camping Area",
+    "location": "Columbus, MS",
+    "state": "MS",
+    "latitude": 33.4343,
+    "longitude": -88.3881,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "50A",
+      "Water",
+      "Sewer"
+    ],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "662-328-2110",
+    "website": "https://www.mdwfp.com/parks-destinations/park/lake-lowndes-state-park",
+    "description": "Conservative Mississippi State Parks first pass. Official MDWFP pages surface a 7-mile equestrian trail at Lake Lowndes State Park and also list RV and tent camping at the park, so it is included as a likely horse-friendly overnight option to verify before arrival.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "MS State Parks"
+  }
+]

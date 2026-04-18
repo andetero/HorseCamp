@@ -1,0 +1,42 @@
+[
+  {
+    "id": "az-state-catalina-equestrian-center",
+    "name": "Catalina State Park Equestrian Center",
+    "location": "Tucson, AZ",
+    "state": "AZ",
+    "latitude": 32.4237,
+    "longitude": -110.9106,
+    "pricePerNight": 25.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 16,
+    "paddockCount": 0,
+    "phone": "520-628-5798",
+    "website": "https://azstateparks.com/catalina/explore/facility-information",
+    "description": "Arizona State Parks equestrian staging and camping area at Catalina State Park. First-come, first-served with 16 pens, water, restroom, hitching posts, fire pits, and shared-use trail access.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "AZ State Parks"
+  }
+]

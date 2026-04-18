@@ -1,0 +1,78 @@
+[
+  {
+    "id": "ut-stateparks-antelope-island-equestrian",
+    "name": "Antelope Island State Park Equestrian Sites",
+    "location": "Syracuse, UT",
+    "state": "UT",
+    "latitude": 41.0582,
+    "longitude": -112.2216,
+    "pricePerNight": 40.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "1-800-322-3770",
+    "website": "https://stateparks.utah.gov/parks/antelope-island/camping-opportunities/",
+    "description": "Official Utah State Parks camping page says Antelope Island has two equestrian sites available in White Rock Bay. No water or electricity at the sites.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E57373"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "UT State Parks"
+  },
+  {
+    "id": "ut-stateparks-goblin-valley-equestrian",
+    "name": "Goblin Valley State Park Equestrian Camping",
+    "location": "Green River, UT",
+    "state": "UT",
+    "latitude": 38.5744,
+    "longitude": -110.7073,
+    "pricePerNight": 15.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "435-259-3710",
+    "website": "https://stateparks.utah.gov/parks/goblin-valley/dispersed-camping/",
+    "description": "Official Utah State Parks primitive camping page says Site 5 at Behind the Butte East is great for equestrian camping and Crack Canyon Access is designated for equestrian camping.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E57373"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "UT State Parks"
+  }
+]

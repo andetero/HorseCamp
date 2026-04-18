@@ -1,0 +1,282 @@
+[
+  {
+    "id": "ia-stateparks-brushy-creek",
+    "name": "Brushy Creek State Recreation Area Equestrian Campgrounds",
+    "location": "Lehigh, IA",
+    "state": "IA",
+    "latitude": 42.3919,
+    "longitude": -93.9847,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 4.0,
+    "hookups": [
+      "30A"
+    ],
+    "accommodations": [
+      "Trails",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "515-543-8298",
+    "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/brushy-creek-state-recreation-area",
+    "description": "Official Iowa DNR page says Brushy Creek has north and south equestrian campgrounds with electric and non-electric sites, a horse-wash area, hitch rails, and modern shower/restroom facilities.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": true,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "IA State Parks"
+  },
+  {
+    "id": "ia-stateparks-elk-rock",
+    "name": "Elk Rock State Park Equestrian Campground",
+    "location": "Knoxville, IA",
+    "state": "IA",
+    "latitude": 41.3783,
+    "longitude": -93.2629,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 4.0,
+    "hookups": [
+      "30A"
+    ],
+    "accommodations": [
+      "Trails",
+      "Stalls",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "641-842-6008",
+    "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/elk-rock-state-park",
+    "description": "Official Iowa DNR page says Elk Rock's equestrian campground has electric and non-electric sites, a shower building, horse stalls, hitching rails, and a riding arena.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "IA State Parks"
+  },
+  {
+    "id": "ia-stateparks-lake-of-three-fires",
+    "name": "Lake of Three Fires State Park Equestrian Campground",
+    "location": "Bedford, IA",
+    "state": "IA",
+    "latitude": 40.7116,
+    "longitude": -94.6902,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 4.0,
+    "hookups": [
+      "30A"
+    ],
+    "accommodations": [
+      "Trails",
+      "Corrals",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "712-523-2700",
+    "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/lake-three-fires-state-park",
+    "description": "Official Iowa DNR page says the equestrian campground has electric and non-electric sites, restrooms, corrals, hitching posts, and holding pens.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "IA State Parks"
+  },
+  {
+    "id": "ia-stateparks-waubonsie",
+    "name": "Waubonsie State Park Equestrian Campground",
+    "location": "Hamburg, IA",
+    "state": "IA",
+    "latitude": 40.6614,
+    "longitude": -95.6869,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 4.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Corrals",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "712-382-2786",
+    "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/waubonsie-state-park",
+    "description": "Official Iowa DNR page says Waubonsie's primitive equestrian campground contains non-electric sites with hitching rails, pens, and pit vault toilets.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "IA State Parks"
+  },
+  {
+    "id": "ia-stateparks-nine-eagles",
+    "name": "Nine Eagles State Park Equestrian Campsites",
+    "location": "Davis City, IA",
+    "state": "IA",
+    "latitude": 40.5984,
+    "longitude": -93.7701,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 4.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "641-442-2855",
+    "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/nine-eagles-state-park",
+    "description": "Official Iowa DNR page says primitive equestrian campsites contain fire rings, pit toilets, water, and hitching rails.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "IA State Parks"
+  },
+  {
+    "id": "ia-stateparks-volga-river",
+    "name": "Volga River State Recreation Area Albany Equestrian Campground",
+    "location": "Fayette, IA",
+    "state": "IA",
+    "latitude": 42.8989,
+    "longitude": -91.7711,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 4.0,
+    "hookups": [
+      "30A"
+    ],
+    "accommodations": [
+      "Trails",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "563-425-4161",
+    "website": "https://www.iowadnr.gov/places-go/state-parks/all-parks/volga-river-state-recreation-area",
+    "description": "Official Iowa DNR page says the Albany Campground has equestrian sites with electricity.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "IA State Parks"
+  },
+  {
+    "id": "ia-stateparks-shimek",
+    "name": "Shimek State Forest Lick Creek Equestrian Campgrounds",
+    "location": "Farmington, IA",
+    "state": "IA",
+    "latitude": 40.6425,
+    "longitude": -91.7118,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 4.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Trails",
+      "Stalls",
+      "Highlines"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "319-878-3811",
+    "website": "https://www.iowadnr.gov/places-go/state-forests/shimek-state-forest",
+    "description": "Official Iowa DNR page says the Lower and Upper Campgrounds in the Lick Creek Unit are designed for equestrian use, with open-air stalls for overnight stabling, hitching posts, and a water hydrant.",
+    "isVerified": false,
+    "seasonStart": 4,
+    "seasonEnd": 10,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "F1948A"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "IA State Parks"
+  }
+]

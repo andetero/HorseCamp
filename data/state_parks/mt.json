@@ -1,0 +1,40 @@
+[
+  {
+    "id": "mt-stateparks-fish-creek",
+    "name": "Fish Creek State Park Horse Camping Area",
+    "location": "Alberton, MT",
+    "state": "MT",
+    "latitude": 47.0009,
+    "longitude": -114.8368,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Trails",
+      "Primitive Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "406-542-5500",
+    "website": "https://fwp.mt.gov/stateparks/fish-creek",
+    "description": "Official Montana FWP page says Fish Creek State Park is open year round and includes both camping and horseback riding among park activities.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "MT State Parks"
+  }
+]

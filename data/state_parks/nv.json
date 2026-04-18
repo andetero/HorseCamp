@@ -1,0 +1,80 @@
+[
+  {
+    "id": "nv-stateparks-washoe-lake-equestrian",
+    "name": "Washoe Lake State Park Equestrian Campground",
+    "location": "Carson City, NV",
+    "state": "NV",
+    "latitude": 39.2167,
+    "longitude": -119.7592,
+    "pricePerNight": 15.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Trails"
+    ],
+    "maxRigLength": 45,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "775-687-4319",
+    "website": "https://parks.nv.gov/parks/washoe-lake/",
+    "description": "Official Nevada State Parks page says the main equestrian facility at Washoe Lake includes an arena, corrals, horse washing station, water and lighting, and that camping is permitted for both tents and RVs with large parking areas for horse trailer access.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": true,
+    "hasDumpStation": true,
+    "hasWifi": true,
+    "hasBathhouse": true,
+    "pullThroughAvailable": true,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "NV State Parks"
+  },
+  {
+    "id": "nv-stateparks-fort-churchill-scout-camp",
+    "name": "Fort Churchill State Historic Park Scout Camp",
+    "location": "Silver Springs, NV",
+    "state": "NV",
+    "latitude": 39.2796,
+    "longitude": -119.2927,
+    "pricePerNight": 15.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [],
+    "accommodations": [
+      "Corrals",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "775-577-2345",
+    "website": "https://parks.nv.gov/parks/fort-churchill-state-historic-park/",
+    "description": "Official Nevada State Parks page says Scout Camp at Fort Churchill is a dispersed camping or day-use area adjacent to the Carson River that includes multiple horse corrals and a designated manure dump area.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "C0392B",
+      "E3A18B"
+    ],
+    "photoURLs": [],
+    "source": "State Parks",
+    "sourceDetail": "NV State Parks"
+  }
+]

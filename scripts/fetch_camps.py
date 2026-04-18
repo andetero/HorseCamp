@@ -24,6 +24,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 DATA_DIR = REPO_ROOT / "data"
 LAYOVERS_FILE = DATA_DIR / "layovers.json"
+PRIVATE_CAMPS_FILE = DATA_DIR / "private_camps.json"
 STATE_PARKS_DIR = DATA_DIR / "state_parks"
 
 STATES = [
@@ -1336,6 +1337,29 @@ def fetch_layovers():
 
 
 
+def fetch_private_camps():
+    if not PRIVATE_CAMPS_FILE.exists():
+        raise FileNotFoundError(
+            f"Missing private camps file: {PRIVATE_CAMPS_FILE}. "
+            "Create data/private_camps.json before running the fetch."
+        )
+
+    with PRIVATE_CAMPS_FILE.open("r", encoding="utf-8") as f:
+        private_camps = json.load(f)
+
+    if not isinstance(private_camps, list):
+        raise ValueError("data/private_camps.json must contain a JSON array of private camp listings")
+
+    for i, camp in enumerate(private_camps, start=1):
+        if not isinstance(camp, dict):
+            raise ValueError(f"Private camp #{i} in data/private_camps.json is not a JSON object")
+        for field in ("id", "name", "location", "state", "latitude", "longitude", "source"):
+            if field not in camp:
+                raise ValueError(f"Private camp #{i} is missing required field: {field}")
+
+    return private_camps
+
+
 def fetch_nv_state_parks():
     """Load manual NV state-park listings from data/state_parks/nv.json."""
     return load_manual_state_parks("NV")
@@ -1902,6 +1926,25 @@ def main():
                 layover_new += 1
     print(f"  Layovers: {layover_new} new listings added")
 
+    print("\nMerging private camp listings...")
+    private_camp_new = 0
+    for camp in fetch_private_camps():
+        cid = camp["id"]
+        if cid not in all_camps:
+            lat, lng = camp["latitude"], camp["longitude"]
+            dup = False
+            for ex in all_camps.values():
+                dlat = _math.radians(lat - ex["latitude"])
+                dlng = _math.radians(lng - ex["longitude"])
+                a = _math.sin(dlat/2)**2 + _math.cos(_math.radians(lat))*_math.cos(_math.radians(ex["latitude"]))*_math.sin(dlng/2)**2
+                if 6371000 * 2 * _math.atan2(_math.sqrt(a), _math.sqrt(1-a)) < 500:
+                    dup = True
+                    break
+            if not dup:
+                all_camps[cid] = camp
+                private_camp_new += 1
+    print(f"  Private Camps: {private_camp_new} new listings added")
+
     print("\nFetching from OpenStreetMap...")
     osm_camps = fetch_osm(all_camps)
     for camp in osm_camps:
@@ -1919,7 +1962,7 @@ def main():
     output = {
         "generated": datetime.now(timezone.utc).isoformat(),
         "count": len(camps_list),
-        "sources": ["Recreation.gov RIDB", "NPS API"] + state_park_sources + ["OpenStreetMap", "Layover"],
+        "sources": ["Recreation.gov RIDB", "NPS API"] + state_park_sources + ["OpenStreetMap", "Layover", "Private Camps"],
         "camps": camps_list,
     }
     output_path = REPO_ROOT / "camps.json"
@@ -1928,6 +1971,7 @@ def main():
 
     osm_count = sum(1 for c in camps_list if c.get("source") == "OSM")
     layover_count = sum(1 for c in camps_list if c.get("source") == "Layover")
+    private_camp_count = sum(1 for c in camps_list if c.get("source") == "Private Camps")
     verified_count = sum(1 for c in camps_list if c.get("isVerified"))
     print(f"\nDone. {len(camps_list)} total camps written to {output_path.relative_to(REPO_ROOT)}")
     print(f"  RIDB:         {total_ridb}")
@@ -1935,6 +1979,7 @@ def main():
     for abbr in sorted(state_park_totals):
         print(f"  {abbr} StateParks:{state_park_totals[abbr]}")
     print(f"  Layovers:     {layover_count}")
+    print(f"  Private Camps:{private_camp_count}")
     print(f"  OSM:          {osm_count}")
     print(f"  Excluded:     {excluded_count}")
     print(f"  Overrides:    {override_count}")

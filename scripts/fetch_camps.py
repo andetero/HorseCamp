@@ -93,131 +93,114 @@ def safe_get(url, headers=None, params=None, retries=3):
             time.sleep(3)
     return None
 
-# ── VERIFIED OVERRIDES ────────────────────────────────────────────────
-import csv, os
+# ── MANUAL OVERRIDES / EXCLUSIONS ─────────────────────────────────────
+OVERRIDES_FILE = DATA_DIR / "overrides.json"
+EXCLUSIONS_FILE = DATA_DIR / "exclusions.json"
 
-OVERRIDE_FILE = str(REPO_ROOT / "verified_overrides.csv")
 
-# Columns in the override CSV
-OVERRIDE_COLUMNS = [
-    "id", "name", "location", "state", "phone",
-    "hookups", "accommodations", "pricePerNight", "horseFeePerNight",
-    "maxRigLength", "stallCount", "paddockCount",
-    "hasWashRack", "hasDumpStation", "hasWifi", "hasBathhouse",
-    "pullThroughAvailable", "description", "photoURL", "verified", "notes"
-]
+def _load_json_file(path: Path, default):
+    if not path.exists():
+        return default
+    try:
+        with path.open("r", encoding="utf-8") as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"Invalid JSON in {path}: {e}") from e
 
-def generate_override_template(camps_dict):
-    """Generate verified_overrides.csv as a blank template.
-    Called only when the file doesn't exist yet.
-    Rows are pre-populated with current data so wife can see what's there."""
-    rows = []
-    for camp in sorted(camps_dict.values(), key=lambda c: (c["state"], c["name"])):
-        rows.append({
-            "id":                   camp["id"],
-            "name":                 camp["name"],
-            "location":             camp["location"],
-            "state":                camp["state"],
-            "phone":                camp["phone"],
-            "hookups":              "|".join(camp["hookups"]),
-            "accommodations":       "|".join(camp["accommodations"]),
-            "pricePerNight":        camp["pricePerNight"],
-            "horseFeePerNight":     camp["horseFeePerNight"],
-            "maxRigLength":         camp["maxRigLength"],
-            "stallCount":           camp["stallCount"],
-            "paddockCount":         camp["paddockCount"],
-            "hasWashRack":          camp["hasWashRack"],
-            "hasDumpStation":       camp["hasDumpStation"],
-            "hasWifi":              camp["hasWifi"],
-            "hasBathhouse":         camp["hasBathhouse"],
-            "pullThroughAvailable": camp["pullThroughAvailable"],
-            "description":          camp["description"],
-            "verified":             "",   # wife fills: YES / NO / CLOSED
-            "notes":                "",   # wife fills: anything useful
-        })
 
-    with open(OVERRIDE_FILE, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=OVERRIDE_COLUMNS)
-        writer.writeheader()
-        writer.writerows(rows)
+def load_overrides():
+    """Load manual field overrides for dynamically fetched camps.
 
-    print(f"  Generated {OVERRIDE_FILE} with {len(rows)} camps — share with verifier")
+    File format:
+      {
+        "camp-id": {"phone": "...", "website": "...", "isVerified": true},
+        ...
+      }
+    """
+    data = _load_json_file(OVERRIDES_FILE, {})
+    if not isinstance(data, dict):
+        raise RuntimeError(f"{OVERRIDES_FILE} must contain a top-level JSON object")
+    for camp_id, patch in data.items():
+        if not isinstance(camp_id, str) or not camp_id.strip():
+            raise RuntimeError(f"{OVERRIDES_FILE} contains an invalid camp id key: {camp_id!r}")
+        if not isinstance(patch, dict):
+            raise RuntimeError(f"Override for {camp_id!r} in {OVERRIDES_FILE} must be a JSON object")
+    return data
+
+
+def load_exclusions():
+    """Load list of camp IDs to exclude from the generated output."""
+    data = _load_json_file(EXCLUSIONS_FILE, [])
+    if not isinstance(data, list):
+        raise RuntimeError(f"{EXCLUSIONS_FILE} must contain a top-level JSON array")
+    cleaned = []
+    for camp_id in data:
+        if not isinstance(camp_id, str) or not camp_id.strip():
+            raise RuntimeError(f"{EXCLUSIONS_FILE} contains an invalid camp id entry: {camp_id!r}")
+        cleaned.append(camp_id.strip())
+    return cleaned
+
+
+def apply_exclusions(camps_dict):
+    """Remove any camp IDs listed in data/exclusions.json."""
+    excluded_ids = load_exclusions()
+    removed = 0
+    for camp_id in excluded_ids:
+        if camp_id in camps_dict:
+            del camps_dict[camp_id]
+            removed += 1
+    print(f"  Exclusions applied: {removed} removed")
+    return removed
+
 
 def apply_overrides(camps_dict):
-    """Read verified_overrides.csv and apply any edits to camps_dict.
-    Only rows where 'verified' is non-empty are applied.
-    Returns count of overrides applied."""
-    if not os.path.exists(OVERRIDE_FILE):
-        return 0
-
+    """Apply partial field patches from data/overrides.json."""
+    overrides = load_overrides()
     applied = 0
-    closed = 0
+    missing_ids = []
 
-    with open(OVERRIDE_FILE, newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            cid = row.get("id", "").strip()
-            verified = row.get("verified", "").strip().upper()
+    numeric_float_fields = {"pricePerNight", "horseFeePerNight", "rating", "latitude", "longitude"}
+    numeric_int_fields = {"maxRigLength", "stallCount", "paddockCount", "reviewCount", "seasonStart", "seasonEnd"}
+    bool_fields = {"isVerified", "hasWashRack", "hasDumpStation", "hasWifi", "hasBathhouse", "pullThroughAvailable"}
+    list_fields = {"hookups", "accommodations", "imageColors", "photoURLs"}
 
-            if not cid or not verified:
-                continue  # skip unverified rows
+    for camp_id, patch in overrides.items():
+        camp = camps_dict.get(camp_id)
+        if camp is None:
+            missing_ids.append(camp_id)
+            continue
 
-            # Mark closed camps — remove from dict entirely
-            if verified == "CLOSED":
-                if cid in camps_dict:
-                    del camps_dict[cid]
-                    closed += 1
-                continue
+        for key, value in patch.items():
+            if key in numeric_float_fields:
+                try:
+                    camp[key] = float(value)
+                except (TypeError, ValueError):
+                    raise RuntimeError(f"Override {camp_id!r}.{key} must be a number")
+            elif key in numeric_int_fields:
+                try:
+                    camp[key] = int(value)
+                except (TypeError, ValueError):
+                    raise RuntimeError(f"Override {camp_id!r}.{key} must be an integer")
+            elif key in bool_fields:
+                if not isinstance(value, bool):
+                    raise RuntimeError(f"Override {camp_id!r}.{key} must be true or false")
+                camp[key] = value
+            elif key in list_fields:
+                if not isinstance(value, list):
+                    raise RuntimeError(f"Override {camp_id!r}.{key} must be a JSON array")
+                camp[key] = value
+            else:
+                camp[key] = value
 
-            if verified != "YES":
-                continue
-
-            if cid not in camps_dict:
-                continue
-
-            camp = camps_dict[cid]
-
-            # Apply only non-empty fields
-            if row.get("name", "").strip():
-                camp["name"] = row["name"].strip()
-            if row.get("phone", "").strip():
-                camp["phone"] = row["phone"].strip()
-            if row.get("hookups", "").strip():
-                camp["hookups"] = [h.strip() for h in row["hookups"].split("|") if h.strip()]
-            if row.get("accommodations", "").strip():
-                camp["accommodations"] = [a.strip() for a in row["accommodations"].split("|") if a.strip()]
-            if row.get("pricePerNight", "").strip():
-                try: camp["pricePerNight"] = float(row["pricePerNight"])
-                except: pass
-            if row.get("horseFeePerNight", "").strip():
-                try: camp["horseFeePerNight"] = float(row["horseFeePerNight"])
-                except: pass
-            if row.get("maxRigLength", "").strip():
-                try: camp["maxRigLength"] = int(row["maxRigLength"])
-                except: pass
-            if row.get("stallCount", "").strip():
-                try: camp["stallCount"] = int(row["stallCount"])
-                except: pass
-            if row.get("paddockCount", "").strip():
-                try: camp["paddockCount"] = int(row["paddockCount"])
-                except: pass
-            for bool_field in ["hasWashRack","hasDumpStation","hasWifi","hasBathhouse","pullThroughAvailable"]:
-                val = row.get(bool_field, "").strip().upper()
-                if val in ("TRUE","YES","1"):
-                    camp[bool_field] = True
-                elif val in ("FALSE","NO","0"):
-                    camp[bool_field] = False
-            if row.get("description", "").strip():
-                camp["description"] = row["description"].strip()
-            if row.get("photoURL", "").strip():
-                camp["photoURLs"] = [row["photoURL"].strip()]
-
+        if "isVerified" not in patch:
             camp["isVerified"] = True
-            camps_dict[cid] = camp
-            applied += 1
+        camps_dict[camp_id] = camp
+        applied += 1
 
-    print(f"  Overrides applied: {applied} updated, {closed} marked closed")
-    return applied + closed
+    if missing_ids:
+        print(f"  Overrides skipped (missing ids): {len(missing_ids)}")
+    print(f"  Overrides applied: {applied} updated")
+    return applied
 
 # ── RIDB HELPERS ──────────────────────────────────────────────────────
 MONTH_MAP = {
@@ -1799,3 +1782,165 @@ def fetch_sd_state_parks():
     """Load manual SD state-park listings from data/state_parks/sd.json."""
     return load_manual_state_parks("SD")
 
+def main():
+    print(f"HorseCamp data fetch starting — {datetime.now(timezone.utc).isoformat()}")
+    print(f"RIDB key present: {'Yes' if RIDB_KEY else 'NO — set RIDB_API_KEY secret'}")
+    print(f"NPS key present:  {'Yes' if NPS_KEY  else 'NO — set NPS_API_KEY secret'}")
+
+    all_camps = {}
+    total_ridb = 0
+    total_nps = 0
+
+    for i, state in enumerate(STATES):
+        state_started = time.time()
+        print(f"[{i+1}/{len(STATES)}] {state}...", end=" ", flush=True)
+        ridb_camps = fetch_ridb_state(state) if RIDB_KEY else []
+        nps_camps = fetch_nps_state(state) if NPS_KEY else []
+        state_new = 0
+        for camp in ridb_camps + nps_camps:
+            cid = camp["id"]
+            if cid not in all_camps:
+                all_camps[cid] = camp
+                state_new += 1
+        total_ridb += len(ridb_camps)
+        total_nps += len(nps_camps)
+        elapsed = time.time() - state_started
+        print(f"{len(ridb_camps)} RIDB + {len(nps_camps)} NPS = {state_new} new [{elapsed:.1f}s]")
+        time.sleep(0.5)
+
+    def merge_state(camps):
+        new_count = 0
+        for camp in camps:
+            cid = camp["id"]
+            if cid not in all_camps:
+                all_camps[cid] = camp
+                new_count += 1
+        return new_count
+
+    state_park_jobs = [
+        ("AK", "Alaska", fetch_ak_state_parks, "Alaska State Parks Equestrian Camping"),
+        ("AL", "Alabama", fetch_al_state_parks, "Alabama State Parks Equestrian Camping"),
+        ("AR", "Arkansas", fetch_ar_state_parks, "Arkansas State Parks Horse Camping"),
+        ("AZ", "Arizona", fetch_az_state_parks, "Arizona State Parks Equestrian Camping"),
+        ("CA", "California", fetch_ca_state_parks, "California State Parks Open Data"),
+        ("CO", "Colorado", fetch_co_state_parks, "Colorado State Parks Equestrian Camping"),
+        ("CT", "Connecticut", fetch_ct_state_parks, "Connecticut State Parks Equestrian Camping"),
+        ("DE", "Delaware", fetch_de_state_parks, "Delaware State Parks Equestrian Camping"),
+        ("FL", "Florida", fetch_fl_state_parks, "Florida State Parks Equestrian Camping"),
+        ("GA", "Georgia", fetch_ga_state_parks, "Georgia State Parks Equestrian Camping"),
+        ("HI", "Hawaii", fetch_hi_state_parks, "Hawaii State Parks Equestrian Camping"),
+        ("IA", "Iowa", fetch_ia_state_parks, "Iowa State Parks Equestrian Camping"),
+        ("ID", "Idaho", fetch_id_state_parks, "Idaho State Parks Equestrian Camping"),
+        ("IL", "Illinois", fetch_il_state_parks, "Illinois DNR Equestrian Camping"),
+        ("IN", "Indiana", fetch_in_state_parks, "Indiana DNR Horse Camping"),
+        ("KS", "Kansas", fetch_ks_state_parks, "Kansas State Parks Equestrian Camping"),
+        ("KY", "Kentucky", fetch_ky_state_parks, "Kentucky State Parks Horse Camping"),
+        ("LA", "Louisiana", fetch_la_state_parks, "Louisiana State Parks Equestrian Camping"),
+        ("MA", "Massachusetts", fetch_ma_state_parks, "Massachusetts State Parks Equestrian Camping"),
+        ("MD", "Maryland", fetch_md_state_parks, "Maryland State Parks Equestrian Camping"),
+        ("ME", "Maine", fetch_me_state_parks, "Maine State Parks Equestrian Camping"),
+        ("MI", "Michigan", fetch_mi_state_parks, "Michigan DNR Equestrian Campgrounds"),
+        ("MN", "Minnesota", fetch_mn_state_parks, "Minnesota DNR Horse Campgrounds"),
+        ("MO", "Missouri", fetch_mo_state_parks, "Missouri State Parks Equestrian Campgrounds"),
+        ("MS", "Mississippi", fetch_ms_state_parks, "Mississippi State Parks Equestrian Camping"),
+        ("MT", "Montana", fetch_mt_state_parks, "Montana State Parks Equestrian Camping"),
+        ("NC", "North Carolina", fetch_nc_state_parks, "North Carolina State Parks Equestrian Camping"),
+        ("ND", "North Dakota", fetch_nd_state_parks, "North Dakota State Parks Equestrian Camping"),
+        ("NE", "Nebraska", fetch_ne_state_parks, "Nebraska State Parks Equestrian Camping"),
+        ("NH", "New Hampshire", fetch_nh_state_parks, "New Hampshire State Parks Equestrian Camping"),
+        ("NJ", "New Jersey", fetch_nj_state_parks, "New Jersey State Parks Equestrian Camping"),
+        ("NM", "New Mexico", fetch_nm_state_parks, "New Mexico State Parks Equestrian Camping"),
+        ("NV", "Nevada", fetch_nv_state_parks, "Nevada State Parks Equestrian Camping"),
+        ("NY", "New York", fetch_ny_state_parks, "New York State Parks Equestrian Camping"),
+        ("OH", "Ohio", fetch_oh_state_parks, "Ohio State Parks Bridle Camps"),
+        ("OK", "Oklahoma", fetch_ok_state_parks, "Oklahoma State Parks Equestrian Camping"),
+        ("OR", "Oregon", fetch_or_state_parks, "Oregon State Parks Equestrian Camping"),
+        ("PA", "Pennsylvania", fetch_pa_state_parks, "Pennsylvania State Parks Horse Camping"),
+        ("RI", "Rhode Island", fetch_ri_state_parks, "Rhode Island State Parks Equestrian Camping"),
+        ("SC", "South Carolina", fetch_sc_state_parks, "South Carolina State Parks Equestrian Camping"),
+        ("SD", "South Dakota", fetch_sd_state_parks, "South Dakota State Parks Equestrian Camping"),
+        ("TN", "Tennessee", fetch_tn_state_parks, "Tennessee State Parks Horse Camping"),
+        ("TX", "Texas", fetch_tx_state_parks, "Texas Parks & Wildlife Equestrian Camping"),
+        ("UT", "Utah", fetch_ut_state_parks, "Utah State Parks Equestrian Camping"),
+        ("VA", "Virginia", fetch_va_state_parks, "Virginia State Parks Horse Camping"),
+        ("VT", "Vermont", fetch_vt_state_parks, "Vermont State Parks Equestrian Camping"),
+        ("WA", "Washington", fetch_wa_state_parks, "Washington State Parks Equestrian Camping"),
+        ("WI", "Wisconsin", fetch_wi_state_parks, "Wisconsin DNR Equestrian Campsites"),
+        ("WV", "West Virginia", fetch_wv_state_parks, "West Virginia State Parks Equestrian Camping"),
+        ("WY", "Wyoming", fetch_wy_state_parks, "Wyoming State Parks Equestrian Camping"),
+    ]
+
+    state_park_totals = {}
+    state_park_sources = []
+    for abbr, state_name, fetcher, source_label in state_park_jobs:
+        print(f"\nFetching {state_name} State Parks...")
+        started = time.time()
+        state_camps = fetcher()
+        state_park_totals[abbr] = len(state_camps)
+        state_park_sources.append(source_label)
+        merged = merge_state(state_camps)
+        elapsed = time.time() - started
+        print(f"  {abbr} State Parks: {merged} new listings added [{elapsed:.1f}s]")
+
+    print("\nMerging layover listings...")
+    import math as _math
+    layover_new = 0
+    for camp in fetch_layovers():
+        cid = camp["id"]
+        if cid not in all_camps:
+            lat, lng = camp["latitude"], camp["longitude"]
+            dup = False
+            for ex in all_camps.values():
+                dlat = _math.radians(lat - ex["latitude"])
+                dlng = _math.radians(lng - ex["longitude"])
+                a = _math.sin(dlat/2)**2 + _math.cos(_math.radians(lat))*_math.cos(_math.radians(ex["latitude"]))*_math.sin(dlng/2)**2
+                if 6371000 * 2 * _math.atan2(_math.sqrt(a), _math.sqrt(1-a)) < 500:
+                    dup = True
+                    break
+            if not dup:
+                all_camps[cid] = camp
+                layover_new += 1
+    print(f"  Layovers: {layover_new} new listings added")
+
+    print("\nFetching from OpenStreetMap...")
+    osm_camps = fetch_osm(all_camps)
+    for camp in osm_camps:
+        cid = camp["id"]
+        if cid not in all_camps:
+            all_camps[cid] = camp
+
+    print("\nApplying manual exclusions...")
+    excluded_count = apply_exclusions(all_camps)
+
+    print("\nApplying manual overrides...")
+    override_count = apply_overrides(all_camps)
+
+    camps_list = sorted(all_camps.values(), key=lambda c: (c["state"], c["name"]))
+    output = {
+        "generated": datetime.now(timezone.utc).isoformat(),
+        "count": len(camps_list),
+        "sources": ["Recreation.gov RIDB", "NPS API"] + state_park_sources + ["OpenStreetMap", "Layover"],
+        "camps": camps_list,
+    }
+    output_path = REPO_ROOT / "camps.json"
+    with output_path.open("w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2)
+
+    osm_count = sum(1 for c in camps_list if c.get("source") == "OSM")
+    layover_count = sum(1 for c in camps_list if c.get("source") == "Layover")
+    verified_count = sum(1 for c in camps_list if c.get("isVerified"))
+    print(f"\nDone. {len(camps_list)} total camps written to {output_path.relative_to(REPO_ROOT)}")
+    print(f"  RIDB:         {total_ridb}")
+    print(f"  NPS:          {total_nps}")
+    for abbr in sorted(state_park_totals):
+        print(f"  {abbr} StateParks:{state_park_totals[abbr]}")
+    print(f"  Layovers:     {layover_count}")
+    print(f"  OSM:          {osm_count}")
+    print(f"  Excluded:     {excluded_count}")
+    print(f"  Overrides:    {override_count}")
+    print(f"  Verified:     {verified_count}")
+    print(f"  Unique total: {len(camps_list)}")
+
+
+if __name__ == "__main__":
+    main()

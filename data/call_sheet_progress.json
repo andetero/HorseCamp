@@ -1,5 +1,5 @@
 {
-  "current_state_index": 1,
+  "current_state_index": 2,
   "offset_by_state": {
     "AK": 0,
     "AL": 0,
@@ -51,8 +51,8 @@
     "WV": 0,
     "WY": 0
   },
-  "last_generated_at": "2026-04-18T14:15:37.671432+00:00",
-  "last_state": "AK",
+  "last_generated_at": "2026-04-18T18:04:02.795811+00:00",
+  "last_state": "AL",
   "last_batch_start": 1,
-  "last_batch_end": 2
+  "last_batch_end": 11
 }

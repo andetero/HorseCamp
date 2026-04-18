@@ -1,303 +1,255 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 
-import csv
 import json
 import math
+import os
 from collections import defaultdict
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Spacer, Paragraph, Table, TableStyle, PageBreak
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-DATA_DIR = REPO_ROOT / "data"
-LAYOVERS_PATH = DATA_DIR / "layovers.json"
+ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = ROOT / "data"
 STATE_PARKS_DIR = DATA_DIR / "state_parks"
+LAYOVERS_PATH = DATA_DIR / "layovers.json"
 PROGRESS_PATH = DATA_DIR / "call_sheet_progress.json"
-OUTPUT_DIR = REPO_ROOT / "out" / "weekly_call_sheet"
+OUTPUT_DIR = ROOT / "generated"
+OUTPUT_PDF = OUTPUT_DIR / "weekly_call_sheet.pdf"
+OUTPUT_MANIFEST = OUTPUT_DIR / "weekly_call_sheet_manifest.json"
 
-DEFAULT_BATCH_SIZE = 30
+BATCH_SIZE = int(os.getenv("BATCH_SIZE", "20"))
+DEFAULT_STATE = os.getenv("DEFAULT_START_STATE", "")
 
 
 @dataclass
 class Listing:
+    source_type: str
     state: str
     name: str
     location: str
     phone: str
     website: str
-    source: str
-    source_detail: str
-    accommodations: str
-    hookups: str
-    notes: str
+    listing_id: str
+    notes: str = ""
 
 
-def load_json(path: Path) -> Any:
+def load_json(path: Path, default: Any) -> Any:
+    if not path.exists():
+        return default
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
 
-def load_manual_records() -> dict[str, list[Listing]]:
+def save_json(path: Path, value: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        json.dump(value, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+
+
+def normalize_phone(value: Any) -> str:
+    if value is None:
+        return ""
+    return str(value).strip()
+
+
+def listing_from_record(record: dict[str, Any], source_type: str) -> Listing:
+    state = str(record.get("state", "")).strip().upper()
+    return Listing(
+        source_type=source_type,
+        state=state,
+        name=str(record.get("name", "")).strip(),
+        location=str(record.get("location", "")).strip(),
+        phone=normalize_phone(record.get("phone")),
+        website=str(record.get("website", "")).strip(),
+        listing_id=str(record.get("id", "")).strip(),
+        notes=str(record.get("description", "")).strip(),
+    )
+
+
+def load_manual_listings() -> list[Listing]:
+    listings: list[Listing] = []
+
+    for record in load_json(LAYOVERS_PATH, []):
+        listings.append(listing_from_record(record, "Layover"))
+
+    if STATE_PARKS_DIR.exists():
+        for path in sorted(STATE_PARKS_DIR.glob("*.json")):
+            for record in load_json(path, []):
+                listings.append(listing_from_record(record, "State Park"))
+
+    listings = [x for x in listings if x.name and x.state]
+    listings.sort(key=lambda x: (x.state, x.name.lower(), x.location.lower()))
+    return listings
+
+
+def build_state_groups(listings: Iterable[Listing]) -> dict[str, list[Listing]]:
     grouped: dict[str, list[Listing]] = defaultdict(list)
-
-    def add_records(items: list[dict[str, Any]]) -> None:
-        for item in items:
-            state = (item.get("state") or "").strip().upper()
-            if not state:
-                continue
-            grouped[state].append(
-                Listing(
-                    state=state,
-                    name=(item.get("name") or "").strip(),
-                    location=(item.get("location") or "").strip(),
-                    phone=(item.get("phone") or "").strip(),
-                    website=(item.get("website") or "").strip(),
-                    source=(item.get("source") or "").strip(),
-                    source_detail=(item.get("sourceDetail") or item.get("source") or "").strip(),
-                    accommodations=", ".join(item.get("accommodations") or []),
-                    hookups=", ".join(item.get("hookups") or []),
-                    notes=(item.get("description") or "").strip(),
-                )
-            )
-
-    add_records(load_json(LAYOVERS_PATH))
-
-    for path in sorted(STATE_PARKS_DIR.glob("*.json")):
-        add_records(load_json(path))
-
-    for listings in grouped.values():
-        listings.sort(key=lambda x: (x.name.lower(), x.location.lower()))
-
-    return dict(sorted(grouped.items()))
+    for item in listings:
+        grouped[item.state].append(item)
+    return dict(sorted(grouped.items(), key=lambda kv: kv[0]))
 
 
-def load_progress(states: list[str]) -> dict[str, Any]:
-    default = {
-        "current_state_index": 0,
-        "offset_by_state": {state: 0 for state in states},
-        "last_generated_at": None,
-        "last_state": None,
-        "last_batch_start": None,
-        "last_batch_end": None,
-    }
-    if not PROGRESS_PATH.exists():
-        return default
-
-    data = load_json(PROGRESS_PATH)
-    if not isinstance(data, dict):
-        return default
-
-    offset_by_state = data.get("offset_by_state") or {}
-    normalized_offsets = {state: int(offset_by_state.get(state, 0) or 0) for state in states}
-
-    return {
-        "current_state_index": int(data.get("current_state_index", 0) or 0),
-        "offset_by_state": normalized_offsets,
-        "last_generated_at": data.get("last_generated_at"),
-        "last_state": data.get("last_state"),
-        "last_batch_start": data.get("last_batch_start"),
-        "last_batch_end": data.get("last_batch_end"),
-    }
-
-
-def choose_batch(grouped: dict[str, list[Listing]], batch_size: int) -> tuple[str, list[Listing], dict[str, Any]]:
-    states = list(grouped.keys())
+def pick_batch(grouped: dict[str, list[Listing]], progress: dict[str, Any], batch_size: int) -> tuple[str, list[Listing], dict[str, Any]]:
+    states = [s for s, rows in grouped.items() if rows]
     if not states:
-        raise RuntimeError("No manual records found in data/layovers.json or data/state_parks/*.json")
+        raise RuntimeError("No manual listings were found in data/layovers.json or data/state_parks/*.json")
 
-    progress = load_progress(states)
-    state_index = progress["current_state_index"] % len(states)
-    offset_by_state = progress["offset_by_state"]
+    progress.setdefault("states", {})
 
-    for _ in range(len(states)):
-        state = states[state_index]
-        listings = grouped[state]
-        if not listings:
-            state_index = (state_index + 1) % len(states)
-            continue
+    current_state = progress.get("current_state") or DEFAULT_STATE
+    if current_state not in grouped or not grouped[current_state]:
+        current_state = states[0]
 
-        offset = max(0, min(offset_by_state.get(state, 0), len(listings)))
-        if offset >= len(listings):
-            offset = 0
-            offset_by_state[state] = 0
-            state_index = (state_index + 1) % len(states)
-            continue
+    # Find the next state with remaining rows.
+    checked = 0
+    while checked < len(states):
+        state_rows = grouped[current_state]
+        offset = int(progress["states"].get(current_state, 0))
+        if offset < len(state_rows):
+            break
+        idx = states.index(current_state)
+        current_state = states[(idx + 1) % len(states)]
+        checked += 1
+    else:
+        progress = {"current_state": states[0], "states": {}}
+        current_state = states[0]
 
-        batch = listings[offset : offset + batch_size]
-        if not batch:
-            state_index = (state_index + 1) % len(states)
-            continue
+    state_rows = grouped[current_state]
+    offset = int(progress["states"].get(current_state, 0))
+    batch = state_rows[offset : offset + batch_size]
+    next_offset = offset + len(batch)
 
-        new_offset = offset + len(batch)
-        if new_offset >= len(listings):
-            offset_by_state[state] = 0
-            next_state_index = (state_index + 1) % len(states)
-        else:
-            offset_by_state[state] = new_offset
-            next_state_index = state_index
+    progress["states"][current_state] = next_offset
+    if next_offset >= len(state_rows):
+        idx = states.index(current_state)
+        progress["current_state"] = states[(idx + 1) % len(states)]
+    else:
+        progress["current_state"] = current_state
 
-        progress.update(
-            {
-                "current_state_index": next_state_index,
-                "offset_by_state": offset_by_state,
-                "last_generated_at": datetime.now(timezone.utc).isoformat(),
-                "last_state": state,
-                "last_batch_start": offset + 1,
-                "last_batch_end": offset + len(batch),
-            }
-        )
-        return state, batch, progress
-
-    raise RuntimeError("No listings available to generate a call sheet.")
+    progress["last_run_at"] = datetime.utcnow().isoformat(timespec="seconds") + "Z"
+    progress["last_batch"] = {
+        "state": current_state,
+        "count": len(batch),
+        "offset_started": offset,
+        "offset_ended": next_offset,
+    }
+    return current_state, batch, progress
 
 
-def write_progress(progress: dict[str, Any]) -> None:
-    PROGRESS_PATH.write_text(json.dumps(progress, indent=2) + "\n", encoding="utf-8")
-
-
-def write_csv(path: Path, records: list[Listing]) -> None:
-    with path.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(
-            [
-                "State",
-                "Name",
-                "Location",
-                "Phone",
-                "Website",
-                "Type",
-                "Accommodations",
-                "Hookups",
-                "Reached?",
-                "Open?",
-                "Horse camping?",
-                "Corrections needed",
-                "Date checked",
-                "Initials",
-                "Notes",
-            ]
-        )
-        for r in records:
-            writer.writerow(
-                [
-                    r.state,
-                    r.name,
-                    r.location,
-                    r.phone,
-                    r.website,
-                    r.source_detail or r.source,
-                    r.accommodations,
-                    r.hookups,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    r.notes,
-                ]
-            )
-
-
-def ellipsize(text: str, max_len: int) -> str:
-    text = (text or "").strip()
-    if len(text) <= max_len:
-        return text
-    return text[: max_len - 1].rstrip() + "…"
-
-
-def write_pdf(path: Path, records: list[Listing], state: str, progress: dict[str, Any], batch_size: int) -> None:
+def paragraph(text: str, style_name: str = "BodyText") -> Paragraph:
     styles = getSampleStyleSheet()
+    safe = (
+        text.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace("\n", "<br/>")
+    )
+    return Paragraph(safe, styles[style_name])
+
+
+def make_pdf(state: str, batch: list[Listing], generated_at: str) -> None:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     doc = SimpleDocTemplate(
-        str(path),
+        str(OUTPUT_PDF),
         pagesize=landscape(letter),
         leftMargin=0.35 * inch,
         rightMargin=0.35 * inch,
-        topMargin=0.35 * inch,
-        bottomMargin=0.35 * inch,
+        topMargin=0.4 * inch,
+        bottomMargin=0.4 * inch,
     )
 
-    part = math.ceil((progress["last_batch_end"] or len(records)) / batch_size)
-    generated_on = datetime.now().astimezone().strftime("%Y-%m-%d")
-    story = [
-        Paragraph(f"HorseCamp weekly verification call sheet — {state} (part {part})", styles["Title"]),
-        Paragraph(
-            f"Generated {generated_on}. Call batch {progress['last_batch_start']}–{progress['last_batch_end']} for {state}.",
-            styles["Normal"],
-        ),
+    elements: list[Any] = []
+    styles = getSampleStyleSheet()
+    title = f"HorseCamp weekly verification sheet — {state}"
+    subtitle = f"Generated {generated_at} • {len(batch)} listings"
+    instructions = (
+        "For each listing: mark OK, FIX, NO ANSWER, CLOSED, or CALL BACK. "
+        "Add any corrections for phone, website, horse camping availability, amenities, or pricing."
+    )
+    elements.extend([
+        Paragraph(title, styles["Title"]),
+        Spacer(1, 0.08 * inch),
+        Paragraph(subtitle, styles["Heading3"]),
+        Spacer(1, 0.08 * inch),
+        Paragraph(instructions, styles["BodyText"]),
         Spacer(1, 0.18 * inch),
-    ]
+    ])
 
-    rows = [["Name / Location", "Phone / Website", "Type / Amenities", "Call Notes"]]
-    for r in records:
-        rows.append(
-            [
-                f"{r.name}\n{r.location}",
-                f"{r.phone or '—'}\n{ellipsize(r.website or '—', 48)}",
-                f"{ellipsize(r.source_detail or r.source, 24)}\n{ellipsize(r.accommodations or '—', 42)}\nHookups: {ellipsize(r.hookups or '—', 30)}",
-                "Reached: ________   Open: ________\nHorse camping: ________   Price: ________\nCorrections: _______________________________________\n_______________________________________________",
-            ]
-        )
+    rows: list[list[Any]] = [[
+        paragraph("#", "Heading5"),
+        paragraph("Type", "Heading5"),
+        paragraph("Name", "Heading5"),
+        paragraph("Location", "Heading5"),
+        paragraph("Phone", "Heading5"),
+        paragraph("Website", "Heading5"),
+        paragraph("Status / notes", "Heading5"),
+    ]]
 
-    table = Table(rows, colWidths=[2.4 * inch, 2.1 * inch, 2.2 * inch, 3.9 * inch], repeatRows=1)
-    table.setStyle(
-        TableStyle(
-            [
-                ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#E6E6E6")),
-                ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
-                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-                ("FONTSIZE", (0, 0), (-1, 0), 9),
-                ("FONTSIZE", (0, 1), (-1, -1), 8),
-                ("LEADING", (0, 1), (-1, -1), 10),
-                ("GRID", (0, 0), (-1, -1), 0.35, colors.HexColor("#9A9A9A")),
-                ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                ("TOPPADDING", (0, 0), (-1, -1), 5),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
-                ("LEFTPADDING", (0, 0), (-1, -1), 4),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 4),
-            ]
-        )
+    for idx, item in enumerate(batch, start=1):
+        rows.append([
+            paragraph(str(idx)),
+            paragraph(item.source_type),
+            paragraph(item.name),
+            paragraph(item.location),
+            paragraph(item.phone or "—"),
+            paragraph(item.website or "—"),
+            paragraph("OK / FIX / NO ANSWER / CLOSED / CALL BACK\n\n______________________________"),
+        ])
+
+    table = Table(
+        rows,
+        colWidths=[0.35 * inch, 0.8 * inch, 2.15 * inch, 1.6 * inch, 1.2 * inch, 2.2 * inch, 2.5 * inch],
+        repeatRows=1,
     )
-    story.append(table)
-    doc.build(story)
+    table.setStyle(
+        TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#EAEAEA")),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
+            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+            ("FONTSIZE", (0, 0), (-1, 0), 9),
+            ("FONTSIZE", (0, 1), (-1, -1), 8),
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("GRID", (0, 0), (-1, -1), 0.4, colors.grey),
+            ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F8F8F8")]),
+            ("TOPPADDING", (0, 0), (-1, -1), 4),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ("LEFTPADDING", (0, 0), (-1, -1), 4),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+        ])
+    )
+
+    elements.append(table)
+    doc.build(elements)
 
 
 def main() -> None:
-    import argparse
+    listings = load_manual_listings()
+    grouped = build_state_groups(listings)
+    progress = load_json(PROGRESS_PATH, {})
+    state, batch, updated_progress = pick_batch(grouped, progress, BATCH_SIZE)
+    generated_at = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
 
-    parser = argparse.ArgumentParser(description="Generate a weekly verification call sheet from manual HorseCamp data.")
-    parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE)
-    args = parser.parse_args()
-
-    batch_size = max(1, args.batch_size)
-    grouped = load_manual_records()
-    state, records, progress = choose_batch(grouped, batch_size=batch_size)
-
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    csv_path = OUTPUT_DIR / "weekly_call_sheet.csv"
-    pdf_path = OUTPUT_DIR / "weekly_call_sheet.pdf"
-
-    write_csv(csv_path, records)
-    write_pdf(pdf_path, records, state=state, progress=progress, batch_size=batch_size)
-    write_progress(progress)
+    make_pdf(state, batch, generated_at)
+    save_json(PROGRESS_PATH, updated_progress)
 
     manifest = {
         "state": state,
-        "count": len(records),
-        "batch_start": progress["last_batch_start"],
-        "batch_end": progress["last_batch_end"],
-        "csv_path": str(csv_path.relative_to(REPO_ROOT)),
-        "pdf_path": str(pdf_path.relative_to(REPO_ROOT)),
+        "count": len(batch),
+        "generated_at": generated_at,
+        "pdf": str(OUTPUT_PDF.relative_to(ROOT)),
     }
-    (OUTPUT_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps(manifest))
+    save_json(OUTPUT_MANIFEST, manifest)
+
+    print(f"Generated {OUTPUT_PDF} with {len(batch)} listings for {state}")
 
 
 if __name__ == "__main__":

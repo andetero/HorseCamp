@@ -26,6 +26,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add camps.json
-          if [ -f verified_overrides.csv ]; then git add verified_overrides.csv; fi
           git diff --staged --quiet || git commit -m "chore: update camp data $(date -u '+%Y-%m-%d')"
           git push

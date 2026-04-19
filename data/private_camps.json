@@ -1,1 +1,33 @@
-test
+[
+  {
+    "id": "private-paria-river-ranch",
+    "name": "Paria River Ranch",
+    "location": "11175 Paria Valley Rd, Kanab, UT 84741",
+    "state": "UT",
+    "latitude": 37.106566,
+    "longitude": -111.91333,
+    "pricePerNight": 0,
+    "horseFeePerNight": 0,
+    "hookups": ["30A", "50A", "Water"],
+    "accommodations": ["Stalls", "Corrals", "Trails"],
+    "maxRigLength": 60,
+    "stallCount": 6,
+    "paddockCount": 4,
+    "phone": "323-347-9185",
+    "website": "https://pariariverranch.com/campsites-and-hookups",
+    "description": "Personally curated private horse campground. Call to verify amenities, pricing, and availability.",
+    "isVerified": true,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": true,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": true,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": ["6D4C41", "BCAAA4"],
+    "photoURLs": [],
+    "source": "Private Camps"
+  }
+]

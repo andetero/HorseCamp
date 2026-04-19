@@ -15,7 +15,7 @@
     "paddockCount": 4,
     "phone": "323-347-9185",
     "website": "https://pariariverranch.com/horse-camping-1",
-    "description": "Bring your horses and/or mules and enjoy the beautiful trails right out of the ranch. We offer 12x12 pipe corrals & larger corrals for 2 or 3 horses/mules. You provide everything (water buckets, hay nets/feeders, manure fork). No shavings, please. We have potable water for you and your horses and other furry family members. We will pick up manure outside of your corral once a day.  Muck buckets provided. Hay available for purchase. Text for more info. *Stalls must be cleaned daily. All manure and hay must be removed upon departure. A $40 clean fee will be applied  if pen has not been mucked prior to check out.",
+    "description": "Bring your horses and/or mules and enjoy the beautiful trails right out of the ranch. We offer 12x12 pipe corrals & larger corrals for 2 or 3 horses/mules. You provide everything (water buckets, hay nets/feeders, manure fork). No shavings, please. We have potable water for you and your horses and other furry family members. We will pick up manure outside of your corral once a day. Muck buckets provided. Hay available for purchase. Text for more info. *Stalls must be cleaned daily. All manure and hay must be removed upon departure. A $40 clean fee will be applied if pen has not been mucked prior to check out.",
     "isVerified": true,
     "seasonStart": 1,
     "seasonEnd": 12,
@@ -27,7 +27,9 @@
     "rating": 0.0,
     "reviewCount": 0,
     "imageColors": ["6D4C41", "BCAAA4"],
-    "photoURLs": [],
+    "photoURLs": [
+      "https://img1.wsimg.com/isteam/ip/61f9125b-f4d0-415e-b443-3e9f2b436e50/paria%20village.jpg"
+    ],
     "source": "Private Camps"
   }
 ]

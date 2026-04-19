@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-19T00:34:42.409340+00:00",
+  "generated": "2026-04-19T07:17:56.017373+00:00",
   "count": 2322,
   "sources": [
     "Recreation.gov RIDB",
@@ -58521,8 +58521,8 @@
       "name": "Great Seal State Park Campground",
       "location": "OH",
       "state": "OH",
-      "latitude": 39.4026884,
-      "longitude": -82.9407908,
+      "latitude": 39.4026728,
+      "longitude": -82.9408163,
       "pricePerNight": 22.0,
       "horseFeePerNight": 0.0,
       "hookups": [
@@ -79418,18 +79418,24 @@
       "pricePerNight": 55,
       "horseFeePerNight": 20,
       "hookups": [
+        "20A",
         "30A",
         "50A",
-        "Water"
+        "Water",
+        "Electric"
       ],
       "accommodations": [
         "Stalls",
         "Corrals",
-        "Trails"
+        "Trails",
+        "Cabins",
+        "Horse Camping",
+        "Primitive Camping",
+        "Group Camping"
       ],
-      "maxRigLength": 0,
-      "stallCount": 6,
-      "paddockCount": 4,
+      "maxRigLength": 60,
+      "stallCount": 0,
+      "paddockCount": 0,
       "phone": "323-347-9185",
       "website": "https://pariariverranch.com/horse-camping-1",
       "description": "Bring your horses and/or mules and enjoy the beautiful trails right out of the ranch. We offer 12x12 pipe corrals & larger corrals for 2 or 3 horses/mules. You provide everything (water buckets, hay nets/feeders, manure fork). No shavings, please. We have potable water for you and your horses and other furry family members. We will pick up manure outside of your corral once a day. Muck buckets provided. Hay available for purchase. Text for more info. *Stalls must be cleaned daily. All manure and hay must be removed upon departure. A $40 clean fee will be applied if pen has not been mucked prior to check out.",

@@ -1,6 +1,6 @@
 {
-  "generated": "2026-04-18T07:04:07.966518+00:00",
-  "count": 2321,
+  "generated": "2026-04-19T00:34:42.409340+00:00",
+  "count": 2322,
   "sources": [
     "Recreation.gov RIDB",
     "NPS API",
@@ -55,7 +55,8 @@
     "West Virginia State Parks Equestrian Camping",
     "Wyoming State Parks Equestrian Camping",
     "OpenStreetMap",
-    "Layover"
+    "Layover",
+    "Private Camps"
   ],
   "camps": [
     {
@@ -32045,7 +32046,7 @@
       "seasonStart": 0,
       "seasonEnd": 0,
       "hasWashRack": false,
-      "hasDumpStation": false,
+      "hasDumpStation": true,
       "hasWifi": false,
       "hasBathhouse": true,
       "pullThroughAvailable": false,
@@ -58520,8 +58521,8 @@
       "name": "Great Seal State Park Campground",
       "location": "OH",
       "state": "OH",
-      "latitude": 39.4026728,
-      "longitude": -82.9408163,
+      "latitude": 39.4026884,
+      "longitude": -82.9407908,
       "pricePerNight": 22.0,
       "horseFeePerNight": 0.0,
       "hookups": [
@@ -79406,6 +79407,50 @@
       ],
       "photoURLs": [],
       "source": "RIDB"
+    },
+    {
+      "id": "private-paria-river-ranch",
+      "name": "Paria River Ranch",
+      "location": "11175 Paria Valley Rd, Kanab, UT 84741",
+      "state": "UT",
+      "latitude": 37.106566,
+      "longitude": -111.91333,
+      "pricePerNight": 55,
+      "horseFeePerNight": 20,
+      "hookups": [
+        "30A",
+        "50A",
+        "Water"
+      ],
+      "accommodations": [
+        "Stalls",
+        "Corrals",
+        "Trails"
+      ],
+      "maxRigLength": 0,
+      "stallCount": 6,
+      "paddockCount": 4,
+      "phone": "323-347-9185",
+      "website": "https://pariariverranch.com/horse-camping-1",
+      "description": "Bring your horses and/or mules and enjoy the beautiful trails right out of the ranch. We offer 12x12 pipe corrals & larger corrals for 2 or 3 horses/mules. You provide everything (water buckets, hay nets/feeders, manure fork). No shavings, please. We have potable water for you and your horses and other furry family members. We will pick up manure outside of your corral once a day. Muck buckets provided. Hay available for purchase. Text for more info. *Stalls must be cleaned daily. All manure and hay must be removed upon departure. A $40 clean fee will be applied if pen has not been mucked prior to check out.",
+      "isVerified": true,
+      "seasonStart": 1,
+      "seasonEnd": 12,
+      "hasWashRack": true,
+      "hasDumpStation": true,
+      "hasWifi": false,
+      "hasBathhouse": true,
+      "pullThroughAvailable": true,
+      "rating": 0.0,
+      "reviewCount": 0,
+      "imageColors": [
+        "6D4C41",
+        "BCAAA4"
+      ],
+      "photoURLs": [
+        "https://img1.wsimg.com/isteam/ip/61f9125b-f4d0-415e-b443-3e9f2b436e50/paria%20village.jpg"
+      ],
+      "source": "Private Camps"
     },
     {
       "id": "ridb-257097",

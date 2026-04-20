@@ -9,7 +9,7 @@ jobs:
   weekly-call-sheet:
     runs-on: ubuntu-latest
     env:
-      TZ: America/Denver
+      timezone: 'America/Denver'
       BATCH_SIZE: 20
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: ${{ secrets.SMTP_PORT }}

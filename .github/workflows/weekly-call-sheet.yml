@@ -2,7 +2,7 @@ name: Weekly Call Sheet
 
 on:
   schedule:
-    - cron: '0 14 * * 1'
+    - cron: '0 8 * * 1'
   workflow_dispatch:
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
         run: python scripts/send_weekly_call_sheet.py
 
       - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: weekly-call-sheet-pdf
           path: |

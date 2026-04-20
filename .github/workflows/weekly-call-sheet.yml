@@ -3,13 +3,14 @@ name: Weekly Call Sheet
 on:
   schedule:
     - cron: '0 8 * * 1'
+      timezone: 'America/Denver'
   workflow_dispatch:
 
 jobs:
   weekly-call-sheet:
     runs-on: ubuntu-latest
     env:
-      timezone: 'America/Denver'
+      TZ: America/Denver
       BATCH_SIZE: 20
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: ${{ secrets.SMTP_PORT }}

@@ -1,6 +1,6 @@
 {
-  "generated": "2026-04-19T07:17:56.017373+00:00",
-  "count": 2322,
+  "generated": "2026-04-20T08:01:54.557431+00:00",
+  "count": 2320,
   "sources": [
     "Recreation.gov RIDB",
     "NPS API",
@@ -39082,44 +39082,6 @@
       "source": "OSM"
     },
     {
-      "id": "mi-statepark-lake-dubonnet-trail-camp",
-      "name": "Lake Dubonnet Trail Camp",
-      "location": "Michigan",
-      "state": "MI",
-      "latitude": 44.6862071,
-      "longitude": -85.8026736,
-      "pricePerNight": 0.0,
-      "horseFeePerNight": 0.0,
-      "hookups": [],
-      "accommodations": [
-        "Trails",
-        "Corrals"
-      ],
-      "maxRigLength": 0,
-      "stallCount": 0,
-      "paddockCount": 0,
-      "phone": "",
-      "website": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/equestrian-campgrounds",
-      "description": "Official Michigan DNR equestrian campground or trail camp. Verify campground type, reservations, trailer access, and horse amenities with Michigan DNR before arrival.",
-      "isVerified": false,
-      "seasonStart": 0,
-      "seasonEnd": 0,
-      "hasWashRack": false,
-      "hasDumpStation": false,
-      "hasWifi": false,
-      "hasBathhouse": false,
-      "pullThroughAvailable": false,
-      "rating": 0.0,
-      "reviewCount": 0,
-      "imageColors": [
-        "C0392B",
-        "E59866"
-      ],
-      "photoURLs": [],
-      "source": "State Parks",
-      "sourceDetail": "MI State Parks"
-    },
-    {
       "id": "ridb-273344",
       "name": "Lake Nineteen Campsite",
       "location": "Rapid River, MI",
@@ -39490,44 +39452,6 @@
         "https://cdn.recreation.gov/public/2018/12/21/18/13/273357_8a72c849-bd01-4d00-a65e-e137cc6f4ec8_700.webp"
       ],
       "source": "RIDB"
-    },
-    {
-      "id": "mi-statepark-stoney-creek-trail-camp",
-      "name": "Stoney Creek Trail Camp",
-      "location": "Michigan",
-      "state": "MI",
-      "latitude": 45.3920311,
-      "longitude": -84.4126099,
-      "pricePerNight": 0.0,
-      "horseFeePerNight": 0.0,
-      "hookups": [],
-      "accommodations": [
-        "Trails",
-        "Corrals"
-      ],
-      "maxRigLength": 0,
-      "stallCount": 0,
-      "paddockCount": 0,
-      "phone": "",
-      "website": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/equestrian-campgrounds",
-      "description": "Official Michigan DNR equestrian campground or trail camp. Verify campground type, reservations, trailer access, and horse amenities with Michigan DNR before arrival.",
-      "isVerified": false,
-      "seasonStart": 0,
-      "seasonEnd": 0,
-      "hasWashRack": false,
-      "hasDumpStation": false,
-      "hasWifi": false,
-      "hasBathhouse": false,
-      "pullThroughAvailable": false,
-      "rating": 0.0,
-      "reviewCount": 0,
-      "imageColors": [
-        "C0392B",
-        "E59866"
-      ],
-      "photoURLs": [],
-      "source": "State Parks",
-      "sourceDetail": "MI State Parks"
     },
     {
       "id": "ridb-273361",
@@ -41040,8 +40964,8 @@
       "name": "Cuivre River State Park Equestrian Campground",
       "location": "Troy, MO",
       "state": "MO",
-      "latitude": 39.0042071,
-      "longitude": -90.9434513,
+      "latitude": 0.0,
+      "longitude": 0.0,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
       "hookups": [],
@@ -42367,8 +42291,8 @@
       "name": "Sam A. Baker State Park Equestrian Campground",
       "location": "Patterson, MO",
       "state": "MO",
-      "latitude": 37.2660792,
-      "longitude": -90.4991273,
+      "latitude": 0.0,
+      "longitude": 0.0,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
       "hookups": [],

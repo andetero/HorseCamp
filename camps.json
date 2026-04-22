@@ -1,6 +1,6 @@
 {
-  "generated": "2026-04-21T07:35:47.200002+00:00",
-  "count": 2322,
+  "generated": "2026-04-22T07:33:50.164851+00:00",
+  "count": 2321,
   "sources": [
     "Recreation.gov RIDB",
     "NPS API",
@@ -2821,44 +2821,6 @@
         "https://cdn.recreation.gov/public/2021/09/29/19/19/232192_d7b5ab60-fe97-4f24-a0f6-d944995f3b95_700.webp",
         "https://cdn.recreation.gov/public/2021/10/06/22/59/232192_69c2b545-5b22-42e2-aae8-34f0d0f2b831_700.webp",
         "https://cdn.recreation.gov/public/2021/09/29/19/37/232192_15ff7f1f-5c1a-4b9b-ae49-3b205fdf3024_700.webp"
-      ],
-      "source": "RIDB"
-    },
-    {
-      "id": "ridb-262765",
-      "name": "Badger Springs Trailhead",
-      "location": "Phoenix, AZ",
-      "state": "AZ",
-      "latitude": 34.231407,
-      "longitude": -112.100134,
-      "pricePerNight": 0.0,
-      "horseFeePerNight": 0.0,
-      "hookups": [],
-      "accommodations": [
-        "Trails"
-      ],
-      "maxRigLength": 0,
-      "stallCount": 0,
-      "paddockCount": 0,
-      "phone": "602-867-5400",
-      "website": "https://www.recreation.gov/camping/campgrounds/262765",
-      "description": "Badger Springs offers a short trail for non-motorized users within the Agua Fria National Monument. The trail leads down the Badger Springs Wash to the Agua Fria River canyon, an area rich in archaeological resources. The wash may be wet or muddy.\u00a0The confluence of Badger Springs Wash and the Agua Fria River is the location of a fantastic panel of petroglyphs. At the confluence, hikers can travel either upstream or downstream to explore this high desert canyon. Most years the river flows through early summer.Mule deer, white-tail deer, javelina and coyotes roam the area.Informational panels and a toilet are available near the trailhead. Toilets are accessible.",
-      "isVerified": false,
-      "seasonStart": 0,
-      "seasonEnd": 0,
-      "hasWashRack": false,
-      "hasDumpStation": false,
-      "hasWifi": false,
-      "hasBathhouse": false,
-      "pullThroughAvailable": false,
-      "rating": 0.0,
-      "reviewCount": 0,
-      "imageColors": [
-        "5C7A4E",
-        "D4A853"
-      ],
-      "photoURLs": [
-        "https://cdn.recreation.gov/public/2025/12/05/20/21/262765_f8efd3f7-aa67-4c55-a68f-befb85d4ce09.jpeg"
       ],
       "source": "RIDB"
     },
@@ -21802,7 +21764,7 @@
       "name": "Colt Creek State Park",
       "location": "Florida",
       "state": "FL",
-      "latitude": 28.282552,
+      "latitude": 28.2825521,
       "longitude": -82.0393749,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
@@ -86002,7 +85964,7 @@
       "paddockCount": 0,
       "phone": " 509-784-4700",
       "website": "https://www.recreation.gov/camping/campgrounds/233999",
-      "description": "Overview\nPine Flats Group Campground is located next to the Mad River within the Pine Flats Campground, in the Okanogan-Wenatchee National Forest, Entiat Ranger District.  Visitors have easy access to nearby multiple-use trails. Birding and wildlife viewing are popular activities.Recreation\nThe campground offers great nearby access to trail opportunities for hikers, horseback riders, mountain bikers and motorcyclists. The Lower Mad River Trail (#1409) starts next to the campground.  This 14-mile long trail leads to the upper Mad River meadows area and Klone Peak.  Spring time wildflower viewing is a popular activity while hiking up the trail.Facilities\n The campground offers one group site that can accommodate up to 40 people and six first-come first-serve single family sites. Picnic tables and campfire circles are provided, as are vault toilets and drinking water.  \n Garbage service is provided during the main summer season.  Please 'pack it in - pack it out' if cans are full or your group produces more than the cans can accommodate.  Natural Features\n The campground is situated on the banks of the Mad River, at an elevation of 1,621 feet. Ponderosa pines tower over the campground. The group site is adjacent to an open meadow with great wildflowers during the spring bloom season and the Mad River. \n The surrounding forest provides excellent habitat for a wide range of wildlife. Visitors may catch glimpses of mule deer, moose, bald and golden eagles and a variety of woodpeckers and owls.",
+      "description": "Overview\nPine Flats group site is located next to the Mad River within the Pine Flats Campground, in the Okanogan-Wenatchee National Forest, on the Entiat Ranger District. Visitors have easy access to the Mad River trailhead which connects to several multiple-use trails. The campground contains two vault toilets, garbage service, and a hand pump for potable water.Recreation\nThe campground offers great access to trail opportunities for hikers, horseback riders, mountain bikers and motorcyclists. The Lower Mad River Trailhead is located within the campground. The Mad River trail is 14-miles long and leads to the upper Mad River meadows area. Spring time wildflower viewing is a popular activity while hiking up the trail.Facilities\nThe campground offers one group site, that is reservation only, and six first-come, first-served single sites. Each site contains a picnic table and campfire ring. Two vault toilets, garbage service, and a hand pump with potable water are provided during the main summer season. If the trash cans are full, please pack out any extra trash produced greater than what the cans can accommodate.Natural Features\nThe campground is situated on the banks of the Mad River, at an elevation of 1,621 feet. Ponderosa pines tower over the area, which also contains several open meadows that are great for wildflower viewing during the spring bloom season. The surrounding forest provides excellent habitat for a wide range of wildlife. Visitors may catch glimpses of mule deer, bald eagles, and a variety of woodpeckers and owls.\nNearby Attractions\nThe Mad River Trail provides 14 miles of hiking, biking, horseback, and motorcycle riding access to some of the most beautiful alpine settings the area has to offer. The campground sits close to hundreds of miles of multiple use trails that are easily accessible from nearby trailheads. Entiat National Fish Hatchery is at mile marker six on the Entiat River Road and welcomes visitors in the summer. Tyee lookout is just up",
       "isVerified": false,
       "seasonStart": 0,
       "seasonEnd": 0,

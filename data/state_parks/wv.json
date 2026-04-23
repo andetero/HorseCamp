@@ -40,9 +40,7 @@
     "longitude": -80.2951,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A"
-    ],
+    "hookups": ["30A"],
     "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,

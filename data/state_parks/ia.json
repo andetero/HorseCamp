@@ -8,9 +8,7 @@
     "longitude": -93.9847,
     "pricePerNight": 0.0,
     "horseFeePerNight": 4.0,
-    "hookups": [
-      "30A"
-    ],
+    "hookups": ["30A"],
     "accommodations": ["Trails", "Highlines"],
     "maxRigLength": 0,
     "stallCount": 0,
@@ -42,9 +40,7 @@
     "longitude": -93.2629,
     "pricePerNight": 0.0,
     "horseFeePerNight": 4.0,
-    "hookups": [
-      "30A"
-    ],
+    "hookups": ["30A"],
     "accommodations": ["Trails", "Stalls", "Highlines"],
     "maxRigLength": 0,
     "stallCount": 0,
@@ -76,9 +72,7 @@
     "longitude": -94.6902,
     "pricePerNight": 0.0,
     "horseFeePerNight": 4.0,
-    "hookups": [
-      "30A"
-    ],
+    "hookups": ["30A"],
     "accommodations": ["Trails", "Corrals", "Highlines"],
     "maxRigLength": 0,
     "stallCount": 0,
@@ -174,9 +168,7 @@
     "longitude": -91.7711,
     "pricePerNight": 0.0,
     "horseFeePerNight": 4.0,
-    "hookups": [
-      "30A"
-    ],
+    "hookups": ["30A"],
     "accommodations": ["Trails", "Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
@@ -208,9 +200,7 @@
     "longitude": -91.7118,
     "pricePerNight": 0.0,
     "horseFeePerNight": 4.0,
-    "hookups": [
-      "Water"
-    ],
+    "hookups": ["Water"],
     "accommodations": ["Trails", "Stalls", "Highlines"],
     "maxRigLength": 0,
     "stallCount": 0,

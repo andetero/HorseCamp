@@ -8,9 +8,7 @@
     "longitude": -119.7592,
     "pricePerNight": 15.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "Water"
-    ],
+    "hookups": ["Water"],
     "accommodations": ["Corrals", "Trails"],
     "maxRigLength": 45,
     "stallCount": 0,

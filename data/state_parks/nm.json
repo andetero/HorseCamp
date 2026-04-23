@@ -40,9 +40,7 @@
     "longitude": -107.2925,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "Water"
-    ],
+    "hookups": ["Water"],
     "accommodations": ["Corrals", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
@@ -138,9 +136,7 @@
     "longitude": -103.3346,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "Water"
-    ],
+    "hookups": ["Water"],
     "accommodations": ["Trails", "Horse Trailer Parking"],
     "maxRigLength": 0,
     "stallCount": 0,

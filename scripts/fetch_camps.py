@@ -94,6 +94,42 @@ def safe_get(url, headers=None, params=None, retries=3):
             time.sleep(3)
     return None
 
+
+
+def _compact_selected_array_fields(json_text, field_names):
+    """Collapse selected array fields onto a single line after pretty-printing JSON.
+
+    This keeps the overall 2-space-indented structure, while matching the manual
+    style used in data/layovers.json for short arrays like accommodations and
+    imageColors.
+    """
+    field_pattern = "|".join(re.escape(name) for name in field_names)
+    pattern = re.compile(
+        rf'(?P<indent>^[ \t]*)"(?P<field>{field_pattern})": \[\n'
+        rf'(?P<body>(?:^[ \t]+.*\n)*?)'
+        rf'(?P=indent)\]',
+        flags=re.MULTILINE,
+    )
+
+    def repl(match):
+        body = match.group("body")
+        # Build a valid JSON array from the pretty-printed body, then re-emit it
+        # compactly to guarantee correct escaping and commas.
+        array_text = "[\n" + body + match.group("indent") + "]"
+        values = json.loads(array_text)
+        compact = json.dumps(values, ensure_ascii=False)
+        return f'{match.group("indent")}"{match.group("field")}": {compact}'
+
+    return pattern.sub(repl, json_text)
+
+
+def write_camps_json(path, payload):
+    """Write camps.json with stable pretty-printing and compact selected arrays."""
+    rendered = json.dumps(payload, indent=2, ensure_ascii=False)
+    rendered = _compact_selected_array_fields(rendered, {"accommodations", "imageColors"})
+    path.write_text(rendered + "\n", encoding="utf-8")
+
+
 # ── MANUAL OVERRIDES / EXCLUSIONS ─────────────────────────────────────
 OVERRIDES_FILE = DATA_DIR / "overrides.json"
 EXCLUSIONS_FILE = DATA_DIR / "exclusions.json"
@@ -1966,8 +2002,7 @@ def main():
         "camps": camps_list,
     }
     output_path = REPO_ROOT / "camps.json"
-    with output_path.open("w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2)
+    write_camps_json(output_path, output)
 
     osm_count = sum(1 for c in camps_list if c.get("source") == "OSM")
     layover_count = sum(1 for c in camps_list if c.get("source") == "Layover")

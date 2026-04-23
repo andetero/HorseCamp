@@ -8,7 +8,7 @@
     "longitude": -111.91333,
     "pricePerNight": 55,
     "horseFeePerNight": 20,
-    "hookups": ["20A", "30A", "50A", "Water", "Electric"],
+    "hookups": ["30A", "50A", "Water"],
     "accommodations": ["Stalls", "Corrals", "Trails", "Cabins", "Horse Camping", "Primitive Camping", "Group Camping"],
     "maxRigLength": 60,
     "stallCount": 0,

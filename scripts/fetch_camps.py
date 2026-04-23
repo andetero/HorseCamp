@@ -126,7 +126,7 @@ def _compact_selected_array_fields(json_text, field_names):
 def write_camps_json(path, payload):
     """Write camps.json with stable pretty-printing and compact selected arrays."""
     rendered = json.dumps(payload, indent=2, ensure_ascii=False)
-    rendered = _compact_selected_array_fields(rendered, {"accommodations", "imageColors"})
+    rendered = _compact_selected_array_fields(rendered, {"hookups", "accommodations", "imageColors", "photoURLs"})
     path.write_text(rendered + "\n", encoding="utf-8")
 
 

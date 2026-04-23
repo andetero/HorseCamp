@@ -14,11 +14,7 @@
       "Water",
       "Sewer"
     ],
-    "accommodations": [
-      "Trails",
-      "Stalls",
-      "Horse Camping"
-    ],
+    "accommodations": ["Trails", "Stalls", "Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -35,10 +31,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "MS State Parks"
@@ -58,10 +51,7 @@
       "Water",
       "Sewer"
     ],
-    "accommodations": [
-      "Trails",
-      "Horse Camping"
-    ],
+    "accommodations": ["Trails", "Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -78,10 +68,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "MS State Parks"

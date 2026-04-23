@@ -11,9 +11,7 @@
     "hookups": [
       "30A"
     ],
-    "accommodations": [
-      "Trails"
-    ],
+    "accommodations": ["Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -30,10 +28,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WI State Parks"
@@ -48,9 +43,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails"
-    ],
+    "accommodations": ["Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -67,10 +60,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WI State Parks"
@@ -85,9 +75,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails"
-    ],
+    "accommodations": ["Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -104,10 +92,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WI State Parks"
@@ -122,9 +107,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails"
-    ],
+    "accommodations": ["Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -141,10 +124,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WI State Parks"
@@ -159,9 +139,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails"
-    ],
+    "accommodations": ["Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -178,10 +156,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WI State Parks"

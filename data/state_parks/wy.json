@@ -9,11 +9,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Corrals",
-      "Pasture"
-    ],
+    "accommodations": ["Trails", "Corrals", "Pasture"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -30,10 +26,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WY State Parks"
@@ -50,10 +43,7 @@
     "hookups": [
       "Water"
     ],
-    "accommodations": [
-      "Trails",
-      "Corrals"
-    ],
+    "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 3,
@@ -70,10 +60,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WY State Parks"
@@ -88,10 +75,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Corrals",
-      "Group Camping"
-    ],
+    "accommodations": ["Corrals", "Group Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 5,
@@ -108,10 +92,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WY State Parks"

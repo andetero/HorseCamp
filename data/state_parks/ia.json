@@ -11,10 +11,7 @@
     "hookups": [
       "30A"
     ],
-    "accommodations": [
-      "Trails",
-      "Highlines"
-    ],
+    "accommodations": ["Trails", "Highlines"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -31,10 +28,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "IA State Parks"
@@ -51,11 +45,7 @@
     "hookups": [
       "30A"
     ],
-    "accommodations": [
-      "Trails",
-      "Stalls",
-      "Highlines"
-    ],
+    "accommodations": ["Trails", "Stalls", "Highlines"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -72,10 +62,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "IA State Parks"
@@ -92,11 +79,7 @@
     "hookups": [
       "30A"
     ],
-    "accommodations": [
-      "Trails",
-      "Corrals",
-      "Highlines"
-    ],
+    "accommodations": ["Trails", "Corrals", "Highlines"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -113,10 +96,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "IA State Parks"
@@ -131,11 +111,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 4.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Corrals",
-      "Highlines"
-    ],
+    "accommodations": ["Trails", "Corrals", "Highlines"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -152,10 +128,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "IA State Parks"
@@ -170,10 +143,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 4.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Highlines"
-    ],
+    "accommodations": ["Trails", "Highlines"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -190,10 +160,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "IA State Parks"
@@ -210,10 +177,7 @@
     "hookups": [
       "30A"
     ],
-    "accommodations": [
-      "Trails",
-      "Horse Camping"
-    ],
+    "accommodations": ["Trails", "Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -230,10 +194,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "IA State Parks"
@@ -250,11 +211,7 @@
     "hookups": [
       "Water"
     ],
-    "accommodations": [
-      "Trails",
-      "Stalls",
-      "Highlines"
-    ],
+    "accommodations": ["Trails", "Stalls", "Highlines"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -271,10 +228,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "IA State Parks"

@@ -12,10 +12,7 @@
       "30A",
       "Water"
     ],
-    "accommodations": [
-      "Trails",
-      "Corrals"
-    ],
+    "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 15,
@@ -32,10 +29,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "KS State Parks"
@@ -50,10 +44,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Corrals"
-    ],
+    "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -70,10 +61,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "KS State Parks"
@@ -88,10 +76,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Corrals"
-    ],
+    "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -108,10 +93,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "KS State Parks"
@@ -126,10 +108,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Corrals"
-    ],
+    "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -146,10 +125,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "KS State Parks"
@@ -168,10 +144,7 @@
       "Water",
       "Sewer"
     ],
-    "accommodations": [
-      "Trails",
-      "Corrals"
-    ],
+    "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 5,
@@ -188,10 +161,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "KS State Parks"
@@ -206,10 +176,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Corrals"
-    ],
+    "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -226,10 +193,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "KS State Parks"
@@ -248,10 +212,7 @@
       "Water",
       "Sewer"
     ],
-    "accommodations": [
-      "Trails",
-      "Corrals"
-    ],
+    "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -268,10 +229,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "KS State Parks"
@@ -289,10 +247,7 @@
       "30A",
       "Water"
     ],
-    "accommodations": [
-      "Trails",
-      "Corrals"
-    ],
+    "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 20,
@@ -309,10 +264,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "KS State Parks"

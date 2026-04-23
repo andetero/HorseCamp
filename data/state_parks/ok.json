@@ -13,10 +13,7 @@
       "50A",
       "Water"
     ],
-    "accommodations": [
-      "Trails",
-      "Corrals"
-    ],
+    "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -33,10 +30,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "OK State Parks"
@@ -53,11 +47,7 @@
     "hookups": [
       "Water"
     ],
-    "accommodations": [
-      "Trails",
-      "Corrals",
-      "Highlines"
-    ],
+    "accommodations": ["Trails", "Corrals", "Highlines"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -74,10 +64,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "F1948A"
-    ],
+    "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "OK State Parks"

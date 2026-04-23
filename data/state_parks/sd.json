@@ -9,10 +9,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Corrals",
-      "Trails"
-    ],
+    "accommodations": ["Corrals", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -29,10 +26,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "SD State Parks"
@@ -49,10 +43,7 @@
     "hookups": [
       "Water"
     ],
-    "accommodations": [
-      "Corrals",
-      "Trails"
-    ],
+    "accommodations": ["Corrals", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 10,
@@ -69,10 +60,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "SD State Parks"
@@ -90,10 +78,7 @@
       "30A",
       "Water"
     ],
-    "accommodations": [
-      "Corrals",
-      "Trails"
-    ],
+    "accommodations": ["Corrals", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 4,
@@ -110,10 +95,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "SD State Parks"
@@ -130,10 +112,7 @@
     "hookups": [
       "Water"
     ],
-    "accommodations": [
-      "Corrals",
-      "Trails"
-    ],
+    "accommodations": ["Corrals", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 11,
@@ -150,10 +129,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "SD State Parks"
@@ -168,10 +144,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Corrals",
-      "Trails"
-    ],
+    "accommodations": ["Corrals", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 4,
@@ -188,10 +161,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "SD State Parks"
@@ -208,10 +178,7 @@
     "hookups": [
       "Water"
     ],
-    "accommodations": [
-      "Corrals",
-      "Trails"
-    ],
+    "accommodations": ["Corrals", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 5,
@@ -228,10 +195,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "SD State Parks"
@@ -248,10 +212,7 @@
     "hookups": [
       "Water"
     ],
-    "accommodations": [
-      "Corrals",
-      "Trails"
-    ],
+    "accommodations": ["Corrals", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 6,
@@ -268,10 +229,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "SD State Parks"

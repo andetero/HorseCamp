@@ -9,10 +9,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Primitive Camping"
-    ],
+    "accommodations": ["Trails", "Primitive Camping"],
     "maxRigLength": 35,
     "stallCount": 0,
     "paddockCount": 0,
@@ -29,10 +26,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WA State Parks"
@@ -50,10 +44,7 @@
       "30A",
       "Water"
     ],
-    "accommodations": [
-      "Trails",
-      "Corrals"
-    ],
+    "accommodations": ["Trails", "Corrals"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -70,10 +61,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WA State Parks"
@@ -88,10 +76,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Primitive Camping"
-    ],
+    "accommodations": ["Trails", "Primitive Camping"],
     "maxRigLength": 50,
     "stallCount": 0,
     "paddockCount": 0,
@@ -108,10 +93,7 @@
     "pullThroughAvailable": true,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WA State Parks"
@@ -126,10 +108,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Primitive Camping"
-    ],
+    "accommodations": ["Trails", "Primitive Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -146,10 +125,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WA State Parks"
@@ -164,10 +140,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Primitive Camping"
-    ],
+    "accommodations": ["Trails", "Primitive Camping"],
     "maxRigLength": 40,
     "stallCount": 0,
     "paddockCount": 0,
@@ -184,10 +157,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WA State Parks"
@@ -202,10 +172,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Trails",
-      "Primitive Camping"
-    ],
+    "accommodations": ["Trails", "Primitive Camping"],
     "maxRigLength": 60,
     "stallCount": 0,
     "paddockCount": 0,
@@ -222,10 +189,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "C0392B",
-      "E3A18B"
-    ],
+    "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
     "source": "State Parks",
     "sourceDetail": "WA State Parks"

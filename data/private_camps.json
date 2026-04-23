@@ -31,5 +31,36 @@
       "https://img1.wsimg.com/isteam/ip/61f9125b-f4d0-415e-b443-3e9f2b436e50/paria%20village.jpg"
     ],
     "source": "Private Camps"
-  }
+  },
+  {
+    "id": "private-camp-mcclellan-campground",
+    "name": "Camp McClellan Campground",
+    "location": "150 Mud Hole Road, Anniston, AL, 36205",
+    "state": "AL",
+    "latitude": 33.6958333333333,
+    "longitude": -85.7756666666667,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": ["30A", "Water", "Sewer"],
+    "accommodations": ["Trails", "Stalls", "Corrals", "Group Camping", "Horse Camping"],
+    "maxRigLength": 0,
+    "stallCount": 31,
+    "paddockCount": 0,
+    "phone": "256-954-1623",
+    "website": "https://campmcclellanhorsetrailscampground.com/",
+    "description": "Horse layover facility. Call to verify availability, amenities, and pricing before arrival.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": ["6D4C41", "BCAAA4"],
+    "photoURLs": [],
+    "source": "Private Camps"
+  },
 ]

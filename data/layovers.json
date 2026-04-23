@@ -1,14 +1,14 @@
 [
   {
     "id": "layover-8621152",
-    "name": "Stable Stay: Horse Hotel & AirBnB",
-    "location": "Altoona, AL",
+    "name": "Stable Stay",
+    "location": "310 Broom Drive, Altoona, AL, 35952",
     "state": "AL",
     "latitude": 34.1336666666667,
     "longitude": -86.4018611111111,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [],
+    "hookups": [50A],
     "accommodations": [
       "Stalls",
       "Corrals"

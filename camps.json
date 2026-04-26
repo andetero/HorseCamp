@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-26T04:48:51.409175+00:00",
+  "generated": "2026-04-26T07:29:40.317202+00:00",
   "count": 1621,
   "sources": [
     "Recreation.gov RIDB",
@@ -13496,7 +13496,7 @@
       "name": "Highlands Hammock State Park",
       "location": "Florida",
       "state": "FL",
-      "latitude": 27.4671309,
+      "latitude": 27.4671308,
       "longitude": -81.5413821,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
@@ -24748,7 +24748,7 @@
       "name": "Sam A. Baker State Park Equestrian Campground",
       "location": "Patterson, MO",
       "state": "MO",
-      "latitude": 37.2660792,
+      "latitude": 37.2660791,
       "longitude": -90.4991273,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,

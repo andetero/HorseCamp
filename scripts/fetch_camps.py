@@ -70,12 +70,45 @@ EQUESTRIAN_KEYWORDS = [
     "horse trail", "pack station", "mule", "llama"
 ]
 
+INVALID_EQUESTRIAN_PATTERNS = [
+    re.compile(r"\bhas no equestrian sites\b", re.I),
+    re.compile(r"\bhorses are not allowed in (?:the )?campground\b", re.I),
+    re.compile(r"\bhorses are not allowed in campgrounds\b", re.I),
+    re.compile(r"\bno horses allowed in (?:the )?campground\b", re.I),
+    re.compile(r"\bhorse corrals \(no horses allowed in the campground\)", re.I),
+    re.compile(r"\bhorses are not allowed at the cabin\b", re.I),
+    re.compile(r"\bhorses are not allowed at the pavilion and campground\b", re.I),
+    re.compile(r"\bhorses are not allowed near the .*guard station\b", re.I),
+]
+
 def strip_html(text):
     return re.sub(r'<[^>]+>', '', text or '').strip()
 
 def is_equestrian(text_blob):
     low = text_blob.lower()
     return any(k in low for k in EQUESTRIAN_KEYWORDS)
+
+
+def is_invalid_equestrian_listing(camp):
+    """Reject entries that keyword-match horses but explicitly do not allow horse camping."""
+    try:
+        lat = float(camp.get("latitude", 0) or 0)
+        lng = float(camp.get("longitude", 0) or 0)
+    except (TypeError, ValueError):
+        return True
+    if lat == 0 and lng == 0:
+        return True
+
+    text = " ".join(str(camp.get(k, "")) for k in ("name", "description", "location", "source"))
+    return any(pattern.search(text) for pattern in INVALID_EQUESTRIAN_PATTERNS)
+
+
+def remove_invalid_equestrian_listings(camps_dict):
+    bad_ids = [cid for cid, camp in camps_dict.items() if is_invalid_equestrian_listing(camp)]
+    for cid in bad_ids:
+        del camps_dict[cid]
+    print(f"  Invalid/non-horse listings removed: {len(bad_ids)}")
+    return len(bad_ids)
 
 def safe_get(url, headers=None, params=None, retries=3):
     for attempt in range(retries):
@@ -1991,6 +2024,9 @@ def main():
     print("\nApplying manual exclusions...")
     excluded_count = apply_exclusions(all_camps)
 
+    print("\nRemoving invalid/non-horse listings...")
+    invalid_count = remove_invalid_equestrian_listings(all_camps)
+
     print("\nApplying manual overrides...")
     override_count = apply_overrides(all_camps)
 
@@ -2017,6 +2053,7 @@ def main():
     print(f"  Private Camps:{private_camp_count}")
     print(f"  OSM:          {osm_count}")
     print(f"  Excluded:     {excluded_count}")
+    print(f"  Invalid:      {invalid_count}")
     print(f"  Overrides:    {override_count}")
     print(f"  Verified:     {verified_count}")
     print(f"  Unique total: {len(camps_list)}")

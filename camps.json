@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-27T02:16:52.138483+00:00",
+  "generated": "2026-04-27T08:26:47.989450+00:00",
   "count": 1607,
   "sources": [
     "Recreation.gov RIDB",
@@ -7516,7 +7516,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2021/08/27/22/19/233537_885361e2-debe-4211-a0cf-86639abccea2_1440.webp", "https://cdn.recreation.gov/public/2018/12/26/19/30/233537_8dc77207-3071-4991-a2a1-01b67ab4a2b5_1440.webp", "https://cdn.recreation.gov/public/2018/12/26/23/13/233537_7105a259-06a0-442d-ad58-abffa4ebdfba_700.webp", "https://cdn.recreation.gov/public/2018/12/26/20/03/233537_8bf39edd-f74c-41eb-aeef-02f41dbf35b3_1440.webp", "https://cdn.recreation.gov/public/2018/12/26/19/39/233537_ad3d8d78-621a-4398-8c7a-3143e85ef325_1440.webp", "https://cdn.recreation.gov/public/2018/12/26/19/24/233537_94097a65-f0b6-4f21-84a2-71f3413483b7_1440.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2021/08/27/22/19/233537_885361e2-debe-4211-a0cf-86639abccea2_1440.webp", "https://cdn.recreation.gov/public/2018/12/26/19/30/233537_8dc77207-3071-4991-a2a1-01b67ab4a2b5_1440.webp", "https://cdn.recreation.gov/public/2018/12/26/23/13/233537_7105a259-06a0-442d-ad58-abffa4ebdfba_700.webp", "https://cdn.recreation.gov/public/2018/12/26/20/03/233537_8bf39edd-f74c-41eb-aeef-02f41dbf35b3_1440.webp", "https://cdn.recreation.gov/public/2018/12/26/19/39/233537_ad3d8d78-621a-4398-8c7a-3143e85ef325_1440.webp", "https://cdn.recreation.gov/public/2018/12/26/23/19/233537_ed65e8fb-4b1b-42b1-be4e-4a0c699e9aab_1440.webp"],
       "source": "RIDB"
     },
     {
@@ -13403,7 +13403,7 @@
       "name": "Highlands Hammock State Park",
       "location": "Florida",
       "state": "FL",
-      "latitude": 27.4671309,
+      "latitude": 27.4671308,
       "longitude": -81.5413821,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
@@ -26913,7 +26913,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2023/09/20/22/42/234296_be1c6577-60d1-4fec-8a96-e8ce7f4c63ce_1440.webp", "https://cdn.recreation.gov/public/2023/09/20/21/41/234296_89f4bb58-3f62-4e62-be0c-2154b88392ac_1440.webp", "https://cdn.recreation.gov/public/2023/09/20/20/56/234296_2e204dd7-c7b5-4be8-8602-ac1fa7aa94bf_1440.webp", "https://cdn.recreation.gov/public/2023/09/20/20/35/234296_7fbac395-93ad-4c1c-8b8d-4772704b3631_700.webp", "https://cdn.recreation.gov/public/2023/09/20/20/31/234296_62b49a71-aa77-4479-b72b-bacd23596c1e_1440.webp", "https://cdn.recreation.gov/public/2023/09/20/21/36/234296_ce49893a-fc27-44e9-9302-e37ea66461ba_700.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2023/09/20/22/42/234296_be1c6577-60d1-4fec-8a96-e8ce7f4c63ce_1440.webp", "https://cdn.recreation.gov/public/2023/09/20/21/41/234296_89f4bb58-3f62-4e62-be0c-2154b88392ac_1440.webp", "https://cdn.recreation.gov/public/2023/09/20/20/56/234296_2e204dd7-c7b5-4be8-8602-ac1fa7aa94bf_1440.webp", "https://cdn.recreation.gov/public/2023/09/20/20/35/234296_7fbac395-93ad-4c1c-8b8d-4772704b3631_700.webp", "https://cdn.recreation.gov/public/2023/09/20/21/36/234296_ce49893a-fc27-44e9-9302-e37ea66461ba_700.webp", "https://cdn.recreation.gov/public/2023/09/20/20/31/234296_62b49a71-aa77-4479-b72b-bacd23596c1e_1440.webp"],
       "source": "RIDB"
     },
     {

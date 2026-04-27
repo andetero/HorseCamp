@@ -54,5 +54,16 @@
   "last_generated_at": "2026-04-18T18:04:02.795811+00:00",
   "last_state": "AL",
   "last_batch_start": 1,
-  "last_batch_end": 11
+  "last_batch_end": 11,
+  "states": {
+    "AK": 2
+  },
+  "current_state": "AL",
+  "last_run_at": "2026-04-27T15:28:44Z",
+  "last_batch": {
+    "state": "AK",
+    "count": 2,
+    "offset_started": 0,
+    "offset_ended": 2
+  }
 }

@@ -65,6 +65,12 @@
 </main>
 
 <script>
+  function esc(value) {
+    return String(value ?? '').replace(/[&<>"']/g, function(c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
   function getStatusDot(status) {
     if (!status) return 'dot-yellow';
     const s = status.toLowerCase();
@@ -87,8 +93,8 @@
         <div class="horse-card">
           <div class="horse-header">
             <div>
-              <div class="horse-name">${horse.name}</div>
-              <div class="horse-sub">${horse.color || ''} ${horse.sex || ''} · ${horse.breed || ''}</div>
+              <div class="horse-name">${esc(horse.name)}</div>
+              <div class="horse-sub">${esc(horse.color || '')} ${esc(horse.sex || '')} · ${esc(horse.breed || '')}</div>
             </div>
             <span class="status-badge ${allOk ? 'status-ok' : 'status-warn'}">
               ${allOk ? '✓ All Current' : '⚠ Needs Attention'}
@@ -103,12 +109,12 @@
             <div class="doc-row">
               <div class="doc-dot ${getStatusDot(doc.status)}"></div>
               <div style="flex:1">
-                <div class="doc-type">${doc.type}</div>
-                ${doc.cert ? `<div class="doc-cert">Cert #${doc.cert}${doc.vet ? ' · ' + doc.vet : ''}</div>` : ''}
+                <div class="doc-type">${esc(doc.type)}</div>
+                ${doc.cert ? `<div class="doc-cert">Cert #${esc(doc.cert)}${doc.vet ? ' · ' + esc(doc.vet) : ''}</div>` : ''}
               </div>
               <div style="text-align:right">
-                <div class="doc-status" style="color:${doc.status?.toLowerCase().includes('current') ? '#27500A' : '#E53E3E'}">${doc.status}</div>
-                <div class="doc-expires">${doc.expires || ''}</div>
+                <div class="doc-status" style="color:${doc.status?.toLowerCase().includes('current') ? '#27500A' : '#E53E3E'}">${esc(doc.status)}</div>
+                <div class="doc-expires">${esc(doc.expires || '')}</div>
               </div>
             </div>`;
         }
@@ -117,7 +123,7 @@
     }
 
     if (horses[0]?.generated) {
-      document.getElementById('generated-time').textContent = 'Generated ' + horses[0].generated;
+      document.getElementById('generated-time').textContent = 'Generated ' + String(horses[0].generated || '');
     }
 
     main.innerHTML = html;

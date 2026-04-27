@@ -93,65 +93,70 @@
 
 <div class="hero">
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: March 30, 2026 &nbsp;·&nbsp; Effective: March 30, 2026</p>
+  <p class="updated">Last updated: April 26, 2026 &nbsp;·&nbsp; Effective: April 26, 2026</p>
 </div>
 
 <div class="summary-bar">
   <div class="icon">🔒</div>
-  <p><strong>Plain English summary:</strong> HorseCamp collects no personal data. We have no servers that receive your information. Everything you enter — your name, your horses, your trips, your vet documents — stays on your iPhone and never leaves it. We don't have accounts. We don't have a backend database with your records. There is nothing to breach.</p>
+  <p><strong>Plain English summary:</strong> HorseCamp does not require an account and does not run a user database for your horse records. Your rig, horse, document, and trip information is stored locally on your iPhone. The app does connect to public data services for campground data, weather, wildfire context, maps, directions, and optional share pages. If you create a check-in or trip share link, the information in that link can be viewed by anyone you share it with.</p>
 </div>
 
 <main>
 
-  <h2>What we collect</h2>
-  <p>Nothing. HorseCamp does not collect, transmit, store, or process any personal information on any server we operate.</p>
+  <h2>What HorseCamp collects</h2>
+  <p>HorseCamp does not require you to create an account. We do not ask for a username, password, email address, or payment information in the current iPhone app. We do not operate a HorseCamp user database containing your horse records or trip plans.</p>
 
   <table class="zero-table">
     <tr><th>Data type</th><th>Collected by HorseCamp?</th><th>Where it lives</th></tr>
-    <tr><td>Your name</td><td><span class="badge-no">No</span></td><td>Your iPhone only</td></tr>
-    <tr><td>Your location</td><td><span class="badge-no">No</span></td><td>Your iPhone only</td></tr>
-    <tr><td>Your horses</td><td><span class="badge-no">No</span></td><td>Your iPhone only</td></tr>
-    <tr><td>Vet documents (coggins, health certs)</td><td><span class="badge-no">No</span></td><td>Your iPhone only, encrypted</td></tr>
-    <tr><td>Trip plans</td><td><span class="badge-no">No</span></td><td>Your iPhone only</td></tr>
-    <tr><td>States ridden</td><td><span class="badge-no">No</span></td><td>Your iPhone only</td></tr>
-    <tr><td>Email address</td><td><span class="badge-no">No</span></td><td>We don't ask for one</td></tr>
-    <tr><td>Payment information</td><td><span class="badge-no">No</span></td><td>Not applicable</td></tr>
-    <tr><td>Usage analytics</td><td><span class="badge-no">No</span></td><td>None collected</td></tr>
-    <tr><td>Crash reports</td><td><span class="badge-yes">Apple only</span></td><td>Apple's servers, if you opted in to share with developers</td></tr>
+    <tr><td>Your name</td><td><span class="badge-no">No account collection</span></td><td>Your iPhone only, unless you share it yourself</td></tr>
+    <tr><td>Your location</td><td><span class="badge-no">Not stored by us</span></td><td>Used by iOS/app features for nearby results, maps, weather, and directions</td></tr>
+    <tr><td>Your horses</td><td><span class="badge-no">No server collection</span></td><td>Your iPhone only, unless included in a share link you create</td></tr>
+    <tr><td>Vet documents</td><td><span class="badge-no">Original files not uploaded</span></td><td>Your iPhone app sandbox</td></tr>
+    <tr><td>Trip plans</td><td><span class="badge-no">No server collection</span></td><td>Your iPhone only, unless included in a share link you create</td></tr>
+    <tr><td>Usage analytics</td><td><span class="badge-no">No</span></td><td>None collected by HorseCamp</td></tr>
+    <tr><td>Crash reports</td><td><span class="badge-yes">Apple only</span></td><td>Apple's servers, if you opted in to share diagnostics with developers</td></tr>
   </table>
 
-  <h2>What the app does connect to</h2>
-  <p>The app makes exactly two types of network requests:</p>
+  <h2>What the app connects to</h2>
+  <p>HorseCamp uses network services so the app can show current and useful travel information. Depending on what you tap and what permissions you grant, the app may connect to:</p>
   <ul>
-    <li><strong>Equestrian camp data</strong> — on launch, the app fetches camp data. This is a one-way download. No information about you, your device, or your usage is included in the request beyond a standard HTTPS request from an anonymous IP address. This file may include public-source campground data plus curated listings such as state parks, layovers, and private camps.</li>
-    <li><strong>GPS location</strong> — if you grant permission, iOS provides your device's location to the app to sort camps by distance. Your location is never transmitted anywhere. It is used only on your device to calculate distances.</li>
+    <li><strong>HorseCampFinder.com</strong> to download public campground data and to display trip/check-in share pages.</li>
+    <li><strong>National Weather Service</strong> for weather forecast data near a camp or route stop.</li>
+    <li><strong>Public wildfire/geographic data services</strong> for wildfire context where available.</li>
+    <li><strong>Apple MapKit and related Apple services</strong> for maps, geocoding, search, nearby places, and directions.</li>
+    <li><strong>External websites and apps</strong> when you choose to open campground websites, trail links, directions, phone calls, emails, or share links.</li>
   </ul>
 
   <div class="callout">
-    <p>We receive no information from either of these connections that identifies you in any way. An anonymous IP address making an HTTP GET request tells us nothing about who you are.</p>
+    <p>These services may receive ordinary technical information needed to fulfill the request, such as your IP address, approximate/requested location, map search text, coordinates, or the URL you open. HorseCamp does not use advertising networks or sell personal data.</p>
   </div>
 
+  <h2>Location</h2>
+  <p>If you grant location permission, HorseCamp uses your location to show nearby camps, nearby equine services, map context, weather context, and directions-related features. You can deny or revoke location permission in iOS Settings. Some features may be less useful without location access.</p>
+
   <h2>Your horse health documents</h2>
-  <p>Coggins certificates, health certificates, brand inspection records, vaccination records, and any other documents you upload are stored exclusively in your iPhone's private app sandbox using iOS data protection encryption (<code>NSFileProtectionComplete</code>). This means:</p>
+  <p>Coggins certificates, health certificates, brand inspection records, vaccination records, and other document files you add are stored in the iPhone app sandbox. HorseCamp does not upload those original files to a HorseCamp account or document server.</p>
   <ul>
-    <li>The files are encrypted at rest on your device</li>
-    <li>They are never transmitted to HorseCamp or any third party</li>
-    <li>We have no access to them — not now, not ever</li>
-    <li>They are permanently deleted when you remove them in the app or uninstall HorseCamp</li>
-    <li>If you have iCloud Backup enabled, they back up to your own Apple account — not ours</li>
+    <li>Original document files stay on your device unless you separately choose to export or share them.</li>
+    <li>Deleting a document in the app removes the app's local copy.</li>
+    <li>If you have iCloud Backup enabled, iOS may back up app data to your own Apple account according to your Apple settings.</li>
   </ul>
 
+  <h2>Check-in and trip share links</h2>
+  <p>If you create a check-in QR code or share link, the link may contain information you entered in the app, such as horse names, breed/color/sex, document type, certificate number, veterinarian name, expiration status, generated time, trip origin/destination, and stops. Anyone with that link or QR code can view the share page. Share links are intended for people you choose to send them to.</p>
+  <p>The original uploaded document files are not uploaded by the check-in QR/link feature.</p>
+
   <h2>No accounts, no sign-in</h2>
-  <p>HorseCamp has no account system. You don't create a username or password. You don't give us an email address. There is no HorseCamp server that has a record of your existence as a user.</p>
+  <p>HorseCamp has no account system in the current iPhone app. You do not create a username or password. If we add accounts, subscriptions, reviews, analytics, or cloud sync in a future version, we will update this policy before shipping that version.</p>
 
   <h2>Children's privacy</h2>
-  <p>HorseCamp does not knowingly collect information from anyone, including children under 13. Since we collect no information from anyone, COPPA does not apply.</p>
+  <p>HorseCamp is not directed to children under 13 and does not knowingly collect personal information from children.</p>
 
   <h2>Third-party services</h2>
-  <p>HorseCamp does not use advertising networks, analytics SDKs, social login, or any other third-party data services embedded in the app. The only third-party involvement is Apple's App Store and optional Apple crash reporting, both governed by Apple's own privacy policy.</p>
+  <p>HorseCamp does not use advertising SDKs, social login, or third-party analytics SDKs in the current iPhone app. Apple services, public weather/map/geographic services, and websites you choose to open are governed by their own privacy practices.</p>
 
   <h2>Changes to this policy</h2>
-  <p>If we ever change what data we collect — for example, if we add an account system in a future version — we will update this policy before shipping that version and the effective date at the top will reflect the change.</p>
+  <p>If we change what data we collect or how app data is stored or shared, we will update this policy and revise the effective date above.</p>
 
   <h2>Contact</h2>
   <p>Questions about privacy? Email <a href="mailto:support@horsecampfinder.com">support@horsecampfinder.com</a>. We'll respond within a few days.</p>

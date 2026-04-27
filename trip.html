@@ -55,8 +55,14 @@
   <p style="text-align:center;padding:40px;color:#888">Loading...</p>
 </main>
 <script>
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, function(c) {
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
 window.onerror = function(msg, src, line) {
-  document.getElementById('main').innerHTML = '<div class="nodata"><h2>JS Error</h2><p>' + msg + ' (line ' + line + ')</p></div>';
+  document.getElementById('main').innerHTML = '<div class="nodata"><h2>JS Error</h2><p>' + esc(msg) + ' (line ' + esc(line) + ')</p></div>';
   return true;
 };
 
@@ -68,7 +74,7 @@ function go() {
   var search = window.location.search;
   var match = search.match(/[?&]d=([^&]+)/);
   if (!match) {
-    document.getElementById('main').innerHTML = '<div class="nodata"><h2>No trip data</h2><p>search was: ' + search.substring(0,80) + '</p></div>';
+    document.getElementById('main').innerHTML = '<div class="nodata"><h2>No trip data</h2><p>search was: ' + esc(search.substring(0,80)) + '</p></div>';
     return;
   }
 
@@ -77,7 +83,7 @@ function go() {
 
   try { trip = JSON.parse(decodeURIComponent(raw)); } catch(e1) {
     try { trip = JSON.parse(raw); } catch(e2) {
-      document.getElementById('main').innerHTML = '<div class="nodata"><h2>Could not parse trip</h2><p>Raw starts with: ' + raw.substring(0,80) + '</p></div>';
+      document.getElementById('main').innerHTML = '<div class="nodata"><h2>Could not parse trip</h2><p>Raw starts with: ' + esc(raw.substring(0,80)) + '</p></div>';
       return;
     }
   }
@@ -89,25 +95,25 @@ function go() {
   if (stops.length > 0) {
     stopsHtml += '<div class="stitle">Overnight Stops</div>';
     for (var i = 0; i < stops.length; i++) {
-      stopsHtml += '<div class="srow"><div class="snum">' + (i+1) + '</div><div><div class="sname">' + stops[i].campName + '</div><div class="sloc">' + stops[i].location + '</div></div></div>';
+      stopsHtml += '<div class="srow"><div class="snum">' + (i+1) + '</div><div><div class="sname">' + esc(stops[i].campName || 'Unnamed stop') + '</div><div class="sloc">' + esc(stops[i].location || '') + '</div></div></div>';
     }
   }
 
   var html = '<div class="card">';
-  html += '<div class="route-row"><div class="route-point"><div class="rlabel">From</div><div class="rname">' + (trip.originName||'—') + '</div></div>';
+  html += '<div class="route-row"><div class="route-point"><div class="rlabel">From</div><div class="rname">' + esc(trip.originName || '—') + '</div></div>';
   html += '<div class="arrow">→</div>';
-  html += '<div class="route-point" style="text-align:right"><div class="rlabel">To</div><div class="rname">' + (trip.destinationName||'—') + '</div></div></div>';
+  html += '<div class="route-point" style="text-align:right"><div class="rlabel">To</div><div class="rname">' + esc(trip.destinationName || '—') + '</div></div></div>';
   html += '<div class="meta"><div><div class="mlabel">Departure</div><div class="mvalue">' + fmtDate(trip.departureSince1970) + '</div></div>';
   html += '<div><div class="mlabel">Stops</div><div class="mvalue">' + stops.length + ' camp' + (stops.length !== 1 ? 's' : '') + '</div></div></div>';
   html += stopsHtml;
   html += '<button class="btn" id="openbtn">📍 Open in HorseCamp</button>';
-  html += '<div class="noapp">No app? <a href="https://apps.apple.com/app/horsecamp">Download HorseCamp</a></div>';
+  html += '<div class="noapp">Open this link on the iPhone with HorseCamp installed.</div>';
   html += '</div>';
 
   document.getElementById('main').innerHTML = html;
 
   document.getElementById('openbtn').addEventListener('click', function() {
-    window.location.href = 'horsecamp://trip?d=' + raw;
+    window.location.href = 'horsecamp://trip?d=' + encodeURIComponent(raw);
   });
 }
 

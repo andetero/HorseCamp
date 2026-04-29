@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-29T04:11:26.477368+00:00",
+  "generated": "2026-04-29T08:16:49.294118+00:00",
   "count": 1607,
   "sources": [
     "Recreation.gov RIDB",
@@ -6260,7 +6260,7 @@
       "paddockCount": 0,
       "phone": "530-963-3128",
       "website": "https://www.recreation.gov/camping/campgrounds/233162",
-      "description": "Overview\nPerched 1,700 feet above sea level in the expanse of the Mendocino National Forest, the Gray Pine Group Camp is a beautiful recreation oasis for large groups and parties.Recreation\nMendocino National Forest's 913,306 acres of mountains and canyons offer a variety of recreational opportunities, including horseback riding, hiking, backpacking, boating, fishing and hunting, nature study and off-highway vehicle riding. Whether it's deer, birds, rabbits, chipmunks or perhaps the occasional bear, wildlife viewing is always a popular activity for visitors. The area is also an extremely popular destination during hunting season. Facilities\nGray Pine Group Camp offers traditional camping and can hold up to 75 guests comfortably. Natural Features\nThe Mendocino National Forest, California's only national forest that is not crossed by a paved road, straddles the eastern spur of the Coastal Mountain Range in northwestern California, just a three-hour drive north of San Francisco and Sacramento. Sprinkled throughout the dense green forest are several lakes, offering visitors additional recreational opportunities against a stunning backdrop.\nNearby Attractions\nPopular OHV riding trails are easily accessible from the campground. Visit www.fs.usda.gov/mendocino for more information.",
+      "description": "Overview\nPerched 1,700 feet above sea level in the expanse of the Mendocino National Forest, the Gray Pine Group Camp is a beautiful recreation oasis for large groups and parties.Recreation\nMendocino National Forest's 913,306 acres of mountains and canyons offer a variety of recreational opportunities, including horseback riding, hiking, backpacking, boating, fishing and hunting, nature study and off-highway vehicle riding. Whether it's deer, birds, rabbits, chipmunks or perhaps the occasional bear, wildlife viewing is always a popular activity for visitors. The area is also an extremely popular destination during hunting season. Facilities\nGray Pine Group Camp offers traditional camping and can hold up to 75 guests.Natural Features\nThe Mendocino National Forest, California's only national forest that is not crossed by a paved road, straddles the eastern spur of the Coastal Mountain Range in northwestern California, just a three-hour drive north of San Francisco and Sacramento. Sprinkled throughout the dense green forest are several lakes, offering visitors additional recreational opportunities against a stunning backdrop.\nNearby Attractions\nPopular OHV riding trails are easily accessible from the campground. Visit www.fs.usda.gov/mendocino for more information.",
       "isVerified": false,
       "seasonStart": 0,
       "seasonEnd": 0,
@@ -13403,7 +13403,7 @@
       "name": "Highlands Hammock State Park",
       "location": "Florida",
       "state": "FL",
-      "latitude": 27.4671309,
+      "latitude": 27.4671308,
       "longitude": -81.5413821,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
@@ -13626,8 +13626,8 @@
       "name": "Lower Wekiva River Preserve State Park",
       "location": "Florida",
       "state": "FL",
-      "latitude": 28.9668815,
-      "longitude": -81.3942367,
+      "latitude": 29.0031792,
+      "longitude": -81.3837598,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
       "hookups": [],
@@ -14214,7 +14214,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2018/08/04/15/29/7b56671e-40dc-417b-805a-a91271e21c43_700.webp", "https://cdn.recreation.gov/public/2025/01/21/18/39/272303_caa4901a-0672-421e-a69b-2fb359b3668b_1440.webp", "https://cdn.recreation.gov/public/2024/11/22/19/25/272303_f0eea5da-174f-4764-ba22-d4ec2dd70a2c_700.webp", "https://cdn.recreation.gov/public/2024/11/22/19/28/272303_010d7e61-65a0-4cbe-930d-eace34511a37_700.webp", "https://cdn.recreation.gov/public/2024/11/22/14/26/272303_1918bb23-c08d-4437-81e0-a5f2097c3987_1440.webp", "https://cdn.recreation.gov/public/2024/11/22/19/24/272303_79923ef8-14be-48fe-85ab-13e8807fe495_700.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2018/08/04/15/29/7b56671e-40dc-417b-805a-a91271e21c43_700.webp", "https://cdn.recreation.gov/public/2024/11/22/14/26/272303_1918bb23-c08d-4437-81e0-a5f2097c3987_1440.webp", "https://cdn.recreation.gov/public/2025/01/21/18/39/272303_caa4901a-0672-421e-a69b-2fb359b3668b_1440.webp", "https://cdn.recreation.gov/public/2024/11/22/19/25/272303_f0eea5da-174f-4764-ba22-d4ec2dd70a2c_700.webp", "https://cdn.recreation.gov/public/2024/11/22/19/28/272303_010d7e61-65a0-4cbe-930d-eace34511a37_700.webp", "https://cdn.recreation.gov/public/2024/11/22/19/24/272303_79923ef8-14be-48fe-85ab-13e8807fe495_700.webp"],
       "source": "RIDB"
     },
     {
@@ -17420,7 +17420,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2025/08/07/16/47/234609_b543f3c5-17e8-4a9a-ad50-f21161fe8d32_700.webp", "https://cdn.recreation.gov/public/2026/01/15/19/36/234609_74b8028a-0c1b-403f-9852-ab3cb2dd8c50_700.jpeg", "https://cdn.recreation.gov/public/2025/02/11/15/44/234609_5780ff0d-ce19-49f4-be16-8602e8207201_700.webp", "https://cdn.recreation.gov/public/2025/08/07/15/26/234609_a34ee122-5f80-4fb7-8d14-cdd6d0a9c5f2_700.webp", "https://cdn.recreation.gov/public/2025/08/07/15/28/234609_55f8f4c0-8ca4-4759-a374-c7c9ee19ba03_700.webp", "https://cdn.recreation.gov/public/2025/08/07/15/34/234609_351c8099-3987-4d97-96e3-0698e5bfe07b_700.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2025/08/07/16/47/234609_b543f3c5-17e8-4a9a-ad50-f21161fe8d32_700.webp", "https://cdn.recreation.gov/public/2025/08/07/15/32/234609_c6983c50-3561-4baf-b31d-a56cf7a7e514_700.webp", "https://cdn.recreation.gov/public/2026/01/15/19/36/234609_74b8028a-0c1b-403f-9852-ab3cb2dd8c50_700.jpeg", "https://cdn.recreation.gov/public/2025/02/11/15/44/234609_5780ff0d-ce19-49f4-be16-8602e8207201_700.webp", "https://cdn.recreation.gov/public/2025/08/07/15/26/234609_a34ee122-5f80-4fb7-8d14-cdd6d0a9c5f2_700.webp", "https://cdn.recreation.gov/public/2025/08/07/15/28/234609_55f8f4c0-8ca4-4759-a374-c7c9ee19ba03_700.webp"],
       "source": "RIDB"
     },
     {
@@ -20963,7 +20963,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2022/07/15/15/19/250850_d5970af5-ed93-4398-b4c0-0efb9ff31848_1440.webp", "https://cdn.recreation.gov/public/2021/02/18/20/25/250850_de0b5544-352c-4fbc-8670-b47bb7a71c97_700.webp", "https://cdn.recreation.gov/public/2021/07/01/16/33/250850_fcd5f596-1448-4ac2-8a05-200c45578cc2_700.webp", "https://cdn.recreation.gov/public/2021/06/28/18/21/250850_b2911586-08b8-4e1e-80b8-8789f0297a2e_700.webp", "https://cdn.recreation.gov/public/2021/02/18/20/09/250850_040ff66d-cc7b-45c0-a0da-85d7595be8f3_700.webp", "https://cdn.recreation.gov/public/2021/02/18/20/37/250850_9c920770-2c89-46ea-8e38-17fc4f858c17_1440.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2022/07/15/15/19/250850_d5970af5-ed93-4398-b4c0-0efb9ff31848_1440.webp", "https://cdn.recreation.gov/public/2021/06/28/18/21/250850_b2911586-08b8-4e1e-80b8-8789f0297a2e_700.webp", "https://cdn.recreation.gov/public/2021/02/18/20/25/250850_de0b5544-352c-4fbc-8670-b47bb7a71c97_700.webp", "https://cdn.recreation.gov/public/2021/07/01/16/33/250850_fcd5f596-1448-4ac2-8a05-200c45578cc2_700.webp", "https://cdn.recreation.gov/public/2021/02/18/20/09/250850_040ff66d-cc7b-45c0-a0da-85d7595be8f3_700.webp", "https://cdn.recreation.gov/public/2021/02/18/20/37/250850_9c920770-2c89-46ea-8e38-17fc4f858c17_1440.webp"],
       "source": "RIDB"
     },
     {
@@ -21649,7 +21649,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2019/12/12/18/39/232615_3fbdc565-17c3-4d81-a744-de3e3670dfb9_700.webp", "https://cdn.recreation.gov/public/2019/12/12/18/32/232615_0d21b187-e7a8-467f-8bb6-500c1e8af2ad_700.webp", "https://cdn.recreation.gov/public/2019/12/12/18/29/232615_88bce299-efdb-40d6-9db6-761b15f09db2_700.webp", "https://cdn.recreation.gov/public/2024/07/14/15/56/232615_4ddf45d5-23d1-4966-8006-b14e10b23913_700.webp", "https://cdn.recreation.gov/public/2024/07/14/16/37/232615_2553ed9f-e2a8-492a-81a5-aa606af6d6e0_700.webp", "https://cdn.recreation.gov/public/2019/12/12/18/46/232615_1c953550-fb3d-4fbc-ad3f-66e198f61762_700.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2019/12/12/18/29/232615_88bce299-efdb-40d6-9db6-761b15f09db2_700.webp", "https://cdn.recreation.gov/public/2019/12/12/18/39/232615_3fbdc565-17c3-4d81-a744-de3e3670dfb9_700.webp", "https://cdn.recreation.gov/public/2019/12/12/18/32/232615_0d21b187-e7a8-467f-8bb6-500c1e8af2ad_700.webp", "https://cdn.recreation.gov/public/2024/07/14/15/56/232615_4ddf45d5-23d1-4966-8006-b14e10b23913_700.webp", "https://cdn.recreation.gov/public/2024/07/14/16/37/232615_2553ed9f-e2a8-492a-81a5-aa606af6d6e0_700.webp", "https://cdn.recreation.gov/public/2019/12/12/18/46/232615_1c953550-fb3d-4fbc-ad3f-66e198f61762_700.webp"],
       "source": "RIDB"
     },
     {
@@ -23337,7 +23337,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2024/11/06/14/08/273361_991d41a9-1f21-448b-a794-914256e7b08a_1440.webp", "https://cdn.recreation.gov/public/2018/12/21/18/24/273361_b6ea8a81-cde0-48c6-8e01-483193678174_700.webp", "https://cdn.recreation.gov/public/2021/12/28/16/28/273361_3051aed9-14a2-4350-8948-afb1b41f8e9d_700.webp", "https://cdn.recreation.gov/public/2018/12/21/18/24/273361_17dd8aa6-de9f-45b6-9ab6-8f70184763ec_700.webp", "https://cdn.recreation.gov/public/2021/12/28/16/32/273361_b3bb8ff4-5614-4824-8eed-01c984441830_1440.webp", "https://cdn.recreation.gov/public/2018/12/21/18/24/273361_8ebd6f1b-c7e8-4fff-8b08-54149897cfd2_700.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2024/11/06/14/08/273361_991d41a9-1f21-448b-a794-914256e7b08a_1440.webp", "https://cdn.recreation.gov/public/2021/12/28/16/28/273361_3051aed9-14a2-4350-8948-afb1b41f8e9d_700.webp", "https://cdn.recreation.gov/public/2018/12/21/18/24/273361_b6ea8a81-cde0-48c6-8e01-483193678174_700.webp", "https://cdn.recreation.gov/public/2018/12/21/18/24/273361_17dd8aa6-de9f-45b6-9ab6-8f70184763ec_700.webp", "https://cdn.recreation.gov/public/2021/12/28/16/32/273361_b3bb8ff4-5614-4824-8eed-01c984441830_1440.webp", "https://cdn.recreation.gov/public/2018/12/21/18/24/273361_8ebd6f1b-c7e8-4fff-8b08-54149897cfd2_700.webp"],
       "source": "RIDB"
     },
     {
@@ -27533,7 +27533,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2021/04/14/23/10/261804_265c056a-b8ed-487a-8621-2a19cdd8f01b_1440.webp", "https://cdn.recreation.gov/public/2021/11/09/18/10/261804_a9e03ec2-da3b-4e4e-9999-8f6acc37d277_700.webp", "https://cdn.recreation.gov/public/2021/11/09/18/12/261804_88cd13f2-994c-43ce-9e06-d3d8f2d9c4fc_700.webp", "https://cdn.recreation.gov/public/2021/04/14/23/18/261804_6444318f-ee55-434b-915a-b19cc1381f2f_700.webp", "https://cdn.recreation.gov/public/2021/11/09/18/03/261804_2e4e00af-1393-4581-8cab-8972314707a5_700.webp", "https://cdn.recreation.gov/public/2021/11/03/14/59/261804_9a0f00fd-4427-4465-992d-ae0f1fea13d7_700.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2021/04/14/23/10/261804_265c056a-b8ed-487a-8621-2a19cdd8f01b_1440.webp", "https://cdn.recreation.gov/public/2021/11/03/14/59/261804_9a0f00fd-4427-4465-992d-ae0f1fea13d7_700.webp", "https://cdn.recreation.gov/public/2021/11/09/18/10/261804_a9e03ec2-da3b-4e4e-9999-8f6acc37d277_700.webp", "https://cdn.recreation.gov/public/2021/11/09/18/12/261804_88cd13f2-994c-43ce-9e06-d3d8f2d9c4fc_700.webp", "https://cdn.recreation.gov/public/2021/04/14/23/18/261804_6444318f-ee55-434b-915a-b19cc1381f2f_700.webp", "https://cdn.recreation.gov/public/2021/11/09/18/03/261804_2e4e00af-1393-4581-8cab-8972314707a5_700.webp"],
       "source": "RIDB"
     },
     {
@@ -37120,7 +37120,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2018/08/03/14/02/b0e9d699-0033-4074-b8bd-1b3d3a232cdb_700.webp", "https://cdn.recreation.gov/public/2018/08/10/19/04/147e5186-6733-433c-9318-1311f130047b_700.webp", "https://cdn.recreation.gov/public/2018/08/11/15/25/9db0bc53-aab6-4791-8fcd-3bbe11210afe_1440.webp", "https://cdn.recreation.gov/public/2018/08/03/14/03/68f9a618-45dd-4353-8f95-cd0e7e416464_700.webp", "https://cdn.recreation.gov/public/images/84173_700.webp", "https://cdn.recreation.gov/public/images/84171_700.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2018/08/03/14/02/b0e9d699-0033-4074-b8bd-1b3d3a232cdb_700.webp", "https://cdn.recreation.gov/public/images/84173_700.webp", "https://cdn.recreation.gov/public/2018/08/10/19/04/147e5186-6733-433c-9318-1311f130047b_700.webp", "https://cdn.recreation.gov/public/2018/08/11/15/25/9db0bc53-aab6-4791-8fcd-3bbe11210afe_1440.webp", "https://cdn.recreation.gov/public/2018/08/03/14/03/68f9a618-45dd-4353-8f95-cd0e7e416464_700.webp", "https://cdn.recreation.gov/public/images/84171_700.webp"],
       "source": "RIDB"
     },
     {
@@ -45432,7 +45432,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2026/04/28/22/05/233143_4154971f-4b2a-4152-8716-8b0ca6f63a79_1440.jpg", "https://cdn.recreation.gov/public/2026/04/28/21/05/233143_ae8fde27-9cd9-4251-bf67-2147b9c06584_700.jpg", "https://cdn.recreation.gov/public/2026/04/28/21/06/233143_495541ea-e16a-4c47-a5bb-0f10eb5c76fe_700.jpg", "https://cdn.recreation.gov/public/2026/04/28/21/07/233143_67ecd2a3-8113-4405-b1f9-5355e91d2a94_700.jpg", "https://cdn.recreation.gov/public/2026/04/28/21/09/233143_dfc9d670-d2ee-4d08-b95b-2977eb492eb4_700.jpg", "https://cdn.recreation.gov/public/2026/04/28/20/59/233143_ef827831-d6b1-458d-abfc-8a5195b3e504_700.jpg"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2026/04/28/22/05/233143_4154971f-4b2a-4152-8716-8b0ca6f63a79_1440.jpg", "https://cdn.recreation.gov/public/2026/04/28/21/07/233143_67ecd2a3-8113-4405-b1f9-5355e91d2a94_700.jpg", "https://cdn.recreation.gov/public/2026/04/28/21/05/233143_ae8fde27-9cd9-4251-bf67-2147b9c06584_700.jpg", "https://cdn.recreation.gov/public/2026/04/28/21/06/233143_495541ea-e16a-4c47-a5bb-0f10eb5c76fe_700.jpg", "https://cdn.recreation.gov/public/2026/04/28/21/09/233143_dfc9d670-d2ee-4d08-b95b-2977eb492eb4_700.jpg", "https://cdn.recreation.gov/public/2026/04/28/20/59/233143_ef827831-d6b1-458d-abfc-8a5195b3e504_700.jpg"],
       "source": "RIDB"
     },
     {
@@ -47221,7 +47221,7 @@
       "paddockCount": 0,
       "phone": "(509)784-4700",
       "website": "https://www.recreation.gov/camping/campgrounds/233998",
-      "description": "Overview\nSilver Falls Group Campground sits in forested, mountain terrain on the banks of the Entiat River in the Okanogan-Wenatchee National Forest in the Entiat Ranger District.\n  \nThe cascading water of Silver Falls is a draw for many visitors to this particular area, which is especially refreshing in the summer heat. The Silver Falls National Recreation Trail is an exceptional family hike taking you up, around and down the falls. Panoramic views of the surrounding mountains await you on the hike.Recreation\nSilver Falls Campground is a great base camp for a variety of outdoor recreational activities. Anglers enjoy casting a line into the Entiat River above Entiat Falls, about 2.5 miles up-river from the campground. Carving through a wide, U-shaped valley, the river is dominated by relatively shallow riffles interspersed with pools, plunge pools and glides where the trout fishing is quite good. Populations of rainbow, cutthroat and eastern brook trout are found in this tributary. Selective gear rules apply to fishing in the Entiat River. See Washington Department of Fish and Wildlife for fishing rules and regulations. Silver Falls National Recreation Trail offers a 1.8 mile hike next to one of the most beautiful waterfalls in the region. The trail winds along Silver Creek to the base of the falls, through towering canopies of cedar and pine. The handcrafted stone staircase and bridges along this trail offer stopping points and panoramic views of the surrounding mountains. The Silver Falls Trail is an exceptional family hike taking you up, around and down the falls. The elevation gain is approximately 600 feet.Facilities\nSilver Falls Campground has 31 non-reservable single-family sites and one large group site. It is and equipped with picnic tables, campfire rings, and accessible vault toilets. This group site also has a picnic shelter with a fireplace.Natural Features\nThe Okanogan-Wenatchee National Forest offers stunning scenic vistas, with high, glaciated alpine",
+      "description": "Overview\nSilver Falls Group site sits in a forested, mountain terrain on the banks of the Entiat River within the Silver Falls Campground. This is one of the more popular sites on the Entiat Ranger District. The cascading water of Silver Falls is a draw for many visitors to this particular area, which is especially refreshing in the summer heat. The Silver Falls National Recreation Trail is an exceptional family friendly hike that takes you up, around and down the falls. Panoramic views of the surrounding mountains await you on your hike.Recreation\nSilver Falls Campground is a great base camp for a variety of outdoor recreational activities. Anglers enjoy casting a line into the Entiat River above Entiat Falls, about 2.5 miles up-river from the campground. Carving through a wide, U-shaped valley, the river is dominated by relatively shallow riffles interspersed with pools, plunge pools and glides where the trout fishing is quite good. Populations of rainbow, cutthroat and eastern brook trout are found in this tributary. Selective gear rules apply to fishing in the Entiat River. See Washington Department of Fish and Wildlife for fishing rules and regulations.Silver Falls National Recreation Trail offers a 1.8 mile hike next to one of the most beautiful waterfalls in the region. The trail winds along Silver Creek to the base of the falls, through towering canopies of cedar and pine. The handcrafted stone staircase and bridges along this trail offer stopping points and panoramic views of the surrounding mountains. The Silver Falls Trail is an exceptional family friendly hike that takes you up, around and down the falls. The elevation gain is approximately 600 feet.Facilities\nSilver Falls Campground offers one group site with a historic C.C.C. covered cooking area, that is reservation only, and 31 first-come, first-served single sites. Each site contains a picnic table and campfire ring. Multiple vault toilets, garbage service, and a solar pump at the guard station with",
       "isVerified": false,
       "seasonStart": 0,
       "seasonEnd": 0,

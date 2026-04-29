@@ -96,6 +96,51 @@ def extract_state(formatted_address: str) -> str:
     return ""
 
 
+DECIMAL_COORD_RE = re.compile(r"(?<![\d.-])(-?\d{1,3}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)(?![\d.-])")
+DMS_PAIR_RE = re.compile(
+    r"""(?ix)
+    (\d{1,3})\D+(\d{1,2})\D+(\d{1,2}(?:\.\d+)?)\D*([NS])
+    \s+
+    (\d{1,3})\D+(\d{1,2})\D+(\d{1,2}(?:\.\d+)?)\D*([EW])
+    """
+)
+
+
+def looks_like_coordinate_title(value: str) -> bool:
+    value = value or ""
+    return bool(DECIMAL_COORD_RE.search(value) or DMS_PAIR_RE.search(value) or ("°" in value and (("N" in value.upper()) or ("S" in value.upper()))))
+
+
+def dms_to_decimal(degrees: str, minutes: str, seconds: str, hemisphere: str) -> float:
+    decimal = float(degrees) + (float(minutes) / 60.0) + (float(seconds) / 3600.0)
+    if hemisphere.upper() in {"S", "W"}:
+        decimal *= -1
+    return decimal
+
+
+def parse_coordinates_from_text(*values: str) -> tuple[float, float] | None:
+    combined = " ".join(v or "" for v in values)
+
+    # Google Maps search URLs often include decimal coordinates:
+    # https://www.google.com/maps/search/39.05803,-104.79338
+    m = DECIMAL_COORD_RE.search(combined)
+    if m:
+        lat = float(m.group(1))
+        lon = float(m.group(2))
+        if -90 <= lat <= 90 and -180 <= lon <= 180:
+            return lat, lon
+
+    # Saved list titles can also be DMS, e.g. 39°03'28.9"N 104°47'36.2"W
+    m = DMS_PAIR_RE.search(combined)
+    if m:
+        lat = dms_to_decimal(m.group(1), m.group(2), m.group(3), m.group(4))
+        lon = dms_to_decimal(m.group(5), m.group(6), m.group(7), m.group(8))
+        if -90 <= lat <= 90 and -180 <= lon <= 180:
+            return lat, lon
+
+    return None
+
+
 def infer_hookups(note: str) -> list[str]:
     text = (note or "").lower()
     hookups: list[str] = []
@@ -203,6 +248,8 @@ def make_private_camp_record(
     score: float,
     existing_ids: set[str],
     min_score: float,
+    direct_coordinates: tuple[float, float] | None = None,
+    direct_coordinate_source: str = "",
 ) -> dict[str, Any]:
     base_id = "private-" + slugify(title)
     camp_id = base_id
@@ -220,9 +267,18 @@ def make_private_camp_record(
     google_maps_uri = original_url
     matched_name = ""
 
+    if direct_coordinates:
+        latitude, longitude = direct_coordinates
+        matched_name = title
+        google_maps_uri = original_url
+        score = 1.0
+        geocode_provider = direct_coordinate_source or "Saved List Direct Coordinate"
+    else:
+        geocode_provider = "Google Places Text Search"
+
     is_confident = bool(place and score >= min_score)
 
-    if place and is_confident:
+    if place and is_confident and not direct_coordinates:
         matched_name = ((place.get("displayName") or {}).get("text") or "").strip()
         formatted_address = place.get("formattedAddress") or ""
         state = extract_state(formatted_address)
@@ -269,7 +325,7 @@ def make_private_camp_record(
         "googleMapsURL": google_maps_uri,
         "googlePlaceId": google_place_id,
         "googleMatchedName": matched_name,
-        "geocodeProvider": "Google Places Text Search",
+        "geocodeProvider": geocode_provider,
         "geocodeConfidence": round(score, 3),
         "needsCoordinates": not (latitude and longitude),
         "needsVerification": True,
@@ -417,6 +473,12 @@ def main() -> int:
         note = clean_text(row.get("Note") or "")
         url = clean_text(row.get("URL") or "")
 
+        direct_coordinates = parse_coordinates_from_text(title, url)
+        record_title = title
+        if direct_coordinates and looks_like_coordinate_title(title) and note:
+            # Use the user's note as the display name when Google saved a raw coordinate as the title.
+            record_title = clean_text(note)
+
         query_variants = [
             title,
             f"{title} horse camp",
@@ -426,32 +488,49 @@ def main() -> int:
         best_place = None
         best_score = 0.0
         best_match = ""
+        api_errors: list[str] = []
 
-        for query in query_variants:
-            places = google_text_search(api_key, query)
-            candidate, score = choose_best_place(title, places)
-            candidate_name = ""
-            if candidate:
-                candidate_name = ((candidate.get("displayName") or {}).get("text") or "").strip()
-            if score > best_score:
-                best_place = candidate
-                best_score = score
-                best_match = candidate_name
-            if best_score >= 0.85:
-                break
-            time.sleep(args.sleep)
+        if not direct_coordinates:
+            for query in query_variants:
+                try:
+                    places = google_text_search(api_key, query)
+                except RuntimeError as exc:
+                    err = str(exc)
+                    api_errors.append(err)
+                    # Bad text queries should not kill the entire batch. Key/quota/auth errors should.
+                    if any(token in err for token in ["API_KEY", "PERMISSION_DENIED", "RESOURCE_EXHAUSTED", "429", "403"]):
+                        raise
+                    print(f"WARN: skipping query for {title!r}: {err[:220]}")
+                    continue
+
+                candidate, score = choose_best_place(title, places)
+                candidate_name = ""
+                if candidate:
+                    candidate_name = ((candidate.get("displayName") or {}).get("text") or "").strip()
+                if score > best_score:
+                    best_place = candidate
+                    best_score = score
+                    best_match = candidate_name
+                if best_score >= 0.85:
+                    break
+                time.sleep(args.sleep)
+        else:
+            best_match = record_title
+            best_score = 1.0
 
         if best_score < args.min_score:
-            low_confidence.append({"title": title, "best_match": best_match, "score": round(best_score, 3)})
+            low_confidence.append({"title": record_title, "best_match": best_match or "; ".join(api_errors)[:180], "score": round(best_score, 3)})
 
         record = make_private_camp_record(
-            title=title,
+            title=record_title,
             note=note,
             original_url=url,
             place=best_place,
             score=best_score,
             existing_ids=existing_ids,
             min_score=args.min_score,
+            direct_coordinates=direct_coordinates,
+            direct_coordinate_source="Saved List URL/Title Coordinates" if direct_coordinates else "",
         )
 
         if not (record.get("latitude") and record.get("longitude")):

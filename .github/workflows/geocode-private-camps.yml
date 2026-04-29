@@ -10,7 +10,7 @@ on:
       min_score:
         description: "Minimum confidence score for accepting coordinates."
         required: true
-        default: "0.55"
+        default: "0.70"
       commit_outputs:
         description: "Commit staging JSON/report back to repo"
         required: true

@@ -1,0 +1,67 @@
+name: One-Time Geocode Private Camps
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Max new camps to process. Use 0 for all."
+        required: true
+        default: "0"
+      min_score:
+        description: "Minimum confidence score for accepting coordinates."
+        required: true
+        default: "0.55"
+      commit_outputs:
+        description: "Commit staging JSON/report back to repo"
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  geocode-private-camps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Geocode private camps into staging JSON
+        env:
+          GOOGLE_PLACES_KEY: ${{ secrets.GOOGLE_PLACES_KEY }}
+        run: |
+          python scripts/geocode_private_camps_google.py \
+            --csv data/imports/horse_camps_google_maps.csv \
+            --existing data/private_camps.json \
+            --output data/private_camps_google_geocoded_STAGING.json \
+            --report data/private_camps_geocode_report.md \
+            --limit "${{ inputs.limit }}" \
+            --min-score "${{ inputs.min_score }}"
+
+      - name: Upload staging outputs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: private-camps-google-geocode-staging
+          path: |
+            data/private_camps_google_geocoded_STAGING.json
+            data/private_camps_geocode_report.md
+
+      - name: Commit staging outputs
+        if: ${{ inputs.commit_outputs }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/private_camps_google_geocoded_STAGING.json data/private_camps_geocode_report.md
+          git diff --staged --quiet || git commit -m "chore: geocode private camps staging"
+          git push

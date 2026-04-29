@@ -257,6 +257,14 @@ def is_url_line(line: str) -> bool:
     return bool(re.match(r"(?i)^https?://", (line or "").strip()))
 
 
+def is_phone_line(line: str) -> bool:
+    value = clean_text(line)
+    if not value or is_url_line(value) or is_coordinate_line(value):
+        return False
+    digits = re.sub(r"\D+", "", value)
+    return len(digits) == 10 or (len(digits) == 11 and digits.startswith("1"))
+
+
 def parse_simple_note_fields(note: str) -> dict[str, str]:
     """Support easy 3-line notes:
        Better Name
@@ -271,8 +279,12 @@ def parse_simple_note_fields(note: str) -> dict[str, str]:
             fields["website"] = line
             continue
 
-        # If the line has no label and is not coordinates/URL, treat the first one as a name.
-        if ":" not in line and not is_coordinate_line(line) and "name" not in fields:
+        if is_phone_line(line) and "phone" not in fields:
+            fields["phone"] = line
+            continue
+
+        # If the line has no label and is not coordinates/URL/phone, treat the first one as a name.
+        if ":" not in line and not is_coordinate_line(line) and not is_phone_line(line) and "name" not in fields:
             fields["name"] = clean_text(line)
 
     return fields

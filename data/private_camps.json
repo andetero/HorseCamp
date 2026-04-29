@@ -1893,42 +1893,6 @@
     "source": "Private Camps"
   },
   {
-    "id": "private-red-rock-canyon",
-    "name": "Red Rock Canyon",
-    "location": "3550 W High St, Colorado Springs, CO 80904",
-    "state": "CO",
-    "latitude": 38.8518656,
-    "longitude": -104.8784924,
-    "pricePerNight": 0.0,
-    "horseFeePerNight": 0.0,
-    "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
-    "maxRigLength": 0,
-    "stallCount": 0,
-    "paddockCount": 0,
-    "phone": "",
-    "website": "",
-    "description": "Private camp or equestrian travel stop from a curated horse-camping list. Details may change; please confirm horse access, availability, amenities, fees, and rules before travel.",
-    "isVerified": false,
-    "seasonStart": 1,
-    "seasonEnd": 12,
-    "hasWashRack": false,
-    "hasDumpStation": false,
-    "hasWifi": false,
-    "hasBathhouse": false,
-    "pullThroughAvailable": false,
-    "rating": 0.0,
-    "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
-    "photoURLs": [],
-    "source": "Private Camps"
-  },
-  {
     "id": "private-saul-s-creek-stables",
     "name": "Saul's Creek Stables",
     "location": "3113 Co Rd 527, Bayfield, CO 81122",

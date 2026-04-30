@@ -1,0 +1,90 @@
+{
+  "issueNumber": 12,
+  "type": "private_camp",
+  "recordId": "private-submitted-double-m-campground-il",
+  "name": "Double M Campground",
+  "targetSource": "Private Camps",
+  "record": {
+    "id": "private-submitted-double-m-campground-il",
+    "name": "Double M Campground",
+    "location": "5320 Thacker Hollow Rd, Junction, IL, 62954",
+    "state": "IL",
+    "latitude": 37.631488,
+    "longitude": -88.272779,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Cabins",
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Stalls",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "618-275-4440",
+    "website": "https://doublemcampground.com",
+    "description": "Private camp. Details may change; please confirm horse access, availability, amenities, fees, and rules before travel.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": true,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "6D4C41",
+      "BCAAA4"
+    ],
+    "photoURLs": [],
+    "source": "Private Camps",
+    "submittedIssueNumber": 12
+  },
+  "originalPayload": {
+    "hasWashRack": false,
+    "latitude": 37.631488,
+    "hasWifi": true,
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "state": "IL",
+    "location": "5320 Thacker Hollow Rd, Junction, IL, 62954",
+    "pullThroughAvailable": false,
+    "horseFeePerNight": 0,
+    "submitterAppVersion": "1.0 (1)",
+    "website": "doublemcampground.com",
+    "phone": "6182754440",
+    "accommodations": [
+      "Cabins",
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Stalls",
+      "Trails"
+    ],
+    "longitude": -88.272779,
+    "paddockCount": 0,
+    "pricePerNight": 0,
+    "description": "Private camp. Details may change; please confirm horse access, availability, amenities, fees, and rules before travel.",
+    "notes": "",
+    "stallCount": 0,
+    "hasDumpStation": true,
+    "name": "Double M Campground",
+    "hasBathhouse": true,
+    "maxRigLength": 0,
+    "type": "private_camp",
+    "submittedAt": "2026-04-30T07:30:00.818Z"
+  }
+}

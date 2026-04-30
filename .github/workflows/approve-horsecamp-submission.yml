@@ -9,9 +9,13 @@ permissions:
   issues: write
   pull-requests: write
 
+concurrency:
+  group: approve-horsecamp-submission-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
 jobs:
   approved-submission-to-pr:
-    if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'submission')
+    if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'submission') && !contains(github.event.issue.labels.*.name, 'pr-created')
     runs-on: ubuntu-latest
     timeout-minutes: 15
 

@@ -1,0 +1,89 @@
+{
+  "issueNumber": 5,
+  "type": "layover",
+  "recordId": "layover-submitted-diamond-a-cattle-ranch-aka-ashley-arena-sd",
+  "name": "Diamond A Cattle Ranch aka Ashley Arena",
+  "targetSource": "Layover",
+  "record": {
+    "id": "layover-submitted-diamond-a-cattle-ranch-aka-ashley-arena-sd",
+    "name": "Diamond A Cattle Ranch aka Ashley Arena",
+    "location": "35540 250th St, Pukwana, SD",
+    "state": "SD",
+    "latitude": 43.7607,
+    "longitude": -99.088285,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Generator",
+      "Water"
+    ],
+    "accommodations": [
+      "Cabins",
+      "Corrals",
+      "Group Camping",
+      "Layover",
+      "Primitive Camping",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 5,
+    "phone": "60573004555",
+    "website": "",
+    "description": "Horse layover. Confirm availability before arrival.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "6D4C41",
+      "BCAAA4"
+    ],
+    "photoURLs": [],
+    "source": "Layover",
+    "submittedIssueNumber": 5
+  },
+  "originalPayload": {
+    "type": "layover",
+    "name": "Diamond A Cattle Ranch aka Ashley Arena",
+    "state": "SD",
+    "latitude": 43.7607,
+    "longitude": -99.088285,
+    "location": "35540 250th St, Pukwana, SD",
+    "phone": "60573004555",
+    "website": "",
+    "description": "Horse layover. Confirm availability before arrival.",
+    "notes": "",
+    "hookups": [
+      "30A",
+      "Generator",
+      "Water"
+    ],
+    "accommodations": [
+      "Cabins",
+      "Corrals",
+      "Group Camping",
+      "Layover",
+      "Primitive Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 5,
+    "pricePerNight": 0,
+    "horseFeePerNight": 0,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": false,
+    "submitterAppVersion": "1.0 (1)",
+    "submittedAt": "2026-04-30T04:52:16.477Z"
+  }
+}

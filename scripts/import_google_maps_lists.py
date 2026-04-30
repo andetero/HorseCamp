@@ -407,9 +407,26 @@ def load_json_array(path: Path) -> list[dict[str, Any]]:
     return data
 
 
+def compact_json(value: Any) -> str:
+    """Pretty JSON with simple scalar arrays kept on one line for easier review."""
+    text = json.dumps(value, indent=2, ensure_ascii=False)
+
+    def inline_array(match: re.Match[str]) -> str:
+        raw = match.group(0)
+        try:
+            parsed = json.loads(raw)
+        except json.JSONDecodeError:
+            return raw
+        if isinstance(parsed, list) and all(not isinstance(item, (dict, list)) for item in parsed):
+            return json.dumps(parsed, ensure_ascii=False)
+        return raw
+
+    return re.sub(r"\[\n(?:\s+[^\[\]{}]+,?\n)+\s*\]", inline_array, text)
+
+
 def write_json_array(path: Path, data: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(compact_json(data) + "\n", encoding="utf-8")
 
 
 def haversine_meters(a_lat: float, a_lon: float, b_lat: float, b_lon: float) -> float:

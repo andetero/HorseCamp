@@ -1,5 +1,10 @@
-[
-  {
+{
+  "issueNumber": 3,
+  "type": "layover",
+  "recordId": "layover-submitted-hqh-overnight-stables-ne",
+  "name": "HQH Overnight Stables",
+  "targetSource": "Layover",
+  "record": {
     "id": "layover-submitted-hqh-overnight-stables-ne",
     "name": "HQH Overnight Stables",
     "location": "1625 County Rd 203, Big Springs, NE",
@@ -45,15 +50,17 @@
     "source": "Layover",
     "submittedIssueNumber": 3
   },
-  {
-    "id": "layover-submitted-hobby-horse-overnight-stables-sd",
-    "name": "Hobby Horse Overnight Stables",
-    "location": "815 Spruce St, Mitchell",
-    "state": "SD",
-    "latitude": 43.686937,
-    "longitude": -98.036463,
-    "pricePerNight": 0.0,
-    "horseFeePerNight": 0.0,
+  "originalPayload": {
+    "type": "layover",
+    "name": "HQH Overnight Stables",
+    "state": "NE",
+    "latitude": 41.107734,
+    "longitude": -102.112066,
+    "location": "1625 County Rd 203, Big Springs, NE",
+    "phone": "308-889-3538",
+    "website": "https://a-chordpublishing.com",
+    "description": "Horse layover. Confirm availability before arrival.",
+    "notes": "",
     "hookups": [
       "30A",
       "Generator",
@@ -64,32 +71,19 @@
       "Group Camping",
       "Layover",
       "Paddocks",
-      "Primitive Camping",
-      "Stalls",
-      "Horse Camping"
+      "Primitive Camping"
     ],
-    "maxRigLength": 0,
-    "stallCount": 12,
-    "paddockCount": 12,
-    "phone": "605-995-1581",
-    "website": "https://hobbyhorseovernightstables.com",
-    "description": "Horse layover. Confirm availability before arrival.",
-    "isVerified": false,
-    "seasonStart": 1,
-    "seasonEnd": 12,
+    "maxRigLength": 60,
+    "stallCount": 0,
+    "paddockCount": 4,
+    "pricePerNight": 0,
+    "horseFeePerNight": 0,
     "hasWashRack": false,
     "hasDumpStation": false,
     "hasWifi": false,
     "hasBathhouse": false,
-    "pullThroughAvailable": true,
-    "rating": 0.0,
-    "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
-    "photoURLs": [],
-    "source": "Layover",
-    "submittedIssueNumber": 1
+    "pullThroughAvailable": false,
+    "submitterAppVersion": "1.0 (1)",
+    "submittedAt": "2026-04-30T04:31:16.509Z"
   }
-]
+}

@@ -13,7 +13,7 @@ jobs:
   approved-submission-to-pr:
     if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'submission')
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repo
@@ -40,21 +40,16 @@ jobs:
             --issue-body /tmp/horsecamp_submission_issue.md \
             --issue-number "${{ github.event.issue.number }}"
 
-      - name: Install seed dependencies
-        run: pip install requests
-
-      - name: Run Seed Camp Data
-        env:
-          RIDB_API_KEY: ${{ secrets.RIDB_API_KEY }}
-          NPS_API_KEY: ${{ secrets.NPS_API_KEY }}
-        run: python scripts/fetch_camps.py
-
-      - name: Commit submission update
+      - name: Commit submission source JSON update
         id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/layovers.json data/private_camps.json data/submissions camps.json
+
+          # Only commit source/staging files here. Do NOT run fetch_camps.py or update camps.json.
+          # The scheduled Seed Camp Data workflow will rebuild camps.json overnight, or you can run it manually.
+          git add data/layovers.json data/private_camps.json data/submissions
+
           if git diff --staged --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No changes to commit."
@@ -64,17 +59,22 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Create pull request
+      - name: Create or find pull request
         id: pr
         if: steps.commit.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          PR_URL=$(gh pr create \
+          cat > /tmp/horsecamp_pr_body.md <<'EOF'
+          ${{ steps.process.outputs.pr_body }}
+          EOF
+
+          PR_URL=$(gh pr view "submission-${{ github.event.issue.number }}" --json url --jq .url 2>/dev/null || gh pr create \
             --base main \
             --head "submission-${{ github.event.issue.number }}" \
             --title "${{ steps.process.outputs.pr_title }}" \
-            --body "${{ steps.process.outputs.pr_body }}")
+            --body-file /tmp/horsecamp_pr_body.md)
+
           echo "url=$PR_URL" >> "$GITHUB_OUTPUT"
 
       - name: Comment on issue

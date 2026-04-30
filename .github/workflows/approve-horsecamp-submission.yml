@@ -55,7 +55,9 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "chore: approve HorseCamp submission #${{ github.event.issue.number }}"
-            git push --force-with-lease origin "submission-${{ github.event.issue.number }}"
+            # This branch is fully managed by this workflow. Force push avoids stale branch conflicts
+            # from earlier failed/retried approval runs for the same issue.
+            git push --force origin "submission-${{ github.event.issue.number }}"
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 

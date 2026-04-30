@@ -1,38 +1,5 @@
 [
   {
-    "id": "private-paria-river-ranch",
-    "name": "Paria River Ranch",
-    "location": "11175 Paria Valley Rd, Kanab, UT 84741",
-    "state": "UT",
-    "latitude": 37.106566,
-    "longitude": -111.91333,
-    "pricePerNight": 55,
-    "horseFeePerNight": 20,
-    "hookups": ["30A", "50A", "Water"],
-    "accommodations": ["Stalls", "Corrals", "Trails", "Cabins", "Horse Camping", "Primitive Camping", "Group Camping"],
-    "maxRigLength": 60,
-    "stallCount": 0,
-    "paddockCount": 0,
-    "phone": "323-347-9185",
-    "website": "https://pariariverranch.com/horse-camping-1",
-    "description": "Bring your horses and/or mules and enjoy the beautiful trails right out of the ranch. We offer 12x12 pipe corrals & larger corrals for 2 or 3 horses/mules. You provide everything (water buckets, hay nets/feeders, manure fork). No shavings, please. We have potable water for you and your horses and other furry family members. We will pick up manure outside of your corral once a day. Muck buckets provided. Hay available for purchase. Text for more info. *Stalls must be cleaned daily. All manure and hay must be removed upon departure. A $40 clean fee will be applied if pen has not been mucked prior to check out.",
-    "isVerified": true,
-    "seasonStart": 1,
-    "seasonEnd": 12,
-    "hasWashRack": true,
-    "hasDumpStation": true,
-    "hasWifi": false,
-    "hasBathhouse": true,
-    "pullThroughAvailable": true,
-    "rating": 0.0,
-    "reviewCount": 0,
-    "imageColors": ["6D4C41", "BCAAA4"],
-    "photoURLs": [
-      "https://img1.wsimg.com/isteam/ip/61f9125b-f4d0-415e-b443-3e9f2b436e50/paria%20village.jpg"
-    ],
-    "source": "Private Camps"
-  },
-  {
     "id": "private-camp-mcclellan-campground",
     "name": "Camp McClellan Campground",
     "location": "150 Mud Hole Road, Anniston, AL, 36205",
@@ -41,8 +8,18 @@
     "longitude": -85.7756666666667,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["30A", "Water", "Sewer"],
-    "accommodations": ["Trails", "Stalls", "Corrals", "Group Camping", "Horse Camping"],
+    "hookups": [
+      "30A",
+      "Water",
+      "Sewer"
+    ],
+    "accommodations": [
+      "Trails",
+      "Stalls",
+      "Corrals",
+      "Group Camping",
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 31,
     "paddockCount": 0,
@@ -59,8 +36,105 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": ["6D4C41", "BCAAA4"],
+    "imageColors": [
+      "6D4C41",
+      "BCAAA4"
+    ],
     "photoURLs": [],
+    "source": "Private Camps"
+  },
+  {
+    "id": "private-submitted-little-lusk-trail-lodge-campground-il",
+    "name": "Little Lusk Trail Lodge Campground",
+    "location": "50 Barger Rd, Stonefort, IL, 62987",
+    "state": "IL",
+    "latitude": 37.570328,
+    "longitude": -88.57436,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Paddocks",
+      "Stalls",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "270-205-7183",
+    "website": "https://littleluskcampground.com",
+    "description": "Private camp. Details may change; please confirm horse access, availability, amenities, fees, and rules before travel.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": true,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "6D4C41",
+      "BCAAA4"
+    ],
+    "photoURLs": [],
+    "source": "Private Camps",
+    "submittedIssueNumber": 6
+  },
+  {
+    "id": "private-paria-river-ranch",
+    "name": "Paria River Ranch",
+    "location": "11175 Paria Valley Rd, Kanab, UT 84741",
+    "state": "UT",
+    "latitude": 37.106566,
+    "longitude": -111.91333,
+    "pricePerNight": 55,
+    "horseFeePerNight": 20,
+    "hookups": [
+      "30A",
+      "50A",
+      "Water"
+    ],
+    "accommodations": [
+      "Stalls",
+      "Corrals",
+      "Trails",
+      "Cabins",
+      "Horse Camping",
+      "Primitive Camping",
+      "Group Camping"
+    ],
+    "maxRigLength": 60,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "323-347-9185",
+    "website": "https://pariariverranch.com/horse-camping-1",
+    "description": "Bring your horses and/or mules and enjoy the beautiful trails right out of the ranch. We offer 12x12 pipe corrals & larger corrals for 2 or 3 horses/mules. You provide everything (water buckets, hay nets/feeders, manure fork). No shavings, please. We have potable water for you and your horses and other furry family members. We will pick up manure outside of your corral once a day. Muck buckets provided. Hay available for purchase. Text for more info. *Stalls must be cleaned daily. All manure and hay must be removed upon departure. A $40 clean fee will be applied if pen has not been mucked prior to check out.",
+    "isVerified": true,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": true,
+    "hasDumpStation": true,
+    "hasWifi": false,
+    "hasBathhouse": true,
+    "pullThroughAvailable": true,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "6D4C41",
+      "BCAAA4"
+    ],
+    "photoURLs": [
+      "https://img1.wsimg.com/isteam/ip/61f9125b-f4d0-415e-b443-3e9f2b436e50/paria%20village.jpg"
+    ],
     "source": "Private Camps"
   }
 ]

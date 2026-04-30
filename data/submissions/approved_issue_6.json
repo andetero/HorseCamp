@@ -1,0 +1,90 @@
+{
+  "issueNumber": 6,
+  "type": "private_camp",
+  "recordId": "private-submitted-little-lusk-trail-lodge-campground-il",
+  "name": "Little Lusk Trail Lodge Campground",
+  "targetSource": "Private Camps",
+  "record": {
+    "id": "private-submitted-little-lusk-trail-lodge-campground-il",
+    "name": "Little Lusk Trail Lodge Campground",
+    "location": "50 Barger Rd, Stonefort, IL, 62987",
+    "state": "IL",
+    "latitude": 37.570328,
+    "longitude": -88.57436,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Paddocks",
+      "Stalls",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "270-205-7183",
+    "website": "https://littleluskcampground.com",
+    "description": "Private camp. Details may change; please confirm horse access, availability, amenities, fees, and rules before travel.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": true,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "6D4C41",
+      "BCAAA4"
+    ],
+    "photoURLs": [],
+    "source": "Private Camps",
+    "submittedIssueNumber": 6
+  },
+  "originalPayload": {
+    "type": "private_camp",
+    "name": "Little Lusk Trail Lodge Campground",
+    "state": "IL",
+    "latitude": 37.570328,
+    "longitude": -88.57436,
+    "location": "50 Barger Rd, Stonefort, IL, 62987",
+    "phone": "270-205-7183",
+    "website": "https://littleluskcampground.com",
+    "description": "Private camp. Details may change; please confirm horse access, availability, amenities, fees, and rules before travel.",
+    "notes": "",
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Paddocks",
+      "Stalls",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "pricePerNight": 0,
+    "horseFeePerNight": 0,
+    "hasWashRack": false,
+    "hasDumpStation": true,
+    "hasWifi": true,
+    "hasBathhouse": true,
+    "pullThroughAvailable": false,
+    "submitterAppVersion": "1.0 (1)",
+    "submittedAt": "2026-04-30T05:39:04.295Z"
+  }
+}

@@ -408,12 +408,14 @@ def main() -> int:
     pr_title = f"Add {human_kind}: {record['name']}"
     pr_body = (
         f"Adds approved HorseCamp user submission from issue #{args.issue_number}.\n\n"
+        f"Closes #{args.issue_number}\n\n"
         f"- Type: {human_kind}\n"
         f"- Name: {record['name']}\n"
         f"- State: {record['state']}\n"
         f"- Coordinates: {record['latitude']}, {record['longitude']}\n"
         f"- Target: `{target_path}`\n\n"
-        "Please review the generated JSON diff before merging."
+        "Please review the generated JSON diff before merging. "
+        "Merging this PR will automatically close the linked submission issue."
     )
     summary = f"Prepared {human_kind} submission '{record['name']}' for {target_path}; log: {log_path}"
     print(summary)

@@ -2,11 +2,8 @@
 """
 Approve a HorseCamp user submission from a GitHub Issue body and update JSON data files.
 
-Expected issue body contains this hidden block, created by the Cloudflare Worker:
-
-<!-- HORSECAMP_SUBMISSION_JSON
-{ ... }
-HORSECAMP_SUBMISSION_JSON -->
+Expected issue body contains either a fenced JSON block or the legacy hidden block created
+by the Cloudflare Worker.
 
 This script intentionally does not approve anything directly. It edits JSON files on the
 current Git branch. The GitHub Action then opens a PR for final review/merge.
@@ -199,12 +196,29 @@ def write_json_array(path: Path, data: list[dict[str, Any]]) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def compact_json(value: Any) -> str:
+    """Pretty JSON with simple scalar arrays kept on one line for easier GitHub review."""
+    text = json.dumps(value, indent=2, ensure_ascii=False)
+
+    def inline_array(match: re.Match[str]) -> str:
+        raw = match.group(0)
+        try:
+            parsed = json.loads(raw)
+        except json.JSONDecodeError:
+            return raw
+        if isinstance(parsed, list) and all(not isinstance(item, (dict, list)) for item in parsed):
+            return json.dumps(parsed, ensure_ascii=False)
+        return raw
+
+    return re.sub(r"\[\n(?:\s+[^\[\]{}]+,?\n)+\s*\]", inline_array, text)
+
+
 def extract_submission(body: str) -> dict[str, Any]:
     match = JSON_BLOCK_RE.search(body)
     if not match:
         match = FENCED_JSON_RE.search(body)
     if not match:
-        raise ValueError("Could not find HORSECAMP_SUBMISSION_JSON block in issue body")
+        raise ValueError("Could not find submission JSON in issue body")
     try:
         payload = json.loads(match.group("json"))
     except json.JSONDecodeError as exc:
@@ -407,15 +421,13 @@ def main() -> int:
     human_kind = "layover" if kind == "layover" else "private camp"
     pr_title = f"Add {human_kind}: {record['name']}"
     pr_body = (
-        f"Adds approved HorseCamp user submission from issue #{args.issue_number}.\n\n"
         f"Closes #{args.issue_number}\n\n"
-        f"- Type: {human_kind}\n"
-        f"- Name: {record['name']}\n"
-        f"- State: {record['state']}\n"
-        f"- Coordinates: {record['latitude']}, {record['longitude']}\n"
-        f"- Target: `{target_path}`\n\n"
-        "Please review the generated JSON diff before merging. "
-        "Merging this PR will automatically close the linked submission issue."
+        f"Target: `{target_path}`\n\n"
+        "Generated app record:\n\n"
+        "```json\n"
+        f"{compact_json(record)}\n"
+        "```\n\n"
+        "Review the JSON diff below, then merge when ready. Merging this PR will automatically close the linked submission issue."
     )
     summary = f"Prepared {human_kind} submission '{record['name']}' for {target_path}; log: {log_path}"
     print(summary)

@@ -79,10 +79,16 @@ jobs:
 
           echo "url=$PR_URL" >> "$GITHUB_OUTPUT"
 
-      - name: Comment on issue
+      - name: Comment on issue and update labels
         if: steps.commit.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh issue comment "${{ github.event.issue.number }}" --body "Approved submission converted into a PR for final review: ${{ steps.pr.outputs.url }}"
-          gh issue edit "${{ github.event.issue.number }}" --remove-label "needs-review" --add-label "pr-created"
+
+          # Make this idempotent: create the status label if it does not already exist.
+          gh label create "pr-created" --color "8250df" --description "Submission PR has been created" 2>/dev/null || true
+
+          # Remove/add labels without failing the whole workflow if a label is already absent/present.
+          gh issue edit "${{ github.event.issue.number }}" --remove-label "needs-review" || true
+          gh issue edit "${{ github.event.issue.number }}" --add-label "pr-created" || true

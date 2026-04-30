@@ -13,19 +13,8 @@
     "longitude": -102.112066,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Generator",
-      "Water"
-    ],
-    "accommodations": [
-      "Corrals",
-      "Group Camping",
-      "Layover",
-      "Paddocks",
-      "Primitive Camping",
-      "Horse Camping"
-    ],
+    "hookups": ["30A", "Generator", "Water"],
+    "accommodations": ["Corrals", "Group Camping", "Layover", "Paddocks", "Primitive Camping", "Horse Camping"],
     "maxRigLength": 60,
     "stallCount": 0,
     "paddockCount": 4,
@@ -42,10 +31,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Layover",
     "submittedIssueNumber": 3
@@ -61,18 +47,8 @@
     "website": "https://a-chordpublishing.com",
     "description": "Horse layover. Confirm availability before arrival.",
     "notes": "",
-    "hookups": [
-      "30A",
-      "Generator",
-      "Water"
-    ],
-    "accommodations": [
-      "Corrals",
-      "Group Camping",
-      "Layover",
-      "Paddocks",
-      "Primitive Camping"
-    ],
+    "hookups": ["30A", "Generator", "Water"],
+    "accommodations": ["Corrals", "Group Camping", "Layover", "Paddocks", "Primitive Camping"],
     "maxRigLength": 60,
     "stallCount": 0,
     "paddockCount": 4,

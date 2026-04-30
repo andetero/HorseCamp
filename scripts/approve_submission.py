@@ -191,11 +191,6 @@ def load_json_array(path: Path) -> list[dict[str, Any]]:
     raise ValueError(f"{path} must contain a JSON array or an object with a camps array")
 
 
-def write_json_array(path: Path, data: list[dict[str, Any]]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-
-
 def compact_json(value: Any) -> str:
     """Pretty JSON with simple scalar arrays kept on one line for easier GitHub review."""
     text = json.dumps(value, indent=2, ensure_ascii=False)
@@ -211,6 +206,11 @@ def compact_json(value: Any) -> str:
         return raw
 
     return re.sub(r"\[\n(?:\s+[^\[\]{}]+,?\n)+\s*\]", inline_array, text)
+
+
+def write_json_array(path: Path, data: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(compact_json(data) + "\n", encoding="utf-8")
 
 
 def extract_submission(body: str) -> dict[str, Any]:
@@ -358,7 +358,7 @@ def write_submission_log(issue_number: int, kind: str, record: dict[str, Any], o
     SUBMISSION_LOG_DIR.mkdir(parents=True, exist_ok=True)
     path = SUBMISSION_LOG_DIR / f"approved_issue_{issue_number}.json"
     path.write_text(
-        json.dumps(
+        compact_json(
             {
                 "issueNumber": issue_number,
                 "type": kind,
@@ -367,9 +367,7 @@ def write_submission_log(issue_number: int, kind: str, record: dict[str, Any], o
                 "targetSource": record["source"],
                 "record": record,
                 "originalPayload": original_payload,
-            },
-            indent=2,
-            ensure_ascii=False,
+            }
         )
         + "\n",
         encoding="utf-8",

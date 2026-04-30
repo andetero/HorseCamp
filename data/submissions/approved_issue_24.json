@@ -1,0 +1,92 @@
+{
+  "issueNumber": 24,
+  "type": "private_camp",
+  "recordId": "private-submitted-east-fork-stables-campground-tn",
+  "name": "East Fork Stables & Campground",
+  "targetSource": "Private Camps",
+  "record": {
+    "id": "private-submitted-east-fork-stables-campground-tn",
+    "name": "East Fork Stables & Campground",
+    "location": "3598 S York Hwy, Jamestown, TN 38556",
+    "state": "TN",
+    "latitude": 36.340176,
+    "longitude": -84.954146,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Cabins",
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Paddocks",
+      "Stalls",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "phone": "931-879-1176",
+    "website": "https://eastforkstables.com",
+    "description": "East Fork Stables opened to the public in 1994. When its parent company, The Estate of Bruno Gernt, Inc., diversified into the tourism business. East Fork Stables was quickly established as one of the best trail riding venues in the state. The 12,000+ acre privately owned tract of land contains East Forks’ trail system of over 100 miles of trails on the western edge of the Cumberland Plateau and offers a diverse selection of attractions",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": true,
+    "hasDumpStation": true,
+    "hasWifi": true,
+    "hasBathhouse": true,
+    "pullThroughAvailable": true,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "6D4C41",
+      "BCAAA4"
+    ],
+    "photoURLs": [],
+    "source": "Private Camps",
+    "submittedIssueNumber": 24
+  },
+  "originalPayload": {
+    "type": "private_camp",
+    "name": "East Fork Stables & Campground",
+    "state": "TN",
+    "latitude": 36.340176,
+    "longitude": -84.954146,
+    "location": "3598 S York Hwy, Jamestown, TN 38556",
+    "phone": "(931) 879-1176",
+    "website": "eastforkstables.com",
+    "description": "East Fork Stables opened to the public in 1994. When its parent company, The Estate of Bruno Gernt, Inc., diversified into the tourism business. East Fork Stables was quickly established as one of the best trail riding venues in the state. The 12,000+ acre privately owned tract of land contains East Forks’ trail system of over 100 miles of trails on the western edge of the Cumberland Plateau and offers a diverse selection of attractions",
+    "notes": "Love it",
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Cabins",
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Paddocks",
+      "Stalls",
+      "Trails"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 0,
+    "paddockCount": 0,
+    "pricePerNight": 0,
+    "horseFeePerNight": 0,
+    "hasWashRack": true,
+    "hasDumpStation": true,
+    "hasWifi": true,
+    "hasBathhouse": true,
+    "pullThroughAvailable": true,
+    "submitterAppVersion": "1.0 (1)",
+    "submittedAt": "2026-04-30T15:48:42.576Z"
+  }
+}

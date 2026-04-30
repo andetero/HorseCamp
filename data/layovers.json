@@ -1,1 +1,49 @@
-[]
+[
+  {
+    "id": "layover-submitted-hobby-horse-overnight-stables-sd",
+    "name": "Hobby Horse Overnight Stables",
+    "location": "815 Spruce St, Mitchell",
+    "state": "SD",
+    "latitude": 43.686937,
+    "longitude": -98.036463,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Generator",
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Group Camping",
+      "Layover",
+      "Paddocks",
+      "Primitive Camping",
+      "Stalls",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 12,
+    "paddockCount": 12,
+    "phone": "605-995-1581",
+    "website": "https://hobbyhorseovernightstables.com",
+    "description": "Horse layover. Confirm availability before arrival.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": true,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "6D4C41",
+      "BCAAA4"
+    ],
+    "photoURLs": [],
+    "source": "Layover",
+    "submittedIssueNumber": 1
+  }
+]

@@ -122,30 +122,74 @@ function validateAndNormalizeSubmission(input) {
   };
 }
 
+function markdownValue(value) {
+  if (Array.isArray(value)) {
+    return value.length ? value.join(", ") : "—";
+  }
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (typeof value === "number") return Number.isFinite(value) && value !== 0 ? String(value) : "—";
+  const cleaned = cleanText(value);
+  if (!cleaned) return "—";
+  return cleaned.replace(/\|/g, "\\|");
+}
+
 function issueBody(submission) {
   const humanType = submission.type === "layover" ? "Layover" : "Private Camp";
+  const rows = [
+    ["Type", humanType],
+    ["Name", submission.name],
+    ["State", submission.state],
+    ["Coordinates", `${submission.latitude}, ${submission.longitude}`],
+    ["Location / Address", submission.location],
+    ["Phone", submission.phone],
+    ["Website", submission.website],
+    ["Description", submission.description],
+    ["Reviewer / submitter notes", submission.notes],
+    ["Hookups", submission.hookups],
+    ["Accommodations", submission.accommodations],
+    ["Max rig length", submission.maxRigLength],
+    ["Stall count", submission.stallCount],
+    ["Paddock / corral count", submission.paddockCount],
+    ["Nightly price", submission.pricePerNight],
+    ["Horse fee", submission.horseFeePerNight],
+    ["Wash rack", submission.hasWashRack],
+    ["Dump station", submission.hasDumpStation],
+    ["Wi-Fi", submission.hasWifi],
+    ["Bathhouse", submission.hasBathhouse],
+    ["Pull-through available", submission.pullThroughAvailable],
+    ["Submitted from app version", submission.submitterAppVersion],
+    ["Submitted at", submission.submittedAt],
+  ];
+
+  const detailTable = [
+    "| Field | Value |",
+    "| --- | --- |",
+    ...rows.map(([label, value]) => `| ${label} | ${markdownValue(value)} |`),
+  ];
+
   const lines = [
     `## ${humanType} submission`,
     "",
-    `**Name:** ${submission.name}`,
-    `**State:** ${submission.state}`,
-    `**Coordinates:** ${submission.latitude}, ${submission.longitude}`,
-    submission.location ? `**Location:** ${submission.location}` : "",
-    submission.phone ? `**Phone:** ${submission.phone}` : "",
-    submission.website ? `**Website:** ${submission.website}` : "",
-    submission.description ? `**Description:** ${submission.description}` : "",
-    submission.notes ? `**Submitter notes:** ${submission.notes}` : "",
+    ...detailTable,
     "",
     "### Approval",
     "",
-    "Review the details. If it looks good, add the `approved` label. A GitHub Action will create a PR that updates JSON and `camps.json` for final review before merge.",
+    "Review the details. If it looks good, add the `approved` label. A GitHub Action will create a PR that updates the source JSON for final review before merge. The scheduled Seed Camp Data workflow will rebuild `camps.json` later, or you can run it manually.",
     "",
     "### Submission JSON",
+    "",
+    "<details>",
+    "<summary>Raw JSON used by automation</summary>",
+    "",
+    "```json",
+    JSON.stringify(submission, null, 2),
+    "```",
+    "</details>",
     "",
     "<!-- HORSECAMP_SUBMISSION_JSON",
     JSON.stringify(submission, null, 2),
     "HORSECAMP_SUBMISSION_JSON -->",
-  ].filter((line) => line !== "");
+  ];
   return lines.join("\n");
 }
 

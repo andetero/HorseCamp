@@ -8,18 +8,8 @@
     "longitude": -85.7756666666667,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Water",
-      "Sewer"
-    ],
-    "accommodations": [
-      "Trails",
-      "Stalls",
-      "Corrals",
-      "Group Camping",
-      "Horse Camping"
-    ],
+    "hookups": ["30A", "Water", "Sewer"],
+    "accommodations": ["Trails", "Stalls", "Corrals", "Group Camping", "Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 31,
     "paddockCount": 0,
@@ -36,10 +26,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps"
   },
@@ -52,19 +39,8 @@
     "longitude": -88.272779,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Sewer",
-      "Water"
-    ],
-    "accommodations": [
-      "Cabins",
-      "Corrals",
-      "Group Camping",
-      "Horse Camping",
-      "Stalls",
-      "Trails"
-    ],
+    "hookups": ["30A", "Sewer", "Water"],
+    "accommodations": ["Cabins", "Corrals", "Group Camping", "Horse Camping", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -81,10 +57,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "submittedIssueNumber": 12
@@ -98,18 +71,8 @@
     "longitude": -88.58677,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Sewer",
-      "Water"
-    ],
-    "accommodations": [
-      "Corrals",
-      "Group Camping",
-      "Horse Camping",
-      "Stalls",
-      "Trails"
-    ],
+    "hookups": ["30A", "Sewer", "Water"],
+    "accommodations": ["Corrals", "Group Camping", "Horse Camping", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -126,10 +89,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "submittedIssueNumber": 17
@@ -143,20 +103,8 @@
     "longitude": -88.334563,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Sewer",
-      "Water"
-    ],
-    "accommodations": [
-      "Cabins",
-      "Corrals",
-      "Group Camping",
-      "Horse Camping",
-      "Paddocks",
-      "Stalls",
-      "Trails"
-    ],
+    "hookups": ["30A", "Sewer", "Water"],
+    "accommodations": ["Cabins", "Corrals", "Group Camping", "Horse Camping", "Paddocks", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -173,10 +121,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "submittedIssueNumber": 15
@@ -190,19 +135,8 @@
     "longitude": -88.57436,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Sewer",
-      "Water"
-    ],
-    "accommodations": [
-      "Corrals",
-      "Group Camping",
-      "Horse Camping",
-      "Paddocks",
-      "Stalls",
-      "Trails"
-    ],
+    "hookups": ["30A", "Sewer", "Water"],
+    "accommodations": ["Corrals", "Group Camping", "Horse Camping", "Paddocks", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -219,10 +153,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "submittedIssueNumber": 6
@@ -236,20 +167,8 @@
     "longitude": -111.91333,
     "pricePerNight": 55,
     "horseFeePerNight": 20,
-    "hookups": [
-      "30A",
-      "50A",
-      "Water"
-    ],
-    "accommodations": [
-      "Stalls",
-      "Corrals",
-      "Trails",
-      "Cabins",
-      "Horse Camping",
-      "Primitive Camping",
-      "Group Camping"
-    ],
+    "hookups": ["30A", "50A", "Water"],
+    "accommodations": ["Stalls", "Corrals", "Trails", "Cabins", "Horse Camping", "Primitive Camping", "Group Camping"],
     "maxRigLength": 60,
     "stallCount": 0,
     "paddockCount": 0,
@@ -266,13 +185,8 @@
     "pullThroughAvailable": true,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
-    "photoURLs": [
-      "https://img1.wsimg.com/isteam/ip/61f9125b-f4d0-415e-b443-3e9f2b436e50/paria%20village.jpg"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
+    "photoURLs": ["https://img1.wsimg.com/isteam/ip/61f9125b-f4d0-415e-b443-3e9f2b436e50/paria%20village.jpg"],
     "source": "Private Camps"
   }
 ]

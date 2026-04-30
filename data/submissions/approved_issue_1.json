@@ -1,0 +1,91 @@
+{
+  "issueNumber": 1,
+  "type": "layover",
+  "recordId": "layover-submitted-hobby-horse-overnight-stables-sd",
+  "name": "Hobby Horse Overnight Stables",
+  "targetSource": "Layover",
+  "record": {
+    "id": "layover-submitted-hobby-horse-overnight-stables-sd",
+    "name": "Hobby Horse Overnight Stables",
+    "location": "815 Spruce St, Mitchell",
+    "state": "SD",
+    "latitude": 43.686937,
+    "longitude": -98.036463,
+    "pricePerNight": 0.0,
+    "horseFeePerNight": 0.0,
+    "hookups": [
+      "30A",
+      "Generator",
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Group Camping",
+      "Layover",
+      "Paddocks",
+      "Primitive Camping",
+      "Stalls",
+      "Horse Camping"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 12,
+    "paddockCount": 12,
+    "phone": "605-995-1581",
+    "website": "https://hobbyhorseovernightstables.com",
+    "description": "Horse layover. Confirm availability before arrival.",
+    "isVerified": false,
+    "seasonStart": 1,
+    "seasonEnd": 12,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": true,
+    "rating": 0.0,
+    "reviewCount": 0,
+    "imageColors": [
+      "6D4C41",
+      "BCAAA4"
+    ],
+    "photoURLs": [],
+    "source": "Layover",
+    "submittedIssueNumber": 1
+  },
+  "originalPayload": {
+    "type": "layover",
+    "name": "Hobby Horse Overnight Stables",
+    "state": "SD",
+    "latitude": 43.686937,
+    "longitude": -98.036463,
+    "location": "815 Spruce St, Mitchell",
+    "phone": "605-995-1581",
+    "website": "https://hobbyhorseovernightstables.com",
+    "description": "Horse layover. Confirm availability before arrival.",
+    "notes": "",
+    "hookups": [
+      "30A",
+      "Generator",
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Group Camping",
+      "Layover",
+      "Paddocks",
+      "Primitive Camping",
+      "Stalls"
+    ],
+    "maxRigLength": 0,
+    "stallCount": 12,
+    "paddockCount": 12,
+    "pricePerNight": 0,
+    "horseFeePerNight": 0,
+    "hasWashRack": false,
+    "hasDumpStation": false,
+    "hasWifi": false,
+    "hasBathhouse": false,
+    "pullThroughAvailable": true,
+    "submitterAppVersion": "1.0 (1)",
+    "submittedAt": "2026-04-30T03:13:57.731Z"
+  }
+}

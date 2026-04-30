@@ -1,0 +1,86 @@
+name: Approve HorseCamp Submission
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  approved-submission-to-pr:
+    if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'submission')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Create approval branch
+        run: git checkout -B "submission-${{ github.event.issue.number }}"
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Read issue body
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue view "${{ github.event.issue.number }}" --json body --jq .body > /tmp/horsecamp_submission_issue.md
+
+      - name: Convert approved issue into JSON update
+        id: process
+        run: |
+          python scripts/approve_submission.py \
+            --issue-body /tmp/horsecamp_submission_issue.md \
+            --issue-number "${{ github.event.issue.number }}"
+
+      - name: Install seed dependencies
+        run: pip install requests
+
+      - name: Run Seed Camp Data
+        env:
+          RIDB_API_KEY: ${{ secrets.RIDB_API_KEY }}
+          NPS_API_KEY: ${{ secrets.NPS_API_KEY }}
+        run: python scripts/fetch_camps.py
+
+      - name: Commit submission update
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/layovers.json data/private_camps.json data/submissions camps.json
+          if git diff --staged --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes to commit."
+          else
+            git commit -m "chore: approve HorseCamp submission #${{ github.event.issue.number }}"
+            git push --force-with-lease origin "submission-${{ github.event.issue.number }}"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create pull request
+        id: pr
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR_URL=$(gh pr create \
+            --base main \
+            --head "submission-${{ github.event.issue.number }}" \
+            --title "${{ steps.process.outputs.pr_title }}" \
+            --body "${{ steps.process.outputs.pr_body }}")
+          echo "url=$PR_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Comment on issue
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body "Approved submission converted into a PR for final review: ${{ steps.pr.outputs.url }}"
+          gh issue edit "${{ github.event.issue.number }}" --remove-label "needs-review" --add-label "pr-created"

@@ -1,26 +1,21 @@
 name: Sync HorseMotel.com Listings
 
 on:
-  workflow_dispatch:
-    inputs:
-      source_url:
-        description: "Optional authorized HorseMotel.com CSV/JSON export URL; leave blank to read HorseMotel.com listing pages"
-        required: false
-        type: string
-      run_seed:
-        description: "Run scripts/fetch_camps.py after syncing HorseMotel.com listings"
-        required: true
-        type: boolean
-        default: false
-      commit_outputs:
-        description: "Commit updated HorseMotel.com JSON/report/camps.json back to repo"
-        required: true
-        type: boolean
-        default: true
   schedule:
     # Runs nightly at 12:00 AM Mountain Time.
     - cron: "0 0 * * *"
       timezone: "America/Denver"
+  workflow_dispatch:
+    inputs:
+      source_url:
+        description: "Optional authorized HorseMotel.com feed URL. Leave blank to read HorseMotel.com listing pages directly."
+        required: false
+        type: string
+      run_seed:
+        description: "Run scripts/fetch_camps.py after syncing HorseMotel.com listings"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -39,9 +34,15 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install importer dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+
       - name: Import authorized HorseMotel.com listings
         run: |
           EXTRA_ARGS="--allow-empty"
+
           if [ -n "${{ inputs.source_url }}" ]; then
             EXTRA_ARGS="$EXTRA_ARGS --source-url '${{ inputs.source_url }}'"
           elif [ -n "${{ secrets.HORSEMOTEL_SOURCE_URL }}" ]; then
@@ -77,13 +78,20 @@ jobs:
             camps.json
 
       - name: Commit outputs
-        if: ${{ inputs.commit_outputs || github.event_name == 'schedule' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/horsemotel_listings.json data/imports/horsemotel_import_report.md
-          if [ -f camps.json ]; then
+
+          git add data/horsemotel_listings.json
+          git add data/imports/horsemotel_import_report.md
+
+          if [ "${{ inputs.run_seed }}" = "true" ] || [ "${{ github.event_name }}" = "schedule" ]; then
             git add camps.json
           fi
-          git diff --staged --quiet || git commit -m "chore: sync HorseMotel.com listings"
-          git push
+
+          if git diff --staged --quiet; then
+            echo "No HorseMotel.com changes to commit."
+          else
+            git commit -m "chore: sync HorseMotel.com listings"
+            git push
+          fi

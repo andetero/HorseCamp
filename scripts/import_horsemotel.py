@@ -183,21 +183,98 @@ def text_matches(text: str, patterns: Iterable[str]) -> bool:
     return any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in patterns)
 
 
+def has_negative_phrase(text: str, patterns: Iterable[str]) -> bool:
+    """Return True when an amenity is explicitly negated in nearby text.
+
+    HorseMotel.com descriptions often contain phrases like "no dump station"
+    or "no septic hook ups". Those should not be interpreted as positive
+    hookup amenities just because the amenity word appears.
+    """
+    prefix = r"(?:no|not|without|does\s+not\s+have|do\s+not\s+have|don't\s+have|doesn't\s+have|sorry,?\s*no)"
+    for pattern in patterns:
+        if re.search(prefix + r"[^.!,;()\n]{0,45}" + pattern, text, flags=re.IGNORECASE):
+            return True
+    return False
+
+
+def cleanup_listing_name(value: str) -> str:
+    value = clean_text(value)
+    value = re.sub(r"\s*,\s*,+", ", ", value)
+    value = re.sub(r",\s{2,}", ", ", value)
+    value = re.sub(r"\s{2,}", " ", value)
+    return value.strip(" ,")
+
+
+def should_replace_city(city: str) -> bool:
+    if not city:
+        return True
+    if len(city) > 32 or len(city.split()) > 4:
+        return True
+    return bool(re.search(r"\d|\b(?:p\.?o\.?|box|road|rd|street|st|avenue|ave|highway|hwy|county|route|drive|dr|lane|ln)\b", city, flags=re.IGNORECASE))
+
+
+def city_from_location(location: str, state: str) -> str:
+    if not location or not state:
+        return ""
+    state = state.upper()
+    text = clean_text(location)
+
+    # Best case: ", City, ST 12345" or ", City ST 12345".
+    zip_pattern = rf",\s*([^,]+?)\s*,?\s*{re.escape(state)}\s+\d{{5}}(?:-\d{{4}})?\b"
+    zip_candidates = [clean_text(match.group(1)) for match in re.finditer(zip_pattern, text, flags=re.IGNORECASE)]
+    if zip_candidates:
+        city = zip_candidates[-1]
+    else:
+        state_pattern = rf",\s*([^,]+?)\s*,?\s*{re.escape(state)}\b"
+        state_candidates = [clean_text(match.group(1)) for match in re.finditer(state_pattern, text, flags=re.IGNORECASE)]
+        if not state_candidates:
+            return ""
+        city = state_candidates[-1]
+
+    # If an earlier parser captured a P.O. Box plus city, keep the final city token(s).
+    city = re.sub(r"\bP\.?\s*O\.?\s*Box\s+\d+\s*,?\s*", "", city, flags=re.IGNORECASE)
+    city = re.sub(r"^[A-Z]\d+\s+", "", city, flags=re.IGNORECASE)
+    city = re.sub(r"^(?:N|S|E|W|North|South|East|West)\s+", "", city, flags=re.IGNORECASE)
+    city = cleanup_listing_name(city)
+
+    # Avoid returning street fragments as cities.
+    if re.search(r"\d|\b(?:road|rd|street|st|avenue|ave|highway|hwy|county|route|drive|dr|lane|ln)\b", city, flags=re.IGNORECASE):
+        parts = [cleanup_listing_name(part) for part in re.split(r",", text) if cleanup_listing_name(part)]
+        for idx, part in enumerate(parts):
+            if re.fullmatch(state + r"(?:\s+\d{5}(?:-\d{4})?)?", part, flags=re.IGNORECASE) and idx > 0:
+                return cleanup_listing_name(parts[idx - 1])
+        return ""
+    return city
+
+
+def cleanup_city(city: str, location: str, state: str) -> str:
+    extracted = city_from_location(location, state)
+    if extracted and (should_replace_city(city) or extracted.lower() not in city.lower()):
+        return extracted
+    return cleanup_listing_name(city)
+
+
 def infer_hookups(text: str) -> list[str]:
     """Infer structured RV/trailer hookups from free-text HorseMotel.com details."""
     hookups: list[str] = []
 
+    no_dump = has_negative_phrase(text, [r"\bdump\s+station\b", r"\bdump\b"])
+    no_sewer = has_negative_phrase(text, [r"\bsewer\b", r"\bseptic\b"])
+    no_hookups = has_negative_phrase(text, [r"\b(?:rv\s+|trailer\s+|electrical\s+|electric\s+)?hook[- ]?ups?\b"])
+    no_electric = no_hookups or has_negative_phrase(text, [r"\belectric(?:al|ity)?\b", r"\bpower\b"])
+    no_water = has_negative_phrase(text, [r"\bwater\b"])
+
     amp_patterns = [
-        ("20A", [r"\b20\s*(?:amp|amps|a)\b", r"\b20[- ]amp\b"]),
-        ("30A", [r"\b30\s*(?:amp|amps|a)\b", r"\b30[- ]amp\b"]),
-        ("50A", [r"\b50\s*(?:amp|amps|a)\b", r"\b50[- ]amp\b"]),
+        ("20A", [r"\b20\s*(?:amp|amps)\b", r"\b20[- ]amp\b", r"\b20a\b", r"\b20\s*/\s*30\s*/\s*50\s*(?:amp|amps)?\b", r"\b50\s*/\s*30\s*/\s*20\s*(?:amp|amps)?\b"]),
+        ("30A", [r"\b30\s*(?:amp|amps)\b", r"\b30[- ]amp\b", r"\b30a\b", r"\b20\s*/\s*30\s*/\s*50\s*(?:amp|amps)?\b", r"\b50\s*/\s*30\s*/\s*20\s*(?:amp|amps)?\b", r"\b50\s*/\s*30\s*(?:amp|amps)?\b", r"\b30\s*/\s*50\s*(?:amp|amps)?\b"]),
+        ("50A", [r"\b50\s*(?:amp|amps)\b", r"\b50[- ]amp\b", r"\b50a\b", r"\b20\s*/\s*30\s*/\s*50\s*(?:amp|amps)?\b", r"\b50\s*/\s*30\s*/\s*20\s*(?:amp|amps)?\b", r"\b50\s*/\s*30\s*(?:amp|amps)?\b", r"\b30\s*/\s*50\s*(?:amp|amps)?\b"]),
         ("110V", [r"\b110\s*(?:v|volt|volts)\b", r"\b110\s*amp\b"]),
     ]
     for label, patterns in amp_patterns:
-        if text_matches(text, patterns):
+        if not no_electric and text_matches(text, patterns):
             add_unique(hookups, label)
 
-    if text_matches(text, [
+    if not no_electric and text_matches(text, [
         r"\belectric(?:al|ity)?\b",
         r"\bpower\s+hook",
         r"\btrailer\s+hook",
@@ -209,8 +286,8 @@ def infer_hookups(text: str) -> list[str]:
     ]):
         add_unique(hookups, "Electric")
 
-    if text_matches(text, [
-        r"\bwater\s+(?:hook[- ]?ups?|spigot|available|access|pedestal|connection)s?\b",
+    if not no_water and not no_hookups and text_matches(text, [
+        r"\bwater\s+(?:hook[- ]?ups?|spigot|available|access|pedestal|connection|filling)s?\b",
         r"\bwater\s*(?:/|and|&)\s*electric",
         r"\belectric\s*(?:/|and|&)\s*water",
         r"\bcity\s+water\b",
@@ -219,19 +296,20 @@ def infer_hookups(text: str) -> list[str]:
     ]):
         add_unique(hookups, "Water")
 
-    if text_matches(text, [
+    sewer_positive = text_matches(text, [
         r"\bsewer\b",
         r"\bseptic\b",
         r"\bdump\s+station\b",
         r"\bfull\s+(?:rv\s+)?hook[- ]?ups?\b",
         r"\bfhu\b",
-    ]):
+    ])
+    if sewer_positive and not no_hookups and not no_sewer and not no_dump:
         add_unique(hookups, "Sewer")
 
-    if text_matches(text, [r"\bdump\s+station\b"]):
+    if text_matches(text, [r"\bdump\s+station\b"]) and not no_dump:
         add_unique(hookups, "Dump Station")
 
-    if text_matches(text, [r"\bfull\s+(?:rv\s+)?hook[- ]?ups?\b", r"\bfhu\b"]):
+    if text_matches(text, [r"\bfull\s+(?:rv\s+)?hook[- ]?ups?\b", r"\bfhu\b"]) and not no_hookups:
         add_unique(hookups, "Full Hookups")
 
     return hookups
@@ -240,24 +318,25 @@ def infer_hookups(text: str) -> list[str]:
 def infer_accommodations(text: str) -> list[str]:
     lower = text.lower()
     values = ["HorseMotel.com", "Layover", "Horse Camping"]
+    no_rv_hookups = has_negative_phrase(text, [r"\b(?:rv\s+|trailer\s+|electrical\s+|electric\s+)?hook[- ]?ups?\b"])
     checks = [
-        ("Stalls", ["stall", "barn"]),
-        ("Paddocks", ["paddock", "turnout", "pasture", "corral", "pen"]),
-        ("RV Hookups", ["rv hookup", "hookup", "electric", "30 amp", "30a", "50 amp", "50a", "water hook", "fhu", "full hookup"]),
-        ("Big Rig Friendly", ["big rig", "semi", "any size rig", "large trailer", "large rig", "18 wheeler", "tractor/trailer"]),
-        ("Wash Rack", ["wash rack", "washrack", "wash racks", "wash station"]),
-        ("WiFi", ["wifi", "wi-fi", "internet"]),
-        ("Lodging", ["cabin", "guest house", "bed and breakfast", "apartment", "room", "airbnb", "vrbo", "bunkhouse", "casita"]),
-        ("Trails", ["trail"]),
+        ("Stalls", ["stall", "barn"], False),
+        ("Paddocks", ["paddock", "turnout", "pasture", "corral", "pen"], False),
+        ("RV Hookups", ["rv hookup", "hookup", "electric", "30 amp", "30a", "50 amp", "50a", "water hook", "fhu", "full hookup"], no_rv_hookups),
+        ("Big Rig Friendly", ["big rig", "semi", "any size rig", "large trailer", "large rig", "18 wheeler", "tractor/trailer"], False),
+        ("Wash Rack", ["wash rack", "washrack", "wash racks", "wash station"], False),
+        ("WiFi", ["wifi", "wi-fi", "internet"], False),
+        ("Lodging", ["cabin", "guest house", "bed and breakfast", "apartment", "room", "airbnb", "vrbo", "bunkhouse", "casita"], False),
+        ("Trails", ["trail"], False),
     ]
-    for label, terms in checks:
-        if any(term in lower for term in terms) and label not in values:
+    for label, terms, suppressed in checks:
+        if not suppressed and any(term in lower for term in terms) and label not in values:
             values.append(label)
     return values
 
 
 def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-    name = first_value(row, FIELD_ALIASES["name"])
+    name = cleanup_listing_name(first_value(row, FIELD_ALIASES["name"]))
     if not name:
         return None
 
@@ -266,6 +345,7 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     location = first_value(row, FIELD_ALIASES["location"])
     if not location:
         location = ", ".join(v for v in [city, state] if v)
+    city = cleanup_city(city, location, state)
 
     source_url = first_value(row, FIELD_ALIASES["sourceUrl"])
     website = first_value(row, FIELD_ALIASES["website"]) or source_url
@@ -323,12 +403,10 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     lower_desc = description.lower()
     hookups = set(listing["hookups"])
     listing["hasWashRack"] = any(term in lower_desc for term in ["wash rack", "washrack", "wash racks", "wash station"])
-    listing["hasDumpStation"] = any(term in lower_desc for term in ["dump station", "sewer", "septic", "full hookup", "full hook-up", "fhu"])
+    listing["hasDumpStation"] = "Dump Station" in hookups or "Sewer" in hookups or "Full Hookups" in hookups
     listing["hasWifi"] = any(term in lower_desc for term in ["wifi", "wi-fi", "internet"])
     listing["hasBathhouse"] = any(term in lower_desc for term in ["bathroom", "restroom", "shower", "bathhouse"])
     listing["pullThroughAvailable"] = any(term in lower_desc for term in ["pull through", "pull-through", "pull thru", "big rig", "large rig", "semi", "18 wheeler", "tractor/trailer"])
-    if "Dump Station" in hookups or "Sewer" in hookups or "Full Hookups" in hookups:
-        listing["hasDumpStation"] = True
 
     for output_field, aliases in BOOL_FIELDS.items():
         explicit = first_value(row, aliases)
@@ -769,8 +847,7 @@ def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, s
         address_lines: list[str] = []
     else:
         name_lines = lines[:address_start]
-        name = clean_text(", ".join(name_lines[:3])) or lines[0]
-        name = re.sub(r"\s*,\s*,+", ", ", name).strip(" ,")
+        name = cleanup_listing_name(", ".join(name_lines[:3])) or cleanup_listing_name(lines[0])
         address_lines = lines[address_start:]
 
     city, state, _zip_code = parse_city_state(address_lines, state_code)
@@ -850,7 +927,7 @@ def write_report(path: Path, count: int, inputs: list[str]) -> None:
         f"- Attribution: {ATTRIBUTION}",
         "- HorseMotel.com remains the source of truth.",
         "- Rows without coordinates are skipped until latitude/longitude are provided.",
-        "- Hookups are inferred from free-text descriptions when terms such as 30A, 50A, water, electric, sewer, dump station, full hookups, or FHU are present.",
+        '- Hookups are inferred from free-text descriptions, with negative phrases such as "no dump station" or "no sewer" excluded.', 
         "- The importer can download the authorized Google My Maps KML into data/imports/horsemotel_map.kml and use it to improve coordinates.",
         "- Website-derived imports read public HorseMotel.com state listing pages with permission from HorseMotel.com.",
     ])

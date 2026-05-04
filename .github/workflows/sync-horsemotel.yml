@@ -58,11 +58,11 @@ jobs:
             $EXTRA_ARGS
 
       - name: Install seed dependencies
-        if: ${{ inputs.run_seed || github.event_name == 'schedule' }}
+        if: ${{ inputs.run_seed }}
         run: pip install requests
 
       - name: Run Seed Camp Data after HorseMotel.com sync
-        if: ${{ inputs.run_seed || github.event_name == 'schedule' }}
+        if: ${{ inputs.run_seed }}
         env:
           RIDB_API_KEY: ${{ secrets.RIDB_API_KEY }}
           NPS_API_KEY: ${{ secrets.NPS_API_KEY }}
@@ -85,7 +85,7 @@ jobs:
           git add data/horsemotel_listings.json
           git add data/imports/horsemotel_import_report.md
 
-          if [ "${{ inputs.run_seed }}" = "true" ] || [ "${{ github.event_name }}" = "schedule" ]; then
+          if [ "${{ inputs.run_seed }}" = "true" ]; then
             git add camps.json
           fi
 

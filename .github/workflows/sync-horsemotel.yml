@@ -31,19 +31,22 @@ jobs:
 
       - name: Import authorized HorseMotel.com listings
         run: |
-          EXTRA_ARGS="--allow-empty"
-
           if [ -n "${{ secrets.HORSEMOTEL_SOURCE_URL }}" ]; then
-            EXTRA_ARGS="$EXTRA_ARGS --source-url '${{ secrets.HORSEMOTEL_SOURCE_URL }}'"
+            python scripts/import_horsemotel.py \
+              --csv data/imports/horsemotel_listings.csv \
+              --output data/horsemotel_listings.json \
+              --report data/imports/horsemotel_import_report.md \
+              --allow-empty \
+              --source-url "${{ secrets.HORSEMOTEL_SOURCE_URL }}"
           else
-            EXTRA_ARGS="$EXTRA_ARGS --scrape-site --site-url 'https://www.horsemotel.com/'"
+            python scripts/import_horsemotel.py \
+              --csv data/imports/horsemotel_listings.csv \
+              --output data/horsemotel_listings.json \
+              --report data/imports/horsemotel_import_report.md \
+              --allow-empty \
+              --scrape-site \
+              --site-url "https://www.horsemotel.com/"
           fi
-
-          python scripts/import_horsemotel.py \
-            --csv data/imports/horsemotel_listings.csv \
-            --output data/horsemotel_listings.json \
-            --report data/imports/horsemotel_import_report.md \
-            $EXTRA_ARGS
 
       - name: Upload HorseMotel.com sync outputs as artifact
         uses: actions/upload-artifact@v4

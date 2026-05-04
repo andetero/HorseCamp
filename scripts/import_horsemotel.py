@@ -38,6 +38,7 @@ DEFAULT_CSV = REPO_ROOT / "data" / "imports" / "horsemotel_listings.csv"
 DEFAULT_JSON = REPO_ROOT / "data" / "horsemotel_listings.json"
 DEFAULT_REPORT = REPO_ROOT / "data" / "imports" / "horsemotel_import_report.md"
 DEFAULT_KML = REPO_ROOT / "data" / "imports" / "horsemotel_map.kml"
+DEFAULT_KML_URL = "https://www.google.com/maps/d/kml?mid=1qrjPl4O3jErNdqkjkci9NcMi1AU&forcekml=1"
 PARTNER_NAME = "HorseMotel.com"
 ATTRIBUTION = "Listing provided by HorseMotel.com"
 DEFAULT_SITE_URL = "https://www.horsemotel.com/"
@@ -579,6 +580,26 @@ def read_kml_url(url: str) -> list[Dict[str, Any]]:
     return parse_kml_text(fetch_text(url))
 
 
+def download_kml(url: str, path: Path) -> bool:
+    """Download the authorized Google My Maps KML export into data/imports.
+
+    The local file remains as a fallback if Google is temporarily unavailable.
+    """
+    if not url:
+        return False
+    try:
+        kml_text = fetch_text(url)
+        # Validate before writing so we do not replace a good local KML with an error page.
+        parse_kml_text(kml_text)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(kml_text, encoding="utf-8")
+        print(f"Downloaded HorseMotel.com Google My Maps KML to {path}")
+        return True
+    except Exception as exc:  # noqa: BLE001 - keep sync resilient and use local fallback.
+        print(f"Warning: could not download HorseMotel.com KML from {url}: {exc}", file=sys.stderr)
+        return False
+
+
 def score_kml_match(row: Dict[str, Any], kml_row: Dict[str, Any]) -> int:
     if first_value(row, FIELD_ALIASES["state"]).upper() and kml_row.get("state"):
         if first_value(row, FIELD_ALIASES["state"]).upper() != str(kml_row.get("state", "")).upper():
@@ -830,7 +851,7 @@ def write_report(path: Path, count: int, inputs: list[str]) -> None:
         "- HorseMotel.com remains the source of truth.",
         "- Rows without coordinates are skipped until latitude/longitude are provided.",
         "- Hookups are inferred from free-text descriptions when terms such as 30A, 50A, water, electric, sewer, dump station, full hookups, or FHU are present.",
-        "- If data/imports/horsemotel_map.kml exists, Google My Maps placemarks are matched by state/name/phone/city and used to improve coordinates.",
+        "- The importer can download the authorized Google My Maps KML into data/imports/horsemotel_map.kml and use it to improve coordinates.",
         "- Website-derived imports read public HorseMotel.com state listing pages with permission from HorseMotel.com.",
     ])
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -845,7 +866,8 @@ def main() -> int:
     parser.add_argument("--scrape-site", action="store_true", help="Import from authorized public HorseMotel.com listing pages")
     parser.add_argument("--site-url", default=DEFAULT_SITE_URL, help="HorseMotel.com home page URL")
     parser.add_argument("--kml", type=Path, default=DEFAULT_KML, help="Optional Google My Maps KML export path for better coordinates")
-    parser.add_argument("--kml-url", help="Optional authorized Google My Maps KML URL for better coordinates")
+    parser.add_argument("--kml-url", default=DEFAULT_KML_URL, help="Authorized Google My Maps KML URL for better coordinates")
+    parser.add_argument("--download-kml", action="store_true", help="Download the authorized KML URL into --kml before importing")
     parser.add_argument("--output", type=Path, default=DEFAULT_JSON, help="Output JSON path")
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT, help="Import report path")
     parser.add_argument("--allow-empty", action="store_true", help="Write [] when no input rows are available")
@@ -875,6 +897,9 @@ def main() -> int:
         inputs.append(f"Authorized public HorseMotel.com listing pages: {args.site_url}")
 
     kml_rows: list[Dict[str, Any]] = []
+    if args.download_kml and args.kml_url and args.kml:
+        download_kml(args.kml_url, args.kml)
+
     if args.kml and args.kml.exists():
         kml_rows.extend(read_kml(args.kml))
         inputs.append(str(args.kml.relative_to(REPO_ROOT) if args.kml.is_relative_to(REPO_ROOT) else args.kml))

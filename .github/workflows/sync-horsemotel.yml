@@ -6,16 +6,6 @@ on:
     - cron: "0 0 * * *"
       timezone: "America/Denver"
   workflow_dispatch:
-    inputs:
-      source_url:
-        description: "Optional authorized HorseMotel.com feed URL. Leave blank to read HorseMotel.com listing pages directly."
-        required: false
-        type: string
-      run_seed:
-        description: "Run scripts/fetch_camps.py after syncing HorseMotel.com listings"
-        required: false
-        type: boolean
-        default: false
 
 permissions:
   contents: write
@@ -43,9 +33,7 @@ jobs:
         run: |
           EXTRA_ARGS="--allow-empty"
 
-          if [ -n "${{ inputs.source_url }}" ]; then
-            EXTRA_ARGS="$EXTRA_ARGS --source-url '${{ inputs.source_url }}'"
-          elif [ -n "${{ secrets.HORSEMOTEL_SOURCE_URL }}" ]; then
+          if [ -n "${{ secrets.HORSEMOTEL_SOURCE_URL }}" ]; then
             EXTRA_ARGS="$EXTRA_ARGS --source-url '${{ secrets.HORSEMOTEL_SOURCE_URL }}'"
           else
             EXTRA_ARGS="$EXTRA_ARGS --scrape-site --site-url 'https://www.horsemotel.com/'"
@@ -57,17 +45,6 @@ jobs:
             --report data/imports/horsemotel_import_report.md \
             $EXTRA_ARGS
 
-      - name: Install seed dependencies
-        if: ${{ inputs.run_seed }}
-        run: pip install requests
-
-      - name: Run Seed Camp Data after HorseMotel.com sync
-        if: ${{ inputs.run_seed }}
-        env:
-          RIDB_API_KEY: ${{ secrets.RIDB_API_KEY }}
-          NPS_API_KEY: ${{ secrets.NPS_API_KEY }}
-        run: python scripts/fetch_camps.py
-
       - name: Upload HorseMotel.com sync outputs as artifact
         uses: actions/upload-artifact@v4
         with:
@@ -75,7 +52,6 @@ jobs:
           path: |
             data/horsemotel_listings.json
             data/imports/horsemotel_import_report.md
-            camps.json
 
       - name: Commit outputs
         run: |
@@ -84,10 +60,6 @@ jobs:
 
           git add data/horsemotel_listings.json
           git add data/imports/horsemotel_import_report.md
-
-          if [ "${{ inputs.run_seed }}" = "true" ]; then
-            git add camps.json
-          fi
 
           if git diff --staged --quiet; then
             echo "No HorseMotel.com changes to commit."

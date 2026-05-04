@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       source_url:
-        description: "Optional authorized HorseMotel.com CSV/JSON export URL"
+        description: "Optional authorized HorseMotel.com CSV/JSON export URL; leave blank to read HorseMotel.com listing pages"
         required: false
         type: string
       run_seed:
         description: "Run scripts/fetch_camps.py after syncing HorseMotel.com listings"
         required: true
         type: boolean
-        default: true
+        default: false
       commit_outputs:
         description: "Commit updated HorseMotel.com JSON/report/camps.json back to repo"
         required: true
@@ -21,6 +21,7 @@ on:
     # Runs nightly at 12:00 AM Mountain Time.
     - cron: "0 0 * * *"
       timezone: "America/Denver"
+
 permissions:
   contents: write
 
@@ -45,6 +46,8 @@ jobs:
             EXTRA_ARGS="$EXTRA_ARGS --source-url '${{ inputs.source_url }}'"
           elif [ -n "${{ secrets.HORSEMOTEL_SOURCE_URL }}" ]; then
             EXTRA_ARGS="$EXTRA_ARGS --source-url '${{ secrets.HORSEMOTEL_SOURCE_URL }}'"
+          else
+            EXTRA_ARGS="$EXTRA_ARGS --scrape-site --site-url 'https://www.horsemotel.com/'"
           fi
 
           python scripts/import_horsemotel.py \
@@ -78,6 +81,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/horsemotel_listings.json data/imports/horsemotel_import_report.md camps.json
+          git add data/horsemotel_listings.json data/imports/horsemotel_import_report.md
+          if [ -f camps.json ]; then
+            git add camps.json
+          fi
           git diff --staged --quiet || git commit -m "chore: sync HorseMotel.com listings"
           git push

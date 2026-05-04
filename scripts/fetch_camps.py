@@ -23,7 +23,8 @@ NPS_BASE  = "https://developer.nps.gov/api/v1"
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 DATA_DIR = REPO_ROOT / "data"
-LAYOVERS_FILE = DATA_DIR / "layovers.json"
+HORSEMOTEL_FILE = DATA_DIR / "horsemotel_listings.json"
+LAYOVERS_FILE = DATA_DIR / "layovers.json"  # legacy; replaced by HorseMotel.com partner listings
 PRIVATE_CAMPS_FILE = DATA_DIR / "private_camps.json"
 STATE_PARKS_DIR = DATA_DIR / "state_parks"
 
@@ -1377,32 +1378,36 @@ out center;
     return result
 
 
-# ── LAYOVER LISTINGS ───────────────────────────────────────────────────
-# Curated horse layover facilities — private barns and farms that
-# welcome overnight horse travelers. Call to verify before arrival.
-# Source data now lives in data/layovers.json so new layovers can be
-# added without editing Python code.
-def fetch_layovers():
-    if not LAYOVERS_FILE.exists():
+# ── HORSEMOTEL.COM PARTNER LISTINGS ───────────────────────────────────
+# Authorized partner data from HorseMotel.com. HorseMotel.com remains the
+# source of truth; this repo stores the normalized app-ready JSON snapshot.
+# These listings replace the legacy generic Layover source in the app.
+def fetch_horsemotel_listings():
+    if not HORSEMOTEL_FILE.exists():
         raise FileNotFoundError(
-            f"Missing layovers file: {LAYOVERS_FILE}. "
-            "Create data/layovers.json before running the fetch."
+            f"Missing HorseMotel.com file: {HORSEMOTEL_FILE}. "
+            "Create data/horsemotel_listings.json before running the fetch."
         )
 
-    with LAYOVERS_FILE.open("r", encoding="utf-8") as f:
-        layovers = json.load(f)
+    with HORSEMOTEL_FILE.open("r", encoding="utf-8") as f:
+        listings = json.load(f)
 
-    if not isinstance(layovers, list):
-        raise ValueError("data/layovers.json must contain a JSON array of layover listings")
+    if not isinstance(listings, list):
+        raise ValueError("data/horsemotel_listings.json must contain a JSON array of listings")
 
-    for i, layover in enumerate(layovers, start=1):
-        if not isinstance(layover, dict):
-            raise ValueError(f"Layover #{i} in data/layovers.json is not a JSON object")
+    for i, listing in enumerate(listings, start=1):
+        if not isinstance(listing, dict):
+            raise ValueError(f"HorseMotel.com listing #{i} is not a JSON object")
         for field in ("id", "name", "location", "state", "latitude", "longitude", "source"):
-            if field not in layover:
-                raise ValueError(f"Layover #{i} is missing required field: {field}")
+            if field not in listing:
+                raise ValueError(f"HorseMotel.com listing #{i} is missing required field: {field}")
+        listing.setdefault("source", "HorseMotel.com")
+        listing.setdefault("sourceDetail", "HorseMotel.com")
+        listing.setdefault("category", "HorseMotel.com")
+        listing.setdefault("attribution", "Listing provided by HorseMotel.com")
+        listing.setdefault("partner", "HorseMotel.com")
 
-    return layovers
+    return listings
 
 
 
@@ -1975,10 +1980,10 @@ def main():
         elapsed = time.time() - started
         print(f"  {abbr} State Parks: {merged} new listings added [{elapsed:.1f}s]")
 
-    print("\nMerging layover listings...")
+    print("\nMerging HorseMotel.com partner listings...")
     import math as _math
-    layover_new = 0
-    for camp in fetch_layovers():
+    horsemotel_new = 0
+    for camp in fetch_horsemotel_listings():
         cid = camp["id"]
         if cid not in all_camps:
             lat, lng = camp["latitude"], camp["longitude"]
@@ -1992,8 +1997,8 @@ def main():
                     break
             if not dup:
                 all_camps[cid] = camp
-                layover_new += 1
-    print(f"  Layovers: {layover_new} new listings added")
+                horsemotel_new += 1
+    print(f"  HorseMotel.com: {horsemotel_new} new listings added")
 
     print("\nMerging private camp listings...")
     private_camp_new = 0
@@ -2034,14 +2039,14 @@ def main():
     output = {
         "generated": datetime.now(timezone.utc).isoformat(),
         "count": len(camps_list),
-        "sources": ["Recreation.gov RIDB", "NPS API"] + state_park_sources + ["OpenStreetMap", "Layover", "Private Camps"],
+        "sources": ["Recreation.gov RIDB", "NPS API"] + state_park_sources + ["OpenStreetMap", "HorseMotel.com", "Private Camps"],
         "camps": camps_list,
     }
     output_path = REPO_ROOT / "camps.json"
     write_camps_json(output_path, output)
 
     osm_count = sum(1 for c in camps_list if c.get("source") == "OSM")
-    layover_count = sum(1 for c in camps_list if c.get("source") == "Layover")
+    horsemotel_count = sum(1 for c in camps_list if c.get("source") == "HorseMotel.com")
     private_camp_count = sum(1 for c in camps_list if c.get("source") == "Private Camps")
     verified_count = sum(1 for c in camps_list if c.get("isVerified"))
     print(f"\nDone. {len(camps_list)} total camps written to {output_path.relative_to(REPO_ROOT)}")
@@ -2049,7 +2054,7 @@ def main():
     print(f"  NPS:          {total_nps}")
     for abbr in sorted(state_park_totals):
         print(f"  {abbr} StateParks:{state_park_totals[abbr]}")
-    print(f"  Layovers:     {layover_count}")
+    print(f"  HorseMotel.com:{horsemotel_count}")
     print(f"  Private Camps:{private_camp_count}")
     print(f"  OSM:          {osm_count}")
     print(f"  Excluded:     {excluded_count}")

@@ -1,8 +1,9 @@
 name: Seed Camp Data
 on:
   schedule:
-    - cron: '0 2 * * *'
-      timezone: 'America/Denver'
+    # Runs nightly at 2:00 AM Mountain Time, after HorseMotel sync.
+    - cron: "0 2 * * *"
+      timezone: "America/Denver"
   workflow_dispatch:
 jobs:
   fetch-camps:

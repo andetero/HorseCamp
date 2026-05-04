@@ -37,6 +37,7 @@ jobs:
               --output data/horsemotel_listings.json \
               --report data/imports/horsemotel_import_report.md \
               --allow-empty \
+              --download-kml \
               --source-url "${{ secrets.HORSEMOTEL_SOURCE_URL }}"
           else
             python scripts/import_horsemotel.py \
@@ -44,6 +45,7 @@ jobs:
               --output data/horsemotel_listings.json \
               --report data/imports/horsemotel_import_report.md \
               --allow-empty \
+              --download-kml \
               --scrape-site \
               --site-url "https://www.horsemotel.com/"
           fi
@@ -63,6 +65,7 @@ jobs:
 
           git add data/horsemotel_listings.json
           git add data/imports/horsemotel_import_report.md
+          git add data/imports/horsemotel_map.kml
 
           if git diff --staged --quiet; then
             echo "No HorseMotel.com changes to commit."

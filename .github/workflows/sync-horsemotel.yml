@@ -1,0 +1,84 @@
+name: Sync HorseMotel.com Listings
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_url:
+        description: "Optional authorized HorseMotel.com CSV/JSON export URL"
+        required: false
+        type: string
+      run_seed:
+        description: "Run scripts/fetch_camps.py after syncing HorseMotel.com listings"
+        required: true
+        type: boolean
+        default: true
+      commit_outputs:
+        description: "Commit updated HorseMotel.com JSON/report/camps.json back to repo"
+        required: true
+        type: boolean
+        default: true
+  schedule:
+    # GitHub cron is UTC. This runs nightly at 7:15 AM UTC.
+    # That is 1:15 AM MDT / 12:15 AM MST for Mountain Time.
+    - cron: "15 7 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync-horsemotel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Import authorized HorseMotel.com listings
+        run: |
+          EXTRA_ARGS="--allow-empty"
+          if [ -n "${{ inputs.source_url }}" ]; then
+            EXTRA_ARGS="$EXTRA_ARGS --source-url '${{ inputs.source_url }}'"
+          elif [ -n "${{ secrets.HORSEMOTEL_SOURCE_URL }}" ]; then
+            EXTRA_ARGS="$EXTRA_ARGS --source-url '${{ secrets.HORSEMOTEL_SOURCE_URL }}'"
+          fi
+
+          python scripts/import_horsemotel.py \
+            --csv data/imports/horsemotel_listings.csv \
+            --output data/horsemotel_listings.json \
+            --report data/imports/horsemotel_import_report.md \
+            $EXTRA_ARGS
+
+      - name: Install seed dependencies
+        if: ${{ inputs.run_seed || github.event_name == 'schedule' }}
+        run: pip install requests
+
+      - name: Run Seed Camp Data after HorseMotel.com sync
+        if: ${{ inputs.run_seed || github.event_name == 'schedule' }}
+        env:
+          RIDB_API_KEY: ${{ secrets.RIDB_API_KEY }}
+          NPS_API_KEY: ${{ secrets.NPS_API_KEY }}
+        run: python scripts/fetch_camps.py
+
+      - name: Upload HorseMotel.com sync outputs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: horsemotel-sync-outputs
+          path: |
+            data/horsemotel_listings.json
+            data/imports/horsemotel_import_report.md
+            camps.json
+
+      - name: Commit outputs
+        if: ${{ inputs.commit_outputs || github.event_name == 'schedule' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/horsemotel_listings.json data/imports/horsemotel_import_report.md camps.json
+          git diff --staged --quiet || git commit -m "chore: sync HorseMotel.com listings"
+          git push

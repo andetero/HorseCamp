@@ -25,6 +25,7 @@ import html
 import json
 import re
 import sys
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
@@ -36,6 +37,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CSV = REPO_ROOT / "data" / "imports" / "horsemotel_listings.csv"
 DEFAULT_JSON = REPO_ROOT / "data" / "horsemotel_listings.json"
 DEFAULT_REPORT = REPO_ROOT / "data" / "imports" / "horsemotel_import_report.md"
+DEFAULT_KML = REPO_ROOT / "data" / "imports" / "horsemotel_map.kml"
 PARTNER_NAME = "HorseMotel.com"
 ATTRIBUTION = "Listing provided by HorseMotel.com"
 DEFAULT_SITE_URL = "https://www.horsemotel.com/"
@@ -492,6 +494,168 @@ def extract_coords(url: str) -> tuple[float, float]:
     return 0.0, 0.0
 
 
+def strip_html(value: str) -> str:
+    value = re.sub(r"<br\s*/?>", "\n", value, flags=re.IGNORECASE)
+    value = re.sub(r"<[^>]+>", " ", value)
+    return clean_text(value)
+
+
+def digits_only(value: str) -> str:
+    return re.sub(r"\D+", "", value or "")
+
+
+def norm_match_text(value: str) -> str:
+    value = html.unescape(value or "").lower()
+    value = re.sub(r"https?://\S+|www\.\S+", " ", value)
+    value = re.sub(r"\b(?:llc|inc|ltd|co|company|ranch|farm|stables?|stable|horse|hotel|motel|bed|barn|bnb|b&b)\b", " ", value)
+    value = re.sub(r"[^a-z0-9]+", " ", value)
+    return re.sub(r"\s+", " ", value).strip()
+
+
+def match_tokens(value: str) -> set[str]:
+    return {token for token in norm_match_text(value).split() if len(token) >= 3}
+
+
+def parse_kml_text(kml_text: str) -> list[Dict[str, Any]]:
+    """Parse a Google My Maps KML export into lightweight coordinate rows."""
+    root = ET.fromstring(kml_text.encode("utf-8"))
+    ns = {"kml": "http://www.opengis.net/kml/2.2"}
+    placemarks = root.findall(".//kml:Placemark", ns)
+    rows: list[Dict[str, Any]] = []
+    for placemark in placemarks:
+        name_el = placemark.find("kml:name", ns)
+        desc_el = placemark.find("kml:description", ns)
+        coord_el = placemark.find(".//kml:Point/kml:coordinates", ns)
+        if coord_el is None or not coord_el.text:
+            continue
+        coords = [part.strip() for part in coord_el.text.strip().split(",")]
+        if len(coords) < 2:
+            continue
+        try:
+            longitude = float(coords[0])
+            latitude = float(coords[1])
+        except ValueError:
+            continue
+
+        placemark_name = clean_text(name_el.text if name_el is not None and name_el.text else "")
+        state = ""
+        city = ""
+        city_match = re.match(r"^([A-Z]{2})\s*-\s*(.+)$", placemark_name)
+        if city_match:
+            state = city_match.group(1).strip()
+            city = clean_text(city_match.group(2))
+
+        desc_html = desc_el.text if desc_el is not None and desc_el.text else ""
+        desc_lines = [clean_text(line) for line in strip_html(desc_html).split("\n") if clean_text(line)]
+        listing_name = desc_lines[0] if desc_lines else placemark_name
+        phone = ""
+        url = ""
+        for line in desc_lines[1:]:
+            if line.lower().startswith("tel:"):
+                phone = clean_text(line.split(":", 1)[1])
+            elif "horsemotel.com" in line.lower():
+                url = line
+
+        rows.append({
+            "name": listing_name,
+            "city": city,
+            "state": state,
+            "latitude": latitude,
+            "longitude": longitude,
+            "phone": phone,
+            "source_url": url,
+            "placemarkName": placemark_name,
+        })
+    return rows
+
+
+def read_kml(path: Path) -> list[Dict[str, Any]]:
+    if not path.exists():
+        return []
+    return parse_kml_text(path.read_text(encoding="utf-8-sig"))
+
+
+def read_kml_url(url: str) -> list[Dict[str, Any]]:
+    return parse_kml_text(fetch_text(url))
+
+
+def score_kml_match(row: Dict[str, Any], kml_row: Dict[str, Any]) -> int:
+    if first_value(row, FIELD_ALIASES["state"]).upper() and kml_row.get("state"):
+        if first_value(row, FIELD_ALIASES["state"]).upper() != str(kml_row.get("state", "")).upper():
+            return 0
+
+    score = 0
+    row_phone = digits_only(first_value(row, FIELD_ALIASES["phone"]))
+    kml_phone = digits_only(str(kml_row.get("phone", "")))
+    if row_phone and kml_phone and (row_phone[-7:] == kml_phone[-7:] or row_phone in kml_phone or kml_phone in row_phone):
+        score += 80
+
+    row_name = first_value(row, FIELD_ALIASES["name"])
+    kml_name = str(kml_row.get("name", ""))
+    row_norm = norm_match_text(row_name)
+    kml_norm = norm_match_text(kml_name)
+    if row_norm and kml_norm:
+        if row_norm == kml_norm:
+            score += 75
+        elif row_norm.startswith(kml_norm) or kml_norm.startswith(row_norm):
+            score += 60
+        else:
+            row_tokens = match_tokens(row_name)
+            kml_tokens = match_tokens(kml_name)
+            if row_tokens and kml_tokens:
+                overlap = len(row_tokens & kml_tokens) / max(1, min(len(row_tokens), len(kml_tokens)))
+                if overlap >= 0.75:
+                    score += 55
+                elif overlap >= 0.5:
+                    score += 35
+
+    row_city = first_value(row, FIELD_ALIASES["city"])
+    kml_city = str(kml_row.get("city", ""))
+    row_city_norm = norm_match_text(row_city)
+    kml_city_norm = norm_match_text(kml_city)
+    if row_city_norm and kml_city_norm:
+        if row_city_norm == kml_city_norm or row_city_norm in kml_city_norm or kml_city_norm in row_city_norm:
+            score += 20
+
+    return score
+
+
+def apply_kml_coordinates(rows: list[Dict[str, Any]], kml_rows: list[Dict[str, Any]]) -> tuple[list[Dict[str, Any]], int]:
+    """Fill/replace listing coordinates using authorized Google My Maps KML placemarks."""
+    if not rows or not kml_rows:
+        return rows, 0
+
+    kml_by_state: dict[str, list[Dict[str, Any]]] = {}
+    for kml_row in kml_rows:
+        state = str(kml_row.get("state", "")).upper()
+        kml_by_state.setdefault(state, []).append(kml_row)
+
+    enhanced: list[Dict[str, Any]] = []
+    matched_count = 0
+    for row in rows:
+        row_state = first_value(row, FIELD_ALIASES["state"]).upper()
+        candidates = kml_by_state.get(row_state) or kml_rows
+        best: Optional[Dict[str, Any]] = None
+        best_score = 0
+        for kml_row in candidates:
+            score = score_kml_match(row, kml_row)
+            if score > best_score:
+                best = kml_row
+                best_score = score
+
+        updated = dict(row)
+        # Require either strong name overlap or phone/state evidence before overriding coordinates.
+        if best and best_score >= 70:
+            updated["latitude"] = str(best["latitude"])
+            updated["longitude"] = str(best["longitude"])
+            if not first_value(updated, FIELD_ALIASES["city"]) and best.get("city"):
+                updated["city"] = str(best["city"])
+            updated["kmlPlacemark"] = str(best.get("placemarkName", ""))
+            matched_count += 1
+        enhanced.append(updated)
+    return enhanced, matched_count
+
+
 def extract_between(text: str, start_label: str, end_labels: list[str]) -> str:
     pattern = re.compile(re.escape(start_label) + r"\s*(.*)", re.IGNORECASE | re.DOTALL)
     match = pattern.search(text)
@@ -666,6 +830,7 @@ def write_report(path: Path, count: int, inputs: list[str]) -> None:
         "- HorseMotel.com remains the source of truth.",
         "- Rows without coordinates are skipped until latitude/longitude are provided.",
         "- Hookups are inferred from free-text descriptions when terms such as 30A, 50A, water, electric, sewer, dump station, full hookups, or FHU are present.",
+        "- If data/imports/horsemotel_map.kml exists, Google My Maps placemarks are matched by state/name/phone/city and used to improve coordinates.",
         "- Website-derived imports read public HorseMotel.com state listing pages with permission from HorseMotel.com.",
     ])
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -679,6 +844,8 @@ def main() -> int:
     parser.add_argument("--source-url", help="Optional authorized CSV/JSON export URL")
     parser.add_argument("--scrape-site", action="store_true", help="Import from authorized public HorseMotel.com listing pages")
     parser.add_argument("--site-url", default=DEFAULT_SITE_URL, help="HorseMotel.com home page URL")
+    parser.add_argument("--kml", type=Path, default=DEFAULT_KML, help="Optional Google My Maps KML export path for better coordinates")
+    parser.add_argument("--kml-url", help="Optional authorized Google My Maps KML URL for better coordinates")
     parser.add_argument("--output", type=Path, default=DEFAULT_JSON, help="Output JSON path")
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT, help="Import report path")
     parser.add_argument("--allow-empty", action="store_true", help="Write [] when no input rows are available")
@@ -706,6 +873,17 @@ def main() -> int:
         site_rows = scrape_horsemotel(args.site_url)
         rows.extend(site_rows)
         inputs.append(f"Authorized public HorseMotel.com listing pages: {args.site_url}")
+
+    kml_rows: list[Dict[str, Any]] = []
+    if args.kml and args.kml.exists():
+        kml_rows.extend(read_kml(args.kml))
+        inputs.append(str(args.kml.relative_to(REPO_ROOT) if args.kml.is_relative_to(REPO_ROOT) else args.kml))
+    if args.kml_url:
+        kml_rows.extend(read_kml_url(args.kml_url))
+        inputs.append(args.kml_url)
+    if kml_rows:
+        rows, kml_matches = apply_kml_coordinates(rows, kml_rows)
+        print(f"Matched {kml_matches} HorseMotel.com rows to KML coordinates")
 
     listings = merge_unique(rows)
     if not listings and not args.allow_empty:

@@ -171,17 +171,80 @@ def build_id(name: str, state: str, location: str, source_url: str = "") -> str:
     return f"horsemotel-{slugify(name)}-{state.lower()}-{digest}"
 
 
+def add_unique(values: list[str], value: str) -> None:
+    if value and value not in values:
+        values.append(value)
+
+
+def text_matches(text: str, patterns: Iterable[str]) -> bool:
+    return any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in patterns)
+
+
+def infer_hookups(text: str) -> list[str]:
+    """Infer structured RV/trailer hookups from free-text HorseMotel.com details."""
+    hookups: list[str] = []
+
+    amp_patterns = [
+        ("20A", [r"\b20\s*(?:amp|amps|a)\b", r"\b20[- ]amp\b"]),
+        ("30A", [r"\b30\s*(?:amp|amps|a)\b", r"\b30[- ]amp\b"]),
+        ("50A", [r"\b50\s*(?:amp|amps|a)\b", r"\b50[- ]amp\b"]),
+        ("110V", [r"\b110\s*(?:v|volt|volts)\b", r"\b110\s*amp\b"]),
+    ]
+    for label, patterns in amp_patterns:
+        if text_matches(text, patterns):
+            add_unique(hookups, label)
+
+    if text_matches(text, [
+        r"\belectric(?:al|ity)?\b",
+        r"\bpower\s+hook",
+        r"\btrailer\s+hook",
+        r"\brv\s+hook",
+        r"\blq\s+hook",
+        r"\bhook[- ]?ups?\b",
+        r"\bfull\s+(?:rv\s+)?hook[- ]?ups?\b",
+        r"\bfhu\b",
+    ]):
+        add_unique(hookups, "Electric")
+
+    if text_matches(text, [
+        r"\bwater\s+(?:hook[- ]?ups?|spigot|available|access|pedestal|connection)s?\b",
+        r"\bwater\s*(?:/|and|&)\s*electric",
+        r"\belectric\s*(?:/|and|&)\s*water",
+        r"\bcity\s+water\b",
+        r"\bfull\s+(?:rv\s+)?hook[- ]?ups?\b",
+        r"\bfhu\b",
+    ]):
+        add_unique(hookups, "Water")
+
+    if text_matches(text, [
+        r"\bsewer\b",
+        r"\bseptic\b",
+        r"\bdump\s+station\b",
+        r"\bfull\s+(?:rv\s+)?hook[- ]?ups?\b",
+        r"\bfhu\b",
+    ]):
+        add_unique(hookups, "Sewer")
+
+    if text_matches(text, [r"\bdump\s+station\b"]):
+        add_unique(hookups, "Dump Station")
+
+    if text_matches(text, [r"\bfull\s+(?:rv\s+)?hook[- ]?ups?\b", r"\bfhu\b"]):
+        add_unique(hookups, "Full Hookups")
+
+    return hookups
+
+
 def infer_accommodations(text: str) -> list[str]:
     lower = text.lower()
     values = ["HorseMotel.com", "Layover", "Horse Camping"]
     checks = [
         ("Stalls", ["stall", "barn"]),
-        ("Paddocks", ["paddock", "turnout", "pasture", "corral"]),
-        ("RV Hookups", ["rv hookup", "hookup", "electric", "30 amp", "50 amp", "water hook"]),
-        ("Big Rig Friendly", ["big rig", "semi", "any size rig", "large trailer"]),
-        ("Wash Rack", ["wash rack", "washrack", "wash racks"]),
+        ("Paddocks", ["paddock", "turnout", "pasture", "corral", "pen"]),
+        ("RV Hookups", ["rv hookup", "hookup", "electric", "30 amp", "30a", "50 amp", "50a", "water hook", "fhu", "full hookup"]),
+        ("Big Rig Friendly", ["big rig", "semi", "any size rig", "large trailer", "large rig", "18 wheeler", "tractor/trailer"]),
+        ("Wash Rack", ["wash rack", "washrack", "wash racks", "wash station"]),
         ("WiFi", ["wifi", "wi-fi", "internet"]),
-        ("Lodging", ["cabin", "guest house", "bed and breakfast", "apartment", "room", "airbnb"]),
+        ("Lodging", ["cabin", "guest house", "bed and breakfast", "apartment", "room", "airbnb", "vrbo", "bunkhouse", "casita"]),
         ("Trails", ["trail"]),
     ]
     for label, terms in checks:
@@ -224,7 +287,7 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "longitude": lng,
         "pricePerNight": parse_float(first_value(row, FIELD_ALIASES["pricePerNight"]), 0.0),
         "horseFeePerNight": parse_float(first_value(row, FIELD_ALIASES["horseFeePerNight"]), 0.0),
-        "hookups": [],
+        "hookups": infer_hookups(description),
         "accommodations": accommodations,
         "maxRigLength": parse_int(first_value(row, FIELD_ALIASES["maxRigLength"]), 0),
         "stallCount": parse_int(first_value(row, FIELD_ALIASES["stallCount"]), 0),
@@ -255,10 +318,14 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     }
 
     lower_desc = description.lower()
-    listing["hasWashRack"] = any(term in lower_desc for term in ["wash rack", "washrack", "wash racks"])
+    hookups = set(listing["hookups"])
+    listing["hasWashRack"] = any(term in lower_desc for term in ["wash rack", "washrack", "wash racks", "wash station"])
+    listing["hasDumpStation"] = any(term in lower_desc for term in ["dump station", "sewer", "septic", "full hookup", "full hook-up", "fhu"])
     listing["hasWifi"] = any(term in lower_desc for term in ["wifi", "wi-fi", "internet"])
     listing["hasBathhouse"] = any(term in lower_desc for term in ["bathroom", "restroom", "shower", "bathhouse"])
-    listing["pullThroughAvailable"] = any(term in lower_desc for term in ["pull through", "pull-through", "big rig", "semi"])
+    listing["pullThroughAvailable"] = any(term in lower_desc for term in ["pull through", "pull-through", "pull thru", "big rig", "large rig", "semi", "18 wheeler", "tractor/trailer"])
+    if "Dump Station" in hookups or "Sewer" in hookups or "Full Hookups" in hookups:
+        listing["hasDumpStation"] = True
 
     for output_field, aliases in BOOL_FIELDS.items():
         explicit = first_value(row, aliases)
@@ -445,12 +512,23 @@ def parse_city_state(address_lines: list[str], fallback_state: str) -> tuple[str
     city = ""
     state = fallback_state
     zip_code = ""
-    joined = " ".join(address_lines)
-    match = re.search(r"([A-Za-z .'-]+),\s*([A-Z]{2})\s+(\d{5}(?:-\d{4})?)", joined)
-    if match:
-        city = clean_text(match.group(1))
-        state = match.group(2)
-        zip_code = match.group(3)
+    joined = clean_text(" ".join(address_lines))
+
+    # Prefer the city immediately before the state/ZIP. This avoids turning
+    # "14945 Sipsey Valley Rd. S, Ralph, AL 35480" into
+    # "Sipsey Valley Rd. S Ralph".
+    comma_matches = re.findall(r",\s*([^,]+?)\s*,?\s*([A-Z]{2})\s+(\d{5}(?:-\d{4})?)", joined)
+    if comma_matches:
+        raw_city, state, zip_code = comma_matches[-1]
+        city = clean_text(raw_city)
+    else:
+        match = re.search(r"\b([A-Za-z .'-]+?)\s*,?\s*([A-Z]{2})\s+(\d{5}(?:-\d{4})?)", joined)
+        if match:
+            city = clean_text(match.group(1))
+            state = match.group(2)
+            zip_code = match.group(3)
+
+    city = re.sub(r"^(?:N|S|E|W|North|South|East|West)\s+", "", city).strip()
     return city, state, zip_code
 
 
@@ -507,6 +585,7 @@ def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, s
     else:
         name_lines = lines[:address_start]
         name = clean_text(", ".join(name_lines[:3])) or lines[0]
+        name = re.sub(r"\s*,\s*,+", ", ", name).strip(" ,")
         address_lines = lines[address_start:]
 
     city, state, _zip_code = parse_city_state(address_lines, state_code)
@@ -586,6 +665,7 @@ def write_report(path: Path, count: int, inputs: list[str]) -> None:
         f"- Attribution: {ATTRIBUTION}",
         "- HorseMotel.com remains the source of truth.",
         "- Rows without coordinates are skipped until latitude/longitude are provided.",
+        "- Hookups are inferred from free-text descriptions when terms such as 30A, 50A, water, electric, sewer, dump station, full hookups, or FHU are present.",
         "- Website-derived imports read public HorseMotel.com state listing pages with permission from HorseMotel.com.",
     ])
     path.parent.mkdir(parents=True, exist_ok=True)

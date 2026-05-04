@@ -65,7 +65,8 @@ def load_exclusions(path: Path = EXCLUSIONS_PATH) -> list[str]:
 def write_exclusions(exclusions: list[str], path: Path = EXCLUSIONS_PATH) -> None:
     unique_sorted = sorted(dict.fromkeys(exclusions))
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(unique_sorted, ensure_ascii=False) + "\n", encoding="utf-8")
+    # Keep exclusions one item per line so GitHub diffs/reviews are readable.
+    path.write_text(json.dumps(unique_sorted, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 def decode_json(raw: str) -> dict[str, Any]:

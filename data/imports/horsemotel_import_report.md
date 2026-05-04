@@ -1,6 +1,6 @@
 # HorseMotel.com Import Report
 
-Generated: 2026-05-04T06:52:46.259485+00:00
+Generated: 2026-05-04T07:00:34.058150+00:00
 Listings written: 717
 
 ## Inputs
@@ -13,6 +13,6 @@ Listings written: 717
 - Attribution: Listing provided by HorseMotel.com
 - HorseMotel.com remains the source of truth.
 - Rows without coordinates are skipped until latitude/longitude are provided.
-- Hookups are inferred from free-text descriptions when terms such as 30A, 50A, water, electric, sewer, dump station, full hookups, or FHU are present.
+- Hookups are inferred from free-text descriptions, with negative phrases such as "no dump station" or "no sewer" excluded.
 - The importer can download the authorized Google My Maps KML into data/imports/horsemotel_map.kml and use it to improve coordinates.
 - Website-derived imports read public HorseMotel.com state listing pages with permission from HorseMotel.com.

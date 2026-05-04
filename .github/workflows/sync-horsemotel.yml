@@ -18,10 +18,9 @@ on:
         type: boolean
         default: true
   schedule:
-    # GitHub cron is UTC. This runs nightly at 7:15 AM UTC.
-    # That is 1:15 AM MDT / 12:15 AM MST for Mountain Time.
-    - cron: "15 7 * * *"
-
+    # Runs nightly at 12:00 AM Mountain Time.
+    - cron: "0 0 * * *"
+      timezone: "America/Denver"
 permissions:
   contents: write
 

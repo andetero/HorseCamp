@@ -42,6 +42,7 @@ DEFAULT_KML_URL = "https://www.google.com/maps/d/kml?mid=1qrjPl4O3jErNdqkjkci9Nc
 PARTNER_NAME = "HorseMotel.com"
 ATTRIBUTION = "Listing provided by HorseMotel.com"
 DEFAULT_SITE_URL = "https://www.horsemotel.com/"
+IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".webp", ".gif")
 
 STATE_NAME_TO_CODE = {
     "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR", "California": "CA",
@@ -498,6 +499,11 @@ class BlockParser(HTMLParser):
         if tag == "a":
             self._href = attrs_dict.get("href")
             self._link_text = []
+        elif tag == "img":
+            src = attrs_dict.get("src") or attrs_dict.get("data-src") or attrs_dict.get("data-original") or attrs_dict.get("data-lazy-src")
+            alt = attrs_dict.get("alt") or ""
+            if src:
+                self.current().append({"type": "image", "src": src, "alt": alt})
         elif tag == "br":
             self.current().append({"type": "text", "text": "\n"})
         elif tag == "hr":
@@ -571,6 +577,42 @@ def extract_coords(url: str) -> tuple[float, float]:
     if q_match:
         return float(q_match.group(1)), float(q_match.group(2))
     return 0.0, 0.0
+
+
+def is_photo_url(url: str) -> bool:
+    if not url:
+        return False
+    cleaned = url.split("?", 1)[0].split("#", 1)[0].lower()
+    if not cleaned.endswith(IMAGE_EXTENSIONS):
+        return False
+    skip_terms = [
+        "spacer", "blank", "transparent", "pixel", "logo", "icon", "button",
+        "facebook", "counter", "banner", "paypal", "map", "marker", "arrow",
+    ]
+    return not any(term in cleaned for term in skip_terms)
+
+
+def extract_photo_urls(block: list[dict[str, str]], base_url: str) -> list[str]:
+    """Extract listing photo URLs from a parsed HorseMotel.com listing block.
+
+    Photos can appear as img src/data-src values or as links to image files.
+    Keep this conservative so decorative site images do not become listing photos.
+    """
+    photos: list[str] = []
+    seen: set[str] = set()
+    for token in block:
+        candidates: list[str] = []
+        if token["type"] == "image":
+            candidates.append(token.get("src", ""))
+        elif token["type"] == "link":
+            candidates.append(token.get("href", ""))
+
+        for candidate in candidates:
+            absolute = urljoin(base_url, candidate.strip())
+            if is_photo_url(absolute) and absolute not in seen:
+                seen.add(absolute)
+                photos.append(absolute)
+    return photos
 
 
 def strip_html(value: str) -> str:
@@ -805,6 +847,7 @@ def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, s
         return None
 
     links = [token for token in block if token["type"] == "link"]
+    photo_urls = extract_photo_urls(block, state_url)
     maps_href = ""
     website = ""
     for token in links:
@@ -814,7 +857,7 @@ def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, s
         if "google.com/maps" in href_lower or "maps.google" in href_lower:
             maps_href = href
         elif "view comments" not in link_text.lower() and "post comments" not in link_text.lower():
-            if not any(skip in href_lower for skip in ["facebook.com", "parelli.com", "jotform.com"]):
+            if not is_photo_url(href) and not any(skip in href_lower for skip in ["facebook.com", "parelli.com", "jotform.com"]):
                 website = href
 
     lat, lng = extract_coords(maps_href) if maps_href else (0.0, 0.0)
@@ -866,6 +909,7 @@ def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, s
         "website": website,
         "source_url": source_url,
         "description": description or "HorseMotel.com overnight horse lodging listing. Confirm availability before arrival.",
+        "photo_urls": "|".join(photo_urls),
         "accommodations": "|".join(infer_accommodations(description)),
         "is_confirmed_map_marker": "true" if confirmed else "false",
     }
@@ -928,6 +972,7 @@ def write_report(path: Path, count: int, inputs: list[str]) -> None:
         "- HorseMotel.com remains the source of truth.",
         "- Rows without coordinates are skipped until latitude/longitude are provided.",
         '- Hookups are inferred from free-text descriptions, with negative phrases such as "no dump station" or "no sewer" excluded.', 
+        "- Listing image URLs are captured from HorseMotel.com listing blocks when image files are present.",
         "- The importer can download the authorized Google My Maps KML into data/imports/horsemotel_map.kml and use it to improve coordinates.",
         "- Website-derived imports read public HorseMotel.com state listing pages with permission from HorseMotel.com.",
     ])

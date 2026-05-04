@@ -3,13 +3,15 @@
 Import authorized HorseMotel.com partner listings into HorseCamp.
 
 HorseMotel.com remains the source of truth. This script normalizes an approved
-partner export into data/horsemotel_listings.json so the existing HorseCamp
-nightly seed can merge it into camps.json.
+partner export, or the authorized public HorseMotel.com listing pages, into
+/data/horsemotel_listings.json so the existing HorseCamp nightly seed can merge
+it into camps.json.
 
 Supported first-phase inputs:
   - CSV file exported/provided by HorseMotel.com
   - JSON file/export URL provided by HorseMotel.com
   - CSV export URL provided by HorseMotel.com
+  - Authorized scrape of public HorseMotel.com listing pages
 
 This intentionally avoids Supabase and Cloudflare Workers for phase 1.
 """
@@ -19,12 +21,15 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import html
 import json
 import re
 import sys
 from datetime import datetime, timezone
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
+from urllib.parse import unquote, urljoin
 from urllib.request import Request, urlopen
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -33,6 +38,20 @@ DEFAULT_JSON = REPO_ROOT / "data" / "horsemotel_listings.json"
 DEFAULT_REPORT = REPO_ROOT / "data" / "imports" / "horsemotel_import_report.md"
 PARTNER_NAME = "HorseMotel.com"
 ATTRIBUTION = "Listing provided by HorseMotel.com"
+DEFAULT_SITE_URL = "https://www.horsemotel.com/"
+
+STATE_NAME_TO_CODE = {
+    "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR", "California": "CA",
+    "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE", "Florida": "FL", "Georgia": "GA",
+    "Hawaii": "HI", "Idaho": "ID", "Illinois": "IL", "Indiana": "IN", "Iowa": "IA",
+    "Kansas": "KS", "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD",
+    "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS", "Missouri": "MO",
+    "Montana": "MT", "Nebraska": "NE", "Nevada": "NV", "New Hampshire": "NH", "New Jersey": "NJ",
+    "New Mexico": "NM", "New York": "NY", "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH",
+    "Oklahoma": "OK", "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
+    "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT", "Vermont": "VT",
+    "Virginia": "VA", "Washington": "WA", "West Virginia": "WV", "Wisconsin": "WI", "Wyoming": "WY",
+}
 
 FIELD_ALIASES = {
     "name": ["name", "listing_name", "business_name", "title", "facility", "facility_name"],
@@ -152,6 +171,25 @@ def build_id(name: str, state: str, location: str, source_url: str = "") -> str:
     return f"horsemotel-{slugify(name)}-{state.lower()}-{digest}"
 
 
+def infer_accommodations(text: str) -> list[str]:
+    lower = text.lower()
+    values = ["HorseMotel.com", "Layover", "Horse Camping"]
+    checks = [
+        ("Stalls", ["stall", "barn"]),
+        ("Paddocks", ["paddock", "turnout", "pasture", "corral"]),
+        ("RV Hookups", ["rv hookup", "hookup", "electric", "30 amp", "50 amp", "water hook"]),
+        ("Big Rig Friendly", ["big rig", "semi", "any size rig", "large trailer"]),
+        ("Wash Rack", ["wash rack", "washrack", "wash racks"]),
+        ("WiFi", ["wifi", "wi-fi", "internet"]),
+        ("Lodging", ["cabin", "guest house", "bed and breakfast", "apartment", "room", "airbnb"]),
+        ("Trails", ["trail"]),
+    ]
+    for label, terms in checks:
+        if any(term in lower for term in terms) and label not in values:
+            values.append(label)
+    return values
+
+
 def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     name = first_value(row, FIELD_ALIASES["name"])
     if not name:
@@ -168,13 +206,13 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     lat = parse_float(first_value(row, FIELD_ALIASES["latitude"]), default=0.0)
     lng = parse_float(first_value(row, FIELD_ALIASES["longitude"]), default=0.0)
 
+    description = first_value(row, FIELD_ALIASES["description"]) or "HorseMotel.com overnight horse lodging listing. Confirm availability before arrival."
     accommodations = parse_list(first_value(row, FIELD_ALIASES["accommodations"]))
-    for required in ["HorseMotel.com", "Layover", "Horse Camping"]:
+    for required in infer_accommodations(description):
         if required not in accommodations:
             accommodations.append(required)
 
     photo_urls = parse_list(first_value(row, FIELD_ALIASES["photoURLs"]))
-    description = first_value(row, FIELD_ALIASES["description"]) or "HorseMotel.com overnight horse lodging listing. Confirm availability before arrival."
 
     listing = {
         "id": build_id(name, state, location, source_url),
@@ -216,8 +254,16 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "lastSynced": datetime.now(timezone.utc).date().isoformat(),
     }
 
+    lower_desc = description.lower()
+    listing["hasWashRack"] = any(term in lower_desc for term in ["wash rack", "washrack", "wash racks"])
+    listing["hasWifi"] = any(term in lower_desc for term in ["wifi", "wi-fi", "internet"])
+    listing["hasBathhouse"] = any(term in lower_desc for term in ["bathroom", "restroom", "shower", "bathhouse"])
+    listing["pullThroughAvailable"] = any(term in lower_desc for term in ["pull through", "pull-through", "big rig", "semi"])
+
     for output_field, aliases in BOOL_FIELDS.items():
-        listing[output_field] = parse_bool(first_value(row, aliases), False)
+        explicit = first_value(row, aliases)
+        if explicit:
+            listing[output_field] = parse_bool(explicit, listing[output_field])
 
     return listing
 
@@ -241,9 +287,16 @@ def read_json(path: Path) -> list[Dict[str, Any]]:
     return [item for item in data if isinstance(item, dict)]
 
 
+def fetch_text(url: str) -> str:
+    request = Request(url, headers={"User-Agent": "HorseCamp authorized HorseMotel.com sync"})
+    with urlopen(request, timeout=45) as response:
+        charset = response.headers.get_content_charset() or "utf-8"
+        return response.read().decode(charset, errors="replace")
+
+
 def read_url(url: str) -> list[Dict[str, Any]]:
     request = Request(url, headers={"User-Agent": "HorseCamp authorized HorseMotel.com sync"})
-    with urlopen(request, timeout=30) as response:
+    with urlopen(request, timeout=45) as response:
         content_type = response.headers.get("content-type", "").lower()
         body = response.read().decode("utf-8-sig")
     if "json" in content_type or url.lower().endswith(".json"):
@@ -254,6 +307,249 @@ def read_url(url: str) -> list[Dict[str, Any]]:
             raise ValueError("Source URL JSON must contain an array or listings/data/items")
         return [item for item in data if isinstance(item, dict)]
     return list(csv.DictReader(body.splitlines()))
+
+
+class LinkParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.links: list[tuple[str, str]] = []
+        self._href: Optional[str] = None
+        self._text: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, Optional[str]]]) -> None:
+        if tag.lower() == "a":
+            self._href = dict(attrs).get("href")
+            self._text = []
+
+    def handle_data(self, data: str) -> None:
+        if self._href is not None:
+            self._text.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() == "a" and self._href is not None:
+            text = clean_text(" ".join(self._text))
+            if text and self._href:
+                self.links.append((text, self._href))
+            self._href = None
+            self._text = []
+
+
+class BlockParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.blocks: list[list[dict[str, str]]] = [[]]
+        self._href: Optional[str] = None
+        self._link_text: list[str] = []
+
+    def current(self) -> list[dict[str, str]]:
+        return self.blocks[-1]
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, Optional[str]]]) -> None:
+        tag = tag.lower()
+        attrs_dict = dict(attrs)
+        if tag == "a":
+            self._href = attrs_dict.get("href")
+            self._link_text = []
+        elif tag == "br":
+            self.current().append({"type": "text", "text": "\n"})
+        elif tag == "hr":
+            if self.current():
+                self.blocks.append([])
+        elif tag in {"p", "div", "tr", "li"}:
+            self.current().append({"type": "text", "text": "\n"})
+
+    def handle_data(self, data: str) -> None:
+        if self._href is not None:
+            self._link_text.append(data)
+        else:
+            self.current().append({"type": "text", "text": data})
+
+    def handle_endtag(self, tag: str) -> None:
+        tag = tag.lower()
+        if tag == "a" and self._href is not None:
+            text = clean_text(" ".join(self._link_text))
+            self.current().append({"type": "link", "text": text, "href": self._href})
+            self._href = None
+            self._link_text = []
+        elif tag in {"p", "div", "tr", "li"}:
+            self.current().append({"type": "text", "text": "\n"})
+
+
+def clean_text(value: str) -> str:
+    value = html.unescape(value).replace("\xa0", " ")
+    return re.sub(r"[ \t\r\f\v]+", " ", value).strip()
+
+
+def block_to_text(block: list[dict[str, str]]) -> str:
+    parts: list[str] = []
+    for token in block:
+        if token["type"] == "text":
+            parts.append(token["text"])
+        elif token["type"] == "link":
+            parts.append(token["text"])
+    raw = " ".join(parts)
+    raw = raw.replace("\xa0", " ")
+    raw = re.sub(r"[ \t\r\f\v]+", " ", raw)
+    raw = re.sub(r"\n\s*", "\n", raw)
+    return clean_text(raw)
+
+
+def extract_state_links(site_url: str) -> list[tuple[str, str, str]]:
+    html_text = fetch_text(site_url)
+    parser = LinkParser()
+    parser.feed(html_text)
+    links: list[tuple[str, str, str]] = []
+    seen: set[str] = set()
+    for text, href in parser.links:
+        state_name = clean_text(text)
+        if state_name in STATE_NAME_TO_CODE and state_name not in seen:
+            links.append((state_name, STATE_NAME_TO_CODE[state_name], urljoin(site_url, href)))
+            seen.add(state_name)
+    if not links:
+        raise RuntimeError("No HorseMotel.com state links found on home page")
+    return links
+
+
+def extract_coords(url: str) -> tuple[float, float]:
+    decoded = unquote(url)
+    pair_matches = re.findall(r"!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)", decoded)
+    if pair_matches:
+        lat, lng = pair_matches[-1]
+        return float(lat), float(lng)
+    at_match = re.search(r"@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)", decoded)
+    if at_match:
+        return float(at_match.group(1)), float(at_match.group(2))
+    q_match = re.search(r"[?&](?:q|ll)=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)", decoded)
+    if q_match:
+        return float(q_match.group(1)), float(q_match.group(2))
+    return 0.0, 0.0
+
+
+def extract_between(text: str, start_label: str, end_labels: list[str]) -> str:
+    pattern = re.compile(re.escape(start_label) + r"\s*(.*)", re.IGNORECASE | re.DOTALL)
+    match = pattern.search(text)
+    if not match:
+        return ""
+    value = match.group(1)
+    end_positions = []
+    for label in end_labels:
+        end = re.search(re.escape(label), value, re.IGNORECASE)
+        if end:
+            end_positions.append(end.start())
+    if end_positions:
+        value = value[: min(end_positions)]
+    return clean_text(value)
+
+
+def parse_city_state(address_lines: list[str], fallback_state: str) -> tuple[str, str, str]:
+    city = ""
+    state = fallback_state
+    zip_code = ""
+    joined = " ".join(address_lines)
+    match = re.search(r"([A-Za-z .'-]+),\s*([A-Z]{2})\s+(\d{5}(?:-\d{4})?)", joined)
+    if match:
+        city = clean_text(match.group(1))
+        state = match.group(2)
+        zip_code = match.group(3)
+    return city, state, zip_code
+
+
+def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, state_url: str) -> Optional[Dict[str, Any]]:
+    text = block_to_text(block)
+    if not text or "no horse motel listings" in text.lower():
+        return None
+    if "Location on Google Maps" not in text and "Facilities:" not in text:
+        return None
+    if "Tel:" not in text and "E-mail" not in text and "Email" not in text:
+        return None
+
+    links = [token for token in block if token["type"] == "link"]
+    maps_href = ""
+    website = ""
+    for token in links:
+        href = urljoin(state_url, token.get("href", ""))
+        link_text = token.get("text", "")
+        href_lower = href.lower()
+        if "google.com/maps" in href_lower or "maps.google" in href_lower:
+            maps_href = href
+        elif "view comments" not in link_text.lower() and "post comments" not in link_text.lower():
+            if not any(skip in href_lower for skip in ["facebook.com", "parelli.com", "jotform.com"]):
+                website = href
+
+    lat, lng = extract_coords(maps_href) if maps_href else (0.0, 0.0)
+    confirmed = "(confirmed)" in text.lower()
+
+    facilities = extract_between(text, "Facilities:", ["Location:", "View Comments", "Post Comments"])
+    location_notes = extract_between(text, "Location:", ["View Comments", "Post Comments"])
+    description = clean_text(" ".join(v for v in [facilities, f"Location notes: {location_notes}" if location_notes else ""] if v))
+
+    phone_match = re.search(r"Tel:\s*(.*?)(?:E-?mail:|E-Mail:|Email:|Web Site:|Location on Google Maps|Facilities:|$)", text, re.IGNORECASE | re.DOTALL)
+    email_match = re.search(r"E-?mail:\s*(.*?)(?:Web Site:|Location on Google Maps|Facilities:|$)", text, re.IGNORECASE | re.DOTALL)
+    phone = clean_text(phone_match.group(1)) if phone_match else ""
+    email_value = clean_text(email_match.group(1)) if email_match else ""
+
+    pre_contact = re.split(r"Tel:|E-?mail:|Web Site:|Location on Google Maps|Facilities:", text, flags=re.IGNORECASE)[0]
+    pre_contact = re.sub(r"\bNew Listing\b", "", pre_contact, flags=re.IGNORECASE)
+    lines = [clean_text(line) for line in re.split(r"\n| {2,}", pre_contact) if clean_text(line)]
+    lines = [line for line in lines if line.lower() not in {"image", state_name.lower()}]
+    if not lines:
+        return None
+
+    # Use all leading non-address lines as name/owner context until an address-looking line begins.
+    address_start = None
+    for idx, line in enumerate(lines):
+        if re.search(r"\d", line):
+            address_start = idx
+            break
+    if address_start is None:
+        name = lines[0]
+        address_lines: list[str] = []
+    else:
+        name_lines = lines[:address_start]
+        name = clean_text(", ".join(name_lines[:3])) or lines[0]
+        address_lines = lines[address_start:]
+
+    city, state, _zip_code = parse_city_state(address_lines, state_code)
+    location = clean_text(", ".join(address_lines)) or ", ".join(v for v in [city, state] if v)
+    source_url = state_url
+
+    row = {
+        "name": name,
+        "location": location,
+        "city": city,
+        "state": state or state_code,
+        "latitude": str(lat),
+        "longitude": str(lng),
+        "phone": phone,
+        "email": email_value,
+        "website": website,
+        "source_url": source_url,
+        "description": description or "HorseMotel.com overnight horse lodging listing. Confirm availability before arrival.",
+        "accommodations": "|".join(infer_accommodations(description)),
+        "is_confirmed_map_marker": "true" if confirmed else "false",
+    }
+    return row
+
+
+def scrape_horsemotel(site_url: str) -> list[Dict[str, Any]]:
+    rows: list[Dict[str, Any]] = []
+    state_links = extract_state_links(site_url)
+    print(f"Found {len(state_links)} HorseMotel.com state pages")
+    for state_name, state_code, state_url in state_links:
+        try:
+            html_text = fetch_text(state_url)
+        except Exception as exc:  # noqa: BLE001 - report and keep going state-by-state
+            print(f"Warning: could not fetch {state_name} ({state_url}): {exc}", file=sys.stderr)
+            continue
+        parser = BlockParser()
+        parser.feed(html_text)
+        before = len(rows)
+        for block in parser.blocks:
+            parsed = parse_block(block, state_name, state_code, state_url)
+            if parsed:
+                rows.append(parsed)
+        print(f"  {state_code}: {len(rows) - before} listing rows found")
+    return rows
 
 
 def merge_unique(listings: Iterable[Dict[str, Any]]) -> list[Dict[str, Any]]:
@@ -290,6 +586,7 @@ def write_report(path: Path, count: int, inputs: list[str]) -> None:
         f"- Attribution: {ATTRIBUTION}",
         "- HorseMotel.com remains the source of truth.",
         "- Rows without coordinates are skipped until latitude/longitude are provided.",
+        "- Website-derived imports read public HorseMotel.com state listing pages with permission from HorseMotel.com.",
     ])
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -300,6 +597,8 @@ def main() -> int:
     parser.add_argument("--csv", type=Path, default=DEFAULT_CSV, help="CSV export/input path")
     parser.add_argument("--json", type=Path, help="Optional JSON export/input path")
     parser.add_argument("--source-url", help="Optional authorized CSV/JSON export URL")
+    parser.add_argument("--scrape-site", action="store_true", help="Import from authorized public HorseMotel.com listing pages")
+    parser.add_argument("--site-url", default=DEFAULT_SITE_URL, help="HorseMotel.com home page URL")
     parser.add_argument("--output", type=Path, default=DEFAULT_JSON, help="Output JSON path")
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT, help="Import report path")
     parser.add_argument("--allow-empty", action="store_true", help="Write [] when no input rows are available")
@@ -323,9 +622,14 @@ def main() -> int:
         rows.extend(url_rows)
         inputs.append(args.source_url)
 
+    if args.scrape_site:
+        site_rows = scrape_horsemotel(args.site_url)
+        rows.extend(site_rows)
+        inputs.append(f"Authorized public HorseMotel.com listing pages: {args.site_url}")
+
     listings = merge_unique(rows)
     if not listings and not args.allow_empty:
-        print("No HorseMotel.com listings found. Provide CSV/JSON input or pass --allow-empty.", file=sys.stderr)
+        print("No HorseMotel.com listings found. Provide CSV/JSON input, use --scrape-site, or pass --allow-empty.", file=sys.stderr)
         return 2
 
     compact_json_dump(args.output, listings)

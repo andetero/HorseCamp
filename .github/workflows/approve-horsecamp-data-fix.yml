@@ -81,7 +81,7 @@ jobs:
         run: |
           gh issue view "${{ steps.issue.outputs.number }}" --json body --jq .body > /tmp/horsecamp_problem_report_issue.md
 
-      - name: Convert approved problem report into exclusion update
+      - name: Convert approved problem report into source JSON update
         id: process
         run: |
           python scripts/approve_problem_report.py \
@@ -96,7 +96,7 @@ jobs:
 
           # Only commit source/review files here. Do NOT run fetch_camps.py or update camps.json.
           # The scheduled Seed Camp Data workflow will rebuild camps.json overnight, or you can run it manually.
-          git add data/exclusions.json data/problem_reports
+          git add data/exclusions.json data/overrides.json data/problem_reports
 
           if git diff --staged --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"

@@ -13,7 +13,9 @@ Listings written: 717
 - Attribution: Listing provided by HorseMotel.com
 - HorseMotel.com remains the source of truth.
 - Rows without coordinates are skipped until latitude/longitude are provided.
+- Street addresses are captured as the preferred external map/search location when available.
+- KML / Google My Maps coordinates are treated as fallback or approximate pin coordinates, not authoritative street-address validation.
 - Hookups are inferred from free-text descriptions, with negative phrases such as "no dump station" or "no sewer" excluded.
 - Listing image URLs are captured from HorseMotel.com listing blocks when image files are present.
-- The importer can download the authorized Google My Maps KML into data/imports/horsemotel_map.kml and use it to improve coordinates.
+- The importer can download the authorized Google My Maps KML into data/imports/horsemotel_map.kml and use it to improve fallback coordinates.
 - Website-derived imports read public HorseMotel.com state listing pages with permission from HorseMotel.com.

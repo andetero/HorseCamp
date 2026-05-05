@@ -214,6 +214,42 @@ def should_replace_city(city: str) -> bool:
     return bool(re.search(r"\d|\b(?:p\.?o\.?|box|road|rd|street|st|avenue|ave|highway|hwy|county|route|drive|dr|lane|ln)\b", city, flags=re.IGNORECASE))
 
 
+STREET_ADDRESS_PATTERN = re.compile(
+    r"\b\d{1,6}\b.*\b(?:"
+    r"street|st|road|rd|avenue|ave|drive|dr|lane|ln|court|ct|circle|cir|"
+    r"trail|trl|way|highway|hwy|route|rte|county\s+road|cr|place|pl|boulevard|blvd|pike|parkway|pkwy"
+    r")\b",
+    flags=re.IGNORECASE,
+)
+
+
+def has_usable_street_address(location: str) -> bool:
+    """Return True when the HorseMotel.com listing has a real street-style address.
+
+    HorseMotel.com Google My Maps/KML points can be approximate town markers.
+    A specific street address is more trustworthy for opening external maps, while
+    KML remains useful as a fallback pin coordinate when no address exists.
+    """
+    if not location:
+        return False
+    text = clean_text(location)
+    if re.search(r"\bP\.?\s*O\.?\s*Box\b", text, flags=re.IGNORECASE):
+        return False
+    if text.count(",") < 1:
+        return False
+    return bool(STREET_ADDRESS_PATTERN.search(text))
+
+
+def build_map_search_address(name: str, location: str) -> str:
+    location = clean_text(location)
+    name = cleanup_listing_name(name)
+    if not location:
+        return name
+    if name and name.lower() not in location.lower():
+        return f"{name}, {location}"
+    return location
+
+
 def city_from_location(location: str, state: str) -> str:
     if not location or not state:
         return ""
@@ -352,6 +388,13 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     website = first_value(row, FIELD_ALIASES["website"]) or source_url
     lat = parse_float(first_value(row, FIELD_ALIASES["latitude"]), default=0.0)
     lng = parse_float(first_value(row, FIELD_ALIASES["longitude"]), default=0.0)
+    usable_address = has_usable_street_address(location)
+    map_search_address = build_map_search_address(name, location) if usable_address else ""
+    coordinate_source = str(row.get("coordinate_source") or row.get("coordinateSource") or "").strip()
+    if not coordinate_source and (lat or lng):
+        coordinate_source = "website_map" if row.get("maps_href") or row.get("mapsHref") else "provided"
+    if usable_address and coordinate_source in {"website_map", "kml", "provided"}:
+        coordinate_source = f"{coordinate_source}_approximate"
 
     description = first_value(row, FIELD_ALIASES["description"]) or "HorseMotel.com overnight horse lodging listing. Confirm availability before arrival."
     accommodations = parse_list(first_value(row, FIELD_ALIASES["accommodations"]))
@@ -365,10 +408,15 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "id": build_id(name, state, location, source_url),
         "name": name,
         "location": location,
+        "address": location if usable_address else "",
+        "mapSearchAddress": map_search_address,
+        "addressPreferredForMaps": usable_address,
         "city": city,
         "state": state,
         "latitude": lat,
         "longitude": lng,
+        "coordinateSource": coordinate_source or ("address_only" if usable_address else "unknown"),
+        "locationConfidence": "address_preferred" if usable_address else ("coordinate_only" if (lat or lng) else "missing"),
         "pricePerNight": parse_float(first_value(row, FIELD_ALIASES["pricePerNight"]), 0.0),
         "horseFeePerNight": parse_float(first_value(row, FIELD_ALIASES["horseFeePerNight"]), 0.0),
         "hookups": infer_hookups(description),
@@ -785,13 +833,22 @@ def apply_kml_coordinates(rows: list[Dict[str, Any]], kml_rows: list[Dict[str, A
                 best_score = score
 
         updated = dict(row)
-        # Require either strong name overlap or phone/state evidence before overriding coordinates.
+        # Require either strong name overlap or phone/state evidence before using KML coordinates.
+        # KML/My Maps points can be approximate town markers, so keep metadata that lets
+        # the app/pipeline prefer a real street address for external map searches.
         if best and best_score >= 70:
-            updated["latitude"] = str(best["latitude"])
-            updated["longitude"] = str(best["longitude"])
+            existing_lat = parse_float(first_value(updated, FIELD_ALIASES["latitude"]), default=0.0)
+            existing_lng = parse_float(first_value(updated, FIELD_ALIASES["longitude"]), default=0.0)
+            if not existing_lat or not existing_lng:
+                updated["latitude"] = str(best["latitude"])
+                updated["longitude"] = str(best["longitude"])
+                updated["coordinate_source"] = "kml"
+            else:
+                updated["coordinate_source"] = updated.get("coordinate_source") or "website_map"
             if not first_value(updated, FIELD_ALIASES["city"]) and best.get("city"):
                 updated["city"] = str(best["city"])
             updated["kmlPlacemark"] = str(best.get("placemarkName", ""))
+            updated["kmlMatchScore"] = str(best_score)
             matched_count += 1
         enhanced.append(updated)
     return enhanced, matched_count
@@ -904,6 +961,8 @@ def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, s
         "state": state or state_code,
         "latitude": str(lat),
         "longitude": str(lng),
+        "coordinate_source": "website_map" if lat and lng else "",
+        "maps_href": maps_href,
         "phone": phone,
         "email": email_value,
         "website": website,
@@ -971,9 +1030,11 @@ def write_report(path: Path, count: int, inputs: list[str]) -> None:
         f"- Attribution: {ATTRIBUTION}",
         "- HorseMotel.com remains the source of truth.",
         "- Rows without coordinates are skipped until latitude/longitude are provided.",
+        "- Street addresses are captured as the preferred external map/search location when available.",
+        "- KML / Google My Maps coordinates are treated as fallback or approximate pin coordinates, not authoritative street-address validation.",
         '- Hookups are inferred from free-text descriptions, with negative phrases such as "no dump station" or "no sewer" excluded.', 
         "- Listing image URLs are captured from HorseMotel.com listing blocks when image files are present.",
-        "- The importer can download the authorized Google My Maps KML into data/imports/horsemotel_map.kml and use it to improve coordinates.",
+        "- The importer can download the authorized Google My Maps KML into data/imports/horsemotel_map.kml and use it to improve fallback coordinates.",
         "- Website-derived imports read public HorseMotel.com state listing pages with permission from HorseMotel.com.",
     ])
     path.parent.mkdir(parents=True, exist_ok=True)

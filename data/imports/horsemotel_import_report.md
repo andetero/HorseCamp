@@ -1,7 +1,7 @@
 # HorseMotel.com Import Report
 
-Generated: 2026-05-04T07:26:03.679440+00:00
-Listings written: 717
+Generated: 2026-05-05T09:03:37.569100+00:00
+Listings written: 718
 
 ## Inputs
 - Authorized public HorseMotel.com listing pages: https://www.horsemotel.com/

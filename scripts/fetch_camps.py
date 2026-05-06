@@ -1983,7 +1983,10 @@ def main():
     all_camps = {}
     total_ridb = 0
     total_nps = 0
+    ridb_allowlist_fetched = 0
+    ridb_allowlist_new = 0
 
+    print("\n=== Federal Sources ===")
     for i, state in enumerate(STATES):
         state_started = time.time()
         print(f"[{i+1}/{len(STATES)}] {state}...", end=" ", flush=True)
@@ -2001,15 +2004,14 @@ def main():
         print(f"{len(ridb_camps)} RIDB + {len(nps_camps)} NPS = {state_new} new [{elapsed:.1f}s]")
         time.sleep(0.5)
 
-    print("\nFetching RIDB allowlist...")
+    print("\n=== RIDB Allowlist ===")
     ridb_allowlist_camps = fetch_ridb_allowlist() if RIDB_KEY else []
-    ridb_allowlist_new = 0
+    ridb_allowlist_fetched = len(ridb_allowlist_camps)
     for camp in ridb_allowlist_camps:
         cid = camp["id"]
         if cid not in all_camps:
             all_camps[cid] = camp
             ridb_allowlist_new += 1
-    total_ridb += len(ridb_allowlist_camps)
     print(f"  RIDB allowlist: {ridb_allowlist_new} new listings added")
 
     def merge_state(camps):
@@ -2074,19 +2076,21 @@ def main():
         ("WY", "Wyoming", fetch_wy_state_parks, "Wyoming State Parks Equestrian Camping"),
     ]
 
+    print("\n=== State Parks ===")
     state_park_totals = {}
     state_park_sources = []
     for abbr, state_name, fetcher, source_label in state_park_jobs:
         print(f"\nFetching {state_name} State Parks...")
         started = time.time()
         state_camps = fetcher()
-        state_park_totals[abbr] = len(state_camps)
         state_park_sources.append(source_label)
         merged = merge_state(state_camps)
+        state_park_totals[abbr] = merged
         elapsed = time.time() - started
         print(f"  {abbr} State Parks: {merged} new listings added [{elapsed:.1f}s]")
 
-    print("\nMerging HorseMotel.com partner listings...")
+    print("\n=== Partner Sources ===")
+    print("Merging HorseMotel.com partner listings...")
     import math as _math
     horsemotel_new = 0
     for camp in fetch_horsemotel_listings():
@@ -2106,7 +2110,8 @@ def main():
                 horsemotel_new += 1
     print(f"  HorseMotel.com: {horsemotel_new} new listings added")
 
-    print("\nMerging private camp listings...")
+    print("\n=== Private / Curated Sources ===")
+    print("Merging private camp listings...")
     private_camp_new = 0
     for camp in fetch_private_camps():
         cid = camp["id"]
@@ -2125,20 +2130,22 @@ def main():
                 private_camp_new += 1
     print(f"  Private Camps: {private_camp_new} new listings added")
 
-    print("\nFetching from OpenStreetMap...")
+    print("\n=== OpenStreetMap ===")
+    print("Fetching from OpenStreetMap...")
     osm_camps = fetch_osm(all_camps)
     for camp in osm_camps:
         cid = camp["id"]
         if cid not in all_camps:
             all_camps[cid] = camp
 
-    print("\nApplying manual exclusions...")
+    print("\n=== Cleanup / Data Quality ===")
+    print("Applying manual exclusions...")
     excluded_count = apply_exclusions(all_camps)
 
-    print("\nRemoving invalid/non-horse listings...")
+    print("Removing invalid/non-horse listings...")
     invalid_count = remove_invalid_equestrian_listings(all_camps)
 
-    print("\nApplying manual overrides...")
+    print("Applying manual overrides...")
     override_count = apply_overrides(all_camps)
 
     camps_list = sorted(all_camps.values(), key=lambda c: (c["state"], c["name"]))
@@ -2152,22 +2159,37 @@ def main():
     write_camps_json(output_path, output)
 
     osm_count = sum(1 for c in camps_list if c.get("source") == "OSM")
+    ridb_count = sum(1 for c in camps_list if c.get("source") == "RIDB")
+    nps_count = sum(1 for c in camps_list if c.get("source") == "NPS")
+    state_parks_count = sum(1 for c in camps_list if c.get("source") == "State Parks")
     horsemotel_count = sum(1 for c in camps_list if c.get("source") == "HorseMotel.com")
     private_camp_count = sum(1 for c in camps_list if c.get("source") == "Private Camps")
     verified_count = sum(1 for c in camps_list if c.get("isVerified"))
+
     print(f"\nDone. {len(camps_list)} total camps written to {output_path.relative_to(REPO_ROOT)}")
-    print(f"  RIDB:         {total_ridb}")
-    print(f"  NPS:          {total_nps}")
-    for abbr in sorted(state_park_totals):
-        print(f"  {abbr} StateParks:{state_park_totals[abbr]}")
-    print(f"  HorseMotel.com:{horsemotel_count}")
-    print(f"  Private Camps:{private_camp_count}")
-    print(f"  OSM:          {osm_count}")
-    print(f"  Excluded:     {excluded_count}")
-    print(f"  Invalid:      {invalid_count}")
-    print(f"  Overrides:    {override_count}")
-    print(f"  Verified:     {verified_count}")
-    print(f"  Unique total: {len(camps_list)}")
+    print("\n=== Final Totals ===")
+    print("Federal fetch totals:")
+    print(f"  RIDB search fetched:     {total_ridb}")
+    print(f"  RIDB allowlist fetched: {ridb_allowlist_fetched}")
+    print(f"  RIDB allowlist added:   {ridb_allowlist_new}")
+    print(f"  NPS fetched:             {total_nps}")
+
+    print("\nFinal feed by source:")
+    print(f"  RIDB:                   {ridb_count}")
+    print(f"  NPS:                    {nps_count}")
+    print(f"  State Parks:            {state_parks_count}")
+    print(f"  HorseMotel.com:         {horsemotel_count}")
+    print(f"  Private Camps:          {private_camp_count}")
+    print(f"  OpenStreetMap:          {osm_count}")
+
+    print("\nData quality adjustments:")
+    print(f"  Excluded:               {excluded_count}")
+    print(f"  Invalid removed:        {invalid_count}")
+    print(f"  Overrides applied:      {override_count}")
+
+    print("\nOverall:")
+    print(f"  Verified:               {verified_count}")
+    print(f"  Unique total:           {len(camps_list)}")
 
 
 if __name__ == "__main__":

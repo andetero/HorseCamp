@@ -26,6 +26,7 @@ DATA_DIR = REPO_ROOT / "data"
 HORSEMOTEL_FILE = DATA_DIR / "horsemotel_listings.json"
 LAYOVERS_FILE = DATA_DIR / "layovers.json"  # legacy; replaced by HorseMotel.com partner listings
 PRIVATE_CAMPS_FILE = DATA_DIR / "private_camps.json"
+RIDB_ALLOWLIST_FILE = DATA_DIR / "ridb_allowlist.json"
 STATE_PARKS_DIR = DATA_DIR / "state_parks"
 
 STATES = [
@@ -82,6 +83,15 @@ INVALID_EQUESTRIAN_PATTERNS = [
     re.compile(r"\bhorses are not allowed near the .*guard station\b", re.I),
 ]
 
+VALID_ADJACENT_HORSE_SITE_PATTERNS = [
+    re.compile(r"\bhorse sites?\b", re.I),
+    re.compile(r"\bequestrian (?:site|sites|loop|campsite|campsites)\b", re.I),
+    re.compile(r"\bcampsites? for stock users\b", re.I),
+    re.compile(r"\bcorrals? with .* sites?\b", re.I),
+    re.compile(r"\bcorrals? .* adjacent to (?:the )?campground\b", re.I),
+    re.compile(r"\bopposite side of (?:forest road|fsr|road)\b", re.I),
+]
+
 def strip_html(text):
     return re.sub(r'<[^>]+>', '', text or '').strip()
 
@@ -89,6 +99,10 @@ def is_equestrian(text_blob):
     low = text_blob.lower()
     return any(k in low for k in EQUESTRIAN_KEYWORDS)
 
+
+def has_valid_adjacent_horse_sites(text):
+    """True when a listing says horses are outside the main campground but valid horse sites exist nearby."""
+    return any(pattern.search(text) for pattern in VALID_ADJACENT_HORSE_SITE_PATTERNS)
 
 def is_invalid_equestrian_listing(camp):
     """Reject entries that keyword-match horses but explicitly do not allow horse camping."""
@@ -100,7 +114,9 @@ def is_invalid_equestrian_listing(camp):
     if lat == 0 and lng == 0:
         return True
 
-    text = " ".join(str(camp.get(k, "")) for k in ("name", "description", "location", "source"))
+    text = " ".join(str(camp.get(k, "")) for k in ("name", "description", "location", "source", "accommodations"))
+    if has_valid_adjacent_horse_sites(text):
+        return False
     return any(pattern.search(text) for pattern in INVALID_EQUESTRIAN_PATTERNS)
 
 
@@ -273,6 +289,36 @@ def apply_overrides(camps_dict):
     print(f"  Overrides applied: {applied} updated")
     return applied
 
+def load_ridb_allowlist():
+    """Load approved RIDB facility IDs that should be fetched directly.
+
+    Some legitimate horse-camping facilities do not show up in RIDB search results
+    because horse/equestrian details live in campsite loops, notices, or Recreation.gov
+    page text instead of searchable facility keywords.
+    """
+    if not RIDB_ALLOWLIST_FILE.exists():
+        return []
+
+    try:
+        data = json.loads(RIDB_ALLOWLIST_FILE.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"Invalid JSON in {RIDB_ALLOWLIST_FILE.relative_to(REPO_ROOT)}: {e}") from e
+
+    if not isinstance(data, list):
+        raise RuntimeError(f"{RIDB_ALLOWLIST_FILE.relative_to(REPO_ROOT)} must contain a JSON array")
+
+    facility_ids = []
+    for item in data:
+        if isinstance(item, dict):
+            value = item.get("facilityId") or item.get("id")
+        else:
+            value = item
+        fid = str(value or "").replace("ridb-", "").strip()
+        if fid:
+            facility_ids.append(fid)
+
+    return list(dict.fromkeys(facility_ids))
+
 # ── RIDB HELPERS ──────────────────────────────────────────────────────
 MONTH_MAP = {
     "jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6,
@@ -397,6 +443,105 @@ def parse_ridb_photos(facility):
     ordered = primary + gallery + rest
     return [m["URL"] for m in ordered[:6]]  # cap at 6 photos
 
+def build_ridb_camp(f):
+    """Convert one full RIDB facility record into a HorseCamp listing."""
+    fid = str(f.get("FacilityID", ""))
+    if not fid:
+        return None
+
+    lat = float(f.get("FacilityLatitude", 0) or 0)
+    lng = float(f.get("FacilityLongitude", 0) or 0)
+    if abs(lat) < 0.1 or abs(lng) < 0.1:
+        return None
+
+    amenities  = [a.get("AmenityName", "") for a in (f.get("FACILITYAMENITY") or [])]
+    activities = [a.get("ActivityName", "") for a in (f.get("ACTIVITY") or [])]
+    desc       = strip_html(f.get("FacilityDescription", ""))
+    blob       = " ".join(amenities + activities + [desc])
+    blob_lower = blob.lower()
+
+    addr  = (f.get("FACILITYADDRESS") or [{}])[0]
+    city  = addr.get("City", "")
+    fstate = addr.get("AddressStateCode", "")
+
+    hookups = []
+    if "50 amp" in blob_lower or "50-amp" in blob_lower: hookups.append("50A")
+    if "30 amp" in blob_lower or "30-amp" in blob_lower: hookups.append("30A")
+    if "water hookup" in blob_lower:                       hookups.append("Water")
+
+    accommodations = []
+    if "stall"    in blob_lower: accommodations.append("Stalls")
+    if "corral"   in blob_lower: accommodations.append("Corrals")
+    if "highline" in blob_lower or "high line" in blob_lower or "tie rail" in blob_lower:
+        accommodations.append("Highlines")
+    if "paddock"  in blob_lower: accommodations.append("Paddocks")
+    if "equestrian" in blob_lower or "horse site" in blob_lower or "stock user" in blob_lower:
+        accommodations.append("Horse Camping")
+    if "trail" in blob_lower or "hiking" in blob_lower: accommodations.append("Trails")
+    if "cabin" in blob_lower: accommodations.append("Cabins")
+
+    season_start, season_end = parse_season(f)
+    return {
+        "id":                  f"ridb-{fid}",
+        "name":                f.get("FacilityName", "Unknown Camp"),
+        "location":            f"{city}, {fstate}".strip(", "),
+        "state":               fstate,
+        "latitude":            lat,
+        "longitude":           lng,
+        "pricePerNight":       parse_ridb_fee(f),
+        "horseFeePerNight":    0.0,
+        "hookups":             list(dict.fromkeys(hookups)),
+        "accommodations":      list(dict.fromkeys(accommodations)),
+        "maxRigLength":        parse_rig_length(f),
+        "stallCount":          parse_stall_count(f),
+        "paddockCount":        parse_paddock_count(f),
+        "phone":               f.get("FacilityPhone", ""),
+        "website":             f.get("FacilityReservationURL", "") or f"https://www.recreation.gov/camping/campgrounds/{fid}",
+        "description":         desc[:2000],
+        "isVerified":          False,
+        "seasonStart":         season_start,
+        "seasonEnd":           season_end,
+        "hasWashRack":         "wash rack" in blob_lower,
+        "hasDumpStation":      "dump" in blob_lower,
+        "hasWifi":             "wifi" in blob_lower or "internet" in blob_lower,
+        "hasBathhouse":        "shower" in blob_lower or "bathhouse" in blob_lower,
+        "pullThroughAvailable": "pull-through" in blob_lower or "pull through" in blob_lower,
+        "rating":              0.0,
+        "reviewCount":         0,
+        "imageColors":         ["5C7A4E", "D4A853"],
+        "photoURLs":           parse_ridb_photos(f),
+        "source":              "RIDB",
+    }
+
+def fetch_ridb_allowlist():
+    """Fetch approved RIDB facilities directly by ID."""
+    if not RIDB_KEY:
+        return []
+
+    headers = {"apikey": RIDB_KEY}
+    camps = []
+    for fid in load_ridb_allowlist():
+        data = safe_get(f"{RIDB_BASE}/facilities/{fid}", headers=headers, params={"full": "true"})
+        if not data:
+            print(f"  RIDB allowlist skipped {fid}: facility not found")
+            continue
+
+        f = data.get("RECDATA", data)
+        if isinstance(f, list):
+            f = f[0] if f else None
+        if not isinstance(f, dict):
+            print(f"  RIDB allowlist skipped {fid}: unexpected API response")
+            continue
+
+        camp = build_ridb_camp(f)
+        if camp:
+            camps.append(camp)
+        else:
+            print(f"  RIDB allowlist skipped {fid}: missing required location data")
+
+    print(f"  RIDB allowlist: {len(camps)} approved facilities fetched")
+    return camps
+
 # ── RIDB ───────────────────────────────────────────────────────────────
 def fetch_ridb_state(state):
     camps = {}
@@ -452,59 +597,9 @@ def fetch_ridb_state(state):
                 elif not is_equestrian(blob):
                     continue
 
-                addr  = (f.get("FACILITYADDRESS") or [{}])[0]
-                city  = addr.get("City", "")
-                fstate = addr.get("AddressStateCode", state)
-
-                blob_lower = blob.lower()
-
-                hookups = []
-                if "50 amp" in blob_lower or "50-amp" in blob_lower: hookups.append("50A")
-                if "30 amp" in blob_lower or "30-amp" in blob_lower: hookups.append("30A")
-                if "water hookup" in blob_lower:                       hookups.append("Water")
-
-                accommodations = []
-                if "stall"    in blob_lower: accommodations.append("Stalls")
-                if "corral"   in blob_lower: accommodations.append("Corrals")
-                if "highline" in blob_lower or "high line" in blob_lower or "tie rail" in blob_lower:
-                    accommodations.append("Highlines")
-                if "paddock"  in blob_lower: accommodations.append("Paddocks")
-                if "trail" in blob_lower or "hiking" in blob_lower: accommodations.append("Trails")
-                if "cabin" in blob_lower: accommodations.append("Cabins")
-
-                season_start, season_end = parse_season(f)
-                camps[fid] = {
-                    "id":                  f"ridb-{fid}",
-                    "name":                f.get("FacilityName", "Unknown Camp"),
-                    "location":            f"{city}, {fstate}".strip(", "),
-                    "state":               fstate,
-                    "latitude":            lat,
-                    "longitude":           lng,
-                    "pricePerNight":       parse_ridb_fee(f),
-                    "horseFeePerNight":    0.0,
-                    "hookups":             list(dict.fromkeys(hookups)),
-                    "accommodations":      list(dict.fromkeys(accommodations)),
-                     "maxRigLength":        parse_rig_length(f),
-                     "stallCount":          parse_stall_count(f),
-                     "paddockCount":        parse_paddock_count(f),
-                    "phone":               f.get("FacilityPhone", ""),
-
-                    "website":             f.get("FacilityReservationURL", "") or f"https://www.recreation.gov/camping/campgrounds/{fid}",
-                    "description":         desc[:2000],
-                    "isVerified":          False,
-                     "seasonStart":         season_start,
-                     "seasonEnd":           season_end,
-                    "hasWashRack":         "wash rack" in blob_lower,
-                    "hasDumpStation":      "dump" in blob_lower,
-                    "hasWifi":             "wifi" in blob_lower or "internet" in blob_lower,
-                    "hasBathhouse":        "shower" in blob_lower or "bathhouse" in blob_lower,
-                    "pullThroughAvailable": "pull-through" in blob_lower or "pull through" in blob_lower,
-                    "rating":              0.0,
-                    "reviewCount":         0,
-                    "imageColors":         ["5C7A4E", "D4A853"],
-                    "photoURLs":           parse_ridb_photos(f),
-                    "source":              "RIDB",
-                }
+                camp = build_ridb_camp(f)
+                if camp:
+                    camps[fid] = camp
 
             offset += 50
             if len(facilities) < 50:
@@ -1905,6 +2000,17 @@ def main():
         elapsed = time.time() - state_started
         print(f"{len(ridb_camps)} RIDB + {len(nps_camps)} NPS = {state_new} new [{elapsed:.1f}s]")
         time.sleep(0.5)
+
+    print("\nFetching RIDB allowlist...")
+    ridb_allowlist_camps = fetch_ridb_allowlist() if RIDB_KEY else []
+    ridb_allowlist_new = 0
+    for camp in ridb_allowlist_camps:
+        cid = camp["id"]
+        if cid not in all_camps:
+            all_camps[cid] = camp
+            ridb_allowlist_new += 1
+    total_ridb += len(ridb_allowlist_camps)
+    print(f"  RIDB allowlist: {ridb_allowlist_new} new listings added")
 
     def merge_state(camps):
         new_count = 0

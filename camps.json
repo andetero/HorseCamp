@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-06T17:40:56.216566+00:00",
+  "generated": "2026-05-06T18:36:09.950564+00:00",
   "count": 2325,
   "sources": [
     "Recreation.gov RIDB",
@@ -37687,7 +37687,7 @@
       "name": "Sam A. Baker State Park Equestrian Campground",
       "location": "Patterson, MO",
       "state": "MO",
-      "latitude": 37.2660791,
+      "latitude": 37.2660792,
       "longitude": -90.4991273,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
@@ -79119,7 +79119,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2018/08/24/19/13/251787_798572fd-312f-4ae0-a0b6-06daaf3d7cd1_1440.webp", "https://cdn.recreation.gov/public/images/76095_700.webp", "https://cdn.recreation.gov/public/2018/10/03/12/59/251787_00a43c9e-6b7f-4549-bc73-9cd9b7cf70e8_700.webp", "https://cdn.recreation.gov/public/images/76102_700.webp", "https://cdn.recreation.gov/public/2018/10/03/12/55/251787_e3b1ba5f-0396-49e4-acfb-851d0679f1de_700.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2018/08/24/19/13/251787_798572fd-312f-4ae0-a0b6-06daaf3d7cd1_1440.webp", "https://cdn.recreation.gov/public/2026/05/06/13/19/251787_890e3d09-df75-471a-93e0-fa608be5334f_700.jpg", "https://cdn.recreation.gov/public/images/76095_700.webp", "https://cdn.recreation.gov/public/2018/10/03/12/59/251787_00a43c9e-6b7f-4549-bc73-9cd9b7cf70e8_700.webp", "https://cdn.recreation.gov/public/2018/10/03/12/55/251787_e3b1ba5f-0396-49e4-acfb-851d0679f1de_700.webp"],
       "source": "RIDB"
     },
     {
@@ -79150,7 +79150,7 @@
       "rating": 0.0,
       "reviewCount": 0,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2018/08/14/14/37/aae68860-83c8-4ebd-ae90-2a1620326e7c_1440.webp", "https://cdn.recreation.gov/public/2021/09/22/19/45/251785_efc8876d-189a-4556-bf02-490341d8efbb_700.webp", "https://cdn.recreation.gov/public/2021/09/22/20/17/251785_e17b5006-4787-4004-ad90-d1af59e553fe_700.webp", "https://cdn.recreation.gov/public/images/76103_700.webp", "https://cdn.recreation.gov/public/2018/10/02/19/52/251785_379fea51-ea60-4a95-a83d-1b4b7cb28f0c_700.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2018/08/14/14/37/aae68860-83c8-4ebd-ae90-2a1620326e7c_1440.webp", "https://cdn.recreation.gov/public/2026/05/06/13/33/251785_90edcd1c-7f49-48dd-816d-c8b7a26f85ec_700.jpg", "https://cdn.recreation.gov/public/2026/05/06/13/35/251785_21f9f839-2a21-4889-aec8-711c2b9bb08c_700.jpg", "https://cdn.recreation.gov/public/2021/09/22/19/45/251785_efc8876d-189a-4556-bf02-490341d8efbb_700.webp", "https://cdn.recreation.gov/public/images/76103_700.webp", "https://cdn.recreation.gov/public/2018/10/02/19/52/251785_379fea51-ea60-4a95-a83d-1b4b7cb28f0c_700.webp"],
       "source": "RIDB"
     },
     {

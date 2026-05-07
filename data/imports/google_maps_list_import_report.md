@@ -13,16 +13,8 @@ Optional columns supported: `Website`, `Phone`, `Description`, `URL`, `Tags`, `C
 
 ## Horse Camps
 
-- CSV rows: **275**
-- Generated records: **270**
-- Skipped rows: **5**
+- CSV rows: **217**
+- Generated records: **217**
+- Skipped rows: **0**
 - Output: `data/private_camps.json`
-
-### Row notes
-
-- Paria River Ranch: skipped, same name as existing manual record: Paria River Ranch
-- Hayes Canyon Campground: skipped, same name as existing manual record: Hayes Canyon Campground
-- Little Lusk Trail Lodge: skipped, within 100m of existing manual record: Little Lusk Trail Lodge Campground
-- Double M Campground: skipped, same name as existing manual record: Double M Campground
-- High Knob Ranch Equestrian Campground: skipped, same name as existing manual record: High Knob Ranch Equestrian Campground
 

@@ -13,9 +13,9 @@ Supported approved report types:
 - Missing accommodations
 - Incorrect amenities/accommodations
 - Bad phone / website
-- Other
+- Other reports are review-only issues and do not create PRs.
 
-The GitHub Action opens a PR for final review before the data fix is merged.
+The GitHub Action opens a PR for final review before structured data fixes are merged.
 The issue body may contain plain JSON, fenced JSON, or the legacy hidden JSON block.
 """
 
@@ -31,7 +31,6 @@ from typing import Any
 
 EXCLUSIONS_PATH = Path("data/exclusions.json")
 OVERRIDES_PATH = Path("data/overrides.json")
-REPORT_LOG_DIR = Path("data/problem_reports")
 
 HIDDEN_JSON_RE = re.compile(
     r"<!--\s*HORSECAMP_PROBLEM_REPORT_JSON\s*(?P<json>\{.*?\})\s*HORSECAMP_PROBLEM_REPORT_JSON\s*-->",
@@ -439,25 +438,6 @@ def parse_coordinates(payload: dict[str, Any]) -> tuple[float, float]:
     return latitude, longitude
 
 
-def write_problem_report_log(issue_number: int, payload: dict[str, Any], action: str, camp_id: str, result: dict[str, Any]) -> Path:
-    REPORT_LOG_DIR.mkdir(parents=True, exist_ok=True)
-    path = REPORT_LOG_DIR / f"approved_issue_{issue_number}.json"
-    path.write_text(
-        compact_json(
-            {
-                "issueNumber": issue_number,
-                "action": action,
-                "campId": camp_id,
-                "result": result,
-                "originalPayload": payload,
-            }
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-    return path
-
-
 def write_github_outputs(output_path: str | None, *, pr_title: str, pr_body: str, summary: str) -> None:
     if not output_path:
         return
@@ -519,11 +499,6 @@ def approve_exclusion_report(issue_number: int, payload: dict[str, Any], camp_id
         exclusions.append(camp_id)
         write_exclusions(exclusions)
 
-    result = {"alreadyExcluded": already_excluded, "target": str(EXCLUSIONS_PATH), "excludeReason": exclude_reason}
-    if duplicate_of:
-        result["duplicateOf"] = duplicate_of
-    log_path = write_problem_report_log(issue_number, payload, "exclude_listing", camp_id, result)
-
     action_summary = (
         f"This PR adds generated listing ID `{camp_id}` to `data/exclusions.json`. "
         "The next Seed Camp Data run will remove this listing from `camps.json`."
@@ -549,7 +524,7 @@ def approve_exclusion_report(issue_number: int, payload: dict[str, Any], camp_id
         payload=payload,
         action_summary=action_summary,
     )
-    summary = f"Added {camp_id} to {EXCLUSIONS_PATH}; wrote review log: {log_path}" if not already_excluded else f"{camp_id} was already present in {EXCLUSIONS_PATH}; wrote review log: {log_path}"
+    summary = f"Added {camp_id} to {EXCLUSIONS_PATH}" if not already_excluded else f"{camp_id} was already present in {EXCLUSIONS_PATH}"
     return pr_title, pr_body, summary
 
 
@@ -564,25 +539,7 @@ def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id:
 
     normalized_updates = normalize_override_updates(updates, category=category)
     if not normalized_updates:
-        # All reports still create a PR path. For truly generic/Other reports, keep a review log only.
-        log_path = write_problem_report_log(
-            issue_number,
-            payload,
-            "review_only",
-            camp_id,
-            {"target": str(REPORT_LOG_DIR), "message": "No source JSON override was provided; maintainer review required."},
-        )
-        pr_title = f"Review HorseCamp problem report: {camp_name}"
-        pr_body = build_pr_body(
-            issue_number=issue_number,
-            target=str(log_path),
-            category=category,
-            camp_id=camp_id,
-            notes=notes,
-            payload=payload,
-            action_summary="This PR records the approved problem report for review. Add a concrete override or exclusion in the Files changed tab before merging if app data should change.",
-        )
-        return pr_title, pr_body, f"Wrote review-only problem report log: {log_path}"
+        raise ValueError("Structured update reports must include at least one proposedUpdates field. Use Other for review-only notes.")
 
     overrides = load_overrides()
     existing_patch = dict(overrides.get(camp_id, {}))
@@ -590,18 +547,6 @@ def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id:
     existing_patch.update(normalized_updates)
     overrides[camp_id] = existing_patch
     write_overrides(overrides)
-
-    log_path = write_problem_report_log(
-        issue_number,
-        payload,
-        "override_listing_fields",
-        camp_id,
-        {
-            "target": str(OVERRIDES_PATH),
-            "updates": normalized_updates,
-            "previousValues": previous_values,
-        },
-    )
 
     category_title = canonical_category(category)
     if category_title == "Wrong location":
@@ -630,7 +575,7 @@ def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id:
         payload=payload,
         action_summary=action_summary,
     )
-    summary = f"Updated override for {camp_id} in {OVERRIDES_PATH}; wrote review log: {log_path}"
+    summary = f"Updated override for {camp_id} in {OVERRIDES_PATH}"
     return pr_title, pr_body, summary
 
 
@@ -642,13 +587,23 @@ def main() -> int:
     args = parser.parse_args()
 
     body = Path(args.issue_body).read_text(encoding="utf-8")
-    payload = extract_problem_report(body)
+    try:
+        payload = extract_problem_report(body)
+    except ValueError as exc:
+        if "Could not find problem report JSON" in str(exc):
+            print("Review-only Other problem report has no structured JSON; no PR will be created.")
+            return 0
+        raise
+
+    category = canonical_category(get_category(payload))
+    if normalize_field_name(category) == "other":
+        print("Other problem report is review-only; no PR will be created.")
+        return 0
+
     camp_id = get_camp_id(payload)
-    category = get_category(payload)
     camp_name = clean_text(payload.get("campName") or payload.get("camp_name") or payload.get("listingName") or payload.get("listing_name") or payload.get("name")) or camp_id
     notes = clean_text(payload.get("notes") or payload.get("userNotes") or payload.get("user_notes"))
 
-    category = canonical_category(category)
     normalized_category = category_key(category)
     if normalized_category in EXCLUSION_CATEGORIES:
         pr_title, pr_body, summary = approve_exclusion_report(args.issue_number, payload, camp_id, camp_name, category, notes)

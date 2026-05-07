@@ -22,7 +22,6 @@ from typing import Any
 
 PRIVATE_CAMPS_PATH = Path("data/private_camps.json")
 CAMPS_PATH = Path("camps.json")
-SUBMISSION_LOG_DIR = Path("data/submissions")
 
 DEFAULT_IMAGE_COLORS = ["6D4C41", "BCAAA4"]
 
@@ -345,27 +344,6 @@ def append_record(target_path: Path, record: dict[str, Any]) -> None:
     write_json_array(target_path, records)
 
 
-def write_submission_log(issue_number: int, kind: str, record: dict[str, Any], original_payload: dict[str, Any]) -> Path:
-    SUBMISSION_LOG_DIR.mkdir(parents=True, exist_ok=True)
-    path = SUBMISSION_LOG_DIR / f"approved_issue_{issue_number}.json"
-    path.write_text(
-        compact_json(
-            {
-                "issueNumber": issue_number,
-                "type": kind,
-                "recordId": record["id"],
-                "name": record["name"],
-                "targetSource": record["source"],
-                "record": record,
-                "originalPayload": original_payload,
-            }
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-    return path
-
-
 def write_github_outputs(output_path: str | None, *, pr_title: str, pr_body: str, summary: str) -> None:
     if not output_path:
         return
@@ -403,8 +381,6 @@ def main() -> int:
         raise ValueError(f"Submission appears to be a duplicate: {duplicate}")
 
     append_record(target_path, record)
-    log_path = write_submission_log(args.issue_number, kind, record, payload)
-
     human_kind = "private camp"
     pr_title = f"Add {human_kind}: {record['name']}"
     pr_body = (
@@ -418,7 +394,7 @@ def main() -> int:
         "```\n\n"
         "Review the actual JSON file diff below, then merge when ready. Merging this PR will automatically close the linked submission issue."
     )
-    summary = f"Prepared {human_kind} submission '{record['name']}' for {target_path}; log: {log_path}"
+    summary = f"Prepared {human_kind} submission '{record['name']}' for {target_path}"
     print(summary)
     write_github_outputs(args.github_output, pr_title=pr_title, pr_body=pr_body, summary=summary)
     return 0

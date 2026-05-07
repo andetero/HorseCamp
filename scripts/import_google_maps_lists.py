@@ -6,21 +6,35 @@ This script is intentionally NOT a Google Places crawler/geocoder.
 
 Expected workflow:
   1. Curate places in Google Maps Saved Lists.
-  2. Put coordinates in each saved item's Note field.
-  3. Export the list CSV with Google Takeout.
-  4. Place CSVs at:
+  2. Export or maintain a CSV with a Title column and either Note or Coordinates.
+  3. Put coordinates in either:
+       - Note
+       - Coordinates
+       - Coords
+       - Coordinate
+  4. Optional columns such as Website, Phone, Description, URL, Tags, and Comment
+     are supported. URL may be a Google Maps URL and is stored as sourceUrl/googleMapsUrl.
+  5. Place CSVs at:
        data/imports/horse_layovers.csv
        data/imports/horse_camps.csv
-  5. Run this script/workflow.
+  6. Run this script/workflow.
 
-Supported note formats:
+Supported simple CSV formats:
 
-Simple 3-line format:
+Minimal column format:
+  Title,Coordinates,URL
+  Better Display Name,"37.123456, -109.123456",https://www.google.com/maps/place/...
+
+Classic Google Takeout note format:
+  Title,Note,URL
+  Better Display Name,"37.123456, -109.123456",https://www.google.com/maps/place/...
+
+Simple multiline Note format:
   Better Display Name
   37.123456, -109.123456
   https://example.com/
 
-Labeled format:
+Labeled Note format:
   name: Better Display Name
   coords: 37.123456, -109.123456
   website: https://example.com/
@@ -144,6 +158,39 @@ STATE_BOUNDS = [
 
 def clean_text(value: str | None) -> str:
     return re.sub(r"\s+", " ", (value or "").strip())
+
+
+def column_key(value: str | None) -> str:
+    return re.sub(r"[^a-z0-9]+", "", (value or "").lower())
+
+
+def row_value(row: dict[str, str], *names: str) -> str:
+    """Case/spacing-insensitive CSV column lookup.
+
+    This lets the importer accept Google Sheets headers such as:
+      Coordinates, coordinates, Coordinate, Phone, phone, Website, website.
+    """
+    if not row:
+        return ""
+    normalized = {column_key(k): v for k, v in row.items()}
+    for name in names:
+        value = normalized.get(column_key(name))
+        if value is not None and str(value).strip():
+            return str(value).strip()
+    return ""
+
+
+def first_nonempty(*values: str | None) -> str:
+    for value in values:
+        cleaned = clean_text(value)
+        if cleaned:
+            return cleaned
+    return ""
+
+
+def is_google_maps_url(value: str | None) -> bool:
+    low = (value or "").lower()
+    return "google.com/maps" in low or "maps.app.goo.gl" in low or "goo.gl/maps" in low
 
 
 def slugify(value: str) -> str:
@@ -466,13 +513,28 @@ def make_id(prefix: str, name: str, state: str, seen_ids: set[str]) -> str:
 
 
 def read_google_maps_csv(path: Path) -> list[dict[str, str]]:
+    # GitHub often keeps placeholder import CSVs as blank/newline-only files.
+    # Treat those as intentionally empty instead of failing the whole workflow.
+    if not path.read_text(encoding="utf-8-sig").strip():
+        return []
+
     with path.open(newline="", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         if not reader.fieldnames:
-            raise RuntimeError(f"{path} has no CSV header")
-        missing = {"Title", "Note"} - set(reader.fieldnames)
+            return []
+
+        headers = {column_key(name) for name in reader.fieldnames}
+        has_title = any(column_key(name) in headers for name in ["Title", "Name"])
+        has_note_or_coords = any(column_key(name) in headers for name in ["Note", "Coordinates", "Coordinate", "Coords", "Lat Lon", "LatLng", "Latitude Longitude"])
+
+        missing: list[str] = []
+        if not has_title:
+            missing.append("Title")
+        if not has_note_or_coords:
+            missing.append("Note or Coordinates")
         if missing:
-            raise RuntimeError(f"{path} is missing expected column(s): {', '.join(sorted(missing))}")
+            raise RuntimeError(f"{path} is missing expected column(s): {', '.join(missing)}")
+
         return [row for row in reader if any((value or "").strip() for value in row.values())]
 
 
@@ -488,19 +550,44 @@ def convert_rows(
     seen_source_keys: set[str] = set()
 
     for index, row in enumerate(rows, start=1):
-        title = clean_text(row.get("Title"))
-        note = row.get("Note") or ""
+        title = first_nonempty(row_value(row, "Title"), row_value(row, "Name"))
+        note = row_value(row, "Note")
+        coordinates_text = row_value(row, "Coordinates", "Coordinate", "Coords", "Lat Lon", "LatLng", "Latitude Longitude")
+        csv_website = row_value(row, "Website", "Web Site", "Site")
+        csv_phone = row_value(row, "Phone", "Phone Number", "Telephone")
+        csv_description = row_value(row, "Description", "Desc")
+        csv_url = row_value(row, "URL", "Google URL", "Google Maps URL", "Map URL")
+        csv_tags = row_value(row, "Tags", "Tag")
+        csv_comment = row_value(row, "Comment", "Comments", "Notes")
+
         if not title:
             report.append(f"- row {index}: skipped blank title")
             continue
 
-        coords = parse_coordinates(note)
+        coordinate_source = "\n".join(part for part in [note, coordinates_text, csv_url] if part)
+        coords = parse_coordinates(coordinate_source)
         if not coords:
-            report.append(f"- {title}: skipped, no coords found in Note")
+            report.append(f"- {title}: skipped, no coords found in Note/Coordinates")
             continue
 
         lat, lon = coords
         fields = merge_note_fields(parse_note_fields(note), parse_simple_note_fields(note))
+
+        # CSV columns are treated as structured fallbacks so large Google Sheets can stay simple:
+        # Title = name, Coordinates = GPS, Website/Phone/Description = optional enrichment,
+        # URL = Google Maps reference/source URL. Explicit labeled Note fields still win.
+        if csv_website and "website" not in fields:
+            fields["website"] = csv_website
+        elif csv_url and not is_google_maps_url(csv_url) and "website" not in fields:
+            fields["website"] = csv_url
+        if csv_phone and "phone" not in fields:
+            fields["phone"] = csv_phone
+        if csv_description and "description" not in fields:
+            fields["description"] = csv_description
+        elif csv_comment and "description" not in fields:
+            fields["description"] = csv_comment
+
+        inference_text = "\n".join(part for part in [note, csv_description, csv_tags, csv_comment] if part)
 
         name = clean_text(fields.get("name") or title)
         location = clean_text(fields.get("location") or fields.get("address") or "")
@@ -519,12 +606,12 @@ def convert_rows(
             prefix = LAYOVER_ID_PREFIX
             source = "Layover"
             description = clean_text(fields.get("description") or LAYOVER_DEFAULT_DESCRIPTION)
-            accommodations = infer_layover_accommodations(note, fields.get("accommodations"))
+            accommodations = infer_layover_accommodations(inference_text, fields.get("accommodations"))
         elif kind == "private":
             prefix = PRIVATE_ID_PREFIX
             source = "Private Camps"
             description = clean_text(fields.get("description") or PRIVATE_DEFAULT_DESCRIPTION)
-            accommodations = infer_private_accommodations(note, fields.get("accommodations"))
+            accommodations = infer_private_accommodations(inference_text, fields.get("accommodations"))
         else:
             raise ValueError(f"Unsupported kind: {kind}")
 
@@ -537,7 +624,7 @@ def convert_rows(
             "longitude": lon,
             "pricePerNight": parse_float(fields.get("price"), 0.0),
             "horseFeePerNight": parse_float(fields.get("horsefee") or fields.get("horsefeepernight"), 0.0),
-            "hookups": infer_hookups(note, fields.get("hookups")),
+            "hookups": infer_hookups(inference_text, fields.get("hookups")),
             "accommodations": accommodations,
             "maxRigLength": parse_int(fields.get("rig") or fields.get("maxrig") or fields.get("maxriglength"), 0),
             "stallCount": parse_int(fields.get("stalls") or fields.get("stallcount"), 0),
@@ -558,6 +645,8 @@ def convert_rows(
             "imageColors": DEFAULT_IMAGE_COLORS,
             "photoURLs": [],
             "source": source,
+            "sourceUrl": clean_text(csv_url),
+            "googleMapsUrl": clean_text(csv_url) if is_google_maps_url(csv_url) else "",
         }
 
         dup_reason = existing_manual_duplicate(record, existing_manual_records)
@@ -609,8 +698,9 @@ def main() -> int:
     report_lines = [
         "# Google Maps Saved List Import Report",
         "",
-        "This importer only trusts coordinates entered in the CSV `Note` field.",
+        "This importer only trusts coordinates entered in the CSV `Note` or `Coordinates` field.",
         "It does not call Google Places and does not fuzzy-match names.",
+        "Optional columns supported: `Website`, `Phone`, `Description`, `URL`, `Tags`, `Comment`.",
         "",
     ]
 

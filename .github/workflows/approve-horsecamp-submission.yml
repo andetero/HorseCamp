@@ -52,7 +52,7 @@ jobs:
 
           # Only commit source/staging files here. Do NOT run fetch_camps.py or update camps.json.
           # The scheduled Seed Camp Data workflow will rebuild camps.json overnight, or you can run it manually.
-          git add data/layovers.json data/private_camps.json data/submissions
+          git add data/private_camps.json data/submissions
 
           if git diff --staged --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"

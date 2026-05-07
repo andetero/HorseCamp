@@ -94,7 +94,7 @@ jobs:
 
           # Only commit source/review files here. Do NOT run fetch_camps.py or update camps.json.
           # The scheduled Seed Camp Data workflow will rebuild camps.json overnight, or you can run it manually.
-          git add data/exclusions.json data/overrides.json data/problem_reports
+          git add data/exclusions.json data/overrides.json
 
           if git diff --staged --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -128,7 +128,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh issue comment "${{ steps.issue.outputs.number }}" --body "Approved data-fix report converted into a PR for final review: ${{ steps.pr.outputs.url }}"
+          gh issue comment "${{ steps.issue.outputs.number }}" --body "Approved structured data-fix report converted into a PR for final review: ${{ steps.pr.outputs.url }}"
 
           # Make this idempotent: create the status label if it does not already exist.
           gh label create "pr-created" --color "8250df" --description "Submission or data-fix PR has been created" 2>/dev/null || true

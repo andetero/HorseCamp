@@ -127,6 +127,63 @@ def safe_get(url, headers=None, params=None, retries=3):
             time.sleep(3)
     return None
 
+def print_section(title):
+    print(f"\n=== {title} ===")
+
+
+def print_metric(label, value, width=28):
+    print(f"  {label + ':':<{width}} {value}")
+
+
+def haversine_meters(lat1, lon1, lat2, lon2):
+    import math
+    radius_m = 6371000
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
+    dphi = math.radians(lat2 - lat1)
+    dlam = math.radians(lon2 - lon1)
+    a = math.sin(dphi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlam / 2) ** 2
+    return radius_m * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+
+def is_near_existing_camp(camp, existing_camps, threshold_m=500):
+    try:
+        lat = float(camp["latitude"])
+        lng = float(camp["longitude"])
+    except (KeyError, TypeError, ValueError):
+        return False
+
+    for existing in existing_camps.values():
+        try:
+            if haversine_meters(lat, lng, float(existing["latitude"]), float(existing["longitude"])) < threshold_m:
+                return True
+        except (KeyError, TypeError, ValueError):
+            continue
+    return False
+
+
+def merge_camps_by_id_and_proximity(camps, all_camps, threshold_m=500):
+    """Merge camps into all_camps while skipping duplicate IDs and nearby duplicates.
+
+    Returns (added, duplicate_id_skips, proximity_skips). This keeps source merge
+    behavior consistent for partner/curated sources and makes workflow logs clearer.
+    """
+    added = 0
+    duplicate_id_skips = 0
+    proximity_skips = 0
+
+    for camp in camps:
+        cid = camp["id"]
+        if cid in all_camps:
+            duplicate_id_skips += 1
+            continue
+        if is_near_existing_camp(camp, all_camps, threshold_m=threshold_m):
+            proximity_skips += 1
+            continue
+        all_camps[cid] = camp
+        added += 1
+
+    return added, duplicate_id_skips, proximity_skips
+
 
 
 def _compact_selected_array_fields(json_text, field_names):
@@ -1978,53 +2035,36 @@ def main():
         elapsed = time.time() - started
         print(f"  {abbr} State Parks: {merged} new listings added [{elapsed:.1f}s]")
 
-    print("\nMerging HorseMotel.com partner listings...")
-    import math as _math
-    horsemotel_new = 0
-    for camp in fetch_horsemotel_listings():
-        cid = camp["id"]
-        if cid not in all_camps:
-            lat, lng = camp["latitude"], camp["longitude"]
-            dup = False
-            for ex in all_camps.values():
-                dlat = _math.radians(lat - ex["latitude"])
-                dlng = _math.radians(lng - ex["longitude"])
-                a = _math.sin(dlat/2)**2 + _math.cos(_math.radians(lat))*_math.cos(_math.radians(ex["latitude"]))*_math.sin(dlng/2)**2
-                if 6371000 * 2 * _math.atan2(_math.sqrt(a), _math.sqrt(1-a)) < 500:
-                    dup = True
-                    break
-            if not dup:
-                all_camps[cid] = camp
-                horsemotel_new += 1
-    print(f"  HorseMotel.com: {horsemotel_new} new listings added")
+    print_section("Partner Sources")
+    print("Merging HorseMotel.com partner listings...")
+    horsemotel_new, horsemotel_duplicate_ids, horsemotel_duplicate_nearby = merge_camps_by_id_and_proximity(
+        fetch_horsemotel_listings(),
+        all_camps,
+    )
+    print_metric("HorseMotel.com added", horsemotel_new)
+    print_metric("HorseMotel.com duplicate IDs", horsemotel_duplicate_ids)
+    print_metric("HorseMotel.com nearby duplicates", horsemotel_duplicate_nearby)
 
-    print("\nMerging private camp listings...")
-    private_camp_new = 0
-    for camp in fetch_private_camps():
-        cid = camp["id"]
-        if cid not in all_camps:
-            lat, lng = camp["latitude"], camp["longitude"]
-            dup = False
-            for ex in all_camps.values():
-                dlat = _math.radians(lat - ex["latitude"])
-                dlng = _math.radians(lng - ex["longitude"])
-                a = _math.sin(dlat/2)**2 + _math.cos(_math.radians(lat))*_math.cos(_math.radians(ex["latitude"]))*_math.sin(dlng/2)**2
-                if 6371000 * 2 * _math.atan2(_math.sqrt(a), _math.sqrt(1-a)) < 500:
-                    dup = True
-                    break
-            if not dup:
-                all_camps[cid] = camp
-                private_camp_new += 1
-    print(f"  Private Camps: {private_camp_new} new listings added")
+    print_section("Private / Curated Sources")
+    print("Merging private camp listings...")
+    private_camp_new, private_camp_duplicate_ids, private_camp_duplicate_nearby = merge_camps_by_id_and_proximity(
+        fetch_private_camps(),
+        all_camps,
+    )
+    print_metric("Private Camps added", private_camp_new)
+    print_metric("Private Camps duplicate IDs", private_camp_duplicate_ids)
+    print_metric("Private Camps nearby duplicates", private_camp_duplicate_nearby)
 
-    print("\nFetching from OpenStreetMap...")
+    print_section("OpenStreetMap")
+    print("Fetching from OpenStreetMap...")
     osm_camps = fetch_osm(all_camps)
     for camp in osm_camps:
         cid = camp["id"]
         if cid not in all_camps:
             all_camps[cid] = camp
 
-    print("\nApplying manual exclusions...")
+    print_section("Cleanup / Data Quality")
+    print("Applying manual exclusions...")
     excluded_count = apply_exclusions(all_camps)
 
     print("\nRemoving invalid/non-horse listings...")
@@ -2043,23 +2083,53 @@ def main():
     output_path = REPO_ROOT / "camps.json"
     write_camps_json(output_path, output)
 
-    osm_count = sum(1 for c in camps_list if c.get("source") == "OSM")
-    horsemotel_count = sum(1 for c in camps_list if c.get("source") == "HorseMotel.com")
-    private_camp_count = sum(1 for c in camps_list if c.get("source") == "Private Camps")
+    source_counts = {}
+    for camp in camps_list:
+        source = camp.get("source") or "Unknown"
+        source_counts[source] = source_counts.get(source, 0) + 1
+    osm_count = source_counts.get("OSM", 0)
+    horsemotel_count = source_counts.get("HorseMotel.com", 0)
+    private_camp_count = source_counts.get("Private Camps", 0)
+    state_parks_count = source_counts.get("State Parks", 0)
+    ridb_count = source_counts.get("RIDB", 0)
+    nps_count = source_counts.get("NPS", 0)
     verified_count = sum(1 for c in camps_list if c.get("isVerified"))
-    print(f"\nDone. {len(camps_list)} total camps written to {output_path.relative_to(REPO_ROOT)}")
-    print(f"  RIDB:         {total_ridb}")
-    print(f"  NPS:          {total_nps}")
+
+    print_section("Final Totals")
+    print(f"Done. {len(camps_list)} total camps written to {output_path.relative_to(REPO_ROOT)}")
+
+    print("\nFederal fetch totals:")
+    print_metric("RIDB fetched before cleanup", total_ridb)
+    print_metric("NPS fetched before cleanup", total_nps)
+
+    print("\nState park source totals:")
     for abbr in sorted(state_park_totals):
-        print(f"  {abbr} StateParks:{state_park_totals[abbr]}")
-    print(f"  HorseMotel.com:{horsemotel_count}")
-    print(f"  Private Camps:{private_camp_count}")
-    print(f"  OSM:          {osm_count}")
-    print(f"  Excluded:     {excluded_count}")
-    print(f"  Invalid:      {invalid_count}")
-    print(f"  Overrides:    {override_count}")
-    print(f"  Verified:     {verified_count}")
-    print(f"  Unique total: {len(camps_list)}")
+        print_metric(f"{abbr} State Parks", state_park_totals[abbr])
+
+    print("\nPartner / curated merge:")
+    print_metric("HorseMotel.com added", horsemotel_new)
+    print_metric("HorseMotel.com duplicate IDs", horsemotel_duplicate_ids)
+    print_metric("HorseMotel.com nearby duplicates", horsemotel_duplicate_nearby)
+    print_metric("Private Camps added", private_camp_new)
+    print_metric("Private Camps duplicate IDs", private_camp_duplicate_ids)
+    print_metric("Private Camps nearby duplicates", private_camp_duplicate_nearby)
+
+    print("\nFinal feed by source:")
+    print_metric("RIDB", ridb_count)
+    print_metric("NPS", nps_count)
+    print_metric("State Parks", state_parks_count)
+    print_metric("HorseMotel.com", horsemotel_count)
+    print_metric("Private Camps", private_camp_count)
+    print_metric("OpenStreetMap", osm_count)
+
+    print("\nData quality adjustments:")
+    print_metric("Exclusions applied", excluded_count)
+    print_metric("Invalid/non-horse removed", invalid_count)
+    print_metric("Overrides applied", override_count)
+
+    print("\nOverall:")
+    print_metric("Verified listings", verified_count)
+    print_metric("Unique total", len(camps_list))
 
 
 if __name__ == "__main__":

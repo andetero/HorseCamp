@@ -25,7 +25,6 @@ jobs:
       (github.event_name == 'issues' &&
        github.event.label.name == 'approved' &&
        contains(github.event.issue.labels.*.name, 'problem-report') &&
-       contains(github.event.issue.labels.*.name, 'data-fix') &&
        !contains(github.event.issue.labels.*.name, 'pr-created')) ||
       github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
@@ -60,7 +59,6 @@ jobs:
 
           require_label "approved"
           require_label "problem-report"
-          require_label "data-fix"
 
           if grep -Fxq "pr-created" /tmp/issue_labels.txt; then
             echo "Issue #${{ steps.issue.outputs.number }} already has pr-created; nothing to do." >&2

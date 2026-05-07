@@ -24,7 +24,6 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 DATA_DIR = REPO_ROOT / "data"
 HORSEMOTEL_FILE = DATA_DIR / "horsemotel_listings.json"
-LAYOVERS_FILE = DATA_DIR / "layovers.json"  # legacy; replaced by HorseMotel.com partner listings
 PRIVATE_CAMPS_FILE = DATA_DIR / "private_camps.json"
 STATE_PARKS_DIR = DATA_DIR / "state_parks"
 
@@ -134,8 +133,7 @@ def _compact_selected_array_fields(json_text, field_names):
     """Collapse selected array fields onto a single line after pretty-printing JSON.
 
     This keeps the overall 2-space-indented structure, while matching the manual
-    style used in data/layovers.json for short arrays like accommodations and
-    imageColors.
+    style used for short arrays like accommodations and imageColors.
     """
     field_pattern = "|".join(re.escape(name) for name in field_names)
     pattern = re.compile(
@@ -775,17 +773,6 @@ def fetch_ca_state_parks():
 
 IL_HORSEBACK_URL = "https://dnr.illinois.gov/recreation/horsebackriding.html"
 
-# Official Illinois DNR equestrian-camping pages that can be missed by the
-# statewide horseback-riding page parser because the page is not a stable data
-# table. Keep these as dynamic importer seeds instead of creating il.json so
-# Illinois remains a single official-source pipeline.
-IL_EQUESTRIAN_CAMP_SEEDS = [
-    (
-        "Middle Fork State Fish and Wildlife Area",
-        "https://dnr.illinois.gov/parks/camp/park.middlefork.html",
-    ),
-]
-
 
 def _strip_html_basic(text):
     text = re.sub(r"<script[\s\S]*?</script>", " ", text, flags=re.I)
@@ -991,14 +978,11 @@ def fetch_il_state_parks():
         full_href = href if href.startswith('http') else ('https://dnr.illinois.gov' + href)
         yes_sites.append((site_name, full_href))
 
-    # Add explicit official DNR equestrian-camping seeds that the statewide page
-    # can miss, then deduplicate while preserving order.
-    yes_sites.extend(IL_EQUESTRIAN_CAMP_SEEDS)
-
+    # Deduplicate while preserving order.
     seen = set()
     deduped_sites = []
     for site_name, full_href in yes_sites:
-        key = re.sub(r"[^a-z0-9]+", "", site_name.lower())
+        key = site_name.lower()
         if key not in seen:
             seen.add(key)
             deduped_sites.append((site_name, full_href))
@@ -1219,7 +1203,7 @@ def fetch_osm(existing_camps):
     """
     Fetches horse-friendly campsites from OpenStreetMap via Overpass API.
     Uses the horse=yes tag which is explicitly set by OSM contributors.
-    Deduplicates against existing RIDB/NPS/Layover camps by proximity (500m).
+    Deduplicates against existing RIDB/NPS/private camps by proximity (500m).
     Free, no API key required.
     """
     import math, urllib.request, urllib.parse
@@ -1395,7 +1379,7 @@ out center;
 # ── HORSEMOTEL.COM PARTNER LISTINGS ───────────────────────────────────
 # Authorized partner data from HorseMotel.com. HorseMotel.com remains the
 # source of truth; this repo stores the normalized app-ready JSON snapshot.
-# These listings replace the legacy generic Layover source in the app.
+# These listings provide the authorized HorseMotel.com partner source in the app.
 def fetch_horsemotel_listings():
     if not HORSEMOTEL_FILE.exists():
         raise FileNotFoundError(

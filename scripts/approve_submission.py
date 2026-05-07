@@ -21,7 +21,6 @@ from pathlib import Path
 from typing import Any
 
 PRIVATE_CAMPS_PATH = Path("data/private_camps.json")
-LAYOVERS_PATH = Path("data/layovers.json")
 CAMPS_PATH = Path("camps.json")
 SUBMISSION_LOG_DIR = Path("data/submissions")
 
@@ -32,10 +31,6 @@ PRIVATE_DEFAULT_DESCRIPTION = (
     "amenities, fees, and rules before travel."
 )
 
-LAYOVER_DEFAULT_DESCRIPTION = (
-    "Horse layover. Details may change; please confirm overnight horse access, "
-    "availability, amenities, fees, and rules before travel."
-)
 
 JSON_BLOCK_RE = re.compile(
     r"<!--\s*HORSECAMP_SUBMISSION_JSON\s*(?P<json>\{.*?\})\s*HORSECAMP_SUBMISSION_JSON\s*-->",
@@ -231,10 +226,12 @@ def extract_submission(body: str) -> dict[str, Any]:
 def normalize_kind(value: Any) -> str:
     raw = clean_text(value).lower().replace("-", "_").replace(" ", "_")
     if raw in {"layover", "horse_layover", "horse_layovers"}:
-        return "layover"
+        # Legacy layover submissions now land in Private Camps.
+        # HorseMotel.com replaced the old standalone Layovers source.
+        return "private_camp"
     if raw in {"private_camp", "private", "camp", "horse_camp", "horse_camping"}:
         return "private_camp"
-    raise ValueError("type must be layover or private_camp")
+    raise ValueError("type must be private_camp")
 
 
 def make_id(prefix: str, name: str, state: str, existing_ids: set[str]) -> str:
@@ -299,18 +296,12 @@ def build_record(payload: dict[str, Any], issue_number: int, existing_ids: set[s
 
     description = clean_text(payload.get("description"))
     if not description:
-        description = LAYOVER_DEFAULT_DESCRIPTION if kind == "layover" else PRIVATE_DEFAULT_DESCRIPTION
+        description = PRIVATE_DEFAULT_DESCRIPTION
 
-    if kind == "layover":
-        source = "Layover"
-        target_path = LAYOVERS_PATH
-        id_prefix = "layover-submitted-"
-        accommodations = normalize_accommodations(payload.get("accommodations"), kind="layover")
-    else:
-        source = "Private Camps"
-        target_path = PRIVATE_CAMPS_PATH
-        id_prefix = "private-submitted-"
-        accommodations = normalize_accommodations(payload.get("accommodations"), kind="private_camp")
+    source = "Private Camps"
+    target_path = PRIVATE_CAMPS_PATH
+    id_prefix = "private-submitted-"
+    accommodations = normalize_accommodations(payload.get("accommodations"), kind="private_camp")
 
     record = {
         "id": make_id(id_prefix, name, state, existing_ids),
@@ -400,9 +391,7 @@ def main() -> int:
 
     all_existing = []
     target_existing_private = load_json_array(PRIVATE_CAMPS_PATH)
-    target_existing_layovers = load_json_array(LAYOVERS_PATH)
     all_existing.extend(target_existing_private)
-    all_existing.extend(target_existing_layovers)
     if CAMPS_PATH.exists():
         all_existing.extend(load_json_array(CAMPS_PATH))
 
@@ -416,7 +405,7 @@ def main() -> int:
     append_record(target_path, record)
     log_path = write_submission_log(args.issue_number, kind, record, payload)
 
-    human_kind = "layover" if kind == "layover" else "private camp"
+    human_kind = "private camp"
     pr_title = f"Add {human_kind}: {record['name']}"
     pr_body = (
         f"Closes #{args.issue_number}\n\n"

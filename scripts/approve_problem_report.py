@@ -3,10 +3,20 @@
 Approve a HorseCamp problem-report issue as a data fix.
 
 Supported approved report types:
-- "No horse camping" adds the reported campId to data/exclusions.json.
-- "Wrong location" adds/updates latitude and longitude in data/overrides.json.
+- Wrong location
+- Closed / no longer available
+- No horse camping
+- Duplicate listing
+- Missing phone
+- Missing website
+- Missing description/details
+- Missing accommodations
+- Incorrect amenities/accommodations
+- Bad phone / website
+- Other
 
 The GitHub Action opens a PR for final review before the data fix is merged.
+The issue body may contain plain JSON, fenced JSON, or the legacy hidden JSON block.
 """
 
 from __future__ import annotations
@@ -28,6 +38,68 @@ HIDDEN_JSON_RE = re.compile(
     re.DOTALL | re.IGNORECASE,
 )
 FENCED_JSON_RE = re.compile(r"```(?:json)?\s*(?P<json>\{.*?\})\s*```", re.DOTALL | re.IGNORECASE)
+
+EXCLUSION_CATEGORIES = {
+    "closed no longer available",
+    "closed / no longer available",
+    "closed",
+    "no horse camping",
+    "duplicate listing",
+    "duplicate",
+}
+
+CATEGORY_ALIASES = {
+    "wronglocation": "Wrong location",
+    "closednolongeravailable": "Closed / no longer available",
+    "closed": "Closed / no longer available",
+    "nohorsecamping": "No horse camping",
+    "duplicatelisting": "Duplicate listing",
+    "duplicate": "Duplicate listing",
+    "missingphone": "Missing phone",
+    "missingwebsite": "Missing website",
+    "missingdescriptiondetails": "Missing description/details",
+    "missingdescription": "Missing description/details",
+    "missingdetails": "Missing description/details",
+    "missingaccommodations": "Missing accommodations",
+    "incorrectamenitiesaccommodations": "Incorrect amenities/accommodations",
+    "incorrectaccommodationsamenities": "Incorrect amenities/accommodations",
+    "incorrectamenities": "Incorrect amenities/accommodations",
+    "incorrectaccommodations": "Incorrect amenities/accommodations",
+    "badphonewebsite": "Bad phone / website",
+    "badphone": "Bad phone / website",
+    "badwebsite": "Bad phone / website",
+    "other": "Other",
+}
+
+OVERRIDE_ALLOWED_FIELDS = {
+    "name",
+    "location",
+    "address",
+    "city",
+    "state",
+    "latitude",
+    "longitude",
+    "phone",
+    "website",
+    "description",
+    "hookups",
+    "accommodations",
+    "maxRigLength",
+    "stallCount",
+    "paddockCount",
+    "seasonStart",
+    "seasonEnd",
+    "hasWashRack",
+    "hasDumpStation",
+    "hasWifi",
+    "hasBathhouse",
+    "pullThroughAvailable",
+}
+
+BOOLEAN_FIELDS = {"hasWashRack", "hasDumpStation", "hasWifi", "hasBathhouse", "pullThroughAvailable"}
+INTEGER_FIELDS = {"maxRigLength", "stallCount", "paddockCount", "seasonStart", "seasonEnd"}
+FLOAT_FIELDS = {"latitude", "longitude"}
+LIST_FIELDS = {"hookups", "accommodations"}
 
 
 def clean_text(value: Any) -> str:
@@ -210,7 +282,7 @@ def extract_problem_report(body: str) -> dict[str, Any]:
 
 
 def get_camp_id(payload: dict[str, Any]) -> str:
-    camp_id = clean_text(payload.get("campId") or payload.get("camp_id") or payload.get("id"))
+    camp_id = clean_text(payload.get("campId") or payload.get("camp_id") or payload.get("listingId") or payload.get("listing_id") or payload.get("id"))
     if not camp_id:
         raise ValueError("Problem report is missing campId")
     if not re.fullmatch(r"[A-Za-z0-9_.:-]+", camp_id):
@@ -219,7 +291,7 @@ def get_camp_id(payload: dict[str, Any]) -> str:
 
 
 def get_category(payload: dict[str, Any]) -> str:
-    category = clean_text(payload.get("category") or payload.get("problemCategory") or payload.get("problem_category"))
+    category = clean_text(payload.get("category") or payload.get("problemCategory") or payload.get("problem_category") or payload.get("problemType") or payload.get("problem_type"))
     if not category:
         raise ValueError("Problem report is missing category/problemCategory")
     return category
@@ -231,6 +303,114 @@ def parse_float(value: Any, *, field: str) -> float:
     except (TypeError, ValueError) as exc:
         raise ValueError(f"{field} must be a number") from exc
     return parsed
+
+
+def parse_int(value: Any, *, field: str) -> int:
+    try:
+        return int(float(str(value).strip()))
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{field} must be an integer") from exc
+
+
+def parse_bool(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    text = clean_text(value).lower()
+    if text in {"1", "true", "yes", "y", "on", "available"}:
+        return True
+    if text in {"0", "false", "no", "n", "off", "unavailable", ""}:
+        return False
+    raise ValueError(f"Expected a boolean value, got: {value!r}")
+
+
+def coerce_string_list(value: Any) -> list[str]:
+    if value is None or value == "":
+        return []
+    if isinstance(value, list):
+        items = value
+    else:
+        items = re.split(r"[,;|]", str(value))
+    out: list[str] = []
+    for item in items:
+        cleaned = clean_text(item)
+        if cleaned and cleaned not in out:
+            out.append(cleaned)
+    return out
+
+
+def canonical_category(category: str) -> str:
+    compact = normalize_field_name(category)
+    return CATEGORY_ALIASES.get(compact, category.strip())
+
+
+def get_proposed_updates(payload: dict[str, Any], category: str) -> dict[str, Any]:
+    updates = payload.get("proposedUpdates") or payload.get("proposed_updates") or payload.get("updates")
+    if updates is not None:
+        if not isinstance(updates, dict):
+            raise ValueError("proposedUpdates must be a JSON object")
+        return dict(updates)
+
+    # Backward-compatible support for older issue bodies where values were top-level fields.
+    direct: dict[str, Any] = {}
+    for field in OVERRIDE_ALLOWED_FIELDS:
+        if field in payload and payload[field] not in (None, ""):
+            direct[field] = payload[field]
+
+    normalized = normalize_field_name(category)
+    if normalized == "missingphone" and payload.get("phone"):
+        direct["phone"] = payload["phone"]
+    if normalized == "missingwebsite" and payload.get("website"):
+        direct["website"] = payload["website"]
+    if normalized in {"missingdescriptiondetails", "missingdescription", "missingdetails"}:
+        description = payload.get("description") or payload.get("details")
+        if description:
+            direct["description"] = description
+    return direct
+
+
+def normalize_override_updates(updates: dict[str, Any], *, category: str) -> dict[str, Any]:
+    normalized: dict[str, Any] = {}
+    unknown_fields = sorted(set(updates) - OVERRIDE_ALLOWED_FIELDS - {"exclude", "excludeReason", "duplicateOf", "duplicate_of"})
+    if unknown_fields:
+        raise ValueError(f"Unsupported proposedUpdates field(s): {', '.join(unknown_fields)}")
+
+    for field, value in updates.items():
+        if field not in OVERRIDE_ALLOWED_FIELDS:
+            continue
+        if value is None or value == "":
+            continue
+        if field in FLOAT_FIELDS:
+            parsed = parse_float(value, field=field)
+            if field == "latitude" and not (-90 <= parsed <= 90):
+                raise ValueError("latitude must be between -90 and 90")
+            if field == "longitude" and not (-180 <= parsed <= 180):
+                raise ValueError("longitude must be between -180 and 180")
+            normalized[field] = parsed
+        elif field in INTEGER_FIELDS:
+            normalized[field] = parse_int(value, field=field)
+        elif field in BOOLEAN_FIELDS:
+            normalized[field] = parse_bool(value)
+        elif field in LIST_FIELDS:
+            normalized[field] = coerce_string_list(value)
+        else:
+            normalized[field] = clean_text(value)
+
+    if ("latitude" in normalized) ^ ("longitude" in normalized):
+        raise ValueError("latitude and longitude must be approved together")
+    if normalized.get("latitude") == 0 and normalized.get("longitude") == 0:
+        raise ValueError("latitude/longitude cannot both be zero")
+
+    normalized_category = normalize_field_name(category)
+    if normalized_category == "missingphone" and "phone" not in normalized:
+        raise ValueError("Missing phone reports must include proposedUpdates.phone")
+    if normalized_category == "missingwebsite" and "website" not in normalized:
+        raise ValueError("Missing website reports must include proposedUpdates.website")
+    if normalized_category in {"missingdescriptiondetails", "missingdescription", "missingdetails"} and "description" not in normalized:
+        raise ValueError("Missing description/details reports must include proposedUpdates.description")
+    if normalized_category in {"missingaccommodations", "incorrectamenitiesaccommodations", "incorrectaccommodationsamenities", "incorrectamenities", "incorrectaccommodations"}:
+        if not any(key in normalized for key in ("accommodations", "hookups", "hasWashRack", "hasDumpStation", "hasWifi", "hasBathhouse", "pullThroughAvailable", "stallCount", "paddockCount")):
+            raise ValueError("Accommodation/amenity reports must include at least one accommodation, hookup, or amenity field")
+    return normalized
 
 
 def parse_coordinates(payload: dict[str, Any]) -> tuple[float, float]:
@@ -291,96 +471,166 @@ def write_github_outputs(output_path: str | None, *, pr_title: str, pr_body: str
         f.write("\nEOF\n")
 
 
-def approve_no_horse_camping(issue_number: int, payload: dict[str, Any], camp_id: str, camp_name: str, category: str, notes: str) -> tuple[str, str, str]:
+def build_pr_body(
+    *,
+    issue_number: int,
+    target: str,
+    category: str,
+    camp_id: str,
+    notes: str,
+    payload: dict[str, Any],
+    action_summary: str,
+) -> str:
+    body = (
+        f"Closes #{issue_number}\n\n"
+        f"Target: `{target}`\n\n"
+        f"Approved problem report category: `{category}`\n\n"
+        f"Listing ID: `{camp_id}`\n\n"
+        f"{action_summary}\n\n"
+        "Important: editing this PR description/body does not change app data. "
+        "To change what gets merged into the app, edit the JSON file in the Files changed tab.\n\n"
+    )
+    if notes:
+        body += f"User notes: {notes}\n\n"
+    body += (
+        "Problem report payload for review:\n\n"
+        "```json\n"
+        f"{compact_json(payload)}\n"
+        "```\n\n"
+        "Review the JSON diff below, then merge when ready. Merging this PR will automatically close the linked issue."
+    )
+    return body
+
+
+def approve_exclusion_report(issue_number: int, payload: dict[str, Any], camp_id: str, camp_name: str, category: str, notes: str) -> tuple[str, str, str]:
+    updates = get_proposed_updates(payload, category)
+    duplicate_of = clean_text(updates.get("duplicateOf") or updates.get("duplicate_of") or payload.get("duplicateOf") or payload.get("duplicate_of"))
+    exclude_reason = clean_text(
+        updates.get("excludeReason")
+        or updates.get("exclude_reason")
+        or payload.get("excludeReason")
+        or payload.get("exclude_reason")
+        or category
+    )
+
     exclusions = load_exclusions()
     already_excluded = camp_id in exclusions
     if not already_excluded:
         exclusions.append(camp_id)
         write_exclusions(exclusions)
 
-    log_path = write_problem_report_log(
-        issue_number,
-        payload,
-        "exclude_generated_listing",
-        camp_id,
-        {"alreadyExcluded": already_excluded, "target": str(EXCLUSIONS_PATH)},
-    )
+    result = {"alreadyExcluded": already_excluded, "target": str(EXCLUSIONS_PATH), "excludeReason": exclude_reason}
+    if duplicate_of:
+        result["duplicateOf"] = duplicate_of
+    log_path = write_problem_report_log(issue_number, payload, "exclude_listing", camp_id, result)
 
-    pr_title = f"Exclude non-horse-camping listing: {camp_name}"
-    pr_body = (
-        f"Closes #{issue_number}\n\n"
-        f"Target: `{EXCLUSIONS_PATH}`\n\n"
-        f"Approved problem report category: `{category}`\n\n"
-        f"This PR adds the generated listing ID `{camp_id}` to `data/exclusions.json`. "
-        "The next Seed Camp Data run will remove this listing from `camps.json`.\n\n"
-        "Important: editing this PR description/body does not change app data. "
-        "To change what gets merged into the app, edit `data/exclusions.json` in the Files changed tab.\n\n"
+    action_summary = (
+        f"This PR adds generated listing ID `{camp_id}` to `data/exclusions.json`. "
+        "The next Seed Camp Data run will remove this listing from `camps.json`."
     )
-    if notes:
-        pr_body += f"User notes: {notes}\n\n"
-    pr_body += (
-        "Problem report payload for review:\n\n"
-        "```json\n"
-        f"{compact_json(payload)}\n"
-        "```\n\n"
-        "Review the JSON diff below, then merge when ready. Merging this PR will automatically close the linked issue."
-    )
+    if duplicate_of:
+        action_summary += f"\n\nDuplicate of: `{duplicate_of}`"
+    if exclude_reason:
+        action_summary += f"\n\nReason: {exclude_reason}"
 
-    if already_excluded:
-        summary = f"{camp_id} was already present in {EXCLUSIONS_PATH}; wrote review log: {log_path}"
+    if canonical_category(category) == "Duplicate listing":
+        pr_title = f"Exclude duplicate listing: {camp_name}"
+    elif canonical_category(category) == "Closed / no longer available":
+        pr_title = f"Exclude closed listing: {camp_name}"
     else:
-        summary = f"Added {camp_id} to {EXCLUSIONS_PATH}; wrote review log: {log_path}"
+        pr_title = f"Exclude listing: {camp_name}"
+
+    pr_body = build_pr_body(
+        issue_number=issue_number,
+        target=str(EXCLUSIONS_PATH),
+        category=category,
+        camp_id=camp_id,
+        notes=notes,
+        payload=payload,
+        action_summary=action_summary,
+    )
+    summary = f"Added {camp_id} to {EXCLUSIONS_PATH}; wrote review log: {log_path}" if not already_excluded else f"{camp_id} was already present in {EXCLUSIONS_PATH}; wrote review log: {log_path}"
     return pr_title, pr_body, summary
 
 
-def approve_wrong_location(issue_number: int, payload: dict[str, Any], camp_id: str, camp_name: str, category: str, notes: str) -> tuple[str, str, str]:
-    latitude, longitude = parse_coordinates(payload)
+def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id: str, camp_name: str, category: str, notes: str) -> tuple[str, str, str]:
+    updates = get_proposed_updates(payload, category)
+
+    # Coordinate reports can still use the older top-level coordinates field.
+    if canonical_category(category) == "Wrong location" and not {"latitude", "longitude"}.issubset(updates):
+        latitude, longitude = parse_coordinates(payload)
+        updates["latitude"] = latitude
+        updates["longitude"] = longitude
+
+    normalized_updates = normalize_override_updates(updates, category=category)
+    if not normalized_updates:
+        # All reports still create a PR path. For truly generic/Other reports, keep a review log only.
+        log_path = write_problem_report_log(
+            issue_number,
+            payload,
+            "review_only",
+            camp_id,
+            {"target": str(REPORT_LOG_DIR), "message": "No source JSON override was provided; maintainer review required."},
+        )
+        pr_title = f"Review HorseCamp problem report: {camp_name}"
+        pr_body = build_pr_body(
+            issue_number=issue_number,
+            target=str(log_path),
+            category=category,
+            camp_id=camp_id,
+            notes=notes,
+            payload=payload,
+            action_summary="This PR records the approved problem report for review. Add a concrete override or exclusion in the Files changed tab before merging if app data should change.",
+        )
+        return pr_title, pr_body, f"Wrote review-only problem report log: {log_path}"
+
     overrides = load_overrides()
     existing_patch = dict(overrides.get(camp_id, {}))
-    previous_latitude = existing_patch.get("latitude")
-    previous_longitude = existing_patch.get("longitude")
-
-    existing_patch["latitude"] = latitude
-    existing_patch["longitude"] = longitude
+    previous_values = {key: existing_patch.get(key) for key in normalized_updates}
+    existing_patch.update(normalized_updates)
     overrides[camp_id] = existing_patch
     write_overrides(overrides)
 
     log_path = write_problem_report_log(
         issue_number,
         payload,
-        "coordinate_override",
+        "override_listing_fields",
         camp_id,
         {
             "target": str(OVERRIDES_PATH),
-            "latitude": latitude,
-            "longitude": longitude,
-            "previousLatitude": previous_latitude,
-            "previousLongitude": previous_longitude,
+            "updates": normalized_updates,
+            "previousValues": previous_values,
         },
     )
 
-    pr_title = f"Correct listing location: {camp_name}"
-    pr_body = (
-        f"Closes #{issue_number}\n\n"
-        f"Target: `{OVERRIDES_PATH}`\n\n"
-        f"Approved problem report category: `{category}`\n\n"
-        f"This PR adds or updates a coordinate override for generated listing ID `{camp_id}`. "
-        "The next Seed Camp Data run will apply these coordinates to `camps.json`.\n\n"
-        f"Corrected coordinates: `{latitude}, {longitude}`\n\n"
-        "Important: editing this PR description/body does not change app data. "
-        "To change what gets merged into the app, edit `data/overrides.json` in the Files changed tab.\n\n"
-    )
-    if notes:
-        pr_body += f"User notes: {notes}\n\n"
-    pr_body += (
-        "Problem report payload for review:\n\n"
-        "```json\n"
-        f"{compact_json(payload)}\n"
-        "```\n\n"
-        "Review the JSON diff below, then merge when ready. Merging this PR will automatically close the linked issue."
-    )
+    category_title = canonical_category(category)
+    if category_title == "Wrong location":
+        pr_title = f"Correct listing location: {camp_name}"
+    elif category_title in {"Missing phone", "Missing website", "Missing description/details", "Missing accommodations"}:
+        pr_title = f"Add missing listing info: {camp_name}"
+    elif category_title in {"Incorrect amenities/accommodations", "Bad phone / website"}:
+        pr_title = f"Correct listing details: {camp_name}"
+    else:
+        pr_title = f"Update listing details: {camp_name}"
 
-    summary = f"Set coordinate override for {camp_id} to {latitude}, {longitude} in {OVERRIDES_PATH}; wrote review log: {log_path}"
+    action_summary = (
+        f"This PR adds or updates an override for generated listing ID `{camp_id}` in `data/overrides.json`. "
+        "The next Seed Camp Data run will apply these corrected fields to `camps.json`.\n\n"
+        "Proposed updates:\n\n"
+        "```json\n"
+        f"{compact_json(normalized_updates)}\n"
+        "```"
+    )
+    pr_body = build_pr_body(
+        issue_number=issue_number,
+        target=str(OVERRIDES_PATH),
+        category=category,
+        camp_id=camp_id,
+        notes=notes,
+        payload=payload,
+        action_summary=action_summary,
+    )
+    summary = f"Updated override for {camp_id} in {OVERRIDES_PATH}; wrote review log: {log_path}"
     return pr_title, pr_body, summary
 
 
@@ -395,19 +645,15 @@ def main() -> int:
     payload = extract_problem_report(body)
     camp_id = get_camp_id(payload)
     category = get_category(payload)
-    camp_name = clean_text(payload.get("campName") or payload.get("camp_name") or payload.get("name")) or camp_id
+    camp_name = clean_text(payload.get("campName") or payload.get("camp_name") or payload.get("listingName") or payload.get("listing_name") or payload.get("name")) or camp_id
     notes = clean_text(payload.get("notes") or payload.get("userNotes") or payload.get("user_notes"))
 
+    category = canonical_category(category)
     normalized_category = category_key(category)
-    if normalized_category == "no horse camping":
-        pr_title, pr_body, summary = approve_no_horse_camping(args.issue_number, payload, camp_id, camp_name, category, notes)
-    elif normalized_category == "wrong location":
-        pr_title, pr_body, summary = approve_wrong_location(args.issue_number, payload, camp_id, camp_name, category, notes)
+    if normalized_category in EXCLUSION_CATEGORIES:
+        pr_title, pr_body, summary = approve_exclusion_report(args.issue_number, payload, camp_id, camp_name, category, notes)
     else:
-        raise ValueError(
-            "This automation supports problem reports with category 'No horse camping' or 'Wrong location'. "
-            f"Found category: {category or '(blank)'}"
-        )
+        pr_title, pr_body, summary = approve_override_report(args.issue_number, payload, camp_id, camp_name, category, notes)
 
     print(summary)
     write_github_outputs(args.github_output, pr_title=pr_title, pr_body=pr_body, summary=summary)

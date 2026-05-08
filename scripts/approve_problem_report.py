@@ -90,6 +90,8 @@ OVERRIDE_ALLOWED_FIELDS = {
     "phone",
     "website",
     "description",
+    "pricePerNight",
+    "horseFeePerNight",
     "hookups",
     "accommodations",
     "maxRigLength",
@@ -106,7 +108,7 @@ OVERRIDE_ALLOWED_FIELDS = {
 
 BOOLEAN_FIELDS = {"hasWashRack", "hasDumpStation", "hasWifi", "hasBathhouse", "pullThroughAvailable"}
 INTEGER_FIELDS = {"maxRigLength", "stallCount", "paddockCount", "seasonStart", "seasonEnd"}
-FLOAT_FIELDS = {"latitude", "longitude"}
+FLOAT_FIELDS = {"latitude", "longitude", "pricePerNight", "horseFeePerNight"}
 LIST_FIELDS = {"hookups", "accommodations"}
 
 
@@ -203,8 +205,8 @@ def load_private_camps(path: Path = PRIVATE_CAMPS_PATH) -> list[dict[str, Any]]:
 
 def write_private_camps(private_camps: list[dict[str, Any]], path: Path = PRIVATE_CAMPS_PATH) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    # Keep simple scalar arrays such as hookups/accommodations on one line so
-    # GitHub reviews stay compact and match the curated private_camps.json style.
+    # Keep simple scalar arrays such as hookups/accommodations/imageColors/photoURLs
+    # on one line so GitHub reviews stay compact and match the curated data style.
     path.write_text(compact_json(private_camps) + "\n", encoding="utf-8")
 
 

@@ -203,7 +203,9 @@ def load_private_camps(path: Path = PRIVATE_CAMPS_PATH) -> list[dict[str, Any]]:
 
 def write_private_camps(private_camps: list[dict[str, Any]], path: Path = PRIVATE_CAMPS_PATH) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(pretty_json(private_camps), encoding="utf-8")
+    # Keep simple scalar arrays such as hookups/accommodations on one line so
+    # GitHub reviews stay compact and match the curated private_camps.json style.
+    path.write_text(compact_json(private_camps) + "\n", encoding="utf-8")
 
 
 def find_private_camp_index(private_camps: list[dict[str, Any]], camp_id: str) -> int | None:

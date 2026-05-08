@@ -8,8 +8,18 @@
     "longitude": -85.7756666666667,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["30A", "Water", "Sewer"],
-    "accommodations": ["Trails", "Stalls", "Corrals", "Group Camping", "Horse Camping"],
+    "hookups": [
+      "30A",
+      "Water",
+      "Sewer"
+    ],
+    "accommodations": [
+      "Trails",
+      "Stalls",
+      "Corrals",
+      "Group Camping",
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 31,
     "paddockCount": 0,
@@ -26,10 +36,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps"
   },
@@ -43,7 +50,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -60,10 +69,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Coldwater+Creek+Recreation+Area/data=!4m2!3m1!1s0x8890ff4d15981015:0x917a37e439ba5016",
@@ -79,7 +85,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -96,10 +104,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Faye+Whittemore+Farms/data=!4m2!3m1!1s0x88885ce42ba865a3:0x818ca288deefd60a",
@@ -115,7 +120,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -132,10 +139,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Hodges+Equestrian+Park/data=!4m2!3m1!1s0x88878de7161ad78f:0x6808203b8934a5",
@@ -151,7 +155,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -168,10 +174,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/The+Bolo+Club/data=!4m2!3m1!1s0x88619843f8bebab9:0xac809ef8e0b7d78b",
@@ -187,7 +190,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -204,10 +209,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Boston+Mountain+Horse+Camp/data=!4m2!3m1!1s0x87cdd95c9a3bbf29:0x67f4101594b8b92c",
@@ -223,7 +225,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -240,10 +244,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Caney+Mountain+Horse+Camp/data=!4m2!3m1!1s0x87d1e2b7e8b9215b:0xec5edbd7e82c1dc4",
@@ -259,7 +260,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -276,10 +279,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cowboy+Up+Trails/data=!4m2!3m1!1s0x87cdcf0789b52bfb:0x845dc3801a3f15df",
@@ -294,8 +294,15 @@
     "longitude": -92.95394,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["30A", "50A", "Water"],
-    "accommodations": ["Horse Camping", "Stalls"],
+    "hookups": [
+      "30A",
+      "50A",
+      "Water"
+    ],
+    "accommodations": [
+      "Horse Camping",
+      "Stalls"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -312,10 +319,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Falling+Water+Horse+Camp/data=!4m2!3m1!1s0x87cdcfdecd523257:0x575d9d4b6fbb4e8d",
@@ -331,7 +335,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -348,10 +354,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Idle+Nook+Horse+Camp+LLC/data=!4m2!3m1!1s0x87cb449948b13549:0xf0574b89203a16b2",
@@ -367,7 +370,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -384,10 +389,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Saddle+Valley+Ranch+Horse+%26+RV+Park/data=!4m2!3m1!1s0x87d1e129b0f3c873:0xc03108a59aee9e5f",
@@ -403,7 +405,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -420,10 +424,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Shelton's+Big+Flat+Getaway/data=!4m2!3m1!1s0x87d1fc69d62db41d:0x7fc66bce529a600d",
@@ -439,7 +440,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -456,10 +459,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Big+Chino+Ranch/data=!4m2!3m1!1s0x872d4fd2b25b8f35:0x7f0398733fc63e90",
@@ -475,7 +475,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -492,10 +494,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Gunsight+Point/data=!4m2!3m1!1s0x8734b34bda12f8c3:0xb8a1ea9c93ef922f",
@@ -511,7 +510,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -528,10 +529,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Hay+Creek+Ranch,+AZ+%E2%80%93+Horse+Camp/data=!4m2!3m1!1s0x86d63d6724d669ed:0x7cd0698bfa59b911",
@@ -547,7 +545,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -564,10 +564,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Little+Elden+Springs+Horse+Camp/data=!4m2!3m1!1s0x872d8985a15abf39:0xd9d211317327e166",
@@ -583,7 +580,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -600,10 +599,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/MCS+Stables/data=!4m2!3m1!1s0x872d852b5a7585cf:0x31007f446fc92f44",
@@ -619,7 +615,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -636,10 +634,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Mule+Power+Farms/data=!4m2!3m1!1s0x86d6685b525bdf89:0x47073ab1494b40c6",
@@ -655,7 +650,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -672,10 +669,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Phantom+Ranch/data=!4m2!3m1!1s0x873311a0814cef0f:0xce7cf77591d7d380",
@@ -691,7 +685,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -708,10 +704,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Ride+Out+Ranch/data=!4m2!3m1!1s0x872a1fa29726aa6f:0x4e0fe2771827b6af",
@@ -727,7 +720,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -744,10 +739,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Rocking+Dd+Horse+Ranch+and+Boarding+Facility/data=!4m2!3m1!1s0x872d2347b62f0bbb:0x44deb55ed5d28d4b",
@@ -763,7 +755,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -780,10 +774,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Tombstone+Livery+Stable+%26+RV+park/data=!4m2!3m1!1s0x86d73cee20f4c931:0x42b879d63ec70226",
@@ -799,7 +790,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -816,10 +809,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cottonwood+Guest+Ranch/data=!4m2!3m1!1s0x80a845a36a806d51:0x196253cf6bec2a3c",
@@ -835,7 +825,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -852,10 +844,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cuneo+Creek+Horse+Group+Camp/data=!4m2!3m1!1s0x54d466e04d72fd3b:0xf1f782c3b46ec6f7",
@@ -871,7 +860,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -888,10 +879,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Five+Brooks+Ranch/data=!4m2!3m1!1s0x8085c131320b3ba5:0x51fe73cb18ec2831",
@@ -907,7 +895,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -924,10 +914,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Iron+Horse+Unlimited+LLC/data=!4m2!3m1!1s0x54cde65bd273b803:0x85911322bb0a72d1",
@@ -943,7 +930,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -960,10 +949,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Orick+Rodeo+Grounds/data=!4m2!3m1!1s0x54d105609cf7bde3:0x63c9dca78dc31450",
@@ -979,7 +965,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -996,10 +984,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Orman+Guest+Ranch+%26+Stables/data=!4m2!3m1!1s0x54d067d8ba29ae11:0x30efcde155314460",
@@ -1015,7 +1000,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1032,10 +1019,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Wawona+Campground/data=!4m2!3m1!1s0x80969101f0d69c13:0xdeea110e6c2d95ec",
@@ -1051,7 +1035,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1068,10 +1054,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Yosemite+Valley+Stables/data=!4m2!3m1!1s0x8096f236b8f9b307:0xb47eaa1a1738d2da",
@@ -1087,7 +1070,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1104,10 +1089,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Beaver+Meadows+Resort+Ranch/data=!4m2!3m1!1s0x87690279f0ee31d5:0xdbea11c0aaefe492",
@@ -1123,7 +1105,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1140,10 +1124,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Buffalo+Arena/data=!4m2!3m1!1s0x873c1ce118717621:0xa4c63f5ccdffc113",
@@ -1159,7 +1140,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1176,10 +1159,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Canyon+Trails+Ranch/data=!4m2!3m1!1s0x87397081f3136c4b:0xcb75585e2f19f877",
@@ -1195,7 +1175,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1212,10 +1194,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Flathat+Ranch+Ltd/data=!4m2!3m1!1s0x8714ad5b428be4a1:0xc696bafe8d5e3b12",
@@ -1231,7 +1210,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1248,10 +1229,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Fritzlans+Guest+Ranch/data=!4m2!3m1!1s0x8743da6b893c1cfd:0xfdeec792374b3c58",
@@ -1267,7 +1245,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1284,10 +1264,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Horse+Ranch+Park/data=!4m2!3m1!1s0x87407b2d7ce4327d:0x5aa98cf481fd3574",
@@ -1303,7 +1280,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1320,10 +1299,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Indian+Creek+Campground/data=!4m2!3m1!1s0x876b616b18db7173:0x5d30cdfc10191023",
@@ -1339,7 +1315,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1356,10 +1334,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Kruger+Equestrian+Campground/data=!4m2!3m1!1s0x8769674bf47a3bf3:0xa866487681d69017",
@@ -1375,7 +1350,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1392,10 +1369,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/M+Lazy+C+Ranch/data=!4m2!3m1!1s0x876b35fd43886b09:0xe72f4cfc6d35c347",
@@ -1411,7 +1385,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1428,10 +1404,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Marvine+Campground/data=!4m2!3m1!1s0x8743d6e6e82b62e3:0xef7b5483f69a7e5b",
@@ -1447,7 +1420,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1464,10 +1439,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Palisades+Horse+Campground/data=!4m2!3m1!1s0x873e7caabc794b4b:0x8c26572b1c66d4a",
@@ -1483,7 +1455,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1500,10 +1474,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Saul's+Creek+Stables/data=!4m2!3m1!1s0x873c2662aeff4fa9:0x7c657d5d9d2af822",
@@ -1519,7 +1490,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1536,10 +1509,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Soap+Creek+Campground/data=!4m2!3m1!1s0x873f79258fe33235:0xb95865dfc39695cd",
@@ -1555,7 +1525,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1572,10 +1544,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Trappers+Lake+%2F+Horse+Thief+Campground/data=!4m2!3m1!1s0x87422a614812028b:0x32db955a42135e00",
@@ -1591,7 +1560,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1608,10 +1579,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Ute+Lodge/data=!4m2!3m1!1s0x8743da2c78eed24b:0x797db85daf50090c",
@@ -1627,7 +1595,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1644,10 +1614,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Winding+River+Resort/data=!4m2!3m1!1s0x876983c1fe97e17d:0xe2dd52237371a7b5",
@@ -1663,7 +1630,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1680,10 +1649,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Woods+Lake+Campground/data=!4m2!3m1!1s0x87392b4498687db3:0x768a627cef0b665e",
@@ -1699,7 +1665,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1716,10 +1684,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Black+Horse+Resort+Ranch/data=!4m2!3m1!1s0x88e7b7556604b149:0xd3d4b15c67ddb2dd",
@@ -1735,7 +1700,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1752,10 +1719,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Fiddlers+Green+RV+Ranch/data=!4m2!3m1!1s0x88e7a581df2af695:0x166eecf781f3c05a",
@@ -1771,7 +1735,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1788,10 +1754,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Florida+Horse+Park/data=!4m2!3m1!1s0x88e7d6da6eaea01d:0x42bd3766855d67",
@@ -1807,7 +1770,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1824,10 +1789,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Goethe+Trailhead+Ranch+RV+Campground/data=!4m2!3m1!1s0x88e85fee548d3b97:0x722467f33a015679",
@@ -1843,7 +1805,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1860,10 +1824,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Long+Branch+Rest+and+Ride/data=!4m2!3m1!1s0x88eee798d5021eb3:0xf0a951353f3e7fc9",
@@ -1879,7 +1840,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1896,10 +1859,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/McCulley+Farms/data=!4m2!3m1!1s0x88eeed1d9f7fd8b9:0x246c233cf1e9853",
@@ -1915,7 +1875,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1932,10 +1894,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Rocking+Horse+Stables/data=!4m2!3m1!1s0x88e7af737ba2e7a9:0x223514d2819a047a",
@@ -1951,7 +1910,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1968,10 +1929,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Shangrila+Campgrounds/data=!4m2!3m1!1s0x88e8786a3857f239:0xb0cee52535921d34",
@@ -1987,7 +1945,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2004,10 +1964,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Spirit+of+the+Suwannee+Music+Park/data=!4m2!3m1!1s0x88eee1af4e4f97eb:0x333dae863522b45b",
@@ -2023,7 +1980,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2040,10 +1999,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Tram+Road+Equestrian+Campground/data=!4m2!3m1!1s0x88e6e7cb7fc3c099:0x750ae003224527c7",
@@ -2059,7 +2015,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2076,10 +2034,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Westgate+River+Ranch+Resort+%26+Rodeo/data=!4m2!3m1!1s0x88ddb7b0c93bed8d:0x93e8ca3748acd81f",
@@ -2095,7 +2050,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2112,10 +2069,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Chattooga+Trails+Bed+%26+Barn/data=!4m2!3m1!1s0x8858e619b88a8229:0xa104a323f84efada",
@@ -2131,7 +2085,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2148,10 +2104,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Mingo+Trails+Saddle+Club/data=!4m2!3m1!1s0x88f12f1b75a45aed:0x28ea68948e17117d",
@@ -2167,7 +2120,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2184,10 +2139,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Randy's+Horse+Camp/data=!4m2!3m1!1s0x8858dda1c18914f1:0x185a2b782a60b9e3",
@@ -2203,7 +2155,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2220,10 +2174,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Whetstone+Horse+Campground/data=!4m2!3m1!1s0x8858e7c4a24c0b8f:0x7068bd4fac1dd8aa",
@@ -2239,7 +2190,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2256,10 +2209,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Big+Valley+Ranch/data=!4m2!3m1!1s0x87fd758031105c0b:0xefcc0303cf2e01eb",
@@ -2275,7 +2225,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2292,10 +2244,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Brushy+Creek+North+Equestrian+Campground/data=!4m2!3m1!1s0x87edf364423a8f69:0xf5f8927f91c99ad0",
@@ -2311,7 +2260,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2328,10 +2279,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/La+Riviere+Park/data=!4m2!3m1!1s0x87fc84d0841e6b67:0x7ed5b246841f677c",
@@ -2347,7 +2295,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2364,10 +2314,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Pioneer+Ridge/data=!4m2!3m1!1s0x87e88282b50bc297:0xb12d4cf6a63d72e0",
@@ -2383,7 +2330,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2400,10 +2349,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/River+Valley+Lodge+%26+Campground/data=!4m2!3m1!1s0x87e702756cbb0ad9:0x6515c886e30d8624",
@@ -2419,7 +2365,10 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping", "Layover"],
+    "accommodations": [
+      "Horse Camping",
+      "Layover"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2436,10 +2385,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Triple+M+Stable+LLC+Bob/data=!4m2!3m1!1s0x87938193e7c2ff25:0x9f1bb4d2160bd9ee",
@@ -2455,7 +2401,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2472,10 +2420,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Covered+Wagon+Ranch/data=!4m2!3m1!1s0x53503c3e388aaa61:0xc871850e67610297",
@@ -2491,7 +2436,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2508,10 +2455,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Elkhorn+Ranch/data=!4m2!3m1!1s0x53503c6cbf503a79:0x1f0e70a96a7f4b2a",
@@ -2527,7 +2471,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2544,10 +2490,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Gunslinger+Gulch+Guest+Ranch/data=!4m2!3m1!1s0x535b91d397449559:0x1457b18dde4fdd99",
@@ -2563,7 +2506,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2580,10 +2525,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Hapi+Trails/data=!4m2!3m1!1s0x5353a12899218f93:0x51fe98721e24f42c",
@@ -2599,7 +2541,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2616,10 +2560,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Heaven+On+Earth+Ranch/data=!4m2!3m1!1s0x5343a2747b5dccad:0xeac07769221b4203",
@@ -2635,7 +2576,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2652,10 +2595,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Palisades+Creek+Campground/data=!4m2!3m1!1s0x535365af3eb62469:0xbf31e41eddb4235e",
@@ -2671,7 +2611,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2688,10 +2630,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Teton+County+Fairgrounds/data=!4m2!3m1!1s0x5353a35e295ec69d:0x9bc587c4c015e2d8",
@@ -2707,7 +2646,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2724,10 +2665,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/The+Diamond+P+Ranch/data=!4m2!3m1!1s0x5351b0311277ca49:0xa34715d2461ff6ac",
@@ -2743,7 +2681,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2760,10 +2700,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Bay+Creek+Ranch+Inc/data=!4m2!3m1!1s0x8859dc8126ad66eb:0xba7dc57715173adb",
@@ -2778,8 +2715,12 @@
     "longitude": -88.584144,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["Water"],
-    "accommodations": ["Horse Camping"],
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2796,10 +2737,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Bear+Branch+Campgrounds/data=!4m2!3m1!1s0x8870bb06585ae17d:0xee661b3993fb8598",
@@ -2815,7 +2753,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2832,10 +2772,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Brushy+Creek+Lodge+%26+Resort/data=!4m2!3m1!1s0x87d9ee9d4f30be45:0x67b1f84db185bb3b",
@@ -2851,7 +2788,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2868,10 +2807,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/79+Gaskin+Mine+Rd/data=!4m2!3m1!1s0x887096c77749312d:0x9ec12c9665804a3",
@@ -2887,7 +2823,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2904,10 +2842,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cedar+Creek+Ranch/data=!4m2!3m1!1s0x88095fbd8279d423:0x11507b7c2bbf9a36",
@@ -2923,7 +2858,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2940,10 +2877,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cedar+Lake+Campground/data=!4m2!3m1!1s0x88774cfe50ff8b3f:0x8f80876b80b3656a",
@@ -2959,7 +2893,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2976,10 +2912,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Circle+B+Campground/data=!4m2!3m1!1s0x8870bbeeebf110cb:0x8cc73e6a13f53dc1",
@@ -2995,7 +2928,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3012,10 +2947,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Coldwater+Ranch/data=!4m2!3m1!1s0x87d0af39f01a9735:0x52dcc1bd780e3e89",
@@ -3031,7 +2963,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3048,10 +2982,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cross+Country+Trail+Rides/data=!4m2!3m1!1s0x87d0af855e7f7371:0xc4f0a43b32eac3f5",
@@ -3066,8 +2997,19 @@
     "longitude": -88.272779,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["30A", "Sewer", "Water"],
-    "accommodations": ["Cabins", "Corrals", "Group Camping", "Horse Camping", "Stalls", "Trails"],
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Cabins",
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Stalls",
+      "Trails"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3084,10 +3026,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "submittedIssueNumber": 12
@@ -3102,7 +3041,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3119,10 +3060,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Green+River+Saddle+Club/data=!4m2!3m1!1s0x8809094eaf54eb59:0xd34ff1b40809eb17",
@@ -3137,8 +3075,18 @@
     "longitude": -88.58677,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["30A", "Sewer", "Water"],
-    "accommodations": ["Corrals", "Group Camping", "Horse Camping", "Stalls", "Trails"],
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Stalls",
+      "Trails"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3155,10 +3103,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "submittedIssueNumber": 17
@@ -3172,8 +3117,20 @@
     "longitude": -88.334563,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["30A", "Sewer", "Water"],
-    "accommodations": ["Cabins", "Corrals", "Group Camping", "Horse Camping", "Paddocks", "Stalls", "Trails"],
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Cabins",
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Paddocks",
+      "Stalls",
+      "Trails"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3190,10 +3147,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "submittedIssueNumber": 15
@@ -3208,7 +3162,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3225,10 +3181,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Horseshoe+Holler+Horse+Camp/data=!4m2!3m1!1s0x87d0af7b33d7d281:0x57b889605165dccd",
@@ -3244,7 +3197,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3261,10 +3216,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Iron+Saddle+Ranch/data=!4m2!3m1!1s0x8876a7867f278ad5:0xe9a4607d8f2d33e3",
@@ -3280,7 +3232,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3297,10 +3251,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Lake+Glendale+Stables+%26+Equestrian+Center/data=!4m2!3m1!1s0x8870af762fa18d8b:0x4d0bac5f20094b1d",
@@ -3315,8 +3266,19 @@
     "longitude": -88.57436,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["30A", "Sewer", "Water"],
-    "accommodations": ["Corrals", "Group Camping", "Horse Camping", "Paddocks", "Stalls", "Trails"],
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Paddocks",
+      "Stalls",
+      "Trails"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3333,10 +3295,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "submittedIssueNumber": 6
@@ -3351,7 +3310,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3368,10 +3329,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Lockwood+Park+%26+Trailside+Equestrian+Centre/data=!4m2!3m1!1s0x8808942f078b3ac5:0xd14a62b03de5ffc3",
@@ -3387,7 +3345,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3404,10 +3364,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Old+Desperado+Ranch/data=!4m2!3m1!1s0x87d0af238044ef11:0x7710899c3ef7f3",
@@ -3423,7 +3380,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3440,10 +3399,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Putnam+Co+Conservation+District/data=!4m2!3m1!1s0x880bd0e2968d3ac5:0x10265280e9142018",
@@ -3459,7 +3415,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3476,10 +3434,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/TK+Ranch+Campground/data=!4m2!3m1!1s0x887097ce0d26dabf:0xd2f6c705c9b889ad",
@@ -3495,7 +3450,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3512,10 +3469,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Come+Again+Horse+Camp/data=!4m2!3m1!1s0x886eca856c9d8ced:0x980749211def95d4",
@@ -3531,7 +3485,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3548,10 +3504,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Harden's+Horse+Camp/data=!4m2!3m1!1s0x886c75302a46aae1:0xa634cf775bfb6d44",
@@ -3567,7 +3520,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3584,10 +3539,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Hoosier+Horse+Camp/data=!4m2!3m1!1s0x886c76a89da93785:0x346635e35c023147",
@@ -3603,7 +3555,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3620,10 +3574,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Midwest+Trail+Ride+RV+Campground/data=!4m2!3m1!1s0x886c73b09bdb7d09:0xbf9dd23a043309c4",
@@ -3639,7 +3590,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3656,10 +3609,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Shaker+Village+of+Pleasant+Hill/data=!4m2!3m1!1s0x884288f9b4bc7af9:0x4a1186d129866663",
@@ -3675,7 +3625,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3692,10 +3644,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Crows+Creek+Campground/data=!4m2!3m1!1s0x87c05029cd65cb07:0x28128abcae7a6340",
@@ -3711,7 +3660,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3728,10 +3679,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Big+Fork+Campground/data=!4m2!3m1!1s0x885d9c1156f36681:0xf4e7335def146e27",
@@ -3747,7 +3695,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3764,10 +3714,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Big+South+Fork+Lodge+%26+Horse+Campground/data=!4m2!3m1!1s0x885d9d4bc0319ef3:0xfb9be28fc387f351",
@@ -3783,7 +3730,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3800,10 +3749,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Buck+Run+Horse+Campground+LLC/data=!4m2!3m1!1s0x885d8344e79c795b:0x3d28993f39196b23",
@@ -3819,7 +3765,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3836,10 +3784,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cowboy+Country+Club+Campground/data=!4m2!3m1!1s0x885d9f5df5b05455:0xf8e7e1d309023903",
@@ -3855,7 +3800,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3872,10 +3819,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Double+J+Stables+and+Campgrounds/data=!4m2!3m1!1s0x8868a9c64c354b6f:0x36c543e9cc3440b5",
@@ -3891,7 +3835,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3908,10 +3854,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Elkins+Creek+Horse+Camp+%26+Tack/data=!4m2!3m1!1s0x88461329a0d8ec4d:0x4bbf39f0cbfbbba6",
@@ -3927,7 +3870,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3944,10 +3889,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Hidden+Cave+Ranch+Bed+and+Breakfast/data=!4m2!3m1!1s0x8867bd7ab468f9b9:0xbceae716feb9144b",
@@ -3963,7 +3905,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3980,10 +3924,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Honey+Creek+Horse+Camp/data=!4m2!3m1!1s0x885d9ebb3e135821:0x6b5633882c18848",
@@ -3999,7 +3940,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4016,10 +3959,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Laurel+Fork+Rustic+Retreat/data=!4m2!3m1!1s0x885d9fef923974cf:0x47e1013354d0bdd1",
@@ -4035,7 +3975,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4052,10 +3994,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Mammoth+Cave+Horse+Camp/data=!4m2!3m1!1s0x8868aa11fbdead81:0xc9b06a68ca63632e",
@@ -4071,7 +4010,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4088,10 +4029,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Quiet+Woods+green+river+stables/data=!4m2!3m1!1s0x8868740f672d17c7:0xb9b6d4cbdc97059f",
@@ -4107,7 +4045,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4124,10 +4064,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Red+Hill+Horse+Camp/data=!4m2!3m1!1s0x8843260c21275c83:0x578c5e1acbf8e680",
@@ -4143,7 +4080,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4160,10 +4099,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Rudy's+Ranch+%26+Horse+Camp/data=!4m2!3m1!1s0x8843bda897696341:0x63c16dabc381fcf7",
@@ -4178,8 +4114,17 @@
     "longitude": -84.216696,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["30A", "Sewer", "Water"],
-    "accommodations": ["Corrals", "Horse Camping", "Stalls", "Trails"],
+    "hookups": [
+      "30A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Corrals",
+      "Horse Camping",
+      "Stalls",
+      "Trails"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4196,10 +4141,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "submittedIssueNumber": 35
@@ -4214,7 +4156,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4231,10 +4175,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Smokey+Valley+Farm/data=!4m2!3m1!1s0x884423d801895fc7:0x6fe892d091ce2934",
@@ -4250,7 +4191,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4267,10 +4210,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Stampede+Run/data=!4m2!3m1!1s0x885d181f7a9dd529:0x1a4ce879565272a0",
@@ -4285,8 +4225,13 @@
     "longitude": -84.834852,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["50A", "Water"],
-    "accommodations": ["Horse Camping"],
+    "hookups": [
+      "50A",
+      "Water"
+    ],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4303,10 +4248,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Timber+Ridge+Horse+Campground/data=!4m2!3m1!1s0x885d82355a47fe0d:0x8899fb041b9d975e",
@@ -4322,7 +4264,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4339,10 +4283,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Wranglers+Campground/data=!4m2!3m1!1s0x887ae5304144accf:0x6ee8da24133b2e6b",
@@ -4358,7 +4299,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4375,10 +4318,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Ebenezer+Equestrian+Camping/data=!4m2!3m1!1s0x8639bc5afdb1596f:0x42438fc486be600",
@@ -4394,7 +4334,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4411,10 +4353,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Gum+Springs+Horse+Campground/data=!4m2!3m1!1s0x86306b33e6739e11:0xefa225918a3d497e",
@@ -4430,7 +4369,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4447,10 +4388,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Rustic+Sky+Horse+Camp/data=!4m2!3m1!1s0x863ac594a5dc38a5:0xa019ea43729d5925",
@@ -4466,7 +4404,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4483,10 +4423,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "",
@@ -4501,8 +4438,13 @@
     "longitude": -85.666959,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["Water"],
-    "accommodations": ["Horse Camping", "Trails"],
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Horse Camping",
+      "Trails"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4519,10 +4461,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/D+bar+D+Ranch/data=!4m2!3m1!1s0x881ed9c307095315:0x660815bdfe5d673b",
@@ -4538,7 +4477,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4555,10 +4496,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Dover+Stables/data=!4m2!3m1!1s0x88059d9a9b8c321b:0x7abf705c7930c9e7",
@@ -4574,7 +4512,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4591,10 +4531,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://maps.app.goo.gl/msQx5CumSSt7fTW68",
@@ -4610,7 +4547,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4627,10 +4566,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Fort+Custer+Equestrian+Camp+%26+Trailhead/data=!4m2!3m1!1s0x88178d10b330c17d:0x65634bb1056736bb",
@@ -4646,7 +4582,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4663,10 +4601,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Goose+Creek+Trail+Camp/data=!4m2!3m1!1s0x8820048d16c382a9:0x71994f7105b2cd50",
@@ -4682,7 +4617,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4699,10 +4636,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Hell+Creek+Ranch+Campground/data=!4m2!3m1!1s0x882335af9462c2fb:0x93ee5e02f4351420",
@@ -4718,7 +4652,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4735,10 +4671,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Horseriders'+Campground/data=!4m2!3m1!1s0x8805c26cebb937e1:0xf73a39c94aa5966",
@@ -4754,7 +4687,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4771,10 +4706,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Ionia+Equestrian-Rustic/data=!4m2!3m1!1s0x881879f36f61b185:0xd2b8d600866cf275",
@@ -4790,7 +4722,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4807,10 +4741,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/River+Road+Equestrian+Campground/data=!4m2!3m1!1s0x4d5431a2a1112029:0xa8b65c464fde07c9",
@@ -4826,7 +4757,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4843,10 +4776,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Spur+of+the+Moment+Ranch,+LLC/data=!4m2!3m1!1s0x4d5347ffa062ecd1:0x40d7f164f1abc932",
@@ -4862,7 +4792,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4879,10 +4811,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Taylor+County+Horse+Trail+%26+Camp/data=!4m2!3m1!1s0x52aa9eaa24f369ef:0xabe9570f0c511cfb",
@@ -4898,7 +4827,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4915,10 +4846,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Turtle+Lake+Campground/data=!4m2!3m1!1s0x881e406cfe21135b:0xcaaea333e2f6e5c",
@@ -4934,7 +4862,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4951,10 +4881,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Ukarydee+Equestrian+Camping/data=!4m2!3m1!1s0x8800a0d69b6bb467:0x4b21e7c16d483fbb",
@@ -4970,7 +4897,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4987,10 +4916,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Waterloo+Horse+Camp+%26+Staging+Area/data=!4m2!3m1!1s0x883cd23a4143fe53:0x2b207137f979f3cb",
@@ -5006,7 +4932,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5023,10 +4951,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/End+of+The+Trail+Equine+Campground/data=!4m2!3m1!1s0x87fdd30731ee7761:0x26b3ed11129c9c0c",
@@ -5042,7 +4967,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5059,10 +4986,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/River+Valley+Ranch,+Inc./data=!4m2!3m1!1s0x87f60c0f21e0a303:0xa03e8ed36be759ce",
@@ -5078,7 +5002,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5095,10 +5021,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Tamarack+Horse+Campground/data=!4m2!3m1!1s0x52ade52ebdd5e893:0xfdfef61722fc8701",
@@ -5114,7 +5037,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5131,10 +5056,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Zumbro+Bottoms+Horse+Campground+-+Central/data=!4m2!3m1!1s0x87f9b674519e24d9:0x2b5eea8869775c52",
@@ -5150,7 +5072,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5167,10 +5091,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Bar-K+Wrangler+Campsite/data=!4m2!3m1!1s0x87cfa3d7c9a37fa7:0x2b48f426ce5e36a2",
@@ -5186,7 +5107,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5203,10 +5126,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Big+Creek+Trail+Ride/data=!4m2!3m1!1s0x87da7141cd5b5b1d:0x238d03bc089ea739",
@@ -5222,7 +5142,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5239,10 +5161,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cedar+Ridge+Trails/data=!4m2!3m1!1s0x87dac8146a53a983:0xf6734d503d11e4f1",
@@ -5258,7 +5177,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5275,10 +5196,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Frank+Russell+Campground/data=!4m2!3m1!1s0x87ddbbd9dc18de95:0x443a669c57aa9842",
@@ -5294,7 +5212,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5311,10 +5231,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Froggy's+River+Resort/data=!4m2!3m1!1s0x87dacf0bcc8b4271:0xa8388481c8b20a4a",
@@ -5330,7 +5247,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5347,10 +5266,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/North+Fork+River+Ranch/data=!4m2!3m1!1s0x87d03f5a0da0e02d:0x1149b8b259a6e73e",
@@ -5366,7 +5282,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5383,10 +5301,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Panther+Creek+Trail+Rides/data=!4m2!3m1!1s0x87db3129b19f411d:0x5eea49e94a690a4c",
@@ -5402,7 +5317,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5419,10 +5336,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Pinecrest+Campground+%26+Cabins/data=!4m2!3m1!1s0x87da6e2bd8dbe805:0xe2bf49c14afc417c",
@@ -5438,7 +5352,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5455,10 +5371,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Slabtown+Horse+Camp+LLC+(formerly+Slabtown+Trail+Rides)/data=!4m2!3m1!1s0x87da951396deb797:0x20529818b4669124",
@@ -5474,7 +5387,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5491,10 +5406,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Von+Holten+Ranch/data=!4m2!3m1!1s0x87c47e44a0360053:0x2120bb08aa203f77",
@@ -5510,7 +5422,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5527,10 +5441,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Elk+Fork+Campground+6.7+outback+hk/data=!4m2!3m1!1s0x534dd5d13c69b11b:0xbf5fb09c0492bdf8",
@@ -5546,7 +5457,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5563,10 +5476,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Hamic+Ranch/data=!4m2!3m1!1s0x534ecddb2cd5e61d:0x1ab8bb20b71ded31",
@@ -5582,7 +5492,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5599,10 +5511,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Hell%E2%80%99s+A-Roarin%E2%80%99+Outfitters/data=!4m2!3m1!1s0x534fd0280c940049:0xe0a506aaa9951034",
@@ -5618,7 +5527,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5635,10 +5546,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Hunter+Trailhead/data=!4m2!3m1!1s0x534a7dfb4c52ed51:0xe09ad5cf95436cdf",
@@ -5654,7 +5562,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5671,10 +5581,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Little+Sunlight+Camping+Area/data=!4m2!3m1!1s0x534e8eb3efe8a01b:0x4d90b590759bd224",
@@ -5690,7 +5597,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5707,10 +5616,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Sundance+Horse+Camp/data=!4m2!3m1!1s0x5332e6c5e3bda2bd:0x78d9cc541afd8929",
@@ -5726,7 +5632,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5743,10 +5651,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Broyhill+Equestrian+Preserve/data=!4m2!3m1!1s0x8850eff796e1f493:0xcf1adcd2c7e51dc6",
@@ -5762,7 +5667,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5779,10 +5686,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cedar+Island+Resort/data=!4m2!3m1!1s0x89a605b31ca690eb:0xe72da9ab6b202573",
@@ -5797,8 +5701,14 @@
     "longitude": -76.316782,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["Water"],
-    "accommodations": ["Horse Camping", "Corrals", "Primitive Camping"],
+    "hookups": [
+      "Water"
+    ],
+    "accommodations": [
+      "Horse Camping",
+      "Corrals",
+      "Primitive Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5815,10 +5725,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cedar+Island+RV+Park/data=!4m2!3m1!1s0x89a605b2af36328f:0xf2b1d769861a9e",
@@ -5834,7 +5741,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5851,10 +5760,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/DEEP+CREEK+BOARDING+STABLES+%26+CAMPING/data=!4m2!3m1!1s0x88594892b4d3d847:0xea88ab072424fb24",
@@ -5870,7 +5776,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5887,10 +5795,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Gilbertson's+Lazy+Horse+Retrt/data=!4m2!3m1!1s0x885ea5eb0e75b49b:0xde63436835973ca3",
@@ -5906,7 +5811,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5923,10 +5830,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/H+COOPER+BLACK+PARK/data=!4m2!3m1!1s0x88550e25a93a3691:0x2876fc2c4d66142a",
@@ -5942,7 +5846,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5959,10 +5865,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/High+Country+Horse+Campground/data=!4m2!3m1!1s0x8851cbc608acb34d:0x9f5ec4cdb03cb1be",
@@ -5978,7 +5881,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5995,10 +5900,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Inlet+Point+Plantation/data=!4m2!3m1!1s0x890086fc9d4ea025:0x5b4209b061c4d099",
@@ -6014,7 +5916,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6031,10 +5935,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Leatherwood+Mountains+Resort/data=!4m2!3m1!1s0x88511de5da28a2e9:0xa7f7750b92bb689e",
@@ -6050,7 +5951,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6067,10 +5970,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://maps.app.goo.gl/ciYsyxU1QVea3dMV8",
@@ -6086,7 +5986,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6103,10 +6005,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Lumber+River+Campground/data=!4m2!3m1!1s0x89aaeb04e8d1a1c3:0xc1dd1bc15bf6c985",
@@ -6122,7 +6021,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6139,10 +6040,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Rocky+Hollow+Horse+Camp/data=!4m2!3m1!1s0x884e3cc000000003:0xf33c79e741dca1aa",
@@ -6158,7 +6056,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6175,10 +6075,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Bar+X+Ranch/data=!4m2!3m1!1s0x5325c492d6c6ed85:0x40896524fc282526",
@@ -6194,7 +6091,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6211,10 +6110,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/King%E2%80%99s+Guest+Ranch+LLC/data=!4m2!3m1!1s0x5325ed9746ae260b:0x5f6e559e20664adf",
@@ -6230,7 +6126,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6247,10 +6145,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cowshed+Cabin+Farm/data=!4m2!3m1!1s0x89e1dac6ddceaa1f:0x979cf2caf0899504",
@@ -6266,7 +6161,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6283,10 +6180,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Jacks+Creek+Campground/data=!4m2!3m1!1s0x8719b6cdd304a4bb:0x6662de1cda15c637",
@@ -6302,7 +6196,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6319,10 +6215,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/N+Bar+Ranch/data=!4m2!3m1!1s0x872701aa852e6b79:0xb58d6357afd185a1",
@@ -6338,7 +6231,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6355,10 +6250,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Valle+Vidal/data=!4m2!3m1!1s0x87173bb46f6fc085:0x7b14fc407fb7a57f",
@@ -6374,7 +6266,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6391,10 +6285,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cowboy+Larrys/data=!4m2!3m1!1s0x8847948973d4b311:0x55aed45b956dd1db",
@@ -6409,8 +6300,17 @@
     "longitude": -82.61632,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": ["30A", "Water"],
-    "accommodations": ["Horse Camping", "Trails", "Stalls", "Corrals", "Cabins"],
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "accommodations": [
+      "Horse Camping",
+      "Trails",
+      "Stalls",
+      "Corrals",
+      "Cabins"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6427,10 +6327,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/STACKED+STONES+RETREAT/data=!4m2!3m1!1s0x8847944d66c4be5b:0x3808df88a27f00f5",
@@ -6446,7 +6343,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6463,10 +6362,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Pine+Creek+Horseman's+Camp/data=!4m2!3m1!1s0x88479506dfe8d77f:0x7f1413be694283d1",
@@ -6482,7 +6378,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6499,10 +6397,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Smoke+Rise+Ranch/data=!4m2!3m1!1s0x884808eab36457db:0xf665489acdc40cc5",
@@ -6518,7 +6413,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6535,10 +6432,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/TC+Performance+Horses/data=!4m2!3m1!1s0x88479eda331ea565:0x14621f2889b0ca3",
@@ -6554,7 +6448,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6571,10 +6467,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/The+Spotted+Horse+Ranch/data=!4m2!3m1!1s0x88479739651477e5:0x9ad6c1e3d979d3eb",
@@ -6590,7 +6483,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6607,10 +6502,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Three+Reasons+Farms,+Horse+Camp/data=!4m2!3m1!1s0x884794c9dedf0953:0x91125cda95a65323",
@@ -6626,7 +6518,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6643,10 +6537,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Cedar+Lake+Equestrian+Campground/data=!4m2!3m1!1s0x87caea85bfaf8e03:0x60828c20e7f091fd",
@@ -6662,7 +6553,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6679,10 +6572,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Haven+at+Box+Canyon/data=!4m2!3m1!1s0x87adc5fd4bc779bb:0xd6cfcd4ebf1e4439",
@@ -6698,7 +6588,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6715,10 +6607,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Heaven's+Gate+RV+and+Retreat/data=!4m2!3m1!1s0x87cab9c6fba40ecf:0xfaf0b6675846b876",
@@ -6734,7 +6623,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6751,10 +6642,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Horse+Heaven/data=!4m2!3m1!1s0x87caa2f695a315bf:0x838a230addb475fd",
@@ -6770,7 +6658,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6787,10 +6677,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Robbers+Cave+Stables/data=!4m2!3m1!1s0x87b5737786728c71:0x431a99657c7b532d",
@@ -6806,7 +6693,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6823,10 +6712,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Kalama+Horse+Camp+Campground/data=!4m2!3m1!1s0x5494274a15b3a27d:0x40844a7c49e7d440",
@@ -6842,7 +6728,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6859,10 +6747,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Sisters+Cow+Camp/data=!4m2!3m1!1s0x54bf379b3bbdb463:0x3f51320acb28bc0a",
@@ -6878,7 +6763,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6895,10 +6782,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Artillery+Ridge+Campground+Gettysburg+Horse+Park/data=!4m2!3m1!1s0x89c9ad1c593275b5:0x858fe1ac20edecf3",
@@ -6914,7 +6798,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6931,10 +6817,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Alkali+Creek+Campground/data=!4m2!3m1!1s0x532d5aeec3766461:0x1472c0da2577a55d",
@@ -6950,7 +6833,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6967,10 +6852,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Aspen+Meadows+Ranch+Horsecamp/data=!4m2!3m1!1s0x8762d3f5f096b33d:0xf262548f48e19013",
@@ -6986,7 +6868,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7003,10 +6887,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Bridle+Ridge+Horse+%26+RV+Camp/data=!4m2!3m1!1s0x8762c99ed2c9a6bf:0x2c05de169e72f328",
@@ -7022,7 +6903,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7039,10 +6922,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Elk+Haven/data=!4m2!3m1!1s0x877d30adef3f6801:0x71168b854cb11ddf",
@@ -7058,7 +6938,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7075,10 +6957,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/French+Creek+Camping+Area/data=!4m2!3m1!1s0x877d1d651730c001:0x12e8f4fe8cde01e3",
@@ -7094,7 +6973,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7111,10 +6992,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Hay+Creek+Ranch/data=!4m2!3m1!1s0x5332abce3e07b83b:0x73a1d7983ba1c6e6",
@@ -7130,7 +7008,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7147,10 +7027,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Circle+K+Horse+Camp/data=!4m2!3m1!1s0x8762c519ce341f7b:0x11074b2b5013bd3e",
@@ -7166,7 +7043,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7183,10 +7062,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Iron+Creek+Camp+Ground/data=!4m2!3m1!1s0x877d358fba946f21:0xd8cd56e6dfe3f26f",
@@ -7202,7 +7078,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7219,10 +7097,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Iron+Creek+Trail/data=!4m2!3m1!1s0x5332bd0544a3d219:0x682eb5e5c337d768",
@@ -7238,7 +7113,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7255,10 +7132,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Minute+Man+RV+Park+%26+Lodging/data=!4m2!3m1!1s0x872b0b312f915c83:0x7f869c61297636f2",
@@ -7274,7 +7148,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7291,10 +7167,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/926+Fletcher+Rd/data=!4m2!3m1!1s0x88611cfb48303e9b:0x341d649fa2be1df3",
@@ -7310,7 +7183,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7327,10 +7202,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Buffalo+River+Trail+Ride+Inc/data=!4m2!3m1!1s0x887cdb9bef48d6b3:0xb0514988b9829ebb",
@@ -7345,8 +7217,22 @@
     "longitude": -84.954215,
     "pricePerNight": 0,
     "horseFeePerNight": 0,
-    "hookups": ["30A", "50A", "Sewer", "Water"],
-    "accommodations": ["Cabins", "Corrals", "Group Camping", "Horse Camping", "Paddocks", "Primitive Camping", "Stalls", "Trails"],
+    "hookups": [
+      "30A",
+      "50A",
+      "Sewer",
+      "Water"
+    ],
+    "accommodations": [
+      "Cabins",
+      "Corrals",
+      "Group Camping",
+      "Horse Camping",
+      "Paddocks",
+      "Primitive Camping",
+      "Stalls",
+      "Trails"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7363,10 +7249,7 @@
     "pullThroughAvailable": true,
     "rating": 0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "submittedIssueNumber": 28
@@ -7381,7 +7264,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7398,10 +7283,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Laurel+Hill+Trail+and+Camp/data=!4m2!3m1!1s0x88632d259cccd3fb:0xddd2d8bffb6d0423",
@@ -7417,7 +7299,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7434,10 +7318,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/T+Bar+S+Horse+Camp/data=!4m2!3m1!1s0x8647f1f6a6ddee19:0x8ccbfb5577f49643",
@@ -7453,7 +7334,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7470,10 +7353,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Train+Robber+Ranch/data=!4m2!3m1!1s0x864813f9d5003e23:0x54ff02b5933ad233",
@@ -7489,7 +7369,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7506,10 +7388,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Bryce+Valley+Ranch+RV+and+Horse+Park/data=!4m2!3m1!1s0x87356d8ba66758ff:0x9a39599003618ec1",
@@ -7525,7 +7404,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7542,10 +7423,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Courthouse+Rock+Campground/data=!4m2!3m1!1s0x874871b7cfebaf3d:0xe8d9812843dc6ddf",
@@ -7560,8 +7438,20 @@
     "longitude": -111.91333,
     "pricePerNight": 55,
     "horseFeePerNight": 20,
-    "hookups": ["30A", "50A", "Water"],
-    "accommodations": ["Stalls", "Corrals", "Trails", "Cabins", "Horse Camping", "Primitive Camping", "Group Camping"],
+    "hookups": [
+      "30A",
+      "50A",
+      "Water"
+    ],
+    "accommodations": [
+      "Stalls",
+      "Corrals",
+      "Trails",
+      "Cabins",
+      "Horse Camping",
+      "Primitive Camping",
+      "Group Camping"
+    ],
     "maxRigLength": 60,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7578,10 +7468,7 @@
     "pullThroughAvailable": true,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [
       "https://img1.wsimg.com/isteam/ip/61f9125b-f4d0-415e-b443-3e9f2b436e50/paria%20village.jpg"
     ],
@@ -7597,7 +7484,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7614,10 +7503,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Equestrian+Campground+Rd/data=!4m2!3m1!1s0x80ca649f2d20d4f7:0xab43ba95d6f2a629",
@@ -7633,7 +7519,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7650,10 +7538,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Tasha+Equestrian+Campground/data=!4m2!3m1!1s0x874bb2797abd335b:0x692bc29a7cbe0f76",
@@ -7669,7 +7554,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7686,10 +7573,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Bedroll+and+Breakfast/data=!4m2!3m1!1s0x53523c4799a070f5:0x2a9fdbf050ec0503",
@@ -7705,7 +7589,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7722,10 +7608,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Boulder+Lake+Campground/data=!4m2!3m1!1s0x8757888b7262e71b:0x61605aaa4dcf0ad2",
@@ -7741,7 +7624,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7758,10 +7643,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Green+River+Lake+Campground/data=!4m2!3m1!1s0x5352b3d0606b1eb5:0xac10c143ca423349",
@@ -7777,7 +7659,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7794,10 +7678,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Pacific+Creek+Campground/data=!4m2!3m1!1s0x535269b9ab7397bb:0x67efc0ce59c8e9f5",
@@ -7813,7 +7694,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7830,10 +7713,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Ram's+Horn+Guest+Ranch/data=!4m2!3m1!1s0x534d63128e91210f:0xa37ff5459a870003",
@@ -7849,7 +7729,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7866,10 +7748,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Sheffield+Campground/data=!4m2!3m1!1s0x53523c391f000001:0x4fe012a3f62e5aaa",
@@ -7885,7 +7764,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7902,10 +7783,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Swift+Creek+Outfitters+-+Teton+Horseback+Adventures/data=!4m2!3m1!1s0x53533d47a467ff3f:0xbf6cd90ac627e5c8",
@@ -7921,7 +7799,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7938,10 +7818,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Ten+Sleep+RV+Park/data=!4m2!3m1!1s0x534ae3daa555e533:0x991894efe176d5dc",
@@ -7957,7 +7834,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7974,10 +7853,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Turpin+Meadow+Campground/data=!4m2!3m1!1s0x53526471ca2f2a81:0xbf12ff0d7df04415",
@@ -7993,7 +7869,9 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "accommodations": [
+      "Horse Camping"
+    ],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -8010,10 +7888,7 @@
     "pullThroughAvailable": false,
     "rating": 0.0,
     "reviewCount": 0,
-    "imageColors": [
-      "6D4C41",
-      "BCAAA4"
-    ],
+    "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
     "source": "Private Camps",
     "sourceUrl": "https://www.google.com/maps/place/Yellowstone+Outfitters/data=!4m2!3m1!1s0x87567225aa304bdf:0x8afee4f53279acea",

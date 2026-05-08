@@ -32,6 +32,7 @@ from typing import Any
 
 EXCLUSIONS_PATH = Path("data/exclusions.json")
 OVERRIDES_PATH = Path("data/overrides.json")
+PRIVATE_CAMPS_PATH = Path("data/private_camps.json")
 
 HIDDEN_JSON_RE = re.compile(
     r"<!--\s*HORSECAMP_PROBLEM_REPORT_JSON\s*(?P<json>\{.*?\})\s*HORSECAMP_PROBLEM_REPORT_JSON\s*-->",
@@ -72,6 +73,9 @@ CATEGORY_ALIASES = {
     "badphonewebsite": "Bad phone / website",
     "badphone": "Bad phone / website",
     "badwebsite": "Bad phone / website",
+    "listinginfoupdate": "Listing info update",
+    "update": "Listing info update",
+    "updatelisting": "Listing info update",
     "other": "Other",
 }
 
@@ -180,6 +184,46 @@ def write_overrides(overrides: dict[str, dict[str, Any]], path: Path = OVERRIDES
     sorted_overrides = {key: overrides[key] for key in sorted(overrides)}
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(pretty_json(sorted_overrides), encoding="utf-8")
+
+
+def load_private_camps(path: Path = PRIVATE_CAMPS_PATH) -> list[dict[str, Any]]:
+    data = load_json(path, [])
+    if not isinstance(data, list):
+        raise ValueError(f"{path} must contain a JSON array")
+    private_camps: list[dict[str, Any]] = []
+    for item in data:
+        if not isinstance(item, dict):
+            raise ValueError(f"{path} contains a non-object camp entry: {item!r}")
+        camp_id = clean_text(item.get("id"))
+        if not camp_id:
+            raise ValueError(f"{path} contains a camp entry without an id")
+        private_camps.append(item)
+    return private_camps
+
+
+def write_private_camps(private_camps: list[dict[str, Any]], path: Path = PRIVATE_CAMPS_PATH) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(pretty_json(private_camps), encoding="utf-8")
+
+
+def find_private_camp_index(private_camps: list[dict[str, Any]], camp_id: str) -> int | None:
+    for index, camp in enumerate(private_camps):
+        if clean_text(camp.get("id")) == camp_id:
+            return index
+    return None
+
+
+def is_private_camp_payload(payload: dict[str, Any], camp_id: str) -> bool:
+    source = clean_text(payload.get("source") or payload.get("listingSource") or payload.get("listing_source"))
+    return camp_id.startswith("private-") or source.lower() == "private camps"
+
+
+def private_camp_exists(camp_id: str) -> bool:
+    try:
+        private_camps = load_private_camps()
+    except FileNotFoundError:
+        return False
+    return find_private_camp_index(private_camps, camp_id) is not None
 
 
 def decode_json(raw: str) -> dict[str, Any]:
@@ -520,7 +564,66 @@ def build_pr_body(
     return body
 
 
+def approve_private_camp_exclusion_report(issue_number: int, payload: dict[str, Any], camp_id: str, camp_name: str, category: str, notes: str) -> tuple[str, str, str]:
+    updates = get_proposed_updates(payload, category)
+    duplicate_of = clean_text(updates.get("duplicateOf") or updates.get("duplicate_of") or payload.get("duplicateOf") or payload.get("duplicate_of"))
+    exclude_reason = clean_text(
+        updates.get("excludeReason")
+        or updates.get("exclude_reason")
+        or payload.get("excludeReason")
+        or payload.get("exclude_reason")
+        or category
+    )
+
+    private_camps = load_private_camps()
+    index = find_private_camp_index(private_camps, camp_id)
+    if index is None:
+        raise ValueError(f"Private Camps report references {camp_id}, but it was not found in {PRIVATE_CAMPS_PATH}")
+
+    private_camps.pop(index)
+    write_private_camps(private_camps)
+
+    # Clean up any stale compatibility patches/exclusions for this static source row.
+    overrides = load_overrides()
+    removed_stale_override = overrides.pop(camp_id, None) is not None
+    if removed_stale_override:
+        write_overrides(overrides)
+    exclusions = load_exclusions()
+    removed_stale_exclusion = camp_id in exclusions
+    if removed_stale_exclusion:
+        write_exclusions([item for item in exclusions if item != camp_id])
+
+    action_summary = (
+        f"This PR removes private camp ID `{camp_id}` directly from `{PRIVATE_CAMPS_PATH}`. "
+        "Private Camps are manually curated/static data, so removing the source row is cleaner than adding a generated-feed exclusion."
+    )
+    if duplicate_of:
+        action_summary += f"\n\nDuplicate of: `{duplicate_of}`"
+    if exclude_reason:
+        action_summary += f"\n\nReason: {exclude_reason}"
+    if removed_stale_override:
+        action_summary += f"\n\nAlso removed stale compatibility override for `{camp_id}` from `{OVERRIDES_PATH}`."
+    if removed_stale_exclusion:
+        action_summary += f"\n\nAlso removed stale exclusion for `{camp_id}` from `{EXCLUSIONS_PATH}`."
+
+    pr_title = f"Remove private camp listing: {camp_name}"
+    pr_body = build_pr_body(
+        issue_number=issue_number,
+        target=str(PRIVATE_CAMPS_PATH),
+        category=category,
+        camp_id=camp_id,
+        notes=notes,
+        payload=payload,
+        action_summary=action_summary,
+    )
+    summary = f"Removed {camp_id} from {PRIVATE_CAMPS_PATH}"
+    return pr_title, pr_body, summary
+
+
 def approve_exclusion_report(issue_number: int, payload: dict[str, Any], camp_id: str, camp_name: str, category: str, notes: str) -> tuple[str, str, str]:
+    if is_private_camp_payload(payload, camp_id) and private_camp_exists(camp_id):
+        return approve_private_camp_exclusion_report(issue_number, payload, camp_id, camp_name, category, notes)
+
     updates = get_proposed_updates(payload, category)
     duplicate_of = clean_text(updates.get("duplicateOf") or updates.get("duplicate_of") or payload.get("duplicateOf") or payload.get("duplicate_of"))
     exclude_reason = clean_text(
@@ -565,12 +668,52 @@ def approve_exclusion_report(issue_number: int, payload: dict[str, Any], camp_id
     summary = f"Added {camp_id} to {EXCLUSIONS_PATH}" if not already_excluded else f"{camp_id} was already present in {EXCLUSIONS_PATH}"
     return pr_title, pr_body, summary
 
-
 def override_title_name(camp_name: str, updates: dict[str, Any]) -> str:
     proposed_name = clean_text(updates.get("name"))
     if proposed_name and proposed_name != clean_text(camp_name):
         return proposed_name
     return camp_name
+
+
+def approve_private_camp_update_report(issue_number: int, payload: dict[str, Any], camp_id: str, camp_name: str, category: str, notes: str, normalized_updates: dict[str, Any]) -> tuple[str, str, str]:
+    private_camps = load_private_camps()
+    index = find_private_camp_index(private_camps, camp_id)
+    if index is None:
+        raise ValueError(f"Private Camps report references {camp_id}, but it was not found in {PRIVATE_CAMPS_PATH}")
+
+    private_camps[index].update(normalized_updates)
+    write_private_camps(private_camps)
+
+    # If an older approval accidentally created an override for this static private camp,
+    # remove it so the source row is the single place to review future edits.
+    overrides = load_overrides()
+    removed_stale_override = overrides.pop(camp_id, None) is not None
+    if removed_stale_override:
+        write_overrides(overrides)
+
+    title_name = override_title_name(camp_name, normalized_updates)
+    pr_title = f"Update private camp listing: {title_name}"
+    action_summary = (
+        f"This PR updates private camp ID `{camp_id}` directly in `{PRIVATE_CAMPS_PATH}`. "
+        "Private Camps are manually curated/static data, so editing the source row is cleaner than adding an override.\n\n"
+        "Proposed updates:\n\n"
+        "```json\n"
+        f"{compact_json(normalized_updates)}\n"
+        "```"
+    )
+    if removed_stale_override:
+        action_summary += f"\n\nAlso removed stale compatibility override for `{camp_id}` from `{OVERRIDES_PATH}`."
+    pr_body = build_pr_body(
+        issue_number=issue_number,
+        target=str(PRIVATE_CAMPS_PATH),
+        category=category,
+        camp_id=camp_id,
+        notes=notes,
+        payload=payload,
+        action_summary=action_summary,
+    )
+    summary = f"Updated {camp_id} in {PRIVATE_CAMPS_PATH}"
+    return pr_title, pr_body, summary
 
 
 def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id: str, camp_name: str, category: str, notes: str) -> tuple[str, str, str]:
@@ -586,9 +729,11 @@ def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id:
     if not normalized_updates:
         raise ValueError("Structured update reports must include at least one proposedUpdates field. Use Other for review-only notes.")
 
+    if is_private_camp_payload(payload, camp_id) and private_camp_exists(camp_id):
+        return approve_private_camp_update_report(issue_number, payload, camp_id, camp_name, category, notes, normalized_updates)
+
     overrides = load_overrides()
     existing_patch = dict(overrides.get(camp_id, {}))
-    previous_values = {key: existing_patch.get(key) for key in normalized_updates}
     existing_patch.update(normalized_updates)
     overrides[camp_id] = existing_patch
     write_overrides(overrides)
@@ -623,7 +768,6 @@ def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id:
     )
     summary = f"Updated override for {camp_id} in {OVERRIDES_PATH}"
     return pr_title, pr_body, summary
-
 
 def main() -> int:
     parser = argparse.ArgumentParser()

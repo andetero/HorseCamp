@@ -164,6 +164,33 @@ def parse_list(value: str) -> list[str]:
     return [p.strip() for p in parts if p.strip()]
 
 
+def normalize_contact_links(website: str, email: str = "", phone: str = "") -> tuple[str, str, str]:
+    """Keep website as a real web URL; move mailto/tel links to contact fields.
+
+    HorseMotel.com pages sometimes expose email or phone links where a web URL
+    would normally be. The app has dedicated email and phone fields, so avoid
+    writing mailto: or tel: values into website during nightly sync.
+    """
+    website = clean_text(website or "")
+    email = clean_text(email or "")
+    phone = clean_text(phone or "")
+    lower = website.lower()
+
+    if lower.startswith("mailto:"):
+        candidate = unquote(website.split(":", 1)[1]).split("?", 1)[0].strip()
+        if candidate and not email:
+            email = candidate
+        return "", email, phone
+
+    if lower.startswith("tel:"):
+        candidate = unquote(website.split(":", 1)[1]).split("?", 1)[0].strip()
+        if candidate and not phone:
+            phone = candidate
+        return "", email, phone
+
+    return website, email, phone
+
+
 def slugify(value: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
     return slug[:80] or "listing"
@@ -385,7 +412,11 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     city = cleanup_city(city, location, state)
 
     source_url = first_value(row, FIELD_ALIASES["sourceUrl"])
-    website = first_value(row, FIELD_ALIASES["website"]) or source_url
+    phone = first_value(row, FIELD_ALIASES["phone"])
+    email = first_value(row, FIELD_ALIASES["email"])
+    website, email, phone = normalize_contact_links(first_value(row, FIELD_ALIASES["website"]), email, phone)
+    if not website and source_url and not source_url.lower().startswith(("mailto:", "tel:")):
+        website = source_url
     lat = parse_float(first_value(row, FIELD_ALIASES["latitude"]), default=0.0)
     lng = parse_float(first_value(row, FIELD_ALIASES["longitude"]), default=0.0)
     usable_address = has_usable_street_address(location)
@@ -424,8 +455,8 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "maxRigLength": parse_int(first_value(row, FIELD_ALIASES["maxRigLength"]), 0),
         "stallCount": parse_int(first_value(row, FIELD_ALIASES["stallCount"]), 0),
         "paddockCount": parse_int(first_value(row, FIELD_ALIASES["paddockCount"]), 0),
-        "phone": first_value(row, FIELD_ALIASES["phone"]),
-        "email": first_value(row, FIELD_ALIASES["email"]),
+        "phone": phone,
+        "email": email,
         "website": website,
         "sourceUrl": source_url or website,
         "description": description,
@@ -928,6 +959,7 @@ def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, s
     email_match = re.search(r"E-?mail:\s*(.*?)(?:Web Site:|Location on Google Maps|Facilities:|$)", text, re.IGNORECASE | re.DOTALL)
     phone = clean_text(phone_match.group(1)) if phone_match else ""
     email_value = clean_text(email_match.group(1)) if email_match else ""
+    website, email_value, phone = normalize_contact_links(website, email_value, phone)
 
     pre_contact = re.split(r"Tel:|E-?mail:|Web Site:|Location on Google Maps|Facilities:", text, flags=re.IGNORECASE)[0]
     pre_contact = re.sub(r"\bNew Listing\b", "", pre_contact, flags=re.IGNORECASE)

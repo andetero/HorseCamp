@@ -14,6 +14,7 @@ Supported approved report types:
 - Incorrect amenities/accommodations
 - Bad phone / website
 - Other reports are review-only issues and do not create PRs.
+- Other removal reason reports create exclusions when the payload requests exclude=true.
 
 The GitHub Action opens a PR for final review before structured data fixes are merged.
 The issue body may contain plain JSON, fenced JSON, or the legacy hidden JSON block.
@@ -45,6 +46,10 @@ EXCLUSION_CATEGORIES = {
     "no horse camping",
     "duplicate listing",
     "duplicate",
+    "other removal reason",
+    "other removal",
+    "bad invalid listing",
+    "bad / invalid listing",
 }
 
 CATEGORY_ALIASES = {
@@ -412,6 +417,39 @@ def normalize_override_updates(updates: dict[str, Any], *, category: str) -> dic
     return normalized
 
 
+
+
+def is_truthy_exclude(value: Any) -> bool:
+    if value in (None, ""):
+        return False
+    try:
+        return parse_bool(value)
+    except ValueError:
+        return False
+
+
+def is_exclusion_report(category: str, payload: dict[str, Any]) -> bool:
+    normalized_category = category_key(category)
+    if normalized_category in EXCLUSION_CATEGORIES:
+        return True
+
+    updates = payload.get("proposedUpdates") or payload.get("proposed_updates") or payload.get("updates") or {}
+    if isinstance(updates, dict) and is_truthy_exclude(updates.get("exclude")):
+        return True
+    if is_truthy_exclude(payload.get("exclude")):
+        return True
+
+    problem_type = normalize_field_name(clean_text(payload.get("problemType") or payload.get("problem_type")))
+    if problem_type in {"closed", "remove", "removal", "removelisting"}:
+        return True
+
+    # The app's Remove Listing flow can send a category such as "Other removal reason".
+    # It is still a structured exclusion, unlike the generic review-only "Other" report.
+    if "removalreason" in normalize_field_name(category) or "removal" in normalized_category:
+        return True
+
+    return False
+
 def parse_coordinates(payload: dict[str, Any]) -> tuple[float, float]:
     # Prefer the visible/maintainer-edited Coordinates table value when present.
     coordinates = clean_text(payload.get("coordinates") or payload.get("coordinate") or payload.get("coords"))
@@ -604,8 +642,7 @@ def main() -> int:
     camp_name = clean_text(payload.get("campName") or payload.get("camp_name") or payload.get("listingName") or payload.get("listing_name") or payload.get("name")) or camp_id
     notes = clean_text(payload.get("notes") or payload.get("userNotes") or payload.get("user_notes"))
 
-    normalized_category = category_key(category)
-    if normalized_category in EXCLUSION_CATEGORIES:
+    if is_exclusion_report(category, payload):
         pr_title, pr_body, summary = approve_exclusion_report(args.issue_number, payload, camp_id, camp_name, category, notes)
     else:
         pr_title, pr_body, summary = approve_override_report(args.issue_number, payload, camp_id, camp_name, category, notes)

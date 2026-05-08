@@ -566,6 +566,13 @@ def approve_exclusion_report(issue_number: int, payload: dict[str, Any], camp_id
     return pr_title, pr_body, summary
 
 
+def override_title_name(camp_name: str, updates: dict[str, Any]) -> str:
+    proposed_name = clean_text(updates.get("name"))
+    if proposed_name and proposed_name != clean_text(camp_name):
+        return proposed_name
+    return camp_name
+
+
 def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id: str, camp_name: str, category: str, notes: str) -> tuple[str, str, str]:
     updates = get_proposed_updates(payload, category)
 
@@ -587,14 +594,15 @@ def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id:
     write_overrides(overrides)
 
     category_title = canonical_category(category)
+    title_name = override_title_name(camp_name, normalized_updates)
     if category_title == "Wrong location":
-        pr_title = f"Correct listing location: {camp_name}"
+        pr_title = f"Correct listing location: {title_name}"
     elif category_title in {"Missing phone", "Missing website", "Missing description/details", "Missing accommodations"}:
-        pr_title = f"Add missing listing info: {camp_name}"
+        pr_title = f"Add missing listing info: {title_name}"
     elif category_title in {"Incorrect amenities/accommodations", "Bad phone / website"}:
-        pr_title = f"Correct listing details: {camp_name}"
+        pr_title = f"Correct listing details: {title_name}"
     else:
-        pr_title = f"Update listing details: {camp_name}"
+        pr_title = f"Update listing details: {title_name}"
 
     action_summary = (
         f"This PR adds or updates an override for generated listing ID `{camp_id}` in `data/overrides.json`. "

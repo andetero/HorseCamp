@@ -9,7 +9,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": "20A | 30A | 50A | Water | Sewer",
-    "accommodations": "Trails | Stalls | Corrals | Paddocks | Highlines | Cabins | Group Camping | Primitive Camping | Horse Camping",
+    "accommodations": "Trails | Stalls | Corrals | Paddocks | Highlines | Cabins | Group Camping | Primitive Camping | Lodging",
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -23,12 +23,11 @@
     "hasDumpStation": "TRUE or FALSE",
     "hasWifi": "TRUE or FALSE",
     "hasBathhouse": "TRUE or FALSE",
-    "pullThroughAvailable": "TRUE or FALSE",
     "rating": 0.0,
     "reviewCount": 0,
     "imageColors": ["REDACTED"],
     "photoURLs": "URL 1 | URL 2 | URL 3",
-    "source": "Layover | RIDB | State Parks | OSM | NPS | Private Camps",
+    "source": "HorseMotel.com | RIDB | State Parks | OSM | NPS | Private Camps",
     "sourceDetail": "OPTIONAL - Example: UT State Parks"
   }
 ]

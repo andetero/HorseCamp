@@ -124,6 +124,48 @@ def first_value(row: Dict[str, Any], aliases: Iterable[str]) -> str:
     return ""
 
 
+def normalize_contact_link(value: str) -> str:
+    return clean_text(unquote(value or "")).strip()
+
+
+def is_web_url(value: str) -> bool:
+    lower = normalize_contact_link(value).lower()
+    return lower.startswith("http://") or lower.startswith("https://")
+
+
+def normalize_contact_fields(raw_website: str, raw_email: str, raw_phone: str, source_url: str = "") -> tuple[str, str, str]:
+    """Keep website as a true web URL only; move mailto/tel data into email/phone.
+
+    The HorseMotel.com state page belongs in sourceUrl, not website. If a listing
+    has no true website link, website should stay blank so the app does not show a
+    misleading Visit Website button for the generic state source page.
+    """
+    website = normalize_contact_link(raw_website)
+    email = clean_text(raw_email or "")
+    phone = clean_text(raw_phone or "")
+    source = normalize_contact_link(source_url)
+
+    lower = website.lower()
+    if lower.startswith("mailto:"):
+        candidate = normalize_contact_link(website.split(":", 1)[1].split("?", 1)[0])
+        if candidate and not email:
+            email = candidate
+        website = ""
+    elif lower.startswith("tel:"):
+        candidate = normalize_contact_link(website.split(":", 1)[1].split("?", 1)[0])
+        if candidate and not phone:
+            phone = candidate
+        website = ""
+    elif not is_web_url(website):
+        website = ""
+
+    # Do not duplicate the HorseMotel.com source/state page as the camp website.
+    if website and source and website.rstrip("/").lower() == source.rstrip("/").lower():
+        website = ""
+
+    return website, email, phone
+
+
 def parse_float(value: str, default: float = 0.0) -> float:
     if not value:
         return default
@@ -162,33 +204,6 @@ def parse_list(value: str) -> list[str]:
             pass
     parts = re.split(r"[|;,]", value)
     return [p.strip() for p in parts if p.strip()]
-
-
-def normalize_contact_links(website: str, email: str = "", phone: str = "") -> tuple[str, str, str]:
-    """Keep website as a real web URL; move mailto/tel links to contact fields.
-
-    HorseMotel.com pages sometimes expose email or phone links where a web URL
-    would normally be. The app has dedicated email and phone fields, so avoid
-    writing mailto: or tel: values into website during nightly sync.
-    """
-    website = clean_text(website or "")
-    email = clean_text(email or "")
-    phone = clean_text(phone or "")
-    lower = website.lower()
-
-    if lower.startswith("mailto:"):
-        candidate = unquote(website.split(":", 1)[1]).split("?", 1)[0].strip()
-        if candidate and not email:
-            email = candidate
-        return "", email, phone
-
-    if lower.startswith("tel:"):
-        candidate = unquote(website.split(":", 1)[1]).split("?", 1)[0].strip()
-        if candidate and not phone:
-            phone = candidate
-        return "", email, phone
-
-    return website, email, phone
 
 
 def slugify(value: str) -> str:
@@ -412,11 +427,10 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     city = cleanup_city(city, location, state)
 
     source_url = first_value(row, FIELD_ALIASES["sourceUrl"])
-    phone = first_value(row, FIELD_ALIASES["phone"])
-    email = first_value(row, FIELD_ALIASES["email"])
-    website, email, phone = normalize_contact_links(first_value(row, FIELD_ALIASES["website"]), email, phone)
-    if not website and source_url and not source_url.lower().startswith(("mailto:", "tel:")):
-        website = source_url
+    raw_website = first_value(row, FIELD_ALIASES["website"])
+    raw_email = first_value(row, FIELD_ALIASES["email"])
+    raw_phone = first_value(row, FIELD_ALIASES["phone"])
+    website, email, phone = normalize_contact_fields(raw_website, raw_email, raw_phone, source_url)
     lat = parse_float(first_value(row, FIELD_ALIASES["latitude"]), default=0.0)
     lng = parse_float(first_value(row, FIELD_ALIASES["longitude"]), default=0.0)
     usable_address = has_usable_street_address(location)
@@ -945,7 +959,11 @@ def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, s
         if "google.com/maps" in href_lower or "maps.google" in href_lower:
             maps_href = href
         elif "view comments" not in link_text.lower() and "post comments" not in link_text.lower():
-            if not is_photo_url(href) and not any(skip in href_lower for skip in ["facebook.com", "parelli.com", "jotform.com"]):
+            if (
+                not href_lower.startswith(("mailto:", "tel:"))
+                and not is_photo_url(href)
+                and not any(skip in href_lower for skip in ["facebook.com", "parelli.com", "jotform.com"])
+            ):
                 website = href
 
     lat, lng = extract_coords(maps_href) if maps_href else (0.0, 0.0)
@@ -959,7 +977,6 @@ def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, s
     email_match = re.search(r"E-?mail:\s*(.*?)(?:Web Site:|Location on Google Maps|Facilities:|$)", text, re.IGNORECASE | re.DOTALL)
     phone = clean_text(phone_match.group(1)) if phone_match else ""
     email_value = clean_text(email_match.group(1)) if email_match else ""
-    website, email_value, phone = normalize_contact_links(website, email_value, phone)
 
     pre_contact = re.split(r"Tel:|E-?mail:|Web Site:|Location on Google Maps|Facilities:", text, flags=re.IGNORECASE)[0]
     pre_contact = re.sub(r"\bNew Listing\b", "", pre_contact, flags=re.IGNORECASE)

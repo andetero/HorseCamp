@@ -8,18 +8,8 @@
     "longitude": -85.7756666666667,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Water",
-      "Sewer"
-    ],
-    "accommodations": [
-      "Trails",
-      "Stalls",
-      "Corrals",
-      "Group Camping",
-      "Horse Camping"
-    ],
+    "hookups": ["30A", "Water", "Sewer"],
+    "accommodations": ["Trails", "Stalls", "Corrals", "Group Camping", "Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 31,
     "paddockCount": 0,
@@ -50,9 +40,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -85,9 +73,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -120,9 +106,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -155,9 +139,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -190,9 +172,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -225,9 +205,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -260,9 +238,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -294,15 +270,8 @@
     "longitude": -92.95394,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "50A",
-      "Water"
-    ],
-    "accommodations": [
-      "Horse Camping",
-      "Stalls"
-    ],
+    "hookups": ["30A", "50A", "Water"],
+    "accommodations": ["Horse Camping", "Stalls"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -335,9 +304,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -370,9 +337,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -405,9 +370,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -440,9 +403,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -475,9 +436,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -510,9 +469,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -545,9 +502,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -580,9 +535,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -615,9 +568,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -650,9 +601,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -685,9 +634,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -720,9 +667,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -755,9 +700,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -790,9 +733,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -825,9 +766,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -860,9 +799,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -895,9 +832,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -930,9 +865,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -965,9 +898,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1000,9 +931,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1035,9 +964,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1070,9 +997,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1105,9 +1030,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1140,9 +1063,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1175,9 +1096,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1210,9 +1129,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1245,9 +1162,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1280,9 +1195,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1315,9 +1228,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1350,9 +1261,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1385,9 +1294,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1420,9 +1327,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1455,9 +1360,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1490,9 +1393,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1525,9 +1426,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1560,9 +1459,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1595,9 +1492,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1630,9 +1525,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1665,9 +1558,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1700,9 +1591,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1735,9 +1624,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1770,9 +1657,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1805,9 +1690,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1840,9 +1723,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1875,9 +1756,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1910,9 +1789,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1945,9 +1822,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -1980,9 +1855,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2015,9 +1888,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2050,9 +1921,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2085,9 +1954,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2120,9 +1987,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2155,9 +2020,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2190,9 +2053,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2225,9 +2086,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2260,9 +2119,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2295,9 +2152,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2330,9 +2185,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2365,10 +2218,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping",
-      "Layover"
-    ],
+    "accommodations": ["Horse Camping", "Layover"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2401,9 +2251,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2436,9 +2284,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2471,9 +2317,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2506,9 +2350,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2541,9 +2383,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2576,9 +2416,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2611,9 +2449,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2646,9 +2482,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2681,9 +2515,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2715,12 +2547,8 @@
     "longitude": -88.584144,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "Water"
-    ],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "hookups": ["Water"],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2753,9 +2581,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2788,9 +2614,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2823,9 +2647,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2858,9 +2680,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2893,9 +2713,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2928,9 +2746,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2963,9 +2779,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -2997,19 +2811,8 @@
     "longitude": -88.272779,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Sewer",
-      "Water"
-    ],
-    "accommodations": [
-      "Cabins",
-      "Corrals",
-      "Group Camping",
-      "Horse Camping",
-      "Stalls",
-      "Trails"
-    ],
+    "hookups": ["30A", "Sewer", "Water"],
+    "accommodations": ["Cabins", "Corrals", "Group Camping", "Horse Camping", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3041,9 +2844,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3075,18 +2876,8 @@
     "longitude": -88.58677,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Sewer",
-      "Water"
-    ],
-    "accommodations": [
-      "Corrals",
-      "Group Camping",
-      "Horse Camping",
-      "Stalls",
-      "Trails"
-    ],
+    "hookups": ["30A", "Sewer", "Water"],
+    "accommodations": ["Corrals", "Group Camping", "Horse Camping", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3117,20 +2908,8 @@
     "longitude": -88.334563,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Sewer",
-      "Water"
-    ],
-    "accommodations": [
-      "Cabins",
-      "Corrals",
-      "Group Camping",
-      "Horse Camping",
-      "Paddocks",
-      "Stalls",
-      "Trails"
-    ],
+    "hookups": ["30A", "Sewer", "Water"],
+    "accommodations": ["Cabins", "Corrals", "Group Camping", "Horse Camping", "Paddocks", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3162,9 +2941,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3197,9 +2974,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3232,9 +3007,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3266,19 +3039,8 @@
     "longitude": -88.57436,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Sewer",
-      "Water"
-    ],
-    "accommodations": [
-      "Corrals",
-      "Group Camping",
-      "Horse Camping",
-      "Paddocks",
-      "Stalls",
-      "Trails"
-    ],
+    "hookups": ["30A", "Sewer", "Water"],
+    "accommodations": ["Corrals", "Group Camping", "Horse Camping", "Paddocks", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3310,9 +3072,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3345,9 +3105,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3380,9 +3138,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3415,9 +3171,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3450,9 +3204,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3485,9 +3237,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3520,9 +3270,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3555,9 +3303,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3590,9 +3336,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3625,9 +3369,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3660,9 +3402,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3695,9 +3435,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3730,9 +3468,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3765,9 +3501,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3800,9 +3534,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3835,9 +3567,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3870,9 +3600,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3905,9 +3633,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3940,9 +3666,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -3975,9 +3699,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4010,9 +3732,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4045,9 +3765,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4080,9 +3798,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4114,17 +3830,8 @@
     "longitude": -84.216696,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Sewer",
-      "Water"
-    ],
-    "accommodations": [
-      "Corrals",
-      "Horse Camping",
-      "Stalls",
-      "Trails"
-    ],
+    "hookups": ["30A", "Sewer", "Water"],
+    "accommodations": ["Corrals", "Horse Camping", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4156,9 +3863,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4191,9 +3896,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4225,13 +3928,8 @@
     "longitude": -84.834852,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "50A",
-      "Water"
-    ],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "hookups": ["50A", "Water"],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4264,9 +3962,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4299,9 +3995,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4334,9 +4028,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4369,9 +4061,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4404,9 +4094,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4438,13 +4126,8 @@
     "longitude": -85.666959,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "Water"
-    ],
-    "accommodations": [
-      "Horse Camping",
-      "Trails"
-    ],
+    "hookups": ["Water"],
+    "accommodations": ["Horse Camping", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4477,9 +4160,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4512,9 +4193,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4547,9 +4226,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4582,9 +4259,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4617,9 +4292,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4652,9 +4325,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4687,9 +4358,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4722,9 +4391,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4757,9 +4424,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4792,9 +4457,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4827,9 +4490,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4862,9 +4523,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4897,9 +4556,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4932,9 +4589,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -4967,9 +4622,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5002,9 +4655,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5037,9 +4688,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5072,9 +4721,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5107,9 +4754,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5142,9 +4787,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5177,9 +4820,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5212,9 +4853,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5247,9 +4886,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5282,9 +4919,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5317,9 +4952,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5352,9 +4985,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5387,9 +5018,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5422,9 +5051,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5457,9 +5084,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5492,9 +5117,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5527,9 +5150,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5562,9 +5183,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5597,9 +5216,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5632,9 +5249,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5667,9 +5282,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5701,14 +5314,8 @@
     "longitude": -76.316782,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "Water"
-    ],
-    "accommodations": [
-      "Horse Camping",
-      "Corrals",
-      "Primitive Camping"
-    ],
+    "hookups": ["Water"],
+    "accommodations": ["Horse Camping", "Corrals", "Primitive Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5741,9 +5348,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5776,9 +5381,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5811,9 +5414,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5846,9 +5447,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5881,9 +5480,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5916,9 +5513,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5951,9 +5546,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5986,9 +5579,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6021,9 +5612,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6056,9 +5645,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6091,9 +5678,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6126,9 +5711,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6161,9 +5744,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6196,9 +5777,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6231,9 +5810,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6266,9 +5843,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6300,17 +5875,8 @@
     "longitude": -82.61632,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
-    "hookups": [
-      "30A",
-      "Water"
-    ],
-    "accommodations": [
-      "Horse Camping",
-      "Trails",
-      "Stalls",
-      "Corrals",
-      "Cabins"
-    ],
+    "hookups": ["30A", "Water"],
+    "accommodations": ["Horse Camping", "Trails", "Stalls", "Corrals", "Cabins"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6343,9 +5909,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6378,9 +5942,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6413,9 +5975,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6448,9 +6008,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6483,9 +6041,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6518,9 +6074,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6553,9 +6107,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6588,9 +6140,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6623,9 +6173,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6658,9 +6206,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6693,9 +6239,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6728,9 +6272,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6763,9 +6305,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6798,9 +6338,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6833,9 +6371,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6868,9 +6404,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6903,9 +6437,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6938,9 +6470,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -6973,9 +6503,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7008,9 +6536,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7043,9 +6569,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7078,9 +6602,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7113,9 +6635,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7148,9 +6668,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7183,9 +6701,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7217,22 +6733,8 @@
     "longitude": -84.954215,
     "pricePerNight": 0,
     "horseFeePerNight": 0,
-    "hookups": [
-      "30A",
-      "50A",
-      "Sewer",
-      "Water"
-    ],
-    "accommodations": [
-      "Cabins",
-      "Corrals",
-      "Group Camping",
-      "Horse Camping",
-      "Paddocks",
-      "Primitive Camping",
-      "Stalls",
-      "Trails"
-    ],
+    "hookups": ["30A", "50A", "Sewer", "Water"],
+    "accommodations": ["Cabins", "Corrals", "Group Camping", "Horse Camping", "Paddocks", "Primitive Camping", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7264,9 +6766,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7299,9 +6799,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7334,9 +6832,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7369,9 +6865,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7404,9 +6898,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7438,20 +6930,8 @@
     "longitude": -111.91333,
     "pricePerNight": 55,
     "horseFeePerNight": 20,
-    "hookups": [
-      "30A",
-      "50A",
-      "Water"
-    ],
-    "accommodations": [
-      "Stalls",
-      "Corrals",
-      "Trails",
-      "Cabins",
-      "Horse Camping",
-      "Primitive Camping",
-      "Group Camping"
-    ],
+    "hookups": ["30A", "50A", "Water"],
+    "accommodations": ["Stalls", "Corrals", "Trails", "Cabins", "Horse Camping", "Primitive Camping", "Group Camping"],
     "maxRigLength": 60,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7469,9 +6949,7 @@
     "rating": 0.0,
     "reviewCount": 0,
     "imageColors": ["6D4C41", "BCAAA4"],
-    "photoURLs": [
-      "https://img1.wsimg.com/isteam/ip/61f9125b-f4d0-415e-b443-3e9f2b436e50/paria%20village.jpg"
-    ],
+    "photoURLs": ["https://img1.wsimg.com/isteam/ip/61f9125b-f4d0-415e-b443-3e9f2b436e50/paria%20village.jpg"],
     "source": "Private Camps"
   },
   {
@@ -7484,9 +6962,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7519,9 +6995,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7554,9 +7028,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7589,9 +7061,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7624,9 +7094,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7659,9 +7127,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7694,9 +7160,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7729,9 +7193,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7764,9 +7226,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7799,9 +7259,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7834,9 +7292,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -7869,9 +7325,7 @@
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],
-    "accommodations": [
-      "Horse Camping"
-    ],
+    "accommodations": ["Horse Camping"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,

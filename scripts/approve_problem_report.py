@@ -226,11 +226,15 @@ def private_camp_exists(camp_id: str) -> bool:
     return find_private_camp_index(private_camps, camp_id) is not None
 
 
-def decode_json(raw: str) -> dict[str, Any]:
+def decode_json_any(raw: str) -> Any:
     try:
-        parsed = json.loads(raw)
+        return json.loads(raw)
     except json.JSONDecodeError as exc:
         raise ValueError(f"Problem report JSON is invalid: {exc}") from exc
+
+
+def decode_json(raw: str) -> dict[str, Any]:
+    parsed = decode_json_any(raw)
     if not isinstance(parsed, dict):
         raise ValueError("Problem report JSON must be an object")
     return parsed
@@ -309,11 +313,18 @@ def extract_markdown_table_fields(body: str) -> dict[str, str]:
 
 def extract_problem_report(body: str) -> dict[str, Any]:
     payload: dict[str, Any] | None = None
-    for regex in (HIDDEN_JSON_RE, FENCED_JSON_RE):
-        match = regex.search(body)
-        if match:
-            payload = decode_json(match.group("json"))
-            break
+    hidden_match = HIDDEN_JSON_RE.search(body)
+    fenced_match = FENCED_JSON_RE.search(body)
+
+    if hidden_match:
+        payload = decode_json(hidden_match.group("json"))
+        # Newer issues show the exact final JSON in the visible code block and
+        # keep workflow metadata hidden. If the maintainer edits that visible
+        # final JSON, use the edited visible JSON as the approved final data.
+        if fenced_match:
+            payload["finalJson"] = decode_json_any(fenced_match.group("json"))
+    elif fenced_match:
+        payload = decode_json(fenced_match.group("json"))
 
     if payload is None:
         payload = extract_first_balanced_json(body)
@@ -634,11 +645,17 @@ def approve_exclusion_report(issue_number: int, payload: dict[str, Any], camp_id
         or category
     )
 
-    exclusions = load_exclusions()
-    already_excluded = camp_id in exclusions
-    if not already_excluded:
-        exclusions.append(camp_id)
+    final_json = payload.get("finalJson")
+    if isinstance(final_json, list) and all(isinstance(item, str) for item in final_json):
+        exclusions = [item.strip() for item in final_json if item.strip()]
+        already_excluded = camp_id in exclusions
         write_exclusions(exclusions)
+    else:
+        exclusions = load_exclusions()
+        already_excluded = camp_id in exclusions
+        if not already_excluded:
+            exclusions.append(camp_id)
+            write_exclusions(exclusions)
 
     action_summary = (
         f"This PR adds generated listing ID `{camp_id}` to `data/exclusions.json`. "
@@ -681,7 +698,11 @@ def approve_private_camp_update_report(issue_number: int, payload: dict[str, Any
     if index is None:
         raise ValueError(f"Private Camps report references {camp_id}, but it was not found in {PRIVATE_CAMPS_PATH}")
 
-    private_camps[index].update(normalized_updates)
+    final_json = payload.get("finalJson")
+    if isinstance(final_json, dict) and clean_text(final_json.get("id")) == camp_id:
+        private_camps[index] = final_json
+    else:
+        private_camps[index].update(normalized_updates)
     write_private_camps(private_camps)
 
     # If an older approval accidentally created an override for this static private camp,
@@ -733,9 +754,13 @@ def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id:
         return approve_private_camp_update_report(issue_number, payload, camp_id, camp_name, category, notes, normalized_updates)
 
     overrides = load_overrides()
-    existing_patch = dict(overrides.get(camp_id, {}))
-    existing_patch.update(normalized_updates)
-    overrides[camp_id] = existing_patch
+    final_json = payload.get("finalJson")
+    if isinstance(final_json, dict) and isinstance(final_json.get(camp_id), dict):
+        overrides[camp_id] = final_json[camp_id]
+    else:
+        existing_patch = dict(overrides.get(camp_id, {}))
+        existing_patch.update(normalized_updates)
+        overrides[camp_id] = existing_patch
     write_overrides(overrides)
 
     category_title = canonical_category(category)

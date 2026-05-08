@@ -94,7 +94,7 @@ jobs:
 
           # Only commit source/review files here. Do NOT run fetch_camps.py or update camps.json.
           # The scheduled Seed Camp Data workflow will rebuild camps.json overnight, or you can run it manually.
-          git add data/exclusions.json data/overrides.json
+          git add data/exclusions.json data/overrides.json data/private_camps.json
 
           if git diff --staged --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"

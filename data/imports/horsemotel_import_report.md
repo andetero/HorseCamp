@@ -1,6 +1,6 @@
 # HorseMotel.com Import Report
 
-Generated: 2026-05-11T11:59:59.486418+00:00
+Generated: 2026-05-12T08:34:53.632264+00:00
 Listings written: 724
 
 ## Inputs

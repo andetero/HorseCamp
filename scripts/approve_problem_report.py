@@ -649,17 +649,15 @@ def approve_exclusion_report(issue_number: int, payload: dict[str, Any], camp_id
         or category
     )
 
-    final_json = payload.get("finalJson")
-    if isinstance(final_json, list) and all(isinstance(item, str) for item in final_json):
-        exclusions = [item.strip() for item in final_json if item.strip()]
-        already_excluded = camp_id in exclusions
+    # Always merge exclusion reports into the latest checked-out data/exclusions.json.
+    # Do not write the full finalJson array from the issue body here: issue snapshots
+    # can become stale when multiple exclusion reports are approved around the same
+    # time, which can accidentally remove exclusions added by newer merged PRs.
+    exclusions = load_exclusions()
+    already_excluded = camp_id in exclusions
+    if not already_excluded:
+        exclusions.append(camp_id)
         write_exclusions(exclusions)
-    else:
-        exclusions = load_exclusions()
-        already_excluded = camp_id in exclusions
-        if not already_excluded:
-            exclusions.append(camp_id)
-            write_exclusions(exclusions)
 
     action_summary = (
         f"This PR adds generated listing ID `{camp_id}` to `data/exclusions.json`. "

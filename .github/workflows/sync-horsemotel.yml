@@ -31,24 +31,47 @@ jobs:
 
       - name: Import authorized HorseMotel.com listings
         run: |
-          if [ -n "${{ secrets.HORSEMOTEL_SOURCE_URL }}" ]; then
-            python scripts/import_horsemotel.py \
-              --csv data/imports/horsemotel_listings.csv \
-              --output data/horsemotel_listings.json \
-              --report data/imports/horsemotel_import_report.md \
-              --allow-empty \
-              --download-kml \
-              --source-url "${{ secrets.HORSEMOTEL_SOURCE_URL }}"
-          else
-            python scripts/import_horsemotel.py \
-              --csv data/imports/horsemotel_listings.csv \
-              --output data/horsemotel_listings.json \
-              --report data/imports/horsemotel_import_report.md \
-              --allow-empty \
-              --download-kml \
-              --scrape-site \
-              --site-url "https://www.horsemotel.com/"
-          fi
+          max_attempts=3
+          delay_seconds=60
+
+          for attempt in $(seq 1 "$max_attempts"); do
+            echo "HorseMotel.com import attempt ${attempt} of ${max_attempts}..."
+
+            set +e
+            if [ -n "${{ secrets.HORSEMOTEL_SOURCE_URL }}" ]; then
+              python scripts/import_horsemotel.py \
+                --csv data/imports/horsemotel_listings.csv \
+                --output data/horsemotel_listings.json \
+                --report data/imports/horsemotel_import_report.md \
+                --allow-empty \
+                --download-kml \
+                --source-url "${{ secrets.HORSEMOTEL_SOURCE_URL }}"
+            else
+              python scripts/import_horsemotel.py \
+                --csv data/imports/horsemotel_listings.csv \
+                --output data/horsemotel_listings.json \
+                --report data/imports/horsemotel_import_report.md \
+                --allow-empty \
+                --download-kml \
+                --scrape-site \
+                --site-url "https://www.horsemotel.com/"
+            fi
+            status=$?
+            set -e
+
+            if [ "$status" -eq 0 ]; then
+              echo "HorseMotel.com import succeeded on attempt ${attempt}."
+              exit 0
+            fi
+
+            if [ "$attempt" -lt "$max_attempts" ]; then
+              echo "HorseMotel.com import failed with status ${status}. Waiting ${delay_seconds} seconds before retry..."
+              sleep "$delay_seconds"
+            else
+              echo "HorseMotel.com import failed after ${max_attempts} attempts."
+              exit "$status"
+            fi
+          done
 
       - name: Upload HorseMotel.com sync outputs as artifact
         uses: actions/upload-artifact@v4

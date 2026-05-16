@@ -554,27 +554,43 @@ def build_pr_body(
     target: str,
     category: str,
     camp_id: str,
-    notes: str,
-    payload: dict[str, Any],
     action_summary: str,
+    old_json: Any | None = None,
+    new_json: Any | None = None,
+    notes: str = "",
 ) -> str:
+    """Build a short review-friendly PR body.
+
+    Keep the detailed source payload in the original issue. The PR body should only
+    show the exact old/new JSON that matters for final merge review.
+    """
     body = (
         f"Closes #{issue_number}\n\n"
         f"Target: `{target}`\n\n"
         f"Approved problem report category: `{category}`\n\n"
         f"Listing ID: `{camp_id}`\n\n"
         f"{action_summary}\n\n"
-        "Important: editing this PR description/body does not change app data. "
-        "To change what gets merged into the app, edit the JSON file in the Files changed tab.\n\n"
     )
     if notes:
         body += f"User notes: {notes}\n\n"
+    if old_json is not None:
+        body += (
+            "OLD JSON:\n\n"
+            "```json\n"
+            f"{compact_json(old_json)}\n"
+            "```\n\n"
+        )
+    if new_json is not None:
+        body += (
+            "NEW JSON:\n\n"
+            "```json\n"
+            f"{compact_json(new_json)}\n"
+            "```\n\n"
+        )
     body += (
-        "Problem report payload for review:\n\n"
-        "```json\n"
-        f"{compact_json(payload)}\n"
-        "```\n\n"
-        "Review the JSON diff below, then merge when ready. Merging this PR will automatically close the linked issue."
+        "Important: editing this PR description/body does not change app data. "
+        "To change what gets merged into the app, edit the JSON file in the Files changed tab.\n\n"
+        "Review the Files changed tab, then merge when ready. Merging this PR will automatically close the linked issue."
     )
     return body
 
@@ -595,6 +611,7 @@ def approve_private_camp_exclusion_report(issue_number: int, payload: dict[str, 
     if index is None:
         raise ValueError(f"Private Camps report references {camp_id}, but it was not found in {PRIVATE_CAMPS_PATH}")
 
+    old_record = dict(private_camps[index])
     private_camps.pop(index)
     write_private_camps(private_camps)
 
@@ -627,9 +644,9 @@ def approve_private_camp_exclusion_report(issue_number: int, payload: dict[str, 
         target=str(PRIVATE_CAMPS_PATH),
         category=category,
         camp_id=camp_id,
-        notes=notes,
-        payload=payload,
         action_summary=action_summary,
+        old_json=old_record,
+        notes=notes,
     )
     summary = f"Removed {camp_id} from {PRIVATE_CAMPS_PATH}"
     return pr_title, pr_body, summary
@@ -649,10 +666,9 @@ def approve_exclusion_report(issue_number: int, payload: dict[str, Any], camp_id
         or category
     )
 
-    # Always merge exclusion reports into the latest checked-out data/exclusions.json.
-    # Do not write the full finalJson array from the issue body here: issue snapshots
-    # can become stale when multiple exclusion reports are approved around the same
-    # time, which can accidentally remove exclusions added by newer merged PRs.
+    # Always merge the approved camp ID into the latest checked-out exclusions file.
+    # Do not trust the full finalJson array embedded in the issue body: older issue
+    # snapshots can be stale and may accidentally remove exclusions merged later.
     exclusions = load_exclusions()
     already_excluded = camp_id in exclusions
     if not already_excluded:
@@ -680,9 +696,9 @@ def approve_exclusion_report(issue_number: int, payload: dict[str, Any], camp_id
         target=str(EXCLUSIONS_PATH),
         category=category,
         camp_id=camp_id,
-        notes=notes,
-        payload=payload,
         action_summary=action_summary,
+        new_json=camp_id,
+        notes=notes,
     )
     summary = f"Added {camp_id} to {EXCLUSIONS_PATH}" if not already_excluded else f"{camp_id} was already present in {EXCLUSIONS_PATH}"
     return pr_title, pr_body, summary
@@ -700,11 +716,13 @@ def approve_private_camp_update_report(issue_number: int, payload: dict[str, Any
     if index is None:
         raise ValueError(f"Private Camps report references {camp_id}, but it was not found in {PRIVATE_CAMPS_PATH}")
 
+    old_record = dict(private_camps[index])
     final_json = payload.get("finalJson")
     if isinstance(final_json, dict) and clean_text(final_json.get("id")) == camp_id:
         private_camps[index] = final_json
     else:
         private_camps[index].update(normalized_updates)
+    new_record = dict(private_camps[index])
     write_private_camps(private_camps)
 
     # If an older approval accidentally created an override for this static private camp,
@@ -718,11 +736,7 @@ def approve_private_camp_update_report(issue_number: int, payload: dict[str, Any
     pr_title = f"Update private camp listing: {title_name}"
     action_summary = (
         f"This PR updates private camp ID `{camp_id}` directly in `{PRIVATE_CAMPS_PATH}`. "
-        "Private Camps are manually curated/static data, so editing the source row is cleaner than adding an override.\n\n"
-        "Proposed updates:\n\n"
-        "```json\n"
-        f"{compact_json(normalized_updates)}\n"
-        "```"
+        "Private Camps are manually curated/static data, so editing the source row is cleaner than adding an override."
     )
     if removed_stale_override:
         action_summary += f"\n\nAlso removed stale compatibility override for `{camp_id}` from `{OVERRIDES_PATH}`."
@@ -731,9 +745,10 @@ def approve_private_camp_update_report(issue_number: int, payload: dict[str, Any
         target=str(PRIVATE_CAMPS_PATH),
         category=category,
         camp_id=camp_id,
-        notes=notes,
-        payload=payload,
         action_summary=action_summary,
+        old_json=old_record,
+        new_json=new_record,
+        notes=notes,
     )
     summary = f"Updated {camp_id} in {PRIVATE_CAMPS_PATH}"
     return pr_title, pr_body, summary
@@ -756,6 +771,7 @@ def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id:
         return approve_private_camp_update_report(issue_number, payload, camp_id, camp_name, category, notes, normalized_updates)
 
     overrides = load_overrides()
+    old_patch = dict(overrides.get(camp_id, {})) if isinstance(overrides.get(camp_id), dict) else None
     final_json = payload.get("finalJson")
     if isinstance(final_json, dict) and isinstance(final_json.get(camp_id), dict):
         overrides[camp_id] = final_json[camp_id]
@@ -763,6 +779,7 @@ def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id:
         existing_patch = dict(overrides.get(camp_id, {}))
         existing_patch.update(normalized_updates)
         overrides[camp_id] = existing_patch
+    new_patch = {camp_id: overrides[camp_id]}
     write_overrides(overrides)
 
     category_title = canonical_category(category)
@@ -778,20 +795,17 @@ def approve_override_report(issue_number: int, payload: dict[str, Any], camp_id:
 
     action_summary = (
         f"This PR adds or updates an override for generated listing ID `{camp_id}` in `data/overrides.json`. "
-        "The next Seed Camp Data run will apply these corrected fields to `camps.json`.\n\n"
-        "Proposed updates:\n\n"
-        "```json\n"
-        f"{compact_json(normalized_updates)}\n"
-        "```"
+        "The next Seed Camp Data run will apply these corrected fields to `camps.json`."
     )
     pr_body = build_pr_body(
         issue_number=issue_number,
         target=str(OVERRIDES_PATH),
         category=category,
         camp_id=camp_id,
-        notes=notes,
-        payload=payload,
         action_summary=action_summary,
+        old_json={camp_id: old_patch} if old_patch else None,
+        new_json=new_patch,
+        notes=notes,
     )
     summary = f"Updated override for {camp_id} in {OVERRIDES_PATH}"
     return pr_title, pr_body, summary

@@ -386,13 +386,15 @@ def main() -> int:
     pr_body = (
         f"Closes #{args.issue_number}\n\n"
         f"Target: `{target_path}`\n\n"
-        "Important: editing this PR description/body does not change app data. "
-        "To change what gets merged into the app, edit the changed JSON file in the Files changed tab.\n\n"
-        "Generated app record for review:\n\n"
+        "Approved submission: New private camp listing\n\n"
+        "This PR appends one new private camp listing.\n\n"
+        "NEW JSON:\n\n"
         "```json\n"
         f"{compact_json(record)}\n"
         "```\n\n"
-        "Review the actual JSON file diff below, then merge when ready. Merging this PR will automatically close the linked submission issue."
+        "Important: editing this PR description/body does not change app data. "
+        "To change what gets merged into the app, edit the changed JSON file in the Files changed tab.\n\n"
+        "Review the Files changed tab, then merge when ready. Merging this PR will automatically close the linked submission issue."
     )
     summary = f"Prepared {human_kind} submission '{record['name']}' for {target_path}"
     print(summary)

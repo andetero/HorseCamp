@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "OR State Parks"
+    "source": "State Parks"
   },
   {
     "id": "or-stateparks-collier-memorial",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "OR State Parks"
+    "source": "State Parks"
   },
   {
     "id": "or-stateparks-nehalem-bay",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "OR State Parks"
+    "source": "State Parks"
   },
   {
     "id": "or-stateparks-emigrant-springs",
@@ -116,8 +113,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "OR State Parks"
+    "source": "State Parks"
   },
   {
     "id": "or-stateparks-stub-stewart",
@@ -146,7 +142,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "OR State Parks"
+    "source": "State Parks"
   }
 ]

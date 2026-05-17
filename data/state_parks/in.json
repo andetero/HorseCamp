@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IN State Parks"
+    "source": "State Parks"
   },
   {
     "id": "in-stateparks-o-bannon-woods-state-park-horsemen-s-campground",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IN State Parks"
+    "source": "State Parks"
   },
   {
     "id": "in-stateparks-potato-creek-state-park-horsemen-s-campground",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IN State Parks"
+    "source": "State Parks"
   },
   {
     "id": "in-stateparks-salamonie-lake-horsemen-s-campground",
@@ -116,8 +113,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IN State Parks"
+    "source": "State Parks"
   },
   {
     "id": "in-stateparks-tippecanoe-river-state-park-horse-sites",
@@ -146,8 +142,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IN State Parks"
+    "source": "State Parks"
   },
   {
     "id": "in-stateparks-whitewater-memorial-state-park-horsemen-s-campground",
@@ -176,7 +171,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IN State Parks"
+    "source": "State Parks"
   }
 ]

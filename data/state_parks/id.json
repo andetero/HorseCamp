@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "ID State Parks"
+    "source": "State Parks"
   },
   {
     "id": "id-stateparks-bruneau-dunes",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "ID State Parks"
+    "source": "State Parks"
   },
   {
     "id": "id-stateparks-heyburn",
@@ -86,7 +84,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "ID State Parks"
+    "source": "State Parks"
   }
 ]

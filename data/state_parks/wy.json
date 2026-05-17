@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WY State Parks"
+    "source": "State Parks"
   },
   {
     "id": "wy-stateparks-keyhole-homestead-horse-sites",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WY State Parks"
+    "source": "State Parks"
   },
   {
     "id": "wy-stateparks-medicine-lodge-group-campsites",
@@ -86,7 +84,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WY State Parks"
+    "source": "State Parks"
   }
 ]

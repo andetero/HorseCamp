@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "CT State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ct-stateparks-natchaug-horse-camp",
@@ -56,7 +55,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "CT State Parks"
+    "source": "State Parks"
   }
 ]

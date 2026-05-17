@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "AR State Parks"
+    "source": "State Parks"
   },
   {
     "id": "arstate-2",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "AR State Parks"
+    "source": "State Parks"
   },
   {
     "id": "arstate-3",
@@ -86,7 +84,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "AR State Parks"
+    "source": "State Parks"
   }
 ]

@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "wa-stateparks-riverside",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "wa-stateparks-steamboat-rock",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": true,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "wa-stateparks-lewis-clark",
@@ -116,8 +113,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "wa-stateparks-beacon-rock",
@@ -146,8 +142,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "wa-stateparks-rainbow-falls",
@@ -176,7 +171,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WA State Parks"
+    "source": "State Parks"
   }
 ]

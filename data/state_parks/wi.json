@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WI State Parks"
+    "source": "State Parks"
   },
   {
     "id": "wi-stateparks-governor-knowles-state-forest-equestrian-campground",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WI State Parks"
+    "source": "State Parks"
   },
   {
     "id": "wi-stateparks-kettle-moraine-state-forest-northern-unit-new-prospect-horse-riders-campground",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WI State Parks"
+    "source": "State Parks"
   },
   {
     "id": "wi-stateparks-kettle-moraine-state-forest-southern-unit-equestrian-campground",
@@ -116,8 +113,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WI State Parks"
+    "source": "State Parks"
   },
   {
     "id": "wi-stateparks-wildcat-mountain-state-park-horse-campground",
@@ -146,7 +142,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "WI State Parks"
+    "source": "State Parks"
   }
 ]

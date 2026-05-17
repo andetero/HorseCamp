@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "OH State Parks"
+    "source": "State Parks"
   },
   {
     "id": "oh-stateparks-hueston-woods-state-park-horsemen-s-camp",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "OH State Parks"
+    "source": "State Parks"
   },
   {
     "id": "oh-stateparks-salt-fork-state-park-equestrian-camp",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "OH State Parks"
+    "source": "State Parks"
   },
   {
     "id": "oh-stateparks-west-branch-state-park-equestrian-camp",
@@ -116,7 +113,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "OH State Parks"
+    "source": "State Parks"
   }
 ]

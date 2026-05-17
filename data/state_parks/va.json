@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "VA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "va-stateparks-fairy-stone-state-park-equestrian-campground",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "VA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "va-stateparks-grayson-highlands-state-park-equestrian-camp",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "VA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "va-stateparks-james-river-state-park-equestrian-campground",
@@ -116,8 +113,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "VA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "va-stateparks-occoneechee-state-park-equestrian-campground",
@@ -146,8 +142,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "VA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "va-stateparks-staunton-river-state-park-equestrian-campground",
@@ -176,7 +171,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "VA State Parks"
+    "source": "State Parks"
   }
 ]

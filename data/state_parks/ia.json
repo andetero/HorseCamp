@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ia-stateparks-elk-rock",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ia-stateparks-lake-of-three-fires",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ia-stateparks-waubonsie",
@@ -116,8 +113,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ia-stateparks-nine-eagles",
@@ -146,8 +142,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ia-stateparks-volga-river",
@@ -176,8 +171,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IA State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ia-stateparks-shimek",
@@ -206,7 +200,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "IA State Parks"
+    "source": "State Parks"
   }
 ]

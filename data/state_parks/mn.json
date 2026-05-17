@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "MN State Parks"
+    "source": "State Parks"
   },
   {
     "id": "mn-state-george-washington-horse-camp",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "MN State Parks"
+    "source": "State Parks"
   },
   {
     "id": "mn-state-huntersville-horse-camp",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "MN State Parks"
+    "source": "State Parks"
   },
   {
     "id": "mn-state-richard-dorer-horse-camp",
@@ -116,8 +113,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "MN State Parks"
+    "source": "State Parks"
   },
   {
     "id": "mn-state-sand-dunes-horse-camp",
@@ -146,8 +142,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "MN State Parks"
+    "source": "State Parks"
   },
   {
     "id": "mn-state-st-croix-horse-camp",
@@ -176,7 +171,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "MN State Parks"
+    "source": "State Parks"
   }
 ]

@@ -26,8 +26,7 @@
     "pullThroughAvailable": true,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NE State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ne-stateparks-danish-alps",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": true,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NE State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ne-stateparks-fort-robinson",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": true,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NE State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ne-stateparks-indian-cave",
@@ -116,8 +113,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NE State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ne-stateparks-lewis-clark",
@@ -146,8 +142,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NE State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ne-stateparks-niobrara",
@@ -176,8 +171,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NE State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ne-stateparks-pawnee",
@@ -206,8 +200,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NE State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ne-stateparks-rock-creek",
@@ -236,8 +229,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NE State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ne-stateparks-two-rivers",
@@ -266,8 +258,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NE State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ne-stateparks-willow-creek",
@@ -296,7 +287,6 @@
     "pullThroughAvailable": true,
     "imageColors": ["C0392B", "E3A18B"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NE State Parks"
+    "source": "State Parks"
   }
 ]

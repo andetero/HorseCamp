@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KS State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ks-stateparks-el-dorado",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KS State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ks-stateparks-hillsdale",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KS State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ks-stateparks-historic-lake-scott",
@@ -116,8 +113,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KS State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ks-stateparks-milford",
@@ -146,8 +142,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KS State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ks-stateparks-perry",
@@ -176,8 +171,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KS State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ks-stateparks-sand-hills",
@@ -206,8 +200,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KS State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ks-stateparks-tuttle-creek",
@@ -236,7 +229,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KS State Parks"
+    "source": "State Parks"
   }
 ]

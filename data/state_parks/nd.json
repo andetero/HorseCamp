@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "ND State Parks"
+    "source": "State Parks"
   },
   {
     "id": "nd-stateparks-fort-abraham-lincoln-horse-camp",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "ND State Parks"
+    "source": "State Parks"
   },
   {
     "id": "nd-stateparks-rough-rider-horse-camp",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "ND State Parks"
+    "source": "State Parks"
   },
   {
     "id": "nd-stateparks-little-missouri-horse-camp",
@@ -116,7 +113,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "ND State Parks"
+    "source": "State Parks"
   }
 ]

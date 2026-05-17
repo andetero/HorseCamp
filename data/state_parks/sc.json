@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "SC State Parks"
+    "source": "State Parks"
   },
   {
     "id": "sc-stateparks-h-cooper-black",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "SC State Parks"
+    "source": "State Parks"
   },
   {
     "id": "sc-stateparks-kings-mountain",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "SC State Parks"
+    "source": "State Parks"
   },
   {
     "id": "sc-stateparks-lee",
@@ -116,7 +113,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "SC State Parks"
+    "source": "State Parks"
   }
 ]

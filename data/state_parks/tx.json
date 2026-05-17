@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "TX State Parks"
+    "source": "State Parks"
   },
   {
     "id": "txsp-caprock-canyons-state-park-trailway-equestrian-camp",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "TX State Parks"
+    "source": "State Parks"
   },
   {
     "id": "txsp-cooper-state-park-south-sulphur-unit-equestrian-camp",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "TX State Parks"
+    "source": "State Parks"
   },
   {
     "id": "txsp-copper-breaks-state-park-equestrian-camp",
@@ -116,8 +113,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "TX State Parks"
+    "source": "State Parks"
   },
   {
     "id": "txsp-davis-mountains-state-park-equestrian-camp",
@@ -146,8 +142,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "TX State Parks"
+    "source": "State Parks"
   },
   {
     "id": "txsp-fort-richardson-state-park-equestrian-camp",
@@ -176,8 +171,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "TX State Parks"
+    "source": "State Parks"
   },
   {
     "id": "txsp-hill-country-state-natural-area-equestrian-camp",
@@ -206,8 +200,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "TX State Parks"
+    "source": "State Parks"
   },
   {
     "id": "txsp-lake-mineral-wells-state-park-trailway-equestrian-camp",
@@ -236,8 +229,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "TX State Parks"
+    "source": "State Parks"
   },
   {
     "id": "txsp-pedernales-falls-state-park-equestrian-camp",
@@ -266,7 +258,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "TX State Parks"
+    "source": "State Parks"
   }
 ]

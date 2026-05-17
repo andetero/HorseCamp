@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NM State Parks"
+    "source": "State Parks"
   },
   {
     "id": "nm-stateparks-caballo-lake",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NM State Parks"
+    "source": "State Parks"
   },
   {
     "id": "nm-stateparks-el-vado-lake",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NM State Parks"
+    "source": "State Parks"
   },
   {
     "id": "nm-stateparks-fenton-lake",
@@ -116,8 +113,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NM State Parks"
+    "source": "State Parks"
   },
   {
     "id": "nm-stateparks-oasis",
@@ -146,8 +142,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NM State Parks"
+    "source": "State Parks"
   },
   {
     "id": "nm-stateparks-sugarite-canyon",
@@ -176,8 +171,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NM State Parks"
+    "source": "State Parks"
   },
   {
     "id": "nm-stateparks-villanueva",
@@ -206,7 +200,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "NM State Parks"
+    "source": "State Parks"
   }
 ]

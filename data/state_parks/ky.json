@@ -26,8 +26,7 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KY State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ky-stateparks-pennyrile-forest",
@@ -56,8 +55,7 @@
     "pullThroughAvailable": true,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KY State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ky-stateparks-taylorsville-lake",
@@ -86,8 +84,7 @@
     "pullThroughAvailable": true,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KY State Parks"
+    "source": "State Parks"
   },
   {
     "id": "ky-stateparks-carter-caves",
@@ -116,7 +113,6 @@
     "pullThroughAvailable": false,
     "imageColors": ["C0392B", "F1948A"],
     "photoURLs": [],
-    "source": "State Parks",
-    "sourceDetail": "KY State Parks"
+    "source": "State Parks"
   }
 ]

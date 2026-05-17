@@ -75,7 +75,6 @@ FIELD_ALIASES = {
     "maxRigLength": ["max_rig_length", "rig_length", "max_length"],
     "photoURLs": ["photo_urls", "photos", "image_urls", "images"],
     "accommodations": ["accommodations", "amenities", "features"],
-    "sourceUrl": ["source_url", "source", "horse_motel_listing_url"],
 }
 
 BOOL_FIELDS = {
@@ -133,17 +132,11 @@ def is_web_url(value: str) -> bool:
     return lower.startswith("http://") or lower.startswith("https://")
 
 
-def normalize_contact_fields(raw_website: str, raw_email: str, raw_phone: str, source_url: str = "") -> tuple[str, str, str]:
-    """Keep website as a true web URL only; move mailto/tel data into email/phone.
-
-    The HorseMotel.com state page belongs in sourceUrl, not website. If a listing
-    has no true website link, website should stay blank so the app does not show a
-    misleading Visit Website button for the generic state source page.
-    """
+def normalize_contact_fields(raw_website: str, raw_email: str, raw_phone: str) -> tuple[str, str, str]:
+    """Keep website as a true web URL only; move mailto/tel data into email/phone."""
     website = normalize_contact_link(raw_website)
     email = clean_text(raw_email or "")
     phone = clean_text(raw_phone or "")
-    source = normalize_contact_link(source_url)
 
     lower = website.lower()
     if lower.startswith("mailto:"):
@@ -426,11 +419,10 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         location = ", ".join(v for v in [city, state] if v)
     city = cleanup_city(city, location, state)
 
-    source_url = first_value(row, FIELD_ALIASES["sourceUrl"])
     raw_website = first_value(row, FIELD_ALIASES["website"])
     raw_email = first_value(row, FIELD_ALIASES["email"])
     raw_phone = first_value(row, FIELD_ALIASES["phone"])
-    website, email, phone = normalize_contact_fields(raw_website, raw_email, raw_phone, source_url)
+    website, email, phone = normalize_contact_fields(raw_website, raw_email, raw_phone)
     lat = parse_float(first_value(row, FIELD_ALIASES["latitude"]), default=0.0)
     lng = parse_float(first_value(row, FIELD_ALIASES["longitude"]), default=0.0)
     usable_address = has_usable_street_address(location)
@@ -450,7 +442,7 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     photo_urls = parse_list(first_value(row, FIELD_ALIASES["photoURLs"]))
 
     listing = {
-        "id": build_id(name, state, location, source_url),
+        "id": build_id(name, state, location),
         "name": name,
         "location": location,
         "address": location if usable_address else "",
@@ -472,7 +464,6 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "phone": phone,
         "email": email,
         "website": website,
-        "sourceUrl": source_url or website,
         "description": description,
         "isVerified": True,
         "seasonStart": 1,

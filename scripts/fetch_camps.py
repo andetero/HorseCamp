@@ -240,7 +240,7 @@ def _compact_selected_array_fields(json_text, field_names):
     return pattern.sub(repl, json_text)
 
 
-PUBLIC_FEED_OMIT_FIELDS = {"rating", "reviewCount", "submittedIssueNumber"}
+PUBLIC_FEED_OMIT_FIELDS = {"rating", "reviewCount", "submittedIssueNumber", "sourceUrl"}
 
 
 def strip_public_feed_fields(camps):

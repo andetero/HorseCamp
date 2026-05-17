@@ -275,8 +275,24 @@ def normalize_description_text(value):
     return re.sub(r"\s+", " ", str(value or "")).strip()
 
 
+def normalize_simple_phone(value):
+    """Normalize only simple single US/Canada phone numbers to 123-456-7890.
+
+    Complex/labeled/multiple-number contact strings are intentionally preserved.
+    """
+    raw = re.sub(r"\s+", " ", str(value or "")).strip()
+    if not raw:
+        return ""
+    if re.fullmatch(r"\d{10}", raw):
+        return f"{raw[0:3]}-{raw[3:6]}-{raw[6:10]}"
+    match = re.fullmatch(r"\((\d{3})\)\s*(\d{3})-(\d{4})", raw)
+    if match:
+        return f"{match.group(1)}-{match.group(2)}-{match.group(3)}"
+    return raw
+
+
 def normalize_description_fields(value):
-    """Recursively collapse whitespace in description fields before writing JSON."""
+    """Recursively collapse description whitespace and normalize simple phone values before writing JSON."""
     if isinstance(value, list):
         return [normalize_description_fields(item) for item in value]
     if isinstance(value, dict):
@@ -284,6 +300,8 @@ def normalize_description_fields(value):
         for key, item in value.items():
             if key == "description":
                 normalized[key] = normalize_description_text(item)
+            elif key == "phone":
+                normalized[key] = normalize_simple_phone(item)
             else:
                 normalized[key] = normalize_description_fields(item)
         return normalized

@@ -114,6 +114,26 @@ def clean_text(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "").strip())
 
 
+def normalize_description_text(value: Any) -> str:
+    """Keep JSON description values as one readable line."""
+    return re.sub(r"\s+", " ", str(value or "")).strip()
+
+
+def normalize_description_fields(value: Any) -> Any:
+    """Recursively collapse whitespace in description fields before writing JSON."""
+    if isinstance(value, list):
+        return [normalize_description_fields(item) for item in value]
+    if isinstance(value, dict):
+        normalized = {}
+        for key, item in value.items():
+            if key == "description":
+                normalized[key] = normalize_description_text(item)
+            else:
+                normalized[key] = normalize_description_fields(item)
+        return normalized
+    return value
+
+
 def normalize_field_name(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", value.lower())
 
@@ -124,6 +144,7 @@ def category_key(value: str) -> str:
 
 def compact_json(value: Any) -> str:
     """Pretty JSON with simple scalar arrays kept on one line for easier GitHub review."""
+    value = normalize_description_fields(value)
     text = json.dumps(value, indent=2, ensure_ascii=False)
 
     def inline_array(match: re.Match[str]) -> str:
@@ -140,6 +161,7 @@ def compact_json(value: Any) -> str:
 
 
 def pretty_json(value: Any) -> str:
+    value = normalize_description_fields(value)
     return json.dumps(value, indent=2, ensure_ascii=False) + "\n"
 
 

@@ -86,7 +86,28 @@ BOOL_FIELDS = {
 }
 
 
+def normalize_description_text(value: Any) -> str:
+    """Keep JSON description values as one readable line."""
+    return re.sub(r"\s+", " ", str(value or "")).strip()
+
+
+def normalize_description_fields(value: Any) -> Any:
+    """Recursively collapse whitespace in description fields before writing JSON."""
+    if isinstance(value, list):
+        return [normalize_description_fields(item) for item in value]
+    if isinstance(value, dict):
+        normalized = {}
+        for key, item in value.items():
+            if key == "description":
+                normalized[key] = normalize_description_text(item)
+            else:
+                normalized[key] = normalize_description_fields(item)
+        return normalized
+    return value
+
+
 def compact_json_dump(path: Path, payload: Any) -> None:
+    payload = normalize_description_fields(payload)
     rendered = json.dumps(payload, indent=2, ensure_ascii=False)
     rendered = _compact_selected_array_fields(rendered, {"hookups", "accommodations", "imageColors", "photoURLs"})
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -426,7 +447,7 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     lat = parse_float(first_value(row, FIELD_ALIASES["latitude"]), default=0.0)
     lng = parse_float(first_value(row, FIELD_ALIASES["longitude"]), default=0.0)
     usable_address = has_usable_street_address(location)
-    description = first_value(row, FIELD_ALIASES["description"]) or "HorseMotel.com overnight horse lodging listing. Confirm availability before arrival."
+    description = normalize_description_text(first_value(row, FIELD_ALIASES["description"])) or "HorseMotel.com overnight horse lodging listing. Confirm availability before arrival."
     accommodations = parse_list(first_value(row, FIELD_ALIASES["accommodations"]))
     for required in infer_accommodations(description):
         if required not in accommodations:
@@ -941,7 +962,7 @@ def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, s
 
     facilities = extract_between(text, "Facilities:", ["Location:", "View Comments", "Post Comments"])
     location_notes = extract_between(text, "Location:", ["View Comments", "Post Comments"])
-    description = clean_text(" ".join(v for v in [facilities, f"Location notes: {location_notes}" if location_notes else ""] if v))
+    description = normalize_description_text(clean_text(" ".join(v for v in [facilities, f"Location notes: {location_notes}" if location_notes else ""] if v)))
 
     phone_match = re.search(r"Tel:\s*(.*?)(?:E-?mail:|E-Mail:|Email:|Web Site:|Location on Google Maps|Facilities:|$)", text, re.IGNORECASE | re.DOTALL)
     email_match = re.search(r"E-?mail:\s*(.*?)(?:Web Site:|Location on Google Maps|Facilities:|$)", text, re.IGNORECASE | re.DOTALL)

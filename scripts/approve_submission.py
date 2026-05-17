@@ -55,6 +55,26 @@ def clean_text(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "").strip())
 
 
+def normalize_description_text(value: Any) -> str:
+    """Keep JSON description values as one readable line."""
+    return re.sub(r"\s+", " ", str(value or "")).strip()
+
+
+def normalize_description_fields(value: Any) -> Any:
+    """Recursively collapse whitespace in description fields before writing JSON."""
+    if isinstance(value, list):
+        return [normalize_description_fields(item) for item in value]
+    if isinstance(value, dict):
+        normalized = {}
+        for key, item in value.items():
+            if key == "description":
+                normalized[key] = normalize_description_text(item)
+            else:
+                normalized[key] = normalize_description_fields(item)
+        return normalized
+    return value
+
+
 def slugify(value: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
     slug = re.sub(r"-+", "-", slug)
@@ -187,6 +207,7 @@ def load_json_array(path: Path) -> list[dict[str, Any]]:
 
 def compact_json(value: Any) -> str:
     """Pretty JSON with simple scalar arrays kept on one line for easier GitHub review."""
+    value = normalize_description_fields(value)
     text = json.dumps(value, indent=2, ensure_ascii=False)
 
     def inline_array(match: re.Match[str]) -> str:

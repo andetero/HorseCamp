@@ -270,8 +270,29 @@ def strip_public_feed_fields(camps):
     return removed
 
 
+def normalize_description_text(value):
+    """Keep JSON description values as one readable line."""
+    return re.sub(r"\s+", " ", str(value or "")).strip()
+
+
+def normalize_description_fields(value):
+    """Recursively collapse whitespace in description fields before writing JSON."""
+    if isinstance(value, list):
+        return [normalize_description_fields(item) for item in value]
+    if isinstance(value, dict):
+        normalized = {}
+        for key, item in value.items():
+            if key == "description":
+                normalized[key] = normalize_description_text(item)
+            else:
+                normalized[key] = normalize_description_fields(item)
+        return normalized
+    return value
+
+
 def write_camps_json(path, payload):
     """Write camps.json with stable pretty-printing and compact selected arrays."""
+    payload = normalize_description_fields(payload)
     rendered = json.dumps(payload, indent=2, ensure_ascii=False)
     rendered = _compact_selected_array_fields(rendered, {"hookups", "accommodations", "imageColors", "photoURLs"})
     path.write_text(rendered + "\n", encoding="utf-8")

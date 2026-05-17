@@ -482,8 +482,6 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "hasWifi": False,
         "hasBathhouse": False,
         "pullThroughAvailable": False,
-        "rating": 0.0,
-        "reviewCount": 0,
         "imageColors": ["6D4C41", "BCAAA4"],
         "photoURLs": photo_urls,
         "source": PARTNER_NAME,

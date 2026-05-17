@@ -327,12 +327,9 @@ def build_record(payload: dict[str, Any], issue_number: int, existing_ids: set[s
         "hasWifi": bool_value(payload.get("hasWifi")),
         "hasBathhouse": bool_value(payload.get("hasBathhouse")),
         "pullThroughAvailable": bool_value(payload.get("pullThroughAvailable")),
-        "rating": 0.0,
-        "reviewCount": 0,
         "imageColors": DEFAULT_IMAGE_COLORS,
         "photoURLs": [],
         "source": source,
-        "submittedIssueNumber": issue_number,
     }
     return kind, target_path, record
 

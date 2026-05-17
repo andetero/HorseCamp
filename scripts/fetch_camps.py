@@ -240,6 +240,20 @@ def _compact_selected_array_fields(json_text, field_names):
     return pattern.sub(repl, json_text)
 
 
+PUBLIC_FEED_OMIT_FIELDS = {"rating", "reviewCount", "submittedIssueNumber"}
+
+
+def strip_public_feed_fields(camps):
+    """Remove retired/default-only fields from the public camps.json feed."""
+    removed = 0
+    for camp in camps:
+        for field in PUBLIC_FEED_OMIT_FIELDS:
+            if field in camp:
+                del camp[field]
+                removed += 1
+    return removed
+
+
 def write_camps_json(path, payload):
     """Write camps.json with stable pretty-printing and compact selected arrays."""
     rendered = json.dumps(payload, indent=2, ensure_ascii=False)
@@ -313,8 +327,8 @@ def apply_overrides(camps_dict):
     applied = 0
     missing_ids = []
 
-    numeric_float_fields = {"pricePerNight", "horseFeePerNight", "rating", "latitude", "longitude"}
-    numeric_int_fields = {"maxRigLength", "stallCount", "paddockCount", "reviewCount", "seasonStart", "seasonEnd"}
+    numeric_float_fields = {"pricePerNight", "horseFeePerNight", "latitude", "longitude"}
+    numeric_int_fields = {"maxRigLength", "stallCount", "paddockCount", "seasonStart", "seasonEnd"}
     bool_fields = {"isVerified", "hasWashRack", "hasDumpStation", "hasWifi", "hasBathhouse", "pullThroughAvailable"}
     list_fields = {"hookups", "accommodations", "imageColors", "photoURLs"}
 
@@ -578,8 +592,6 @@ def fetch_ridb_state(state):
                     "hasWifi":             "wifi" in blob_lower or "internet" in blob_lower,
                     "hasBathhouse":        "shower" in blob_lower or "bathhouse" in blob_lower,
                     "pullThroughAvailable": "pull-through" in blob_lower or "pull through" in blob_lower,
-                    "rating":              0.0,
-                    "reviewCount":         0,
                     "imageColors":         ["5C7A4E", "D4A853"],
                     "photoURLs":           parse_ridb_photos(f),
                     "source":              "RIDB",
@@ -685,8 +697,6 @@ def fetch_nps_state(state):
             "hasWifi":             nps_yes(amenities.get("internetConnectivity")),
             "hasBathhouse":        (any("flush" in t.lower() for t in (amenities.get("toilets") or [])) or any(str(s).strip().lower() not in ("none", "") for s in (amenities.get("showers") or []) if s)),
             "pullThroughAvailable": nps_yes(amenities.get("pullThroughCampsites")),
-            "rating":              0.0,
-            "reviewCount":         0,
             "imageColors":         ["4A7FA5", "5C7A4E"],
             "photoURLs":           [img["url"] for img in (c.get("images") or []) if img.get("url")][:6],
             "source":              "NPS",
@@ -834,8 +844,6 @@ def fetch_ca_state_parks():
                 "hasWifi": False,
                 "hasBathhouse": False,
                 "pullThroughAvailable": False,
-                "rating": 0.0,
-                "reviewCount": 0,
                 "imageColors": ["5C7A4E", "D4A853"],
                 "photoURLs": [],
                 "source": "State Parks",
@@ -1153,8 +1161,6 @@ def fetch_il_state_parks():
             "hasWifi": "wifi" in lower or "wi-fi" in lower,
             "hasBathhouse": "shower" in lower or "flush toilets" in lower or "restrooms" in lower,
             "pullThroughAvailable": "pull through" in lower or "pull-through" in lower,
-            "rating": 0.0,
-            "reviewCount": 0,
             "imageColors": ["B5543A", "E3A18B"],
             "photoURLs": [],
             "source": "State Parks",
@@ -1445,8 +1451,6 @@ out center;
             "hasWifi":             tags.get("internet_access") == "yes",
             "hasBathhouse":        tags.get("shower") == "yes",
             "pullThroughAvailable": False,
-            "rating":              0.0,
-            "reviewCount":         0,
             "imageColors":         ["8B5E3C", "D4A853"],
             "photoURLs":           [],
             "source":              "OSM",
@@ -1571,8 +1575,6 @@ def fetch_la_state_parks():
             "hasWifi": False,
             "hasBathhouse": True,
             "pullThroughAvailable": False,
-            "rating": 0.0,
-            "reviewCount": 0,
             "imageColors": ["C0392B", "F1948A"],
             "photoURLs": [],
             "source": "State Parks",
@@ -1603,8 +1605,6 @@ def fetch_la_state_parks():
             "hasWifi": False,
             "hasBathhouse": True,
             "pullThroughAvailable": False,
-            "rating": 0.0,
-            "reviewCount": 0,
             "imageColors": ["C0392B", "F1948A"],
             "photoURLs": [],
             "source": "State Parks",
@@ -1716,8 +1716,6 @@ def fetch_fl_state_parks():
             "hasWifi": False,
             "hasBathhouse": overrides.get("hasBathhouse", False),
             "pullThroughAvailable": False,
-            "rating": 0.0,
-            "reviewCount": 0,
             "imageColors": ["C0392B", "E3A18B"],
             "photoURLs": [],
             "source": "State Parks",
@@ -1825,8 +1823,6 @@ def fetch_mi_state_parks():
             "hasWifi": False,
             "hasBathhouse": False,
             "pullThroughAvailable": False,
-            "rating": 0.0,
-            "reviewCount": 0,
             "imageColors": ["C0392B", "E59866"],
             "photoURLs": [],
             "source": "State Parks",
@@ -1923,8 +1919,6 @@ def fetch_mo_state_parks():
             "hasWifi": False,
             "hasBathhouse": p["hasBathhouse"],
             "pullThroughAvailable": False,
-            "rating": 0.0,
-            "reviewCount": 0,
             "imageColors": ["C0392B", "F1948A"],
             "photoURLs": [],
             "source": "State Parks",
@@ -2098,6 +2092,7 @@ def main():
     override_count = apply_overrides(all_camps)
 
     camps_list = sorted(all_camps.values(), key=lambda c: (c["state"], c["name"]))
+    retired_field_count = strip_public_feed_fields(camps_list)
     output = {
         "generated": datetime.now(timezone.utc).isoformat(),
         "count": len(camps_list),
@@ -2150,6 +2145,7 @@ def main():
     print_metric("Exclusions applied", excluded_count)
     print_metric("Invalid/non-horse removed", invalid_count)
     print_metric("Overrides applied", override_count)
+    print_metric("Retired fields stripped", retired_field_count)
 
     print("\nOverall:")
     print_metric("Verified listings", verified_count)

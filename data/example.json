@@ -23,8 +23,6 @@
     "hasDumpStation": "TRUE or FALSE",
     "hasWifi": "TRUE or FALSE",
     "hasBathhouse": "TRUE or FALSE",
-    "rating": 0.0,
-    "reviewCount": 0,
     "imageColors": ["REDACTED"],
     "photoURLs": "URL 1 | URL 2 | URL 3",
     "source": "HorseMotel.com | RIDB | State Parks | OSM | NPS | Private Camps",

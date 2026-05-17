@@ -25,7 +25,6 @@
     "hasBathhouse": "TRUE or FALSE",
     "imageColors": ["REDACTED"],
     "photoURLs": "URL 1 | URL 2 | URL 3",
-    "source": "HorseMotel.com | RIDB | State Parks | OSM | NPS | Private Camps",
-    "sourceDetail": "OPTIONAL - Example: UT State Parks"
+    "source": "HorseMotel.com | RIDB | State Parks | OSM | NPS | Private Camps"
   }
 ]

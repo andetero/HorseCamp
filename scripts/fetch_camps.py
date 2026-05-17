@@ -89,6 +89,34 @@ def is_equestrian(text_blob):
     return any(k in low for k in EQUESTRIAN_KEYWORDS)
 
 
+# RIDB/Recreation.gov often tags ordinary campgrounds with activity=9
+# (Horseback Riding) when there are horseback-riding trails nearby. HorseCamp
+# should only import RIDB facilities when the listing itself has a clear onsite
+# horse-camping signal such as equestrian camping, horse sites, corrals, stalls,
+# highlines, tie rails, stock sites, etc. Nearby horseback riding alone is not
+# enough.
+RIDB_HORSE_CAMPING_PATTERNS = [
+    re.compile(r"\bequestrian\s+(?:camp(?:ground|ing)?|camps?|site|sites|area|areas|loop|loops|facility|facilities)\b", re.I),
+    re.compile(r"\bhorse\s+(?:camp(?:ground|ing)?|camps?|site|sites|area|areas|corral|corrals|stall|stalls|paddock|paddocks)\b", re.I),
+    re.compile(r"\bstock\s+(?:camp(?:ground|ing)?|camps?|site|sites|area|areas|use|facility|facilities|corral|corrals|stall|stalls)\b", re.I),
+    re.compile(r"\bcamp(?:ground|ing|site|sites)?\s+(?:with|for)\s+(?:your\s+)?horses\b", re.I),
+    re.compile(r"\b(?:corrals?|stalls?|highlines?|high\s+lines?|tie\s+rails?|hitching\s+rails?|paddocks?)\b", re.I),
+    re.compile(r"\bhorse\s+trailer\s+parking\b", re.I),
+    re.compile(r"\bpack\s+station\b", re.I),
+]
+
+
+def has_ridb_horse_camping_signal(name, amenities, desc):
+    """Return True only for clear onsite RIDB horse-camping signals.
+
+    Deliberately ignores RIDB ACTIVITY names because activity=9 / Horseback
+    Riding commonly means trail access near the campground, not horse camping
+    at the facility.
+    """
+    blob = " ".join([str(name or ""), *(str(a or "") for a in amenities or []), str(desc or "")])
+    return any(pattern.search(blob) for pattern in RIDB_HORSE_CAMPING_PATTERNS)
+
+
 def is_invalid_equestrian_listing(camp):
     """Reject entries that keyword-match horses but explicitly do not allow horse camping."""
     try:
@@ -496,15 +524,11 @@ def fetch_ridb_state(state):
                 desc       = strip_html(f.get("FacilityDescription", ""))
                 blob       = " ".join(amenities + activities + [desc])
 
-                # For activity=9 (Horseback Riding) searches, require equestrian
-                # keywords in description/amenities too — not just the activity name.
-                # This prevents generic multi-use areas (OHV parks etc.) from matching
-                # simply because they list horseback riding as one of many activities.
-                if param_key == "activity" and param_val == "9":
-                    desc_amenity_blob = " ".join(amenities + [desc])
-                    if not is_equestrian(desc_amenity_blob):
-                        continue
-                elif not is_equestrian(blob):
+                # RIDB activity=9 means Horseback Riding may be nearby; it does
+                # not prove the campground supports overnight horse camping.
+                # Require a stronger onsite horse-camping signal from the facility
+                # name, amenities, or description for every RIDB match.
+                if not has_ridb_horse_camping_signal(f.get("FacilityName", ""), amenities, desc):
                     continue
 
                 addr  = (f.get("FACILITYADDRESS") or [{}])[0]

@@ -82,8 +82,6 @@ CATEGORY_ALIASES = {
 OVERRIDE_ALLOWED_FIELDS = {
     "name",
     "location",
-    "address",
-    "city",
     "state",
     "latitude",
     "longitude",

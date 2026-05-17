@@ -426,13 +426,6 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     lat = parse_float(first_value(row, FIELD_ALIASES["latitude"]), default=0.0)
     lng = parse_float(first_value(row, FIELD_ALIASES["longitude"]), default=0.0)
     usable_address = has_usable_street_address(location)
-    map_search_address = build_map_search_address(name, location) if usable_address else ""
-    coordinate_source = str(row.get("coordinate_source") or row.get("coordinateSource") or "").strip()
-    if not coordinate_source and (lat or lng):
-        coordinate_source = "website_map" if row.get("maps_href") or row.get("mapsHref") else "provided"
-    if usable_address and coordinate_source in {"website_map", "kml", "provided"}:
-        coordinate_source = f"{coordinate_source}_approximate"
-
     description = first_value(row, FIELD_ALIASES["description"]) or "HorseMotel.com overnight horse lodging listing. Confirm availability before arrival."
     accommodations = parse_list(first_value(row, FIELD_ALIASES["accommodations"]))
     for required in infer_accommodations(description):
@@ -445,15 +438,9 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "id": build_id(name, state, location),
         "name": name,
         "location": location,
-        "address": location if usable_address else "",
-        "mapSearchAddress": map_search_address,
-        "addressPreferredForMaps": usable_address,
-        "city": city,
         "state": state,
         "latitude": lat,
         "longitude": lng,
-        "coordinateSource": coordinate_source or ("address_only" if usable_address else "unknown"),
-        "locationConfidence": "address_preferred" if usable_address else ("coordinate_only" if (lat or lng) else "missing"),
         "pricePerNight": parse_float(first_value(row, FIELD_ALIASES["pricePerNight"]), 0.0),
         "horseFeePerNight": parse_float(first_value(row, FIELD_ALIASES["horseFeePerNight"]), 0.0),
         "hookups": infer_hookups(description),
@@ -476,11 +463,6 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "imageColors": ["6D4C41", "BCAAA4"],
         "photoURLs": photo_urls,
         "source": PARTNER_NAME,
-        "sourceDetail": PARTNER_NAME,
-        "category": PARTNER_NAME,
-        "partner": PARTNER_NAME,
-        "attribution": ATTRIBUTION,
-        "lastSynced": datetime.now(timezone.utc).date().isoformat(),
     }
 
     lower_desc = description.lower()
@@ -761,8 +743,7 @@ def parse_kml_text(kml_text: str) -> list[Dict[str, Any]]:
 
         rows.append({
             "name": listing_name,
-            "city": city,
-            "state": state,
+                "state": state,
             "latitude": latitude,
             "longitude": longitude,
             "phone": phone,
@@ -995,7 +976,6 @@ def parse_block(block: list[dict[str, str]], state_name: str, state_code: str, s
     row = {
         "name": name,
         "location": location,
-        "city": city,
         "state": state or state_code,
         "latitude": str(lat),
         "longitude": str(lng),

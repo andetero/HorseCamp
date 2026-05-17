@@ -240,7 +240,23 @@ def _compact_selected_array_fields(json_text, field_names):
     return pattern.sub(repl, json_text)
 
 
-PUBLIC_FEED_OMIT_FIELDS = {"rating", "reviewCount", "submittedIssueNumber", "sourceUrl"}
+PUBLIC_FEED_OMIT_FIELDS = {
+    "rating",
+    "reviewCount",
+    "submittedIssueNumber",
+    "sourceUrl",
+    "attribution",
+    "coordinateSource",
+    "lastSynced",
+    "locationConfidence",
+    "mapSearchAddress",
+    "partner",
+    "address",
+    "addressPreferredForMaps",
+    "category",
+    "city",
+    "sourceDetail",
+}
 
 
 def strip_public_feed_fields(camps):
@@ -847,7 +863,6 @@ def fetch_ca_state_parks():
                 "imageColors": ["5C7A4E", "D4A853"],
                 "photoURLs": [],
                 "source": "State Parks",
-                "sourceDetail": "CA State Parks",
             })
 
         if len(features) < page_size:
@@ -1164,7 +1179,6 @@ def fetch_il_state_parks():
             "imageColors": ["B5543A", "E3A18B"],
             "photoURLs": [],
             "source": "State Parks",
-            "sourceDetail": "IL State Parks",
         })
 
     print(f"  Illinois State Parks: {len(camps)} official equestrian-camping listings")
@@ -1485,10 +1499,6 @@ def fetch_horsemotel_listings():
             if field not in listing:
                 raise ValueError(f"HorseMotel.com listing #{i} is missing required field: {field}")
         listing.setdefault("source", "HorseMotel.com")
-        listing.setdefault("sourceDetail", "HorseMotel.com")
-        listing.setdefault("category", "HorseMotel.com")
-        listing.setdefault("attribution", "Listing provided by HorseMotel.com")
-        listing.setdefault("partner", "HorseMotel.com")
 
     return listings
 
@@ -1578,7 +1588,6 @@ def fetch_la_state_parks():
             "imageColors": ["C0392B", "F1948A"],
             "photoURLs": [],
             "source": "State Parks",
-            "sourceDetail": "LA State Parks",
         },
         {
             "id": "la-stateparks-lake-bistineau",
@@ -1608,7 +1617,6 @@ def fetch_la_state_parks():
             "imageColors": ["C0392B", "F1948A"],
             "photoURLs": [],
             "source": "State Parks",
-            "sourceDetail": "LA State Parks",
         },
     ]
     print(f"  Louisiana State Parks: {len(parks)} conservative equestrian-camping listings")
@@ -1719,7 +1727,6 @@ def fetch_fl_state_parks():
             "imageColors": ["C0392B", "E3A18B"],
             "photoURLs": [],
             "source": "State Parks",
-            "sourceDetail": "FL State Parks",
         })
     print(f"  Florida State Parks: {len(camps)} official equestrian-camping listings")
     return camps
@@ -1826,7 +1833,6 @@ def fetch_mi_state_parks():
             "imageColors": ["C0392B", "E59866"],
             "photoURLs": [],
             "source": "State Parks",
-            "sourceDetail": "MI State Parks",
         })
     print(f"  Michigan State Parks: {len(camps)} official equestrian-camping listings")
     return camps
@@ -1922,7 +1928,6 @@ def fetch_mo_state_parks():
             "imageColors": ["C0392B", "F1948A"],
             "photoURLs": [],
             "source": "State Parks",
-            "sourceDetail": "MO State Parks",
         })
     print(f"  Missouri State Parks: {len(camps)} official equestrian-camping listings")
     return camps

@@ -171,8 +171,13 @@ def is_web_url(value: str) -> bool:
     return lower.startswith("http://") or lower.startswith("https://")
 
 
-def normalize_contact_fields(raw_website: str, raw_email: str, raw_phone: str) -> tuple[str, str, str]:
-    """Keep website as a true web URL only; move mailto/tel data into email/phone."""
+def normalize_contact_fields(raw_website: str, raw_email: str, raw_phone: str, source_url: str = "") -> tuple[str, str, str]:
+    """Keep website as a true web URL only; move mailto/tel data into email/phone.
+
+    source_url is an internal importer-only value used to avoid treating a
+    HorseMotel.com state/listing page as the camp's own website. It is not
+    written to the output JSON schema.
+    """
     website = normalize_contact_link(raw_website)
     email = clean_text(raw_email or "")
     phone = clean_text(raw_phone or "")
@@ -192,7 +197,8 @@ def normalize_contact_fields(raw_website: str, raw_email: str, raw_phone: str) -
         website = ""
 
     # Do not duplicate the HorseMotel.com source/state page as the camp website.
-    if website and source and website.rstrip("/").lower() == source.rstrip("/").lower():
+    source_link = normalize_contact_link(source_url)
+    if website and source_link and website.rstrip("/").lower() == source_link.rstrip("/").lower():
         website = ""
 
     return website, email, phone
@@ -461,7 +467,8 @@ def normalize_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     raw_website = first_value(row, FIELD_ALIASES["website"])
     raw_email = first_value(row, FIELD_ALIASES["email"])
     raw_phone = first_value(row, FIELD_ALIASES["phone"])
-    website, email, phone = normalize_contact_fields(raw_website, raw_email, raw_phone)
+    source_url = str(row.get("source_url") or row.get("sourceUrl") or "")
+    website, email, phone = normalize_contact_fields(raw_website, raw_email, raw_phone, source_url)
     lat = parse_float(first_value(row, FIELD_ALIASES["latitude"]), default=0.0)
     lng = parse_float(first_value(row, FIELD_ALIASES["longitude"]), default=0.0)
     usable_address = has_usable_street_address(location)

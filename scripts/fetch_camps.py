@@ -771,21 +771,6 @@ def fetch_nps_state(state):
 
 
 
-def _parse_osm_fee(tags):
-    """Parse fee from OSM charge/fee tags. Returns 0.0 if unknown."""
-    charge = tags.get("charge", "") or tags.get("fee:amount", "") or ""
-    if charge:
-        # Extract numeric value e.g. "5 USD", "10", "$5"
-        import re
-        match = re.search(r"[0-9]+(?:\.[0-9]+)?", charge.replace(",", "."))
-        if match:
-            try:
-                return float(match.group())
-            except:
-                pass
-    return 0.0
-
-
 # ── CALIFORNIA STATE PARKS ─────────────────────────────────────────────
 CA_STATE_PARKS_BASE = "https://services2.arcgis.com/AhxrK3F6WM8ECvDi/arcgis/rest/services/Campgrounds/FeatureServer/0/query"
 CA_STATE_PARKS_KEYWORDS = [
@@ -1348,181 +1333,6 @@ def fetch_ma_state_parks():
 def fetch_nd_state_parks():
     """Load manual ND state-park listings from data/state_parks/nd.json."""
     return load_manual_state_parks("ND")
-
-def fetch_osm(existing_camps):
-    """
-    Fetches horse-friendly campsites from OpenStreetMap via Overpass API.
-    Uses the horse=yes tag which is explicitly set by OSM contributors.
-    Deduplicates against existing RIDB/NPS/private camps by proximity (500m).
-    Free, no API key required.
-    """
-    import math, urllib.request, urllib.parse
-
-    def haversine_meters(lat1, lon1, lat2, lon2):
-        R = 6371000
-        phi1, phi2 = math.radians(lat1), math.radians(lat2)
-        dphi = math.radians(lat2 - lat1)
-        dlam = math.radians(lon2 - lon1)
-        a = math.sin(dphi/2)**2 + math.cos(phi1)*math.cos(phi2)*math.sin(dlam/2)**2
-        return R * 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-
-    def is_duplicate(lat, lng, threshold_m=500):
-        for camp in existing_camps.values():
-            if haversine_meters(lat, lng, camp["latitude"], camp["longitude"]) < threshold_m:
-                return True
-        return False
-
-    # Overpass query — all camp_sites with horse=yes in US bounding box
-    # Bounding box: south=24, west=-127, north=50, east=-65
-    query = """
-[out:json][timeout:60];
-(
-  node["tourism"="camp_site"]["horse"="yes"](24,-127,50,-65);
-  way["tourism"="camp_site"]["horse"="yes"](24,-127,50,-65);
-  node["leisure"="horse_riding"]["access"="yes"](24,-127,50,-65);
-);
-out center;
-"""
-    # Try multiple Overpass API mirrors in case one is down/slow
-    mirrors = [
-        "https://overpass-api.de/api/interpreter",
-        "https://overpass.kumi.systems/api/interpreter",
-        "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
-    ]
-    data = None
-    for url in mirrors:
-        try:
-            encoded = urllib.parse.urlencode({"data": query}).encode()
-            req = urllib.request.Request(url, data=encoded, method="POST")
-            req.add_header("User-Agent", "HorseCamp/1.0 (horsecampfinder.com)")
-            with urllib.request.urlopen(req, timeout=120) as r:
-                data = json.loads(r.read().decode())
-            print(f"  OSM: connected via {url.split('/')[2]}")
-            break
-        except Exception as e:
-            print(f"  OSM mirror failed ({url.split('/')[2]}): {e}")
-            time.sleep(5)
-
-    if not data:
-        print("  OSM: all mirrors failed — skipping")
-        return []
-
-    STATES_BY_BBOX = {
-        "AL":(30.1,84.9,35.0,88.5),"AK":(54.0,130.0,72.0,172.0),
-        "AZ":(31.3,109.1,37.0,114.8),"AR":(33.0,89.6,36.5,94.6),
-        "CA":(32.5,114.1,42.0,124.5),"CO":(36.9,102.0,41.0,109.1),
-        "CT":(40.9,71.8,42.1,73.7),"DE":(38.4,75.0,39.8,75.8),
-        "FL":(24.4,79.9,31.0,87.6),"GA":(30.4,80.8,35.0,85.6),
-        "HI":(18.9,154.8,22.2,160.2),"ID":(41.9,111.0,49.0,117.2),
-        "IL":(36.9,87.5,42.5,91.5),"IN":(37.8,84.8,41.8,88.1),
-        "IA":(40.4,90.1,43.5,96.6),"KS":(36.9,94.6,40.0,102.1),
-        "KY":(36.5,81.9,39.1,89.6),"LA":(28.9,88.8,33.0,94.1),
-        "ME":(43.0,66.9,47.5,71.1),"MD":(37.9,74.9,39.7,79.5),
-        "MA":(41.2,69.9,42.9,73.5),"MI":(41.7,82.1,48.3,90.4),
-        "MN":(43.5,89.5,49.4,97.2),"MS":(30.1,88.1,35.0,91.7),
-        "MO":(35.9,89.1,40.6,95.8),"MT":(44.4,104.0,49.0,116.1),
-        "NE":(40.0,95.3,43.0,104.1),"NV":(35.0,114.0,42.0,120.0),
-        "NH":(42.7,70.7,45.3,72.6),"NJ":(38.9,73.9,41.4,75.6),
-        "NM":(31.3,103.0,37.0,109.1),"NY":(40.5,71.8,45.0,79.8),
-        "NC":(33.8,75.5,36.6,84.3),"ND":(45.9,96.6,49.0,104.1),
-        "OH":(38.4,80.5,42.3,84.8),"OK":(33.6,94.4,37.0,103.0),
-        "OR":(41.9,116.5,46.3,124.7),"PA":(39.7,74.7,42.3,80.5),
-        "RI":(41.1,71.2,42.0,71.9),"SC":(32.0,78.5,35.2,83.4),
-        "SD":(42.5,96.4,45.9,104.1),"TN":(34.9,81.6,36.7,90.3),
-        "TX":(25.8,93.5,36.5,106.7),"UT":(36.9,109.0,42.0,114.1),
-        "VT":(42.7,71.5,45.0,73.4),"VA":(36.5,75.2,39.5,83.7),
-        "WA":(45.5,116.9,49.0,124.8),"WV":(37.2,77.7,40.6,82.6),
-        "WI":(42.5,86.8,47.1,92.9),"WY":(40.9,104.0,45.0,111.1),
-    }
-
-    def guess_state(lat, lng):
-        for state, (slat, slng, nlat, nlng) in STATES_BY_BBOX.items():
-            if slat <= lat <= nlat and slng <= abs(lng) <= nlng:
-                return state
-        return ""
-
-    camps = {}
-    skipped_dup = 0
-
-    for element in data.get("elements", []):
-        # Get coordinates
-        if element["type"] == "node":
-            lat = element.get("lat", 0)
-            lng = element.get("lon", 0)
-        else:
-            center = element.get("center", {})
-            lat = center.get("lat", 0)
-            lng = center.get("lon", 0)
-
-        if not lat or not lng:
-            continue
-
-        if is_duplicate(lat, lng):
-            skipped_dup += 1
-            continue
-
-        tags = element.get("tags", {})
-        name = tags.get("name", "")
-        if not name:
-            continue
-
-        phone = tags.get("phone", tags.get("contact:phone", ""))
-        website = tags.get("website", tags.get("contact:website", ""))
-        state = guess_state(lat, lng)
-
-        # Build hookups from OSM tags
-        hookups = []
-        if tags.get("electric_hookup") == "yes" or tags.get("power_supply") == "yes":
-            hookups.append("30A")
-        if tags.get("water_point") == "yes" or tags.get("drinking_water") == "yes":
-            hookups.append("Water")
-
-        # Build accommodations from actual OSM tags
-        accommodations = []
-        if tags.get("horse_stables") == "yes" or tags.get("stables") == "yes":
-            accommodations.append("Stalls")
-        if tags.get("horse_riding") == "yes" or tags.get("paddock") == "yes":
-            accommodations.append("Corrals")
-        if tags.get("horse_trail") == "yes" or tags.get("hiking") == "yes":
-            accommodations.append("Trails")
-        if tags.get("cabin") == "yes" or tags.get("tourism") == "cabin":
-            accommodations.append("Cabins")
-
-        eid = f"osm-{element['id']}"
-        camps[eid] = {
-            "id":                  eid,
-            "name":                name,
-            "location":            f"{state}".strip(", "),
-            "state":               state,
-            "latitude":            lat,
-            "longitude":           lng,
-            "pricePerNight":       _parse_osm_fee(tags),
-            "horseFeePerNight":    0.0,
-            "hookups":             hookups,
-            "accommodations":      list(dict.fromkeys(accommodations)),
-            "maxRigLength":        0,
-            "stallCount":          0,
-            "paddockCount":        0,
-            "phone":               phone,
-            "website":             website,
-            "description":         f"Horse-friendly campsite. Verify amenities before arrival.",
-            "isVerified":          False,
-            "seasonStart":         0,
-            "seasonEnd":           0,
-            "hasWashRack":         False,
-            "hasDumpStation":      tags.get("sanitary_dump_station") == "yes",
-            "hasWifi":             tags.get("internet_access") == "yes",
-            "hasBathhouse":        tags.get("shower") == "yes",
-            "pullThroughAvailable": False,
-            "imageColors":         ["8B5E3C", "D4A853"],
-            "photoURLs":           [],
-            "source":              "OSM",
-        }
-
-    result = list(camps.values())
-    print(f"  OSM: {len(result)} new camps ({skipped_dup} duplicates skipped)")
-    return result
-
 
 # ── HORSEMOTEL.COM PARTNER LISTINGS ───────────────────────────────────
 # Authorized partner data from HorseMotel.com. HorseMotel.com remains the
@@ -2127,14 +1937,6 @@ def main():
     print_metric("Private Camps duplicate IDs", private_camp_duplicate_ids)
     print_metric("Private Camps nearby duplicates", private_camp_duplicate_nearby)
 
-    print_section("OpenStreetMap")
-    print("Fetching from OpenStreetMap...")
-    osm_camps = fetch_osm(all_camps)
-    for camp in osm_camps:
-        cid = camp["id"]
-        if cid not in all_camps:
-            all_camps[cid] = camp
-
     print_section("Cleanup / Data Quality")
     print("Applying manual exclusions...")
     excluded_count = apply_exclusions(all_camps)
@@ -2151,7 +1953,7 @@ def main():
     output = {
         "generated": datetime.now(timezone.utc).isoformat(),
         "count": len(camps_list),
-        "sources": ["Recreation.gov RIDB", "NPS API"] + state_park_sources + ["OpenStreetMap", "HorseMotel.com", "Private Camps"],
+        "sources": ["Recreation.gov RIDB", "NPS API"] + state_park_sources + ["HorseMotel.com", "Private Camps"],
         "camps": camps_list,
     }
     output_path = REPO_ROOT / "camps.json"
@@ -2161,7 +1963,6 @@ def main():
     for camp in camps_list:
         source = camp.get("source") or "Unknown"
         source_counts[source] = source_counts.get(source, 0) + 1
-    osm_count = source_counts.get("OSM", 0)
     horsemotel_count = source_counts.get("HorseMotel.com", 0)
     private_camp_count = source_counts.get("Private Camps", 0)
     state_parks_count = source_counts.get("State Parks", 0)
@@ -2194,7 +1995,6 @@ def main():
     print_metric("State Parks", state_parks_count)
     print_metric("HorseMotel.com", horsemotel_count)
     print_metric("Private Camps", private_camp_count)
-    print_metric("OpenStreetMap", osm_count)
 
     print("\nData quality adjustments:")
     print_metric("Exclusions applied", excluded_count)

@@ -241,8 +241,6 @@ def _compact_selected_array_fields(json_text, field_names):
 
 
 PUBLIC_FEED_OMIT_FIELDS = {
-    "rating",
-    "reviewCount",
     "submittedIssueNumber",
     "sourceUrl",
     "attribution",
@@ -268,6 +266,18 @@ def strip_public_feed_fields(camps):
                 del camp[field]
                 removed += 1
     return removed
+
+
+def ensure_legacy_app_required_fields(camps):
+    """Keep current released iOS builds decoding until the app schema is migrated.
+
+    The live iOS CampRecord currently requires rating and reviewCount even though
+    the values are default-only. Do not remove these from public camps.json until
+    the App Store build has been updated to make them optional/defaulted.
+    """
+    for camp in camps:
+        camp["rating"] = float(camp.get("rating") or 0.0)
+        camp["reviewCount"] = int(camp.get("reviewCount") or 0)
 
 
 def normalize_description_text(value):
@@ -2137,6 +2147,7 @@ def main():
 
     camps_list = sorted(all_camps.values(), key=lambda c: (c["state"], c["name"]))
     retired_field_count = strip_public_feed_fields(camps_list)
+    ensure_legacy_app_required_fields(camps_list)
     output = {
         "generated": datetime.now(timezone.utc).isoformat(),
         "count": len(camps_list),

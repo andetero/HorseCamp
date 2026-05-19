@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-19T11:30:50.838862+00:00",
+  "generated": "2026-05-19T23:19:25.321558+00:00",
   "count": 1451,
   "sources": [
     "Recreation.gov RIDB",
@@ -8938,7 +8938,7 @@
       "name": "Florida Caverns State Park",
       "location": "Florida",
       "state": "FL",
-      "latitude": 30.813989,
+      "latitude": 30.8139891,
       "longitude": -85.233872,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
@@ -22243,7 +22243,7 @@
       "name": "Sam A. Baker State Park Equestrian Campground",
       "location": "Patterson, MO",
       "state": "MO",
-      "latitude": 37.2660791,
+      "latitude": 37.2660792,
       "longitude": -90.4991273,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,

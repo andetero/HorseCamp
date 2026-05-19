@@ -23,6 +23,8 @@ jobs:
           RIDB_API_KEY: ${{ secrets.RIDB_API_KEY }}
           NPS_API_KEY: ${{ secrets.NPS_API_KEY }}
         run: python scripts/fetch_camps.py
+      - name: Validate camp feed schema
+        run: python scripts/validate_camps_feed.py
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"

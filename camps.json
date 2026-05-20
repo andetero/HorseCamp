@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-19T23:19:25.321558+00:00",
+  "generated": "2026-05-20T01:21:40.751072+00:00",
   "count": 1451,
   "sources": [
     "Recreation.gov RIDB",
@@ -5138,7 +5138,7 @@
       "hasBathhouse": false,
       "pullThroughAvailable": false,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/images/73533_1440.webp", "https://cdn.recreation.gov/public/images/73523_1440.webp", "https://cdn.recreation.gov/public/images/73534_1440.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2026/05/19/21/16/234553_db1b5f07-5e2b-41b4-8086-130324b16caf_1440.jpg", "https://cdn.recreation.gov/public/2026/05/19/21/29/234553_5fb28187-ec10-4944-b5e0-9e23f2b3f16e_700.jpeg", "https://cdn.recreation.gov/public/2026/05/19/21/23/234553_73ea98cd-9e31-4926-ab92-1c051b6a7b8f_700.jpg", "https://cdn.recreation.gov/public/2026/05/19/21/34/234553_cd6249a8-ca94-4127-9dbc-a32a41ba2f25_700.jpg", "https://cdn.recreation.gov/public/2026/05/19/21/25/234553_05c875ab-2e58-4a12-9446-f62272738101_700.jpg"],
       "source": "RIDB",
       "rating": 0.0,
       "reviewCount": 0
@@ -22243,7 +22243,7 @@
       "name": "Sam A. Baker State Park Equestrian Campground",
       "location": "Patterson, MO",
       "state": "MO",
-      "latitude": 37.2660792,
+      "latitude": 37.2660791,
       "longitude": -90.4991273,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,

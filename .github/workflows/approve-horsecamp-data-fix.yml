@@ -123,13 +123,11 @@ jobs:
 
           echo "url=$PR_URL" >> "$GITHUB_OUTPUT"
 
-      - name: Comment on issue and update labels
+      - name: Update labels
         if: steps.commit.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh issue comment "${{ steps.issue.outputs.number }}" --body "Approved structured data-fix report converted into a PR for final review: ${{ steps.pr.outputs.url }}"
-
           # Make this idempotent: create the status label if it does not already exist.
           gh label create "pr-created" --color "8250df" --description "Submission or data-fix PR has been created" 2>/dev/null || true
 

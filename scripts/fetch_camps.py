@@ -249,6 +249,7 @@ PUBLIC_FEED_OMIT_FIELDS = {
     "lastSynced",
     "locationConfidence",
     "mapSearchAddress",
+    "mapStatus",
     "partner",
     "address",
     "addressPreferredForMaps",
@@ -1464,9 +1465,6 @@ def _transform_horsemotel_listing(listing, index):
     if map_search_address:
         camp["mapSearchAddress"] = map_search_address
 
-    map_status = _clean_text(listing.get("mapStatus"))
-    if map_status:
-        camp["mapStatus"] = map_status
 
     return camp
 

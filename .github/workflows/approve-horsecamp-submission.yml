@@ -88,8 +88,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh issue comment "${{ github.event.issue.number }}" --body "Approved submission converted into a PR for final review: ${{ steps.pr.outputs.url }}"
-
+          
           # Make this idempotent: create the status label if it does not already exist.
           gh label create "pr-created" --color "8250df" --description "Submission PR has been created" 2>/dev/null || true
 

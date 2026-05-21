@@ -1434,7 +1434,7 @@ def _transform_horsemotel_listing(listing, index):
         "stallCount": _as_int(listing.get("stallCount")),
         "paddockCount": _as_int(listing.get("paddockCount")),
         "phone": _clean_text(listing.get("phone")),
-        "website": _clean_text(listing.get("website")) or _clean_text(listing.get("sourceUrl")),
+        "website": _clean_text(listing.get("website")),
         "description": final_description[:2000],
         "isVerified": _as_bool(listing.get("isVerified"), True),
         "seasonStart": _as_int(listing.get("seasonStart"), 1),

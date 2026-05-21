@@ -358,7 +358,8 @@ def build_record(payload: dict[str, Any], issue_number: int, existing_ids: set[s
 def append_record(target_path: Path, record: dict[str, Any]) -> None:
     records = load_json_array(target_path)
     records.append(record)
-    records.sort(key=lambda item: ((item.get("state") or "ZZ"), (item.get("name") or "").lower()))
+    # Keep existing listing order stable so approval PRs show only the newly approved camp.
+    # Reordering the full array makes GitHub diffs look like unrelated camps were deleted/re-added.
     write_json_array(target_path, records)
 
 

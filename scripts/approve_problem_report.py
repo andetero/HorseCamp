@@ -87,6 +87,7 @@ OVERRIDE_ALLOWED_FIELDS = {
     "longitude",
     "phone",
     "website",
+    "email",
     "description",
     "pricePerNight",
     "horseFeePerNight",

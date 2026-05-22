@@ -24,7 +24,7 @@
   "hasWifi": false,
   "hasBathhouse": false,
   "pullThroughAvailable": false,
-  "imageColors": ["6D4C41", "BCAAA4"],
+  "imageColors": ["C0392B", "F1948A"],
   "photoURLs": [],
   "source": "State Parks"
   },

@@ -9,5 +9,27 @@
   "ne-stateparks-fort-robinson": {
     "latitude": 42.672851,
     "longitude": -103.479256
+  },
+  "ridb-233883": {
+    "hasBathhouse": true,
+    "latitude": 39.378589,
+    "pullThroughAvailable": true,
+    "hasWashRack": false,
+    "longitude": -105.105024,
+    "seasonEnd": 10,
+    "hasWifi": false,
+    "accommodations": [
+      "Corrals",
+      "Group Camping",
+      "Trails"
+    ],
+    "stallCount": 7,
+    "seasonStart": 3,
+    "hookups": [
+      "Water"
+    ],
+    "location": "2499 Pine Creek Rd, Sedalia, CO 80135",
+    "maxRigLength": 50,
+    "hasDumpStation": false
   }
 }

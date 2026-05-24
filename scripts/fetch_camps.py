@@ -1,1 +1,2206 @@
-__TOO_LARGE_PLACEHOLDER__
+#!/usr/bin/env python3
+"""
+HorseCamp Data Fetcher
+Runs nightly via GitHub Actions.
+Calls Recreation.gov (RIDB) and NPS APIs, writes results to camps.json
+which is served at horsecampfinder.com/camps.json for the iOS app.
+
+Required GitHub Secrets:
+  RIDB_API_KEY  — from ridb.recreation.gov/profile
+  NPS_API_KEY   — from developer.nps.gov/signup
+"""
+
+import os, json, time, re, requests
+from datetime import datetime, timezone
+from pathlib import Path
+
+RIDB_KEY   = os.environ.get("RIDB_API_KEY", "")
+NPS_KEY    = os.environ.get("NPS_API_KEY", "")
+
+RIDB_BASE = "https://ridb.recreation.gov/api/v1"
+NPS_BASE  = "https://developer.nps.gov/api/v1"
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parent
+DATA_DIR = REPO_ROOT / "data"
+HORSEMOTEL_FEED_URL = "https://raw.githubusercontent.com/andetero/HorseMotel/main/horsemotel.json"
+HORSEMOTEL_MIN_LISTINGS = 700
+PRIVATE_CAMPS_FILE = DATA_DIR / "private_camps.json"
+STATE_PARKS_DIR = DATA_DIR / "state_parks"
+
+STATES = [
+    "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID",
+    "IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS",
+    "MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK",
+    "OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
+]
+
+
+def load_manual_state_parks(state_code):
+    """Load manually curated state-park listings from data/state_parks/<state>.json."""
+    path = STATE_PARKS_DIR / f"{state_code.lower()}.json"
+    if not path.exists():
+        raise RuntimeError(f"Manual state parks file not found: {path}")
+
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"Invalid JSON in {path}: {e}") from e
+
+    if not isinstance(data, list):
+        raise RuntimeError(f"{path} must contain a top-level JSON array")
+
+    required_fields = {"id", "name", "location", "state", "latitude", "longitude"}
+    for i, camp in enumerate(data):
+        if not isinstance(camp, dict):
+            raise RuntimeError(f"{path} entry #{i+1} must be an object")
+        missing = sorted(required_fields - set(camp.keys()))
+        if missing:
+            raise RuntimeError(f"{path} entry #{i+1} is missing required fields: {', '.join(missing)}")
+        if camp.get("state") != state_code:
+            raise RuntimeError(
+                f"{path} entry #{i+1} has state={camp.get('state')!r}; expected {state_code!r}"
+            )
+
+    print(f"  Loaded {len(data)} manual {state_code} state-park listings from {path.relative_to(REPO_ROOT)}")
+    return data
+
+EQUESTRIAN_KEYWORDS = [
+    "horse", "equestrian", "corral", "stall", "horseback",
+    "highline", "high line", "tie rail", "paddock", "horse camp",
+    "horse trail", "pack station", "mule", "llama"
+]
+
+INVALID_EQUESTRIAN_PATTERNS = [
+    re.compile(r"\bhas no equestrian sites\b", re.I),
+    re.compile(r"\bhorses are not allowed in (?:the )?campground\b", re.I),
+    re.compile(r"\bhorses are not allowed in campgrounds\b", re.I),
+    re.compile(r"\bno horses allowed in (?:the )?campground\b", re.I),
+    re.compile(r"\bhorse corrals \(no horses allowed in the campground\)", re.I),
+    re.compile(r"\bhorses are not allowed at the cabin\b", re.I),
+    re.compile(r"\bhorses are not allowed at the pavilion and campground\b", re.I),
+    re.compile(r"\bhorses are not allowed near the .*guard station\b", re.I),
+]
+
+def strip_html(text):
+    return re.sub(r'<[^>]+>', '', text or '').strip()
+
+def is_equestrian(text_blob):
+    low = text_blob.lower()
+    return any(k in low for k in EQUESTRIAN_KEYWORDS)
+
+
+# RIDB/Recreation.gov often tags ordinary campgrounds with activity=9
+# (Horseback Riding) when there are horseback-riding trails nearby. HorseCamp
+# should only import RIDB facilities when the listing itself has a clear onsite
+# horse-camping signal such as equestrian camping, horse sites, corrals, stalls,
+# highlines, tie rails, stock sites, etc. Nearby horseback riding alone is not
+# enough.
+RIDB_HORSE_CAMPING_PATTERNS = [
+    re.compile(r"\bequestrian\s+(?:camp(?:ground|ing)?|camps?|site|sites|area|areas|loop|loops|facility|facilities)\b", re.I),
+    re.compile(r"\bhorse\s+(?:camp(?:ground|ing)?|camps?|site|sites|area|areas|corral|corrals|stall|stalls|paddock|paddocks)\b", re.I),
+    re.compile(r"\bstock\s+(?:camp(?:ground|ing)?|camps?|site|sites|area|areas|use|facility|facilities|corral|corrals|stall|stalls)\b", re.I),
+    re.compile(r"\bcamp(?:ground|ing|site|sites)?\s+(?:with|for)\s+(?:your\s+)?horses\b", re.I),
+    re.compile(r"\b(?:corrals?|stalls?|highlines?|high\s+lines?|tie\s+rails?|hitching\s+rails?|paddocks?)\b", re.I),
+    re.compile(r"\bhorse\s+trailer\s+parking\b", re.I),
+    re.compile(r"\bpack\s+station\b", re.I),
+]
+
+
+def has_ridb_horse_camping_signal(name, amenities, desc):
+    """Return True only for clear onsite RIDB horse-camping signals.
+
+    Deliberately ignores RIDB ACTIVITY names because activity=9 / Horseback
+    Riding commonly means trail access near the campground, not horse camping
+    at the facility.
+    """
+    blob = " ".join([str(name or ""), *(str(a or "") for a in amenities or []), str(desc or "")])
+    return any(pattern.search(blob) for pattern in RIDB_HORSE_CAMPING_PATTERNS)
+
+
+def is_invalid_equestrian_listing(camp):
+    """Reject entries that keyword-match horses but explicitly do not allow horse camping."""
+    try:
+        lat = float(camp.get("latitude", 0) or 0)
+        lng = float(camp.get("longitude", 0) or 0)
+    except (TypeError, ValueError):
+        return True
+    if lat == 0 and lng == 0:
+        return True
+
+    text = " ".join(str(camp.get(k, "")) for k in ("name", "description", "location", "source"))
+    return any(pattern.search(text) for pattern in INVALID_EQUESTRIAN_PATTERNS)
+
+
+def remove_invalid_equestrian_listings(camps_dict):
+    bad_ids = [cid for cid, camp in camps_dict.items() if is_invalid_equestrian_listing(camp)]
+    for cid in bad_ids:
+        del camps_dict[cid]
+    print(f"  Invalid/non-horse listings removed: {len(bad_ids)}")
+    return len(bad_ids)
+
+def safe_get(url, headers=None, params=None, retries=3):
+    for attempt in range(retries):
+        try:
+            r = requests.get(url, headers=headers, params=params, timeout=15)
+            if r.status_code == 200:
+                return r.json()
+            elif r.status_code == 429:
+                print(f"  Rate limited — waiting 10s...")
+                time.sleep(10)
+            else:
+                print(f"  HTTP {r.status_code} for {url}")
+                return None
+        except Exception as e:
+            print(f"  Request error (attempt {attempt+1}): {e}")
+            time.sleep(3)
+    return None
+
+def print_section(title):
+    print(f"\n=== {title} ===")
+
+
+def print_metric(label, value, width=28):
+    print(f"  {label + ':':<{width}} {value}")
+
+
+def haversine_meters(lat1, lon1, lat2, lon2):
+    import math
+    radius_m = 6371000
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
+    dphi = math.radians(lat2 - lat1)
+    dlam = math.radians(lon2 - lon1)
+    a = math.sin(dphi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlam / 2) ** 2
+    return radius_m * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+
+def find_near_existing_camp(camp, existing_camps, threshold_m=500):
+    """Return (existing_camp, distance_m) when camp is near an existing listing."""
+    try:
+        lat = float(camp["latitude"])
+        lng = float(camp["longitude"])
+    except (KeyError, TypeError, ValueError):
+        return None, None
+
+    nearest_existing = None
+    nearest_distance = None
+    for existing in existing_camps.values():
+        try:
+            distance_m = haversine_meters(lat, lng, float(existing["latitude"]), float(existing["longitude"]))
+        except (KeyError, TypeError, ValueError):
+            continue
+        if distance_m < threshold_m and (nearest_distance is None or distance_m < nearest_distance):
+            nearest_existing = existing
+            nearest_distance = distance_m
+
+    return nearest_existing, nearest_distance
+
+
+def is_near_existing_camp(camp, existing_camps, threshold_m=500):
+    existing, _ = find_near_existing_camp(camp, existing_camps, threshold_m=threshold_m)
+    return existing is not None
+
+
+def merge_camps_by_id_and_proximity(camps, all_camps, threshold_m=500):
+    """Merge camps into all_camps while skipping duplicate IDs and nearby duplicates.
+
+    Returns (added, duplicate_id_skips, proximity_skips, proximity_details). This keeps source merge
+    behavior consistent for partner/curated sources and makes workflow logs clearer.
+    """
+    added = 0
+    duplicate_id_skips = 0
+    proximity_skips = 0
+    proximity_details = []
+
+    for camp in camps:
+        cid = camp["id"]
+        if cid in all_camps:
+            duplicate_id_skips += 1
+            continue
+
+        existing, distance_m = find_near_existing_camp(camp, all_camps, threshold_m=threshold_m)
+        if existing is not None:
+            proximity_skips += 1
+            proximity_details.append({
+                "incoming": camp,
+                "existing": existing,
+                "distance_m": distance_m,
+            })
+            continue
+
+        all_camps[cid] = camp
+        added += 1
+
+    return added, duplicate_id_skips, proximity_skips, proximity_details
+
+
+def print_nearby_duplicate_details(label, details):
+    if not details:
+        return
+
+    print(f"  {label} nearby duplicate details:")
+    for item in details:
+        incoming = item["incoming"]
+        existing = item["existing"]
+        distance_m = item.get("distance_m") or 0
+        distance_mi = distance_m / 1609.344
+        print(
+            "    - "
+            f"Skipped: {incoming.get('name', 'Unknown')} "
+            f"[{incoming.get('source', 'Unknown')}, {incoming.get('id', 'no-id')}] "
+            f"near Existing: {existing.get('name', 'Unknown')} "
+            f"[{existing.get('source', 'Unknown')}, {existing.get('id', 'no-id')}] "
+            f"({distance_m:.0f} m / {distance_mi:.2f} mi)"
+        )
+
+
+
+def _compact_selected_array_fields(json_text, field_names):
+    """Collapse selected array fields onto a single line after pretty-printing JSON.
+
+    This keeps the overall 2-space-indented structure, while matching the manual
+    style used for short arrays like accommodations and imageColors.
+    """
+    field_pattern = "|".join(re.escape(name) for name in field_names)
+    pattern = re.compile(
+        rf'(?P<indent>^[ \t]*)"(?P<field>{field_pattern})": \[\n'
+        rf'(?P<body>(?:^[ \t]+.*\n)*?)'
+        rf'(?P=indent)\]',
+        flags=re.MULTILINE,
+    )
+
+    def repl(match):
+        body = match.group("body")
+        # Build a valid JSON array from the pretty-printed body, then re-emit it
+        # compactly to guarantee correct escaping and commas.
+        array_text = "[\n" + body + match.group("indent") + "]"
+        values = json.loads(array_text)
+        compact = json.dumps(values, ensure_ascii=False)
+        return f'{match.group("indent")}"{match.group("field")}": {compact}'
+
+    return pattern.sub(repl, json_text)
+
+
+PUBLIC_FEED_OMIT_FIELDS = {
+    "submittedIssueNumber",
+    "sourceUrl",
+    "attribution",
+    "coordinateSource",
+    "lastSynced",
+    "locationConfidence",
+    "mapSearchAddress",
+    "mapStatus",
+    "partner",
+    "address",
+    "addressPreferredForMaps",
+    "category",
+    "city",
+    "sourceDetail",
+}
+
+
+def strip_public_feed_fields(camps):
+    """Remove retired/default-only fields from the public camps.json feed."""
+    removed = 0
+    for camp in camps:
+        for field in PUBLIC_FEED_OMIT_FIELDS:
+            if field in camp:
+                del camp[field]
+                removed += 1
+    return removed
+
+
+def ensure_legacy_app_required_fields(camps):
+    """Keep current released iOS builds decoding until the app schema is migrated.
+
+    The live iOS CampRecord currently requires rating and reviewCount even though
+    the values are default-only. Do not remove these from public camps.json until
+    the App Store build has been updated to make them optional/defaulted.
+    """
+    for camp in camps:
+        camp["rating"] = float(camp.get("rating") or 0.0)
+        camp["reviewCount"] = int(camp.get("reviewCount") or 0)
+
+
+def normalize_description_text(value):
+    """Keep JSON description values as one readable line."""
+    return re.sub(r"\s+", " ", str(value or "")).strip()
+
+
+def normalize_simple_phone(value):
+    """Normalize only simple single US/Canada phone numbers to 123-456-7890.
+
+    Complex/labeled/multiple-number contact strings are intentionally preserved.
+    """
+    raw = re.sub(r"\s+", " ", str(value or "")).strip()
+    if not raw:
+        return ""
+    if re.fullmatch(r"\d{10}", raw):
+        return f"{raw[0:3]}-{raw[3:6]}-{raw[6:10]}"
+    match = re.fullmatch(r"\((\d{3})\)\s*(\d{3})-(\d{4})", raw)
+    if match:
+        return f"{match.group(1)}-{match.group(2)}-{match.group(3)}"
+    return raw
+
+
+def normalize_description_fields(value):
+    """Recursively collapse description whitespace and normalize simple phone values before writing JSON."""
+    if isinstance(value, list):
+        return [normalize_description_fields(item) for item in value]
+    if isinstance(value, dict):
+        normalized = {}
+        for key, item in value.items():
+            if key == "description":
+                normalized[key] = normalize_description_text(item)
+            elif key == "phone":
+                normalized[key] = normalize_simple_phone(item)
+            else:
+                normalized[key] = normalize_description_fields(item)
+        return normalized
+    return value
+
+
+def write_camps_json(path, payload):
+    """Write camps.json with stable pretty-printing and compact selected arrays."""
+    payload = normalize_description_fields(payload)
+    rendered = json.dumps(payload, indent=2, ensure_ascii=False)
+    rendered = _compact_selected_array_fields(rendered, {"hookups", "accommodations", "imageColors", "photoURLs"})
+    path.write_text(rendered + "\n", encoding="utf-8")
+
+
+# ── MANUAL OVERRIDES / EXCLUSIONS ─────────────────────────────────────
+OVERRIDES_FILE = DATA_DIR / "overrides.json"
+EXCLUSIONS_FILE = DATA_DIR / "exclusions.json"
+
+
+def _load_json_file(path: Path, default):
+    if not path.exists():
+        return default
+    try:
+        with path.open("r", encoding="utf-8") as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"Invalid JSON in {path}: {e}") from e
+
+
+def load_overrides():
+    """Load manual field overrides for dynamically fetched camps.
+
+    File format:
+      {
+        "camp-id": {"phone": "...", "website": "...", "isVerified": true},
+        ...
+      }
+    """
+    data = _load_json_file(OVERRIDES_FILE, {})
+    if not isinstance(data, dict):
+        raise RuntimeError(f"{OVERRIDES_FILE} must contain a top-level JSON object")
+    for camp_id, patch in data.items():
+        if not isinstance(camp_id, str) or not camp_id.strip():
+            raise RuntimeError(f"{OVERRIDES_FILE} contains an invalid camp id key: {camp_id!r}")
+        if not isinstance(patch, dict):
+            raise RuntimeError(f"Override for {camp_id!r} in {OVERRIDES_FILE} must be a JSON object")
+    return data
+
+
+def load_exclusions():
+    """Load list of camp IDs to exclude from the generated output."""
+    data = _load_json_file(EXCLUSIONS_FILE, [])
+    if not isinstance(data, list):
+        raise RuntimeError(f"{EXCLUSIONS_FILE} must contain a top-level JSON array")
+    cleaned = []
+    for camp_id in data:
+        if not isinstance(camp_id, str) or not camp_id.strip():
+            raise RuntimeError(f"{EXCLUSIONS_FILE} contains an invalid camp id entry: {camp_id!r}")
+        cleaned.append(camp_id.strip())
+    return cleaned
+
+
+def apply_exclusions(camps_dict):
+    """Remove any camp IDs listed in data/exclusions.json."""
+    excluded_ids = load_exclusions()
+    removed = 0
+    for camp_id in excluded_ids:
+        if camp_id in camps_dict:
+            del camps_dict[camp_id]
+            removed += 1
+    print(f"  Exclusions applied: {removed} removed")
+    return removed
+
+
+def apply_overrides(camps_dict):
+    """Apply partial field patches from data/overrides.json."""
+    overrides = load_overrides()
+    applied = 0
+    missing_ids = []
+
+    numeric_float_fields = {"pricePerNight", "horseFeePerNight", "latitude", "longitude"}
+    numeric_int_fields = {"maxRigLength", "stallCount", "paddockCount", "seasonStart", "seasonEnd"}
+    bool_fields = {"isVerified", "hasWashRack", "hasDumpStation", "hasWifi", "hasBathhouse", "pullThroughAvailable"}
+    list_fields = {"hookups", "accommodations", "imageColors", "photoURLs"}
+
+    for camp_id, patch in overrides.items():
+        camp = camps_dict.get(camp_id)
+        if camp is None:
+            missing_ids.append(camp_id)
+            continue
+
+        for key, value in patch.items():
+            if key in numeric_float_fields:
+                try:
+                    camp[key] = float(value)
+                except (TypeError, ValueError):
+                    raise RuntimeError(f"Override {camp_id!r}.{key} must be a number")
+            elif key in numeric_int_fields:
+                try:
+                    camp[key] = int(value)
+                except (TypeError, ValueError):
+                    raise RuntimeError(f"Override {camp_id!r}.{key} must be an integer")
+            elif key in bool_fields:
+                if not isinstance(value, bool):
+                    raise RuntimeError(f"Override {camp_id!r}.{key} must be true or false")
+                camp[key] = value
+            elif key in list_fields:
+                if not isinstance(value, list):
+                    raise RuntimeError(f"Override {camp_id!r}.{key} must be a JSON array")
+                camp[key] = value
+            else:
+                camp[key] = value
+
+        if "isVerified" not in patch:
+            camp["isVerified"] = True
+        camps_dict[camp_id] = camp
+        applied += 1
+
+    if missing_ids:
+        print(f"  Overrides skipped (missing ids): {len(missing_ids)}")
+    print(f"  Overrides applied: {applied} updated")
+    return applied
+
+# ── RIDB HELPERS ──────────────────────────────────────────────────────
+MONTH_MAP = {
+    "jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6,
+    "jul": 7, "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12,
+    "january": 1, "february": 2, "march": 3, "april": 4, "june": 6,
+    "july": 7, "august": 8, "september": 9, "october": 10, "november": 11, "december": 12,
+}
+
+def parse_season(facility):
+    """Extract real open/close months from FACILITYSEASON array.
+    Returns (0, 0) if no reliable data found — app shows no season status."""
+    seasons = facility.get("FACILITYSEASON") or []
+
+    for season in seasons:
+        start_str = season.get("StartDate", "") or ""
+        end_str   = season.get("EndDate", "")   or ""
+        try:
+            if "-" in start_str and "-" in end_str:
+                start_month = int(start_str.split("-")[1])
+                end_month   = int(end_str.split("-")[1])
+                if 1 <= start_month <= 12 and 1 <= end_month <= 12:
+                    if not (start_month == 1 and end_month == 12):
+                        return start_month, end_month
+        except:
+            pass
+
+    return 0, 0  # Unknown — no data is better than wrong data
+def parse_rig_length(facility):
+    """Extract max rig length from PERMITTEDEQUIPMENT on campsites."""
+    campsites = facility.get("CAMPSITE") or []
+    max_len = 0
+    for site in campsites:
+        for eq in (site.get("PERMITTEDEQUIPMENT") or []):
+            eq_name = (eq.get("EquipmentName") or "").lower()
+            # Only care about trailer/RV type equipment
+            if any(k in eq_name for k in ["trailer", "rv", "motorhome", "camper", "horse"]):
+                try:
+                    length = int(eq.get("MaxLength") or 0)
+                    if length > max_len:
+                        max_len = length
+                except:
+                    pass
+    return max_len if max_len > 0 else 0  # 0 = unknown, app shows nothing
+
+def parse_stall_count(facility):
+    """Extract actual stall count from amenities."""
+    amenities = facility.get("FACILITYAMENITY") or []
+    for a in amenities:
+        name = (a.get("AmenityName") or "").lower()
+        if "stall" in name:
+            try:
+                qty = int(a.get("AmenityValue") or a.get("Quantity") or 0)
+                if qty > 0:
+                    return qty
+            except:
+                pass
+    return 0
+
+def parse_paddock_count(facility):
+    """Extract actual corral/paddock count from amenities."""
+    amenities = facility.get("FACILITYAMENITY") or []
+    for a in amenities:
+        name = (a.get("AmenityName") or "").lower()
+        if "corral" in name or "paddock" in name:
+            try:
+                qty = int(a.get("AmenityValue") or a.get("Quantity") or 0)
+                if qty > 0:
+                    return qty
+            except:
+                pass
+    return 0
+
+def parse_ridb_fee(facility):
+    """Extract nightly fee from RIDB facility data.
+    Checks FACILITYFEE first, then falls back to CAMPSITE fees.
+    Returns 0.0 if no fee data found (app shows 'See site for pricing')."""
+    # Try facility-level fee first
+    for fee in (facility.get("FACILITYFEE") or []):
+        fee_type = (fee.get("FeeType") or "").lower()
+        if "overnight" in fee_type or "nightly" in fee_type or "camping" in fee_type or fee_type == "":
+            try:
+                amount = float(fee.get("FeeAmount") or 0)
+                if amount > 0:
+                    return amount
+            except:
+                pass
+
+    # Fall back to campsite-level fees
+    campsites = facility.get("CAMPSITE") or []
+    fees_found = []
+    for site in campsites:
+        for fee in (site.get("CAMPSITE_FEE") or []):
+            fee_type = (fee.get("FeeType") or "").lower()
+            # Skip reservation/one-time fees, only want nightly/use fees
+            if "reservation" in fee_type or "cancellation" in fee_type:
+                continue
+            try:
+                amount = float(fee.get("FeeAmount") or 0)
+                if amount > 0:
+                    fees_found.append(amount)
+            except:
+                pass
+
+    # Return the median fee if multiple campsites to avoid outliers
+    if fees_found:
+        fees_found.sort()
+        return fees_found[len(fees_found) // 2]
+
+    return 0.0
+
+# ── RIDB HELPERS ──────────────────────────────────────────────────────
+def parse_ridb_photos(facility):
+    """Extract all photo URLs from MEDIA array, primary first."""
+    media = facility.get("MEDIA") or []
+    images = [m for m in media if m.get("MediaType") == "Image" and m.get("URL")]
+    if not images:
+        return []
+    # Primary first, then gallery images, then rest
+    primary = [m for m in images if m.get("IsPrimary")]
+    gallery = [m for m in images if not m.get("IsPrimary") and m.get("IsGallery")]
+    rest    = [m for m in images if not m.get("IsPrimary") and not m.get("IsGallery")]
+    ordered = primary + gallery + rest
+    return [m["URL"] for m in ordered[:6]]  # cap at 6 photos
+
+# ── RIDB ───────────────────────────────────────────────────────────────
+def fetch_ridb_state(state):
+    camps = {}
+    headers = {"apikey": RIDB_KEY}
+    search_terms = [
+        ("activity", "9"),           # activity 9 = Horseback Riding
+        ("query", "horse corral"),
+        ("query", "equestrian"),
+        ("query", "horse camp"),
+        ("query", "horse stall"),
+    ]
+
+    for param_key, param_val in search_terms:
+        offset = 0
+        while True:
+            params = {
+                param_key: param_val,
+                "state":   state,
+                "limit":   50,
+                "offset":  offset,
+                "full":    "true",
+            }
+            data = safe_get(f"{RIDB_BASE}/facilities", headers=headers, params=params)
+            if not data:
+                break
+            facilities = data.get("RECDATA", [])
+            if not facilities:
+                break
+
+            for f in facilities:
+                fid = str(f.get("FacilityID", ""))
+                if not fid or fid in camps:
+                    continue
+
+                lat = float(f.get("FacilityLatitude", 0) or 0)
+                lng = float(f.get("FacilityLongitude", 0) or 0)
+                if abs(lat) < 0.1 or abs(lng) < 0.1:
+                    continue
+
+                amenities  = [a.get("AmenityName", "") for a in (f.get("FACILITYAMENITY") or [])]
+                activities = [a.get("ActivityName", "") for a in (f.get("ACTIVITY") or [])]
+                desc       = strip_html(f.get("FacilityDescription", ""))
+                blob       = " ".join(amenities + activities + [desc])
+
+                # RIDB activity=9 means Horseback Riding may be nearby; it does
+                # not prove the campground supports overnight horse camping.
+                # Require a stronger onsite horse-camping signal from the facility
+                # name, amenities, or description for every RIDB match.
+                if not has_ridb_horse_camping_signal(f.get("FacilityName", ""), amenities, desc):
+                    continue
+
+                addr  = (f.get("FACILITYADDRESS") or [{}])[0]
+                city  = addr.get("City", "")
+                fstate = addr.get("AddressStateCode", state)
+
+                blob_lower = blob.lower()
+
+                hookups = []
+                if "50 amp" in blob_lower or "50-amp" in blob_lower: hookups.append("50A")
+                if "30 amp" in blob_lower or "30-amp" in blob_lower: hookups.append("30A")
+                if "water hookup" in blob_lower:                       hookups.append("Water")
+
+                accommodations = []
+                if "stall"    in blob_lower: accommodations.append("Stalls")
+                if "corral"   in blob_lower: accommodations.append("Corrals")
+                if "highline" in blob_lower or "high line" in blob_lower or "tie rail" in blob_lower:
+                    accommodations.append("Highlines")
+                if "paddock"  in blob_lower: accommodations.append("Paddocks")
+                if "trail" in blob_lower or "hiking" in blob_lower: accommodations.append("Trails")
+                if "cabin" in blob_lower: accommodations.append("Cabins")
+
+                season_start, season_end = parse_season(f)
+                camps[fid] = {
+                    "id":                  f"ridb-{fid}",
+                    "name":                f.get("FacilityName", "Unknown Camp"),
+                    "location":            f"{city}, {fstate}".strip(", "),
+                    "state":               fstate,
+                    "latitude":            lat,
+                    "longitude":           lng,
+                    "pricePerNight":       parse_ridb_fee(f),
+                    "horseFeePerNight":    0.0,
+                    "hookups":             list(dict.fromkeys(hookups)),
+                    "accommodations":      list(dict.fromkeys(accommodations)),
+                     "maxRigLength":        parse_rig_length(f),
+                     "stallCount":          parse_stall_count(f),
+                     "paddockCount":        parse_paddock_count(f),
+                    "phone":               f.get("FacilityPhone", ""),
+
+                    "website":             f.get("FacilityReservationURL", "") or f"https://www.recreation.gov/camping/campgrounds/{fid}",
+                    "description":         desc[:2000],
+                    "isVerified":          False,
+                     "seasonStart":         season_start,
+                     "seasonEnd":           season_end,
+                    "hasWashRack":         "wash rack" in blob_lower,
+                    "hasDumpStation":      "dump" in blob_lower,
+                    "hasWifi":             "wifi" in blob_lower or "internet" in blob_lower,
+                    "hasBathhouse":        "shower" in blob_lower or "bathhouse" in blob_lower,
+                    "pullThroughAvailable": "pull-through" in blob_lower or "pull through" in blob_lower,
+                    "imageColors":         ["5C7A4E", "D4A853"],
+                    "photoURLs":           parse_ridb_photos(f),
+                    "source":              "RIDB",
+                }
+
+            offset += 50
+            if len(facilities) < 50:
+                break
+            time.sleep(0.5)
+
+        time.sleep(0.3)
+
+    return list(camps.values())
+
+
+# ── NPS ────────────────────────────────────────────────────────────────
+def fetch_nps_state(state):
+    camps = []
+    headers = {"X-Api-Key": NPS_KEY}
+    params  = {"stateCode": state, "limit": 100, "start": 0, "fields": "images"}
+
+    data = safe_get(f"{NPS_BASE}/campgrounds", headers=headers, params=params)
+    if not data:
+        return camps
+
+    for c in data.get("data", []):
+        desc       = c.get("description", "")
+        amenities  = c.get("amenities", {})
+        blob       = " ".join([
+            desc,
+            amenities.get("horseTrailsOnsite", ""),
+            amenities.get("corralOrPaddockOnsite", ""),
+            amenities.get("stableNearby", ""),
+        ])
+
+        if not is_equestrian(blob):
+            continue
+
+        try:
+            lat = float(c.get("latitude", 0))
+            lng = float(c.get("longitude", 0))
+        except:
+            continue
+        if abs(lat) < 0.1 or abs(lng) < 0.1:
+            continue
+
+        addr    = (c.get("addresses") or [{}])[0]
+        city    = addr.get("city", "")
+        fee     = 0.0
+        fees    = c.get("fees") or []
+        if fees:
+            try: fee = float(fees[0].get("cost", 0))
+            except: pass
+
+        # Hookups — NPS values are "Yes - seasonal", "Yes - year round", or "No"
+        def nps_yes(val): return str(val or "").startswith("Yes")
+        hookups = []
+        if nps_yes(amenities.get("electricalHookups")): hookups.append("30A")
+        if nps_yes(amenities.get("waterHookups")):      hookups.append("Water")
+        if nps_yes(amenities.get("sewerHookups")):      hookups.append("Sewer")
+        # potableWater — only add if starts with "Yes" (not "No water" or "Water, but not potable")
+        potable = " ".join(amenities.get("potableWater") or [])
+        if potable.startswith("Yes"):                   hookups.append("Water")
+        # Deduplicate in case both waterHookups and potableWater say yes
+        hookups = list(dict.fromkeys(hookups))
+        if not hookups: hookups.append("No Hookups")
+
+        accommodations = []
+        if nps_yes(amenities.get("corralOrPaddockOnsite")): accommodations.append("Corrals")
+        if nps_yes(amenities.get("stableNearby")):          accommodations.append("Stalls")
+        if nps_yes(amenities.get("horseTrailsOnsite")):     accommodations.append("Trails")
+
+        contacts = c.get("contacts", {})
+        phones   = contacts.get("phoneNumbers", [])
+        phone    = phones[0].get("phoneNumber", "") if phones else ""
+
+        # Season — NPS API doesn't provide reliable open/close months
+        # operatingHours contains daily schedule dates, not seasonal months
+        season_start, season_end = 0, 0
+
+        camps.append({
+            "id":                  f"nps-{c['id']}",
+            "name":                c.get("name", "NPS Camp"),
+            "location":            f"{city}, {state}".strip(", "),
+            "state":               state,
+            "latitude":            lat,
+            "longitude":           lng,
+            "pricePerNight":       fee,
+            "horseFeePerNight":    0.0,
+            "hookups":             hookups,
+            "accommodations":      list(dict.fromkeys(accommodations)),
+            "maxRigLength":        0,
+            "stallCount":          0,
+            "paddockCount":        0,
+            "phone":               phone,
+            "website":             c.get("url", f"https://www.nps.gov/{c.get('parkCode', '')}/"),
+            "description":         desc[:2000],
+            "isVerified":          False,
+            "seasonStart":         season_start,
+            "seasonEnd":           season_end,
+            "hasWashRack":         False,
+            "hasDumpStation":      nps_yes(amenities.get("dumpStation")),
+            "hasWifi":             nps_yes(amenities.get("internetConnectivity")),
+            "hasBathhouse":        (any("flush" in t.lower() for t in (amenities.get("toilets") or [])) or any(str(s).strip().lower() not in ("none", "") for s in (amenities.get("showers") or []) if s)),
+            "pullThroughAvailable": nps_yes(amenities.get("pullThroughCampsites")),
+            "imageColors":         ["4A7FA5", "5C7A4E"],
+            "photoURLs":           [img["url"] for img in (c.get("images") or []) if img.get("url")][:6],
+            "source":              "NPS",
+        })
+
+    return camps
+
+
+
+# ── CALIFORNIA STATE PARKS ─────────────────────────────────────────────
+CA_STATE_PARKS_BASE = "https://services2.arcgis.com/AhxrK3F6WM8ECvDi/arcgis/rest/services/Campgrounds/FeatureServer/0/query"
+CA_STATE_PARKS_KEYWORDS = [
+    "horse", "equestrian", "bridle", "bridle trail", "stock",
+    "corral", "stall", "tie rail", "highline", "paddock", "equine", "mule"
+]
+
+def _is_ca_state_park_equestrian(attrs):
+    text_blob = " ".join(str(attrs.get(k, "") or "") for k in [
+        "Campground", "TYPE", "SUBTYPE", "DETAIL", "UNITNAME"
+    ]).lower()
+    return any(k in text_blob for k in CA_STATE_PARKS_KEYWORDS)
+
+def _ca_state_park_accommodations(attrs):
+    text_blob = " ".join(str(attrs.get(k, "") or "") for k in [
+        "Campground", "TYPE", "SUBTYPE", "DETAIL", "UNITNAME"
+    ]).lower()
+
+    accommodations = []
+    if "stall" in text_blob:
+        accommodations.append("Stalls")
+    if any(k in text_blob for k in ["corral", "paddock", "tie rail", "highline"]):
+        accommodations.append("Corrals")
+    if any(k in text_blob for k in ["trail", "bridle", "horse", "equestrian"]):
+        accommodations.append("Trails")
+
+    return list(dict.fromkeys(accommodations)) or ["Trails"]
+
+def fetch_ca_state_parks():
+    """Fetch California State Parks campgrounds from the official ArcGIS layer.
+
+    The public dataset covers all state park campgrounds, so this importer keeps
+    only equestrian-relevant rows using campground/unit/type/detail keyword
+    matching. That makes the first pass conservative while staying fully on
+    official machine-readable data.
+    """
+    camps = []
+    seen_ids = set()
+    offset = 0
+    page_size = 2000
+
+    while True:
+        params = {
+            "where": "1=1",
+            "outFields": "FID,Campground,GISID,TYPE,SUBTYPE,DETAIL,UNITNAME,WHAT3WORD_ADDRESS",
+            "returnGeometry": "true",
+            "outSR": "4326",
+            "resultOffset": offset,
+            "resultRecordCount": page_size,
+            "f": "json",
+        }
+        data = safe_get(CA_STATE_PARKS_BASE, params=params)
+        if not data:
+            break
+
+        features = data.get("features", [])
+        if not features:
+            break
+
+        for feature in features:
+            attrs = feature.get("attributes") or {}
+            geom = feature.get("geometry") or {}
+            lat = geom.get("y")
+            lng = geom.get("x")
+
+            try:
+                lat = float(lat)
+                lng = float(lng)
+            except (TypeError, ValueError):
+                continue
+
+            if abs(lat) < 0.1 or abs(lng) < 0.1:
+                continue
+            if not _is_ca_state_park_equestrian(attrs):
+                continue
+
+            gisid = str(attrs.get("GISID") or attrs.get("FID") or "").strip()
+            campground = str(attrs.get("Campground") or "").strip()
+            unit_name = str(attrs.get("UNITNAME") or "").strip()
+            type_name = str(attrs.get("TYPE") or "").strip()
+            subtype = str(attrs.get("SUBTYPE") or "").strip()
+            detail = str(attrs.get("DETAIL") or "").strip()
+
+            cid = f"ca-sp-{gisid or f'{lat:.5f},{lng:.5f}'}"
+            if cid in seen_ids:
+                continue
+            seen_ids.add(cid)
+
+            name = campground or unit_name or "California State Park Campground"
+            location = f"{unit_name}, CA" if unit_name else "CA"
+
+            detail_parts = [p for p in [type_name, subtype, detail] if p]
+            detail_text = " • ".join(detail_parts)
+            desc = f"California State Parks campground in {unit_name}." if unit_name else "California State Parks campground."
+            if detail_text:
+                desc += f" {detail_text}."
+            desc += " Imported from the official California State Parks Campgrounds layer; verify horse amenities before arrival."
+
+            camps.append({
+                "id": cid,
+                "name": name,
+                "location": location,
+                "state": "CA",
+                "latitude": lat,
+                "longitude": lng,
+                "pricePerNight": 0.0,
+                "horseFeePerNight": 0.0,
+                "hookups": [],
+                "accommodations": _ca_state_park_accommodations(attrs),
+                "maxRigLength": 0,
+                "stallCount": 0,
+                "paddockCount": 0,
+                "phone": "",
+                "website": "",
+                "description": desc[:2000],
+                "isVerified": False,
+                "seasonStart": 0,
+                "seasonEnd": 0,
+                "hasWashRack": False,
+                "hasDumpStation": False,
+                "hasWifi": False,
+                "hasBathhouse": False,
+                "pullThroughAvailable": False,
+                "imageColors": ["5C7A4E", "D4A853"],
+                "photoURLs": [],
+                "source": "State Parks",
+            })
+
+        if len(features) < page_size:
+            break
+        offset += page_size
+        time.sleep(0.3)
+
+    print(f"  CA State Parks: {len(camps)} equestrian candidates")
+    return camps
+
+
+
+IL_HORSEBACK_URL = "https://dnr.illinois.gov/recreation/horsebackriding.html"
+
+
+def _strip_html_basic(text):
+    text = re.sub(r"<script[\s\S]*?</script>", " ", text, flags=re.I)
+    text = re.sub(r"<style[\s\S]*?</style>", " ", text, flags=re.I)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = text.replace("&nbsp;", " ").replace("&amp;", "&")
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def _il_slug_candidates(name):
+    base = re.sub(r"[^a-z0-9]+", "", (name or "").lower())
+    candidates = [base]
+    replacements = {
+        "statepark": "",
+        "staterecreationarea": "",
+        "statefishwildlifearea": "",
+        "stateforest": "",
+        "statenaturalarea": "",
+        "county": "county",
+        "co": "",
+        "donnellystatefishwildlifearea": "donnelly",
+        "andleaqua": "leaquana",
+    }
+    for old, new in replacements.items():
+        if old in base:
+            candidates.append(base.replace(old, new))
+    manual = {
+        "chainolakesstatepark": ["chainolakes"],
+        "desplainesstatefishwildlifearea": ["desplaines"],
+        "jimedgarpanthercreekstatefishwildlifearea": ["jimedgarpanthercreek"],
+        "jubileecollegestatepark": ["jubileecollege"],
+        "lakeleaquanastaterecreationarea": ["lakeleaquana"],
+        "morrisonrockwoodstatepark": ["morrisonrockwood"],
+        "putnamcountycodonneIIystatefishwildlifearea": ["putnamcounty", "putnam"],
+        "putnamcountycodonneIIystatefishwildlifearea": ["putnamcounty", "putnam"],
+        "putnamcountycodonneIIy": ["putnamcounty", "putnam"],
+        "putnamcountycodonneIIystat": ["putnamcounty", "putnam"],
+        "putnamcountycodonneIIystatefishwildlifearea": ["putnamcounty", "putnam"],
+        "putnamcountycodonneIlystatefishwildlifearea": ["putnamcounty", "putnam"],
+        "pyramidstaterecreationarea": ["pyramid"],
+        "ramseylakestaterecreationarea": ["ramseylake"],
+        "randolphcountystaterecreationarea": ["randolphcounty"],
+        "salinecountystatefishwildlifearea": ["salinecounty"],
+        "sangchrislakestaterecreationarea": ["sangchris"],
+        "stephanaforbesstaterecreationarea": ["stephanaforbes"],
+        "weinbergkingstatefishwildlifearea": ["weinbergking"],
+        "wolfcreekstatepark": ["wolfcreek"],
+        "middleforkstatefishwildlifearea": ["middlefork"],
+        "greenriverstatewildlifearea": ["greenriver"],
+        "bigriverstateforest": ["bigriver"],
+        "franklincreekstatenaturalarea": ["franklincreek"],
+        "kankakeeriverstatepark": ["kankakeeriver"],
+        "matthiessenstatepark": ["matthiessen"],
+        "moraineviewstaterecreationarea": ["moraineview"],
+        "argylelakestatepark": ["argylelake"],
+        "ferneclyffestatepark": ["ferneclyffe"],
+        "giantcitystatepark": ["giantcity"],
+        "redhillsstatepark": ["redhills"],
+        "rockcutstatepark": ["rockcut"],
+        "sandridgestateforest": ["sandridge"],
+        "siloamspringsstatepark": ["siloamsprings"],
+        "hennepincanalstatetrail": ["hennepincanal"],
+    }
+    for k, vals in manual.items():
+        if base == k:
+            candidates = vals + candidates
+            break
+    seen = set()
+    out = []
+    for c in candidates:
+        if c and c not in seen:
+            seen.add(c)
+            out.append(c)
+    return out
+
+
+def _fetch_text(url):
+    try:
+        r = requests.get(url, timeout=20, headers={"User-Agent": "HorseCamp/1.0"})
+        if r.status_code == 200:
+            return r.text
+    except Exception:
+        pass
+    return ""
+
+
+def _il_extract_phone_coords(page_text):
+    text = _strip_html_basic(page_text)
+    phone = ""
+    m = re.search(r"(?:Daily\s+Phone:|Phone:)\s*([0-9\-\(\) ]{7,})", text, flags=re.I)
+    if m:
+        phone = m.group(1).strip()
+
+    lat = lng = None
+
+    # Prefer explicitly labeled coordinates. Some IL DNR pages present longitude
+    # as a positive number with a trailing W, which must be negated.
+    mlat = re.search(r"(?:Park\s+)?Latitude[:\s]*([0-9]+(?:\.[0-9]+)?)\s*([NS])?", text, flags=re.I)
+    mlng = re.search(r"(?:Park\s+)?Longitude[:\s]*(-?[0-9]+(?:\.[0-9]+)?)\s*([EW])?", text, flags=re.I)
+    if mlat and mlng:
+        lat = float(mlat.group(1))
+        lng = float(mlng.group(1))
+        lat_dir = (mlat.group(2) or "N").upper()
+        lng_dir = (mlng.group(2) or "W").upper()
+        if lat_dir == "S":
+            lat = -abs(lat)
+        else:
+            lat = abs(lat)
+        if lng_dir == "W":
+            lng = -abs(lng)
+        else:
+            lng = abs(lng)
+    else:
+        # Fallback for pages that expose signed decimal coordinates directly.
+        coords = re.findall(r"\b(-?\d{1,3}\.\d{3,})\b", text)
+        if len(coords) >= 2:
+            vals = [float(x) for x in coords[-2:]]
+            if -90 <= vals[0] <= 90 and -180 <= vals[1] <= 180:
+                lat, lng = vals[0], vals[1]
+
+    # Illinois park pages usually refer to west longitudes; if we parsed a positive
+    # longitude in the normal Illinois range, flip it to west as a safety net.
+    if lat is not None and lng is not None and 36 <= lat <= 43 and 87 <= lng <= 92:
+        lng = -lng
+
+    return phone, lat, lng, text
+
+
+def _il_extract_price(text):
+    m = re.search(r"cost per night is \$(\d+(?:\.\d+)?)", text, flags=re.I)
+    if not m:
+        m = re.search(r"\$(\d+(?:\.\d+)?)\s*/?\s*night", text, flags=re.I)
+    return float(m.group(1)) if m else 0.0
+
+
+def _il_hookups(text):
+    low = text.lower()
+    hookups = []
+
+    # Be conservative for Illinois. Generic mentions of electricity on a park page
+    # do not reliably mean the equestrian campground has 30A hookups.
+    power_terms = [
+        "30 amp", "30-amp", "30a",
+        "electrical hookup", "electrical hookups",
+        "electric hookup", "electric hookups",
+        "rv hookups", "hookups with electricity",
+        "water and electricity", "water & electricity",
+        "electric campsites", "electric sites",
+    ]
+    if any(term in low for term in power_terms):
+        hookups.append("30A")
+
+    water_terms = [
+        "water hookup", "water hookups", "hydrant", "hydrants",
+        "water available", "potable water", "drinking water",
+        "water spigot", "water spigots", "water at campground",
+        "water at the campground", "water in campground",
+        "water in the campground",
+    ]
+    if any(term in low for term in water_terms):
+        hookups.append("Water")
+
+    return hookups
+
+
+def _il_accommodations(text):
+    low = text.lower()
+    acc = ["Trails"]
+    if "hitching" in low or "tie line" in low or "tie lines" in low:
+        acc.append("Highlines")
+    if "corral" in low:
+        acc.append("Corrals")
+    if "stall" in low:
+        acc.append("Stalls")
+    return list(dict.fromkeys(acc))
+
+
+def fetch_il_state_parks():
+    """Fetch Illinois official equestrian-camping sites from IDNR.
+
+    The statewide IDNR horseback-riding page is not a clean HTML table, so this
+    parser uses the official park links plus the nearby Yes/No text that follows
+    each site name on the page.
+    """
+    html = _fetch_text(IL_HORSEBACK_URL)
+    if not html:
+        print("  Illinois State Parks: statewide page unavailable")
+        return []
+
+    yes_sites = []
+    anchor_re = re.compile(r"<a[^>]+href=['\"]([^'\"]+)['\"][^>]*>([^<]+)</a>", flags=re.I)
+    for m in anchor_re.finditer(html):
+        href, site_name = m.group(1), _strip_html_basic(m.group(2)).strip()
+        low_name = site_name.lower()
+        if not site_name or low_name in ("horseback riding", "contact us", "illinois.gov"):
+            continue
+        if not any(k in low_name for k in ["state park", "state forest", "state trail", "state recreation area", "state fish", "wildlife area", "state natural area"]):
+            continue
+        tail = _strip_html_basic(html[m.end():m.end()+220])
+        tail = re.sub(r'\s+', ' ', tail).strip().lower()
+        if not tail.startswith('yes'):
+            continue
+        full_href = href if href.startswith('http') else ('https://dnr.illinois.gov' + href)
+        yes_sites.append((site_name, full_href))
+
+    # Deduplicate while preserving order.
+    seen = set()
+    deduped_sites = []
+    for site_name, full_href in yes_sites:
+        key = site_name.lower()
+        if key not in seen:
+            seen.add(key)
+            deduped_sites.append((site_name, full_href))
+
+    camps = []
+    for site_name, main_url in deduped_sites:
+        main_text = _fetch_text(main_url)
+        if not main_text:
+            continue
+
+        phone, lat, lng, main_plain = _il_extract_phone_coords(main_text)
+
+        slug = ""
+        mslug = re.search(r'/park(?:s/(?:about|activity|camp))?/park\.([a-z0-9\-]+)\.html', main_url, flags=re.I)
+        if mslug:
+            slug = mslug.group(1)
+        else:
+            candidates = _il_slug_candidates(site_name)
+            slug = candidates[0] if candidates else ""
+
+        about_url = act_url = camp_url = ""
+        about_text = act_text = camp_text = ""
+        if slug:
+            about_url = f"https://dnr.illinois.gov/parks/about/park.{slug}.html"
+            act_url = f"https://dnr.illinois.gov/parks/activity/park.{slug}.html"
+            camp_url = f"https://dnr.illinois.gov/parks/camp/park.{slug}.html"
+            about_text = _fetch_text(about_url)
+            act_text = _fetch_text(act_url)
+            camp_text = _fetch_text(camp_url)
+
+            # Some direct links already point to the activity/camp page; fill the
+            # missing main page using the standard park path when possible.
+            if (lat is None or lng is None) and slug:
+                fallback_main = _fetch_text(f"https://dnr.illinois.gov/parks/park.{slug}.html")
+                if fallback_main:
+                    main_text = fallback_main
+                    phone, lat, lng, main_plain = _il_extract_phone_coords(fallback_main)
+                    main_url = f"https://dnr.illinois.gov/parks/park.{slug}.html"
+
+        if lat is None or lng is None:
+            continue
+
+        combined_text = " ".join([_strip_html_basic(x) for x in [main_text, about_text, act_text, camp_text] if x])
+        lower = combined_text.lower()
+        site_type = "Illinois State Park"
+        if "state fish" in site_name.lower() or "wildlife" in site_name.lower():
+            site_type = "Illinois State Fish & Wildlife Area"
+        elif "state forest" in site_name.lower():
+            site_type = "Illinois State Forest"
+        elif "state trail" in site_name.lower():
+            site_type = "Illinois State Trail"
+        elif "recreation area" in site_name.lower():
+            site_type = "Illinois State Recreation Area"
+        elif "state natural area" in site_name.lower():
+            site_type = "Illinois State Natural Area"
+
+        season_start, season_end = 0, 0
+        if "may 1" in lower and ("october 31" in lower or "november" in lower):
+            season_start = 5
+            season_end = 10 if "october 31" in lower else 11
+        elif "april 1" in lower and "october 31" in lower:
+            season_start = 4
+            season_end = 10
+
+        camps.append({
+            "id": f"il-sp-{re.sub(r'[^a-z0-9]+', '-', site_name.lower()).strip('-')}",
+            "name": site_name,
+            "location": f"{site_name}, IL",
+            "state": "IL",
+            "latitude": lat,
+            "longitude": lng,
+            "pricePerNight": _il_extract_price(combined_text),
+            "horseFeePerNight": 0.0,
+            "hookups": _il_hookups(combined_text),
+            "accommodations": _il_accommodations(combined_text),
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": phone,
+            "website": camp_url or act_url or about_url or main_url or IL_HORSEBACK_URL,
+            "description": (f"Official Illinois DNR equestrian-camping site. {site_type}. " + combined_text)[:2000],
+            "isVerified": False,
+            "seasonStart": season_start,
+            "seasonEnd": season_end,
+            "hasWashRack": "wash rack" in lower,
+            "hasDumpStation": "dump station" in lower or "sanitary dump" in lower,
+            "hasWifi": "wifi" in lower or "wi-fi" in lower,
+            "hasBathhouse": "shower" in lower or "flush toilets" in lower or "restrooms" in lower,
+            "pullThroughAvailable": "pull through" in lower or "pull-through" in lower,
+            "imageColors": ["B5543A", "E3A18B"],
+            "photoURLs": [],
+            "source": "State Parks",
+        })
+
+    print(f"  Illinois State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
+def fetch_tn_state_parks():
+    """Load manual TN state-park listings from data/state_parks/tn.json."""
+    return load_manual_state_parks("TN")
+
+def fetch_ar_state_parks():
+    """Load manual AR state-park listings from data/state_parks/ar.json."""
+    return load_manual_state_parks("AR")
+
+def fetch_va_state_parks():
+    """Load manual VA state-park listings from data/state_parks/va.json."""
+    return load_manual_state_parks("VA")
+
+def fetch_ga_state_parks():
+    """Load manual GA state-park listings from data/state_parks/ga.json."""
+    return load_manual_state_parks("GA")
+
+def fetch_nc_state_parks():
+    """Load manual NC state-park listings from data/state_parks/nc.json."""
+    return load_manual_state_parks("NC")
+
+def fetch_az_state_parks():
+    """Load manual AZ state-park listings from data/state_parks/az.json."""
+    return load_manual_state_parks("AZ")
+
+def fetch_ny_state_parks():
+    """Load manual NY state-park listings from data/state_parks/ny.json."""
+    return load_manual_state_parks("NY")
+
+def fetch_mn_state_parks():
+    """Load manual MN state-park listings from data/state_parks/mn.json."""
+    return load_manual_state_parks("MN")
+
+def fetch_co_state_parks():
+    """Load manual CO state-park listings from data/state_parks/co.json."""
+    return load_manual_state_parks("CO")
+
+def fetch_ct_state_parks():
+    """Load manual CT state-park listings from data/state_parks/ct.json."""
+    return load_manual_state_parks("CT")
+
+def fetch_id_state_parks():
+    """Load manual ID state-park listings from data/state_parks/id.json."""
+    return load_manual_state_parks("ID")
+
+def fetch_wa_state_parks():
+    """Load manual WA state-park listings from data/state_parks/wa.json."""
+    return load_manual_state_parks("WA")
+
+def fetch_nm_state_parks():
+    """Load manual NM state-park listings from data/state_parks/nm.json."""
+    return load_manual_state_parks("NM")
+
+def fetch_ut_state_parks():
+    """Load manual UT state-park listings from data/state_parks/ut.json."""
+    return load_manual_state_parks("UT")
+
+def fetch_sc_state_parks():
+    """Load manual SC state-park listings from data/state_parks/sc.json."""
+    return load_manual_state_parks("SC")
+
+def fetch_al_state_parks():
+    """Load manual AL state-park listings from data/state_parks/al.json."""
+    return load_manual_state_parks("AL")
+
+def fetch_wy_state_parks():
+    """Load manual WY state-park listings from data/state_parks/wy.json."""
+    return load_manual_state_parks("WY")
+
+def fetch_mt_state_parks():
+    """Load manual MT state-park listings from data/state_parks/mt.json."""
+    return load_manual_state_parks("MT")
+
+def fetch_de_state_parks():
+    """Load manual DE state-park listings from data/state_parks/de.json."""
+    return load_manual_state_parks("DE")
+
+def fetch_ms_state_parks():
+    """Load manual MS state-park listings from data/state_parks/ms.json."""
+    return load_manual_state_parks("MS")
+
+def fetch_ak_state_parks():
+    """Load manual AK state-park listings from data/state_parks/ak.json."""
+    return load_manual_state_parks("AK")
+
+def fetch_ia_state_parks():
+    """Load manual IA state-park listings from data/state_parks/ia.json."""
+    return load_manual_state_parks("IA")
+
+def fetch_hi_state_parks():
+    """Load manual HI state-park listings from data/state_parks/hi.json."""
+    return load_manual_state_parks("HI")
+
+def fetch_nj_state_parks():
+    """Load manual NJ state-park listings from data/state_parks/nj.json."""
+    return load_manual_state_parks("NJ")
+
+def fetch_ri_state_parks():
+    """Load manual RI state-park listings from data/state_parks/ri.json."""
+    return load_manual_state_parks("RI")
+
+def fetch_nh_state_parks():
+    """Load manual NH state-park listings from data/state_parks/nh.json."""
+    return load_manual_state_parks("NH")
+
+def fetch_me_state_parks():
+    """Load manual ME state-park listings from data/state_parks/me.json."""
+    return load_manual_state_parks("ME")
+
+def fetch_ma_state_parks():
+    """Load manual MA state-park listings from data/state_parks/ma.json."""
+    return load_manual_state_parks("MA")
+
+def fetch_nd_state_parks():
+    """Load manual ND state-park listings from data/state_parks/nd.json."""
+    return load_manual_state_parks("ND")
+
+# ── HORSEMOTEL.COM PARTNER LISTINGS ───────────────────────────────────
+# Authorized partner data from HorseMotel.com. HorseMotel.com remains the
+# source of truth. HorseCamp consumes the already-generated standalone
+# HorseMotel repo feed and transforms it into the HorseCamp camp schema.
+def _clean_text(value):
+    return re.sub(r"\s+", " ", str(value or "")).strip()
+
+
+def _clean_list(value):
+    if isinstance(value, list):
+        return [_clean_text(item) for item in value if _clean_text(item)]
+    if isinstance(value, str) and value.strip():
+        return [value.strip()]
+    return []
+
+
+def _as_float(value, default=0.0):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _as_int(value, default=0):
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _as_bool(value, default=False):
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        low = value.strip().lower()
+        if low in ("true", "yes", "y", "1"):
+            return True
+        if low in ("false", "no", "n", "0"):
+            return False
+    return default
+
+
+def _horsemotel_location(listing):
+    location = _clean_text(listing.get("location"))
+    if location:
+        return location
+
+    city = _clean_text(listing.get("city"))
+    state = _clean_text(listing.get("state"))
+    country = _clean_text(listing.get("country"))
+    parts = [part for part in (city, state or country) if part]
+    return ", ".join(parts)
+
+
+def _transform_horsemotel_listing(listing, index):
+    """Map one standalone HorseMotel app record into HorseCamp's camp schema."""
+    name = _clean_text(listing.get("name"))
+    lat = _as_float(listing.get("latitude"))
+    lng = _as_float(listing.get("longitude"))
+
+    if not name or (lat == 0 and lng == 0):
+        return None
+
+    raw_id = _clean_text(listing.get("id"))
+    if not raw_id:
+        raw_id = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") or f"listing-{index}"
+    camp_id = raw_id if raw_id.startswith("horsemotel-") else f"horsemotel-{raw_id}"
+
+    accommodations = _clean_list(listing.get("accommodations"))
+    if "Horse Motel" not in accommodations:
+        accommodations.append("Horse Motel")
+
+    status_notice = _clean_text(listing.get("statusNotice"))
+    description = _clean_text(listing.get("description"))
+    description_parts = []
+    if status_notice:
+        description_parts.append(f"Notice: {status_notice}")
+    if description:
+        description_parts.append(description)
+    final_description = " ".join(description_parts).strip()
+
+    state = _clean_text(listing.get("state")).upper()
+
+    camp = {
+        "id": camp_id,
+        "name": name,
+        "location": _horsemotel_location(listing),
+        "state": state,
+        "latitude": lat,
+        "longitude": lng,
+        "pricePerNight": _as_float(listing.get("pricePerNight")),
+        "horseFeePerNight": _as_float(listing.get("horseFeePerNight")),
+        "hookups": _clean_list(listing.get("hookups")),
+        "accommodations": list(dict.fromkeys(accommodations)),
+        "maxRigLength": _as_int(listing.get("maxRigLength")),
+        "stallCount": _as_int(listing.get("stallCount")),
+        "paddockCount": _as_int(listing.get("paddockCount")),
+        "phone": _clean_text(listing.get("phone")),
+        "website": _clean_text(listing.get("website")) or _clean_text(listing.get("sourceUrl")),
+        "description": final_description[:2000],
+        "isVerified": _as_bool(listing.get("isVerified"), True),
+        "seasonStart": _as_int(listing.get("seasonStart"), 1),
+        "seasonEnd": _as_int(listing.get("seasonEnd"), 12),
+        "hasWashRack": _as_bool(listing.get("hasWashRack")),
+        "hasDumpStation": _as_bool(listing.get("hasDumpStation")),
+        "hasWifi": _as_bool(listing.get("hasWifi")),
+        "hasBathhouse": _as_bool(listing.get("hasBathhouse")),
+        "pullThroughAvailable": _as_bool(listing.get("pullThroughAvailable")),
+        "imageColors": _clean_list(listing.get("imageColors")),
+        "photoURLs": _clean_list(listing.get("photoURLs")),
+        "source": "HorseMotel.com",
+    }
+
+    email = _clean_text(listing.get("email"))
+    if email:
+        camp["email"] = email
+
+    source_url = _clean_text(listing.get("sourceUrl"))
+    if source_url:
+        camp["sourceUrl"] = source_url
+
+    address = _clean_text(listing.get("address"))
+    if address:
+        camp["address"] = address
+
+    map_search_address = _clean_text(listing.get("mapSearchAddress"))
+    if map_search_address:
+        camp["mapSearchAddress"] = map_search_address
+
+
+    return camp
+
+
+def fetch_horsemotel_listings():
+    print(f"  Fetching HorseMotel.com partner feed from {HORSEMOTEL_FEED_URL}")
+    try:
+        response = requests.get(
+            HORSEMOTEL_FEED_URL,
+            timeout=60,
+            headers={"User-Agent": "HorseCamp feed sync (+https://horsecampfinder.com/)"},
+        )
+        response.raise_for_status()
+        listings = response.json()
+    except Exception as e:
+        raise RuntimeError(f"Unable to fetch HorseMotel.com feed from {HORSEMOTEL_FEED_URL}: {e}") from e
+
+    if not isinstance(listings, list):
+        raise ValueError("HorseMotel.com feed must contain a top-level JSON array of listings")
+
+    transformed = []
+    skipped = 0
+    for i, listing in enumerate(listings, start=1):
+        if not isinstance(listing, dict):
+            skipped += 1
+            continue
+        camp = _transform_horsemotel_listing(listing, i)
+        if camp is None:
+            skipped += 1
+            continue
+
+        required_fields = ("id", "name", "location", "state", "latitude", "longitude", "source")
+        for field in required_fields:
+            if field not in camp:
+                raise ValueError(f"HorseMotel.com listing #{i} is missing required field after transform: {field}")
+        transformed.append(camp)
+
+    if len(transformed) < HORSEMOTEL_MIN_LISTINGS:
+        raise RuntimeError(
+            f"Refusing to continue: HorseMotel.com feed only produced {len(transformed)} usable listings "
+            f"(minimum required: {HORSEMOTEL_MIN_LISTINGS})"
+        )
+
+    print(f"  HorseMotel.com transformed listings: {len(transformed)}")
+    if skipped:
+        print(f"  HorseMotel.com skipped rows: {skipped}")
+    return transformed
+
+
+def fetch_private_camps():
+    if not PRIVATE_CAMPS_FILE.exists():
+        raise FileNotFoundError(
+            f"Missing private camps file: {PRIVATE_CAMPS_FILE}. "
+            "Create data/private_camps.json before running the fetch."
+        )
+
+    with PRIVATE_CAMPS_FILE.open("r", encoding="utf-8") as f:
+        private_camps = json.load(f)
+
+    if not isinstance(private_camps, list):
+        raise ValueError("data/private_camps.json must contain a JSON array of private camp listings")
+
+    for i, camp in enumerate(private_camps, start=1):
+        if not isinstance(camp, dict):
+            raise ValueError(f"Private camp #{i} in data/private_camps.json is not a JSON object")
+        for field in ("id", "name", "location", "state", "latitude", "longitude", "source"):
+            if field not in camp:
+                raise ValueError(f"Private camp #{i} is missing required field: {field}")
+
+    return private_camps
+
+
+def fetch_nv_state_parks():
+    """Load manual NV state-park listings from data/state_parks/nv.json."""
+    return load_manual_state_parks("NV")
+
+def fetch_ok_state_parks():
+    """Load manual OK state-park listings from data/state_parks/ok.json."""
+    return load_manual_state_parks("OK")
+
+def fetch_ks_state_parks():
+    """Load manual KS state-park listings from data/state_parks/ks.json."""
+    return load_manual_state_parks("KS")
+
+def fetch_md_state_parks():
+    """Load manual MD state-park listings from data/state_parks/md.json."""
+    return load_manual_state_parks("MD")
+
+def fetch_vt_state_parks():
+    """Load manual VT state-park listings from data/state_parks/vt.json."""
+    return load_manual_state_parks("VT")
+
+def fetch_wv_state_parks():
+    """Load manual WV state-park listings from data/state_parks/wv.json."""
+    return load_manual_state_parks("WV")
+
+def fetch_la_state_parks():
+    """Fetch conservative Louisiana State Parks equestrian camping locations.
+
+    Louisiana State Parks officially surfaces horseback riding at a small set of
+    parks, and those park pages also advertise overnight camping. This first pass
+    stays conservative and only includes parks with clear official horseback-riding
+    plus camping signals.
+    """
+    parks = [
+        {
+            "id": "la-stateparks-bogue-chitto",
+            "name": "Bogue Chitto State Park Equestrian Area Campground",
+            "location": "Franklinton, LA",
+            "state": "LA",
+            "latitude": 30.7907,
+            "longitude": -89.8834,
+            "pricePerNight": 33.0,
+            "horseFeePerNight": 3.0,
+            "hookups": ["30A", "Water", "Sewer"],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "985-839-5707",
+            "website": "https://www.lastateparks.com/parks-preserves/bogue-chitto-state-park",
+            "description": "Official Louisiana State Parks page lists an Equestrian Area Campground with seven premium sites that include sewer, water, and electrical hookups, along with equestrian trail riding in the park.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": True,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+        },
+        {
+            "id": "la-stateparks-lake-bistineau",
+            "name": "Lake Bistineau State Park Horse Trail Camping",
+            "location": "Doyline, LA",
+            "state": "LA",
+            "latitude": 32.6430,
+            "longitude": -93.4177,
+            "pricePerNight": 22.0,
+            "horseFeePerNight": 3.0,
+            "hookups": [],
+            "accommodations": ["Trails", "Horse Camping"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "318-745-3503",
+            "website": "https://www.lastateparks.com/parks-preserves/lake-bistineau-state-park",
+            "description": "Official Louisiana State Parks page says Lake Bistineau has an equestrian trail and notes that overnight campsites can be rented at parks offering equestrian trails.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": True,
+            "pullThroughAvailable": False,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+        },
+    ]
+    print(f"  Louisiana State Parks: {len(parks)} conservative equestrian-camping listings")
+    return parks
+
+# ── MAIN ───────────────────────────────────────────────────────────────
+
+
+
+
+def _geocode_place_nominatim(query):
+    """Geocode a place name using Nominatim. Returns (lat, lon) or (0,0)."""
+    url = "https://nominatim.openstreetmap.org/search"
+    params = {
+        "q": query,
+        "format": "jsonv2",
+        "limit": 1,
+        "countrycodes": "us",
+    }
+    headers = {"User-Agent": "HorseCamp/1.0 (state parks importer)"}
+    data = safe_get(url, headers=headers, params=params, retries=2)
+    if isinstance(data, list) and data:
+        try:
+            return float(data[0].get("lat", 0) or 0), float(data[0].get("lon", 0) or 0)
+        except Exception:
+            return 0.0, 0.0
+    return 0.0, 0.0
+
+
+# Backward-compatible alias used by later state importers
+geocode_nominatim = _geocode_place_nominatim
+
+
+def fetch_fl_state_parks():
+    """Fetch Florida State Parks equestrian camping parks from the official Florida State Parks page.
+    Park names come from the official Equestrian Camping page; coordinates are geocoded conservatively.
+    """
+    park_names = [
+        "Alafia River State Park",
+        "Buckman Lock - St. Johns Loop North and South",
+        "Colt Creek State Park",
+        "Florida Caverns State Park",
+        "Highlands Hammock State Park",
+        "Jonathan Dickinson State Park",
+        "Kissimmee Prairie Preserve State Park",
+        "Lake Kissimmee State Park",
+        "Lake Louisa State Park",
+        "Little Manatee River State Park",
+        "Lower Wekiva River Preserve State Park",
+        "Paynes Prairie Preserve State Park",
+        "River Rise Preserve State Park",
+        "Rock Springs Run State Reserve",
+        "Ross Prairie Trailhead and Campground",
+        "Shangri-La Trailhead and Campground",
+        "St. Sebastian River Preserve State Park",
+        "Wekiwa Springs State Park",
+    ]
+
+    # Park-specific amenity hints based on official park pages where known.
+    amenity_overrides = {
+        "Alafia River State Park": {"hookups": ["30A", "Water"], "accommodations": ["Stalls", "Paddocks", "Trails"], "hasBathhouse": True, "stallCount": 12, "paddockCount": 6},
+        "Colt Creek State Park": {"hookups": ["Water"], "accommodations": ["Paddocks", "Trails"], "paddockCount": 0},
+        "Kissimmee Prairie Preserve State Park": {"hookups": ["50A", "Water"], "accommodations": ["Paddocks", "Trails"], "paddockCount": 10, "hasBathhouse": True},
+        "Lower Wekiva River Preserve State Park": {"hookups": [], "accommodations": ["Stalls", "Corrals", "Trails"], "hasBathhouse": True},
+        "River Rise Preserve State Park": {"hookups": [], "accommodations": ["Stalls", "Trails"], "stallCount": 20, "hasBathhouse": True},
+        "St. Sebastian River Preserve State Park": {"hookups": [], "accommodations": ["Paddocks", "Trails"], "hasBathhouse": False},
+    }
+
+    overview_url = "https://www.floridastateparks.org/equestrian-camping"
+    camps = []
+    for idx, name in enumerate(park_names, start=1):
+        lat, lon = _geocode_place_nominatim(f"{name}, Florida")
+        time.sleep(1.0)
+        if abs(lat) < 0.1 or abs(lon) < 0.1:
+            continue
+        slug = name.lower().replace("&", "and")
+        slug = re.sub(r"[^a-z0-9]+", "-", slug).strip("-")
+        website = f"https://www.floridastateparks.org/parks-and-trails/{slug}"
+        overrides = amenity_overrides.get(name, {})
+        hooks = overrides.get("hookups", [])
+        acc = overrides.get("accommodations", ["Trails"])
+        city_state = "Florida"
+        camps.append({
+            "id": f"flsp-{slug}",
+            "name": name,
+            "location": city_state,
+            "state": "FL",
+            "latitude": lat,
+            "longitude": lon,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": hooks,
+            "accommodations": acc,
+            "maxRigLength": 0,
+            "stallCount": overrides.get("stallCount", 0),
+            "paddockCount": overrides.get("paddockCount", 0),
+            "phone": "",
+            "website": website,
+            "description": "Official Florida State Parks equestrian camping location. Verify campsite type, amenities, and reservations with the park.",
+            "isVerified": False,
+            "seasonStart": 1,
+            "seasonEnd": 12,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": overrides.get("hasBathhouse", False),
+            "pullThroughAvailable": False,
+            "imageColors": ["C0392B", "E3A18B"],
+            "photoURLs": [],
+            "source": "State Parks",
+        })
+    print(f"  Florida State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
+def fetch_ky_state_parks():
+    """Load manual KY state-park listings from data/state_parks/ky.json."""
+    return load_manual_state_parks("KY")
+
+def fetch_pa_state_parks():
+    """Load manual PA state-park listings from data/state_parks/pa.json."""
+    return load_manual_state_parks("PA")
+
+def fetch_mi_state_parks():
+    """Fetch official Michigan equestrian campgrounds from the official Michigan DNR list.
+    Uses the official equestrian-campgrounds page as the allowlist and geocodes each named
+    campground/park conservatively.
+    """
+    mi_sites = [
+        "4 Mile Trail Camp",
+        "Big Oaks State Forest Campground",
+        "Black Lake Trail Camp",
+        "Brighton Recreation Area Equestrian Campground",
+        "Cedar River North State Forest Campground",
+        "Elk Hill Group Equestrian Campground",
+        "Elk Hill Equestrian River Trail Campground",
+        "Fort Custer Recreation Area Equestrian Campground",
+        "Garey Lake Trail Camp",
+        "Garey Lake State Forest Campground",
+        "Goose Creek Trail Camp",
+        "Headquarters Lake State Forest Campground",
+        "Highland Recreation Area Rustic and Equestrian Campground",
+        "Hopkins Creek Equestrian State Forest Campground and Trail Camp",
+        "Ionia Recreation Area Equestrian Campground",
+        "Johnsons Crossing Trail Camp",
+        "Lake Dubonnet Trail Camp",
+        "Ortonville-Equestrian",
+        "Pontiac Lake Recreation Area Equestrian Campground",
+        "Rapid River Trail Camp",
+        "Scheck's Place Trail Camp",
+        "Stoney Creek Trail Camp",
+        "Walsh Road Equestrian State Forest Campground and Trail Camp",
+        "Waterloo Recreation Area Equestrian Campground",
+        "Yankee Springs Recreation Area Equestrian Campground",
+    ]
+
+    def geocode(name):
+        queries = [
+            f"{name}, Michigan",
+            f"{name} campground, Michigan",
+            f"{name} equestrian campground, Michigan",
+        ]
+        for q in queries:
+            try:
+                r = requests.get(
+                    "https://nominatim.openstreetmap.org/search",
+                    params={"q": q, "format": "jsonv2", "limit": 1},
+                    headers={"User-Agent": "HorseCamp/1.0 (horsecampfinder.com)"},
+                    timeout=20,
+                )
+                if r.status_code == 200:
+                    arr = r.json()
+                    if arr:
+                        return float(arr[0]["lat"]), float(arr[0]["lon"])
+            except Exception:
+                pass
+            time.sleep(1.0)
+        return 0.0, 0.0
+
+    camps = []
+    for name in mi_sites:
+        lat, lng = geocode(name)
+        if abs(lat) < 0.1 or abs(lng) < 0.1:
+            continue
+        desc = "Official Michigan DNR equestrian campground or trail camp. Verify campground type, reservations, trailer access, and horse amenities with Michigan DNR before arrival."
+        lower = name.lower()
+        accommodations = ["Trails"]
+        if "equestrian" in lower or "trail camp" in lower:
+            accommodations.append("Corrals")
+        camps.append({
+            "id": f"mi-statepark-{re.sub(r'[^a-z0-9]+','-', name.lower()).strip('-')}",
+            "name": name,
+            "location": "Michigan",
+            "state": "MI",
+            "latitude": lat,
+            "longitude": lng,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": [],
+            "accommodations": list(dict.fromkeys(accommodations)),
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "",
+            "website": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/equestrian-campgrounds",
+            "description": desc,
+            "isVerified": False,
+            "seasonStart": 0,
+            "seasonEnd": 0,
+            "hasWashRack": False,
+            "hasDumpStation": False,
+            "hasWifi": False,
+            "hasBathhouse": False,
+            "pullThroughAvailable": False,
+            "imageColors": ["C0392B", "E59866"],
+            "photoURLs": [],
+            "source": "State Parks",
+        })
+    print(f"  Michigan State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
+
+def fetch_wi_state_parks():
+    """Load manual WI state-park listings from data/state_parks/wi.json."""
+    return load_manual_state_parks("WI")
+
+def fetch_mo_state_parks():
+    """Fetch Missouri State Parks equestrian campgrounds conservatively.
+
+    Uses the official Missouri State Parks guide to campsites as an allowlist of four
+    parks with separate equestrian campgrounds.
+    """
+    properties = [
+        {
+            "name": "Sam A. Baker State Park Equestrian Campground",
+            "query": "Sam A. Baker State Park equestrian campground Missouri",
+            "location": "Patterson, MO",
+            "website": "https://mostateparks.com/activity/camping/guide-campsites",
+            "description": "Official Missouri State Parks equestrian campground associated with Sam A. Baker State Park's horse trails.",
+            "hookups": [],
+            "accommodations": ["Trails"],
+            "hasBathhouse": False,
+            "hasDumpStation": False,
+        },
+        {
+            "name": "Cuivre River State Park Equestrian Campground",
+            "query": "Cuivre River State Park equestrian campground Missouri",
+            "location": "Troy, MO",
+            "website": "https://mostateparks.com/activity/camping/guide-campsites",
+            "description": "Official Missouri State Parks equestrian campground at Cuivre River State Park; use is limited to campers with horses.",
+            "hookups": [],
+            "accommodations": ["Trails"],
+            "hasBathhouse": False,
+            "hasDumpStation": False,
+        },
+        {
+            "name": "Johnson's Shut-Ins State Park Equestrian Campground",
+            "query": "Johnson's Shut-Ins State Park equestrian campground Missouri",
+            "location": "Middle Brook, MO",
+            "website": "https://mostateparks.com/activity/camping/guide-campsites",
+            "description": "Official Missouri State Parks equestrian campground at Johnson's Shut-Ins State Park associated with the park's horse trails.",
+            "hookups": [],
+            "accommodations": ["Trails"],
+            "hasBathhouse": False,
+            "hasDumpStation": False,
+        },
+        {
+            "name": "St. Joe State Park Equestrian Campground",
+            "query": "St. Joe State Park equestrian campground Missouri",
+            "location": "Park Hills, MO",
+            "website": "https://mostateparks.com/activity/camping/guide-campsites",
+            "description": "Official Missouri State Parks equestrian campground at St. Joe State Park associated with the park's equestrian trail system.",
+            "hookups": [],
+            "accommodations": ["Trails"],
+            "hasBathhouse": False,
+            "hasDumpStation": False,
+        },
+    ]
+
+    camps = []
+    for p in properties:
+        lat, lng = geocode_nominatim(p["query"])
+        if not lat or not lng:
+            lat, lng = geocode_nominatim(f'{p["name"]}, {p["location"]}')
+        camps.append({
+            "id": "mo-stateparks-" + re.sub(r'[^a-z0-9]+', '-', p["name"].lower()).strip('-'),
+            "name": p["name"],
+            "location": p["location"],
+            "state": "MO",
+            "latitude": lat,
+            "longitude": lng,
+            "pricePerNight": 0.0,
+            "horseFeePerNight": 0.0,
+            "hookups": p["hookups"],
+            "accommodations": p["accommodations"],
+            "maxRigLength": 0,
+            "stallCount": 0,
+            "paddockCount": 0,
+            "phone": "1-877-422-6766",
+            "website": p["website"],
+            "description": p["description"],
+            "isVerified": False,
+            "seasonStart": 3,
+            "seasonEnd": 11,
+            "hasWashRack": False,
+            "hasDumpStation": p["hasDumpStation"],
+            "hasWifi": False,
+            "hasBathhouse": p["hasBathhouse"],
+            "pullThroughAvailable": False,
+            "imageColors": ["C0392B", "F1948A"],
+            "photoURLs": [],
+            "source": "State Parks",
+        })
+    print(f"  Missouri State Parks: {len(camps)} official equestrian-camping listings")
+    return camps
+
+
+
+def fetch_in_state_parks():
+    """Load manual IN state-park listings from data/state_parks/in.json."""
+    return load_manual_state_parks("IN")
+
+def fetch_tx_state_parks():
+    """Load manual TX state-park listings from data/state_parks/tx.json."""
+    return load_manual_state_parks("TX")
+
+def fetch_oh_state_parks():
+    """Load manual OH state-park listings from data/state_parks/oh.json."""
+    return load_manual_state_parks("OH")
+
+def fetch_or_state_parks():
+    """Load manual OR state-park listings from data/state_parks/or.json."""
+    return load_manual_state_parks("OR")
+
+def fetch_ne_state_parks():
+    """Load manual NE state-park listings from data/state_parks/ne.json."""
+    return load_manual_state_parks("NE")
+
+def fetch_sd_state_parks():
+    """Load manual SD state-park listings from data/state_parks/sd.json."""
+    return load_manual_state_parks("SD")
+
+def main():
+    print(f"HorseCamp data fetch starting — {datetime.now(timezone.utc).isoformat()}")
+    print(f"RIDB key present: {'Yes' if RIDB_KEY else 'NO — set RIDB_API_KEY secret'}")
+    print(f"NPS key present:  {'Yes' if NPS_KEY  else 'NO — set NPS_API_KEY secret'}")
+
+    all_camps = {}
+    total_ridb = 0
+    total_nps = 0
+
+    for i, state in enumerate(STATES):
+        state_started = time.time()
+        print(f"[{i+1}/{len(STATES)}] {state}...", end=" ", flush=True)
+        ridb_camps = fetch_ridb_state(state) if RIDB_KEY else []
+        nps_camps = fetch_nps_state(state) if NPS_KEY else []
+        state_new = 0
+        for camp in ridb_camps + nps_camps:
+            cid = camp["id"]
+            if cid not in all_camps:
+                all_camps[cid] = camp
+                state_new += 1
+        total_ridb += len(ridb_camps)
+        total_nps += len(nps_camps)
+        elapsed = time.time() - state_started
+        print(f"{len(ridb_camps)} RIDB + {len(nps_camps)} NPS = {state_new} new [{elapsed:.1f}s]")
+        time.sleep(0.5)
+
+    def merge_state(camps):
+        new_count = 0
+        for camp in camps:
+            cid = camp["id"]
+            if cid not in all_camps:
+                all_camps[cid] = camp
+                new_count += 1
+        return new_count
+
+    state_park_jobs = [
+        ("AK", "Alaska", fetch_ak_state_parks, "Alaska State Parks Equestrian Camping"),
+        ("AL", "Alabama", fetch_al_state_parks, "Alabama State Parks Equestrian Camping"),
+        ("AR", "Arkansas", fetch_ar_state_parks, "Arkansas State Parks Horse Camping"),
+        ("AZ", "Arizona", fetch_az_state_parks, "Arizona State Parks Equestrian Camping"),
+        ("CA", "California", fetch_ca_state_parks, "California State Parks Open Data"),
+        ("CO", "Colorado", fetch_co_state_parks, "Colorado State Parks Equestrian Camping"),
+        ("CT", "Connecticut", fetch_ct_state_parks, "Connecticut State Parks Equestrian Camping"),
+        ("DE", "Delaware", fetch_de_state_parks, "Delaware State Parks Equestrian Camping"),
+        ("FL", "Florida", fetch_fl_state_parks, "Florida State Parks Equestrian Camping"),
+        ("GA", "Georgia", fetch_ga_state_parks, "Georgia State Parks Equestrian Camping"),
+        ("HI", "Hawaii", fetch_hi_state_parks, "Hawaii State Parks Equestrian Camping"),
+        ("IA", "Iowa", fetch_ia_state_parks, "Iowa State Parks Equestrian Camping"),
+        ("ID", "Idaho", fetch_id_state_parks, "Idaho State Parks Equestrian Camping"),
+        ("IL", "Illinois", fetch_il_state_parks, "Illinois DNR Equestrian Camping"),
+        ("IN", "Indiana", fetch_in_state_parks, "Indiana DNR Horse Camping"),
+        ("KS", "Kansas", fetch_ks_state_parks, "Kansas State Parks Equestrian Camping"),
+        ("KY", "Kentucky", fetch_ky_state_parks, "Kentucky State Parks Horse Camping"),
+        ("LA", "Louisiana", fetch_la_state_parks, "Louisiana State Parks Equestrian Camping"),
+        ("MA", "Massachusetts", fetch_ma_state_parks, "Massachusetts State Parks Equestrian Camping"),
+        ("MD", "Maryland", fetch_md_state_parks, "Maryland State Parks Equestrian Camping"),
+        ("ME", "Maine", fetch_me_state_parks, "Maine State Parks Equestrian Camping"),
+        ("MI", "Michigan", fetch_mi_state_parks, "Michigan DNR Equestrian Campgrounds"),
+        ("MN", "Minnesota", fetch_mn_state_parks, "Minnesota DNR Horse Campgrounds"),
+        ("MO", "Missouri", fetch_mo_state_parks, "Missouri State Parks Equestrian Campgrounds"),
+        ("MS", "Mississippi", fetch_ms_state_parks, "Mississippi State Parks Equestrian Camping"),
+        ("MT", "Montana", fetch_mt_state_parks, "Montana State Parks Equestrian Camping"),
+        ("NC", "North Carolina", fetch_nc_state_parks, "North Carolina State Parks Equestrian Camping"),
+        ("ND", "North Dakota", fetch_nd_state_parks, "North Dakota State Parks Equestrian Camping"),
+        ("NE", "Nebraska", fetch_ne_state_parks, "Nebraska State Parks Equestrian Camping"),
+        ("NH", "New Hampshire", fetch_nh_state_parks, "New Hampshire State Parks Equestrian Camping"),
+        ("NJ", "New Jersey", fetch_nj_state_parks, "New Jersey State Parks Equestrian Camping"),
+        ("NM", "New Mexico", fetch_nm_state_parks, "New Mexico State Parks Equestrian Camping"),
+        ("NV", "Nevada", fetch_nv_state_parks, "Nevada State Parks Equestrian Camping"),
+        ("NY", "New York", fetch_ny_state_parks, "New York State Parks Equestrian Camping"),
+        ("OH", "Ohio", fetch_oh_state_parks, "Ohio State Parks Bridle Camps"),
+        ("OK", "Oklahoma", fetch_ok_state_parks, "Oklahoma State Parks Equestrian Camping"),
+        ("OR", "Oregon", fetch_or_state_parks, "Oregon State Parks Equestrian Camping"),
+        ("PA", "Pennsylvania", fetch_pa_state_parks, "Pennsylvania State Parks Horse Camping"),
+        ("RI", "Rhode Island", fetch_ri_state_parks, "Rhode Island State Parks Equestrian Camping"),
+        ("SC", "South Carolina", fetch_sc_state_parks, "South Carolina State Parks Equestrian Camping"),
+        ("SD", "South Dakota", fetch_sd_state_parks, "South Dakota State Parks Equestrian Camping"),
+        ("TN", "Tennessee", fetch_tn_state_parks, "Tennessee State Parks Horse Camping"),
+        ("TX", "Texas", fetch_tx_state_parks, "Texas Parks & Wildlife Equestrian Camping"),
+        ("UT", "Utah", fetch_ut_state_parks, "Utah State Parks Equestrian Camping"),
+        ("VA", "Virginia", fetch_va_state_parks, "Virginia State Parks Horse Camping"),
+        ("VT", "Vermont", fetch_vt_state_parks, "Vermont State Parks Equestrian Camping"),
+        ("WA", "Washington", fetch_wa_state_parks, "Washington State Parks Equestrian Camping"),
+        ("WI", "Wisconsin", fetch_wi_state_parks, "Wisconsin DNR Equestrian Campsites"),
+        ("WV", "West Virginia", fetch_wv_state_parks, "West Virginia State Parks Equestrian Camping"),
+        ("WY", "Wyoming", fetch_wy_state_parks, "Wyoming State Parks Equestrian Camping"),
+    ]
+
+    state_park_totals = {}
+    state_park_sources = []
+    for abbr, state_name, fetcher, source_label in state_park_jobs:
+        print(f"\nFetching {state_name} State Parks...")
+        started = time.time()
+        state_camps = fetcher()
+        state_park_totals[abbr] = len(state_camps)
+        state_park_sources.append(source_label)
+        merged = merge_state(state_camps)
+        elapsed = time.time() - started
+        print(f"  {abbr} State Parks: {merged} new listings added [{elapsed:.1f}s]")
+
+    print_section("Partner Sources")
+    print("Merging HorseMotel.com partner listings...")
+    horsemotel_new, horsemotel_duplicate_ids, horsemotel_duplicate_nearby, horsemotel_duplicate_nearby_details = merge_camps_by_id_and_proximity(
+        fetch_horsemotel_listings(),
+        all_camps,
+    )
+    print_metric("HorseMotel.com added", horsemotel_new)
+    print_metric("HorseMotel.com duplicate IDs", horsemotel_duplicate_ids)
+    print_metric("HorseMotel.com nearby duplicates", horsemotel_duplicate_nearby)
+    print_nearby_duplicate_details("HorseMotel.com", horsemotel_duplicate_nearby_details)
+
+    print_section("Private / Curated Sources")
+    print("Merging private camp listings...")
+    private_camp_new, private_camp_duplicate_ids, private_camp_duplicate_nearby, private_camp_duplicate_nearby_details = merge_camps_by_id_and_proximity(
+        fetch_private_camps(),
+        all_camps,
+    )
+    print_metric("Private Camps added", private_camp_new)
+    print_metric("Private Camps duplicate IDs", private_camp_duplicate_ids)
+    print_metric("Private Camps nearby duplicates", private_camp_duplicate_nearby)
+    print_nearby_duplicate_details("Private Camps", private_camp_duplicate_nearby_details)
+
+    print_section("Cleanup / Data Quality")
+    print("Applying manual exclusions...")
+    excluded_count = apply_exclusions(all_camps)
+
+    print("\nRemoving invalid/non-horse listings...")
+    invalid_count = remove_invalid_equestrian_listings(all_camps)
+
+    print("\nApplying manual overrides...")
+    override_count = apply_overrides(all_camps)
+
+    camps_list = sorted(all_camps.values(), key=lambda c: (c["state"], c["name"]))
+    retired_field_count = strip_public_feed_fields(camps_list)
+    ensure_legacy_app_required_fields(camps_list)
+    output = {
+        "generated": datetime.now(timezone.utc).isoformat(),
+        "count": len(camps_list),
+        "sources": ["Recreation.gov RIDB", "NPS API"] + state_park_sources + ["HorseMotel.com", "Private Camps"],
+        "camps": camps_list,
+    }
+    output_path = REPO_ROOT / "camps.json"
+    write_camps_json(output_path, output)
+
+    source_counts = {}
+    for camp in camps_list:
+        source = camp.get("source") or "Unknown"
+        source_counts[source] = source_counts.get(source, 0) + 1
+    horsemotel_count = source_counts.get("HorseMotel.com", 0)
+    private_camp_count = source_counts.get("Private Camps", 0)
+    state_parks_count = source_counts.get("State Parks", 0)
+    ridb_count = source_counts.get("RIDB", 0)
+    nps_count = source_counts.get("NPS", 0)
+    verified_count = sum(1 for c in camps_list if c.get("isVerified"))
+
+    print_section("Final Totals")
+    print(f"Done. {len(camps_list)} total camps written to {output_path.relative_to(REPO_ROOT)}")
+
+    print("\nFederal fetch totals:")
+    print_metric("RIDB fetched before cleanup", total_ridb)
+    print_metric("NPS fetched before cleanup", total_nps)
+
+    print("\nState park source totals:")
+    for abbr in sorted(state_park_totals):
+        print_metric(f"{abbr} State Parks", state_park_totals[abbr])
+
+    print("\nPartner / curated merge:")
+    print_metric("HorseMotel.com added", horsemotel_new)
+    print_metric("HorseMotel.com duplicate IDs", horsemotel_duplicate_ids)
+    print_metric("HorseMotel.com nearby duplicates", horsemotel_duplicate_nearby)
+    print_nearby_duplicate_details("HorseMotel.com", horsemotel_duplicate_nearby_details)
+    print_metric("Private Camps added", private_camp_new)
+    print_metric("Private Camps duplicate IDs", private_camp_duplicate_ids)
+    print_metric("Private Camps nearby duplicates", private_camp_duplicate_nearby)
+    print_nearby_duplicate_details("Private Camps", private_camp_duplicate_nearby_details)
+
+    print("\nFinal feed by source:")
+    print_metric("RIDB", ridb_count)
+    print_metric("NPS", nps_count)
+    print_metric("State Parks", state_parks_count)
+    print_metric("HorseMotel.com", horsemotel_count)
+    print_metric("Private Camps", private_camp_count)
+
+    print("\nData quality adjustments:")
+    print_metric("Exclusions applied", excluded_count)
+    print_metric("Invalid/non-horse removed", invalid_count)
+    print_metric("Overrides applied", override_count)
+    print_metric("Retired fields stripped", retired_field_count)
+
+    print("\nOverall:")
+    print_metric("Verified listings", verified_count)
+    print_metric("Unique total", len(camps_list))
+
+
+if __name__ == "__main__":
+    main()

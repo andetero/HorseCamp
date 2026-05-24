@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-24T14:58:29.446316+00:00",
+  "generated": "2026-05-24T21:52:09.805693+00:00",
   "count": 1528,
   "sources": [
     "Recreation.gov RIDB",
@@ -313,7 +313,7 @@
     {
       "id": "private-gmaps-faye-whittemore-farms-al",
       "name": "Faye Whittemore Farms",
-      "location": "AL (33.913065, -87.184220)",
+      "location": "1619 Forrester Rd, Jasper, AL 35504",
       "state": "AL",
       "latitude": 33.913065,
       "longitude": -87.18422,
@@ -324,8 +324,8 @@
       "maxRigLength": 0,
       "stallCount": 0,
       "paddockCount": 0,
-      "phone": "",
-      "website": "",
+      "phone": "205-300-7141",
+      "website": "fayewhittemorefarms.com",
       "description": "Private camp. Details may change; please confirm horse access, availability, amenities, fees, and rules before travel.",
       "isVerified": false,
       "seasonStart": 1,
@@ -9651,7 +9651,7 @@
       "hasBathhouse": true,
       "pullThroughAvailable": false,
       "imageColors": ["6D4C41", "BCAAA4"],
-      "photoURLs": [],
+      "photoURLs": ["https://www.windingriverresort.com/wp-content/uploads/2024/11/79.jpg"],
       "source": "Private Camps",
       "rating": 0.0,
       "reviewCount": 0

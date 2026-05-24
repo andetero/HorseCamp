@@ -142,6 +142,17 @@ def coerce_string_list(value: Any) -> list[str]:
     return list(dict.fromkeys(cleaned))
 
 
+def normalize_photo_urls(value: Any) -> list[str]:
+    urls = coerce_string_list(value)
+    out: list[str] = []
+    for url in urls:
+        if not re.match(r"(?i)^https://", url):
+            continue
+        if url not in out:
+            out.append(url)
+    return out
+
+
 def normalize_hookups(value: Any) -> list[str]:
     aliases = {
         "30": "30A",
@@ -349,7 +360,7 @@ def build_record(payload: dict[str, Any], issue_number: int, existing_ids: set[s
         "hasBathhouse": bool_value(payload.get("hasBathhouse")),
         "pullThroughAvailable": bool_value(payload.get("pullThroughAvailable")),
         "imageColors": DEFAULT_IMAGE_COLORS,
-        "photoURLs": [],
+        "photoURLs": normalize_photo_urls(payload.get("photoURLs")),
         "source": source,
     }
     return kind, target_path, record

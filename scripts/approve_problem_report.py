@@ -89,6 +89,7 @@ OVERRIDE_ALLOWED_FIELDS = {
     "website",
     "email",
     "description",
+    "photoURLs",
     "pricePerNight",
     "horseFeePerNight",
     "hookups",
@@ -108,7 +109,7 @@ OVERRIDE_ALLOWED_FIELDS = {
 BOOLEAN_FIELDS = {"hasWashRack", "hasDumpStation", "hasWifi", "hasBathhouse", "pullThroughAvailable"}
 INTEGER_FIELDS = {"maxRigLength", "stallCount", "paddockCount", "seasonStart", "seasonEnd"}
 FLOAT_FIELDS = {"latitude", "longitude", "pricePerNight", "horseFeePerNight"}
-LIST_FIELDS = {"hookups", "accommodations"}
+LIST_FIELDS = {"hookups", "accommodations", "photoURLs"}
 
 
 def clean_text(value: Any) -> str:

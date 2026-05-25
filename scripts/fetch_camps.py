@@ -1474,7 +1474,7 @@ def _transform_horsemotel_listing(listing, index):
         "stallCount": _as_int(listing.get("stallCount")),
         "paddockCount": _as_int(listing.get("paddockCount")),
         "phone": _clean_text(listing.get("phone")),
-        "website": _clean_text(listing.get("website")) or _clean_text(listing.get("sourceUrl")),
+        "website": _clean_text(listing.get("website")),
         "description": final_description[:2000],
         "isVerified": _as_bool(listing.get("isVerified"), True),
         "seasonStart": _as_int(listing.get("seasonStart"), 1),
@@ -2117,7 +2117,6 @@ def main():
     print_metric("HorseMotel.com added", horsemotel_new)
     print_metric("HorseMotel.com duplicate IDs", horsemotel_duplicate_ids)
     print_metric("HorseMotel.com nearby duplicates", horsemotel_duplicate_nearby)
-    print_nearby_duplicate_details("HorseMotel.com", horsemotel_duplicate_nearby_details)
 
     print_section("Private / Curated Sources")
     print("Merging private camp listings...")
@@ -2128,7 +2127,6 @@ def main():
     print_metric("Private Camps added", private_camp_new)
     print_metric("Private Camps duplicate IDs", private_camp_duplicate_ids)
     print_metric("Private Camps nearby duplicates", private_camp_duplicate_nearby)
-    print_nearby_duplicate_details("Private Camps", private_camp_duplicate_nearby_details)
 
     print_section("Cleanup / Data Quality")
     print("Applying manual exclusions...")

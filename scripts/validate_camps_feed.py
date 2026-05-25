@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import sys
+import re
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
@@ -48,6 +49,8 @@ REQUIRED_FIELDS = {
 }
 
 BLOCKED_SOURCES = {"OSM", "OpenStreetMap"}
+
+HORSEMOTEL_STATE_PAGE_RE = re.compile(r"^https?://(?:www\.)?horsemotel\.com/[A-Za-z-]+\.html$", re.I)
 
 
 def load_json(path: Path) -> Any:
@@ -109,6 +112,7 @@ def validate() -> int:
     retired_counts: Counter[str] = Counter()
     missing_required: dict[str, list[str]] = defaultdict(list)
     blocked_source_records: list[str] = []
+    horsemotel_state_page_websites: list[str] = []
     duplicate_ids: list[str] = []
     seen_ids: set[str] = set()
 
@@ -135,6 +139,10 @@ def validate() -> int:
         if source in BLOCKED_SOURCES or camp_id.startswith("osm-"):
             blocked_source_records.append(camp_id)
 
+        website = str(camp.get("website") or "").strip()
+        if source == "HorseMotel.com" and website and HORSEMOTEL_STATE_PAGE_RE.match(website):
+            horsemotel_state_page_websites.append(camp_id)
+
     if unexpected_counts:
         errors.append("Unexpected fields outside data/example.json: " + ", ".join(f"{k}={v}" for k, v in sorted(unexpected_counts.items())))
     if retired_counts:
@@ -154,6 +162,10 @@ def validate() -> int:
         preview = ", ".join(blocked_source_records[:10])
         suffix = "..." if len(blocked_source_records) > 10 else ""
         errors.append(f"Blocked OSM/OpenStreetMap records found: {preview}{suffix}")
+    if horsemotel_state_page_websites:
+        preview = ", ".join(horsemotel_state_page_websites[:10])
+        suffix = "..." if len(horsemotel_state_page_websites) > 10 else ""
+        errors.append(f"HorseMotel.com generic state-page URLs found in website field: {preview}{suffix}")
 
     if errors:
         print("HorseCamp feed validation failed.")

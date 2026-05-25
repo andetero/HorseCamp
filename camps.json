@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-25T06:38:38.135087+00:00",
+  "generated": "2026-05-25T12:24:36.749709+00:00",
   "count": 1513,
   "sources": [
     "Recreation.gov RIDB",
@@ -10257,7 +10257,7 @@
       "name": "Colt Creek State Park",
       "location": "Florida",
       "state": "FL",
-      "latitude": 28.2825521,
+      "latitude": 28.282552,
       "longitude": -82.0393749,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
@@ -10788,8 +10788,8 @@
       "name": "Lower Wekiva River Preserve State Park",
       "location": "Florida",
       "state": "FL",
-      "latitude": 28.9668815,
-      "longitude": -81.3942367,
+      "latitude": 29.0031792,
+      "longitude": -81.3837598,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
       "hookups": [],

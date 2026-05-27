@@ -45,7 +45,6 @@ STATES = [
 
 _geocode_cache: dict[str, list[float]] = {}
 _geocode_stats = {"hits": 0, "misses": 0}
-_nominatim_lock = threading.Lock()  # Nominatim ToS: max 1 concurrent request
 
 
 def load_geocode_cache() -> None:
@@ -221,7 +220,7 @@ def safe_get(url, headers=None, params=None, retries=3):
             elif r.status_code == 429:
                 rate_limit_hits += 1
                 if rate_limit_hits >= 3:
-                    print(f"  Rate limited 3 times — giving up on {url}")
+                    print(f"  Rate limited 3 times — giving up")
                     return _FETCH_FAILED
                 print(f"  Rate limited — waiting 10s...")
                 time.sleep(10)
@@ -1753,7 +1752,6 @@ def geocode_nominatim(query):
     """Geocode a place name using Nominatim (≤1 req/s per ToS). Returns (lat, lon) or (0, 0).
 
     Results are cached in data/geocode_cache.json — network is only hit on a cache miss.
-    Uses _nominatim_lock to ensure only one request runs at a time, even across threads.
     """
     cached = _cache_get(query)
     if cached is not None:
@@ -1767,22 +1765,21 @@ def geocode_nominatim(query):
         "countrycodes": "us",
     }
     headers = {"User-Agent": "HorseCamp/1.0 (state parks importer)"}
-    with _nominatim_lock:
-        for attempt in range(2):
-            if attempt > 0:
+    for attempt in range(2):
+        if attempt > 0:
+            time.sleep(1.0)
+        data = safe_get(url, headers=headers, params=params, retries=1)
+        if isinstance(data, list) and data:
+            try:
+                lat = float(data[0].get("lat", 0) or 0)
+                lon = float(data[0].get("lon", 0) or 0)
+                _cache_set(query, lat, lon)
                 time.sleep(1.0)
-            data = safe_get(url, headers=headers, params=params, retries=1)
-            if isinstance(data, list) and data:
-                try:
-                    lat = float(data[0].get("lat", 0) or 0)
-                    lon = float(data[0].get("lon", 0) or 0)
-                    _cache_set(query, lat, lon)
-                    time.sleep(1.0)
-                    return lat, lon
-                except (TypeError, ValueError):
-                    break
-        _cache_set(query, 0.0, 0.0)
-        return 0.0, 0.0
+                return lat, lon
+            except (TypeError, ValueError):
+                break
+    _cache_set(query, 0.0, 0.0)
+    return 0.0, 0.0
 
 def fetch_fl_state_parks():
     """Fetch Florida State Parks equestrian camping parks from the official Florida State Parks page.
@@ -2084,11 +2081,12 @@ RIDB_NPS_STATE_TIMEOUT_S = 60  # hard wall-clock limit per state (enforced via t
 
 
 def fetch_state_with_timeout(state, timeout_s=RIDB_NPS_STATE_TIMEOUT_S):
-    """Run fetch_ridb_state + fetch_nps_state in a thread with a hard join timeout.
+    """Run fetch_ridb_state + fetch_nps_state in a daemon thread with a hard join timeout.
 
-    Returns (ridb_camps, nps_camps). If the thread doesn't finish within timeout_s,
-    returns whatever was collected so far and logs a warning. The hung thread is left
-    as a daemon and will be cleaned up when the process exits.
+    If the thread doesn't finish within timeout_s, logs a warning and returns whatever
+    was collected. The hung thread is a daemon so it won't block process exit.
+    Note: fetch_ridb_state and fetch_nps_state do NOT call geocode_nominatim, so there
+    is no lock contention between this thread and main-thread geocoding.
     """
     result = {"ridb": [], "nps": []}
 

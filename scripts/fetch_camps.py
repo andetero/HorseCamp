@@ -1264,11 +1264,13 @@ def fetch_il_state_parks():
             _cache_set(cache_key, lat, lng)
 
         # Always fetch content pages for fresh description/amenity data.
-        about_text = act_text = camp_text = main_text_for_content = ""
-        if slug:
-            about_text = _fetch_text(f"https://dnr.illinois.gov/parks/about/park.{slug}.html")
-            act_text = _fetch_text(f"https://dnr.illinois.gov/parks/activity/park.{slug}.html")
-            camp_text = _fetch_text(f"https://dnr.illinois.gov/parks/camp/park.{slug}.html")
+        # URL variables are derived here unconditionally so the camp dict can reference them.
+        about_url = f"https://dnr.illinois.gov/parks/about/park.{slug}.html" if slug else ""
+        act_url   = f"https://dnr.illinois.gov/parks/activity/park.{slug}.html" if slug else ""
+        camp_url  = f"https://dnr.illinois.gov/parks/camp/park.{slug}.html" if slug else ""
+        about_text = _fetch_text(about_url) if about_url else ""
+        act_text   = _fetch_text(act_url)   if act_url   else ""
+        camp_text  = _fetch_text(camp_url)  if camp_url  else ""
         main_text_for_content = _fetch_text(main_url)
 
         combined_text = " ".join([_strip_html_basic(x) for x in [main_text_for_content, about_text, act_text, camp_text] if x])

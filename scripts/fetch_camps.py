@@ -11,7 +11,7 @@ Required GitHub Secrets:
 """
 
 import math
-import os, json, time, re, requests
+import os, json, time, re, requests, threading
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -213,8 +213,6 @@ _FETCH_FAILED = object()  # sentinel: network/HTTP error, not an empty result
 def safe_get(url, headers=None, params=None, retries=3):
     for attempt in range(retries):
         try:
-            # (connect_timeout, read_timeout) — prevents slow-drip hangs where
-            # the server accepts the connection but delivers data very slowly.
             r = requests.get(url, headers=headers, params=params, timeout=(10, 20))
             if r.status_code == 200:
                 return r.json()
@@ -671,9 +669,6 @@ def parse_ridb_photos(facility):
     return [m["URL"] for m in ordered[:6]]  # cap at 6 photos
 
 # ── RIDB ───────────────────────────────────────────────────────────────
-RIDB_STATE_TIMEOUT_S = 60  # max wall-clock seconds per state before giving up
-
-
 def fetch_ridb_state(state):
     camps = {}
     headers = {"apikey": RIDB_KEY}
@@ -685,17 +680,9 @@ def fetch_ridb_state(state):
         ("query", "horse stall"),
     ]
 
-    state_deadline = time.time() + RIDB_STATE_TIMEOUT_S
-
     for param_key, param_val in search_terms:
-        if time.time() > state_deadline:
-            print(f"  RIDB {state}: deadline reached — skipping remaining search terms")
-            break
         offset = 0
         while True:
-            if time.time() > state_deadline:
-                print(f"  RIDB {state} ({param_key}={param_val}): deadline reached — skipping remaining pages")
-                break
             params = {
                 param_key: param_val,
                 "state":   state,
@@ -2085,6 +2072,30 @@ def merge_state(camps, all_camps):
     return new_count
 
 
+RIDB_NPS_STATE_TIMEOUT_S = 60  # hard wall-clock limit per state (enforced via thread join)
+
+
+def fetch_state_with_timeout(state, timeout_s=RIDB_NPS_STATE_TIMEOUT_S):
+    """Run fetch_ridb_state + fetch_nps_state in a thread with a hard join timeout.
+
+    Returns (ridb_camps, nps_camps). If the thread doesn't finish within timeout_s,
+    returns whatever was collected so far (possibly empty lists) and logs a warning.
+    The hung thread is left as a daemon and will be cleaned up when the process exits.
+    """
+    result = {"ridb": [], "nps": []}
+
+    def _fetch():
+        result["ridb"] = fetch_ridb_state(state) if RIDB_KEY else []
+        result["nps"]  = fetch_nps_state(state)  if NPS_KEY  else []
+
+    t = threading.Thread(target=_fetch, daemon=True)
+    t.start()
+    t.join(timeout=timeout_s)
+    if t.is_alive():
+        print(f"  WARNING: {state} RIDB/NPS fetch timed out after {timeout_s}s — skipping remainder")
+    return result["ridb"], result["nps"]
+
+
 def main():
     print(f"HorseCamp data fetch starting — {datetime.now(timezone.utc).isoformat()}")
     print(f"RIDB key present: {'Yes' if RIDB_KEY else 'NO — set RIDB_API_KEY secret'}")
@@ -2097,8 +2108,7 @@ def main():
     for i, state in enumerate(STATES):
         state_started = time.time()
         print(f"[{i+1}/{len(STATES)}] {state}...", end=" ", flush=True)
-        ridb_camps = fetch_ridb_state(state) if RIDB_KEY else []
-        nps_camps = fetch_nps_state(state) if NPS_KEY else []
+        ridb_camps, nps_camps = fetch_state_with_timeout(state)
         state_new = 0
         for camp in ridb_camps + nps_camps:
             cid = camp["id"]

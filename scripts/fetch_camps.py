@@ -213,7 +213,9 @@ _FETCH_FAILED = object()  # sentinel: network/HTTP error, not an empty result
 def safe_get(url, headers=None, params=None, retries=3):
     for attempt in range(retries):
         try:
-            r = requests.get(url, headers=headers, params=params, timeout=15)
+            # (connect_timeout, read_timeout) — prevents slow-drip hangs where
+            # the server accepts the connection but delivers data very slowly.
+            r = requests.get(url, headers=headers, params=params, timeout=(10, 20))
             if r.status_code == 200:
                 return r.json()
             elif r.status_code == 429:
@@ -669,6 +671,9 @@ def parse_ridb_photos(facility):
     return [m["URL"] for m in ordered[:6]]  # cap at 6 photos
 
 # ── RIDB ───────────────────────────────────────────────────────────────
+RIDB_STATE_TIMEOUT_S = 60  # max wall-clock seconds per state before giving up
+
+
 def fetch_ridb_state(state):
     camps = {}
     headers = {"apikey": RIDB_KEY}
@@ -680,9 +685,17 @@ def fetch_ridb_state(state):
         ("query", "horse stall"),
     ]
 
+    state_deadline = time.time() + RIDB_STATE_TIMEOUT_S
+
     for param_key, param_val in search_terms:
+        if time.time() > state_deadline:
+            print(f"  RIDB {state}: deadline reached — skipping remaining search terms")
+            break
         offset = 0
         while True:
+            if time.time() > state_deadline:
+                print(f"  RIDB {state} ({param_key}={param_val}): deadline reached — skipping remaining pages")
+                break
             params = {
                 param_key: param_val,
                 "state":   state,
@@ -1095,7 +1108,7 @@ def _il_slug_candidates(name):
 
 def _fetch_text(url):
     try:
-        r = requests.get(url, timeout=20, headers={"User-Agent": "HorseCamp/1.0"})
+        r = requests.get(url, timeout=(8, 15), headers={"User-Agent": "HorseCamp/1.0"})
         if r.status_code == 200:
             return r.text
     except Exception:

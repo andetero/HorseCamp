@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-26T12:48:32.817561+00:00",
+  "generated": "2026-05-27T13:05:54.601462+00:00",
   "count": 1513,
   "sources": [
     "Recreation.gov RIDB",
@@ -7207,13 +7207,13 @@
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
       "hookups": [],
-      "accommodations": ["Trails"],
+      "accommodations": ["Trails", "Cabins"],
       "maxRigLength": 0,
       "stallCount": 0,
       "paddockCount": 0,
       "phone": "760-934-5795",
       "website": "https://www.recreation.gov/camping/campgrounds/234330",
-      "description": "Overview Silver Lake Campground is nestled between Silver Lake and the dramatic scenery of the Ansel Adams Wilderness in the eastern Sierra Nevada Mountains of California. This is a great base camp for fishing, boating, hiking, picnicking, horseback riding and photography. The facility has creekside camping with a boat ramp and pack station nearby.Recreation Rush Creek and 97-acre Silver Lake offer peaceful places for anglers to cast a line for rainbow trout. Boating is allowed on the lake, which has a 10 mph speed limit. The area's majestic scenery and challenging trails are an obvious draw for hiking and horseback riding. A nearby trail provides access to the Ansel Adams Wilderness. Within the facility, campers can go for a relaxing 1-mile walk or horseback ride along Rush Creek. The scenic drive along the June Lake Loop results in expansive views of rugged mountain peaks and several lakes.Facilities This is a moderate-sized facility that is fairly spread out. Some sites border the creek, and several border the lake. The facility provides drinking water, flush toilets, picnic tables, campfire rings and bear-proof lockers for food storage. A small store, cafe, hiking trailhead and pack station are all within easy walking distance.Natural Features Some campsites are in open areas while others are shaded by aspen and willow trees. Rush Creek and Silver Lake border the facility, and June Lake is a short drive away. Silver Lake lies at an elevation of 7,200 feet at the base of 11,000 and 12,000' mountain peaks. Many species of wildlife call the mountains home, such as black bear, mountain lions, mule deer, pine marten, pika and numerous fish and birds. Nearby Attractions The small town of June Lake has various amenities. Hikers can access the Ansel Adams Wilderness via area trails, and Mono Lake and Yosemite National Park are great day trips. Ansel Adams Wilderness Yosemite National Park",
+      "description": "Overview Silver Lake Campground is nestled between Silver Lake and the dramatic scenery of the Ansel Adams Wilderness in the eastern Sierra Nevada Mountains of California. This is a great base camp for fishing, boating, hiking, picnicking, horseback riding and photography. The facility has creekside camping with a boat ramp and pack station nearby.Recreation Rush Creek and 97-acre Silver Lake offer peaceful places for anglers to cast a line for rainbow trout. Boating is allowed on the lake, which has a 10 mph speed limit. The area's majestic scenery and challenging trails are an obvious draw for hiking and horseback riding. A nearby trail provides access to the Ansel Adams Wilderness. Within the facility, campers can go for a relaxing 1-mile walk or horseback ride along Rush Creek. The scenic drive along the June Lake Loop results in expansive views of rugged mountain peaks and several lakes.Facilities This is a moderate-sized facility that is fairly spread out. Some sites border the creek, and several border the lake. The facility provides drinking water, flush toilets, picnic tables, campfire rings and bear-proof lockers for food storage. A small store, cafe, hiking trailhead and pack station are all within easy walking distance.Natural Features Some campsites are in open areas while others are shaded by aspen and willow trees. Rush Creek and Silver Lake border the facility, and June Lake is a short drive away. Silver Lake lies at an elevation of 7,200 feet at the base of 11,000 and 12,000' mountain peaks. Many species of wildlife call the mountains home, such as black bear, mountain lions, mule deer, pine marten, pika and numerous fish and birds. Nearby Attractions The small town of June Lake has various amenities. Hikers can access the Ansel Adams Wilderness via area trails, and Mono Lake and Yosemite National Park are great day trips. Ansel Adams Wilderness Yosemite National ParkCharges & Cancellations As you make travel plans that include reservations on",
       "isVerified": false,
       "seasonStart": 0,
       "seasonEnd": 0,
@@ -8226,7 +8226,7 @@
       "hasBathhouse": false,
       "pullThroughAvailable": false,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2021/04/26/19/11/231864_ada0b3a4-88f7-4fbc-b116-15ff58de962a_1440.webp", "https://cdn.recreation.gov/public/2021/04/27/15/51/231864_89d25313-85a7-4768-84a1-1dc31a334bbe_700.webp", "https://cdn.recreation.gov/public/images/63120_700.webp", "https://cdn.recreation.gov/public/images/63210_700.webp", "https://cdn.recreation.gov/public/2021/04/27/15/49/231864_3abd9ef6-0bfa-461a-944c-127c2d67bb82_700.webp", "https://cdn.recreation.gov/public/2021/04/26/16/47/231864_cbd1a415-46c1-4301-be8b-d65a1e30a8b8_700.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2021/04/26/19/11/231864_ada0b3a4-88f7-4fbc-b116-15ff58de962a_1440.webp", "https://cdn.recreation.gov/public/2021/04/27/15/51/231864_89d25313-85a7-4768-84a1-1dc31a334bbe_700.webp", "https://cdn.recreation.gov/public/images/63210_700.webp", "https://cdn.recreation.gov/public/images/63120_700.webp", "https://cdn.recreation.gov/public/2021/04/27/15/49/231864_3abd9ef6-0bfa-461a-944c-127c2d67bb82_700.webp", "https://cdn.recreation.gov/public/2021/04/26/16/47/231864_cbd1a415-46c1-4301-be8b-d65a1e30a8b8_700.webp"],
       "source": "RIDB",
       "rating": 0.0,
       "reviewCount": 0

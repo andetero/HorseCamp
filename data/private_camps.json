@@ -936,10 +936,10 @@
     "state": "CO",
     "latitude": 37.259729,
     "longitude": -107.524207,
-    "pricePerNight": 75,
-    "horseFeePerNight": 0,
+    "pricePerNight": 50,
+    "horseFeePerNight": 25,
     "hookups": ["20A", "30A", "50A", "Sewer", "Water"],
-    "accommodations": ["Horse Camping", "Paddocks", "Stalls", "Trails"],
+    "accommodations": ["Corrals", "Horse Camping", "Paddocks", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -956,7 +956,8 @@
     "pullThroughAvailable": true,
     "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": ["https://static.wixstatic.com/media/f48418_3588c771f32444b2b84423b5eacd72d6~mv2_d_3024_4032_s_4_2.jpg/v1/fill/w_640,h_853,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/f48418_3588c771f32444b2b84423b5eacd72d6~mv2_d_3024_4032_s_4_2.jpg"],
-    "source": "Private Camps"
+    "source": "Private Camps",
+    "email": "saulscreekstables@yahoo.com"
   },
   {
     "id": "private-gmaps-ute-lodge-co",

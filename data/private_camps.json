@@ -5727,10 +5727,10 @@
     "state": "TX",
     "latitude": 29.260296,
     "longitude": -97.55428,
-    "pricePerNight": 0.0,
-    "horseFeePerNight": 0.0,
-    "hookups": [],
-    "accommodations": ["Horse Camping"],
+    "pricePerNight": 0,
+    "horseFeePerNight": 0,
+    "hookups": ["20A", "30A", "50A", "Sewer", "Water"],
+    "accommodations": ["Group Camping", "Horse Camping", "Primitive Camping", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,
     "paddockCount": 0,
@@ -5741,12 +5741,13 @@
     "seasonStart": 1,
     "seasonEnd": 12,
     "hasWashRack": false,
-    "hasDumpStation": false,
-    "hasWifi": false,
+    "hasDumpStation": true,
+    "hasWifi": true,
     "hasBathhouse": false,
     "pullThroughAvailable": false,
     "imageColors": ["6D4C41", "BCAAA4"],
     "photoURLs": [],
-    "source": "Private Camps"
+    "source": "Private Camps",
+    "email": "lazyfranch@gmail.com"
   }
 ]

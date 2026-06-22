@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-21T22:19:20.638238+00:00",
+  "generated": "2026-06-22T22:52:30.668607+00:00",
   "count": 1549,
   "sources": [
     "Recreation.gov RIDB",
@@ -4475,7 +4475,7 @@
       "hasBathhouse": false,
       "pullThroughAvailable": false,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2024/02/21/23/31/234458_94c78b24-b9ba-43cb-b53d-dd1704bfffd7_700.webp", "https://cdn.recreation.gov/public/2024/02/21/23/30/234458_5cf4fceb-d7b4-42b6-b888-d8d4d2c7d07a_700.webp", "https://cdn.recreation.gov/public/2024/02/21/23/28/234458_04036713-3016-4bbb-8cbe-2ebb04a9be7d_1440.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2026/06/22/16/21/234458_00d9ef1c-2628-4d32-b18e-1dbfeee87e8c_700.jpeg", "https://cdn.recreation.gov/public/2026/06/22/16/23/234458_e36ce1fd-2959-4c79-a0fd-4cfb2a2fc1d5_700.jpeg", "https://cdn.recreation.gov/public/2026/06/22/16/22/234458_a393425a-0558-4559-93ae-0d1da440bb8e_700.jpeg", "https://cdn.recreation.gov/public/2026/06/22/16/24/234458_91008420-ed29-4c41-b19d-d6a035b159c3_700.jpeg", "https://cdn.recreation.gov/public/2026/06/22/16/25/234458_ae25bdec-7756-455b-9df6-8411f4f563d6_700.jpeg", "https://cdn.recreation.gov/public/2024/02/21/23/31/234458_94c78b24-b9ba-43cb-b53d-dd1704bfffd7_700.webp"],
       "source": "RIDB",
       "rating": 0.0,
       "reviewCount": 0
@@ -6030,7 +6030,7 @@
       "hasBathhouse": false,
       "pullThroughAvailable": false,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2026/05/19/21/16/234553_db1b5f07-5e2b-41b4-8086-130324b16caf_1440.jpg", "https://cdn.recreation.gov/public/2026/05/19/21/34/234553_cd6249a8-ca94-4127-9dbc-a32a41ba2f25_700.jpg", "https://cdn.recreation.gov/public/2026/05/19/21/29/234553_5fb28187-ec10-4944-b5e0-9e23f2b3f16e_700.jpeg", "https://cdn.recreation.gov/public/2026/05/19/21/23/234553_73ea98cd-9e31-4926-ab92-1c051b6a7b8f_700.jpg", "https://cdn.recreation.gov/public/2026/05/19/21/25/234553_05c875ab-2e58-4a12-9446-f62272738101_700.jpg"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2026/05/19/21/16/234553_db1b5f07-5e2b-41b4-8086-130324b16caf_1440.jpg", "https://cdn.recreation.gov/public/2026/05/19/21/34/234553_cd6249a8-ca94-4127-9dbc-a32a41ba2f25_700.jpg", "https://cdn.recreation.gov/public/2026/05/19/21/23/234553_73ea98cd-9e31-4926-ab92-1c051b6a7b8f_700.jpg", "https://cdn.recreation.gov/public/2026/05/19/21/29/234553_5fb28187-ec10-4944-b5e0-9e23f2b3f16e_700.jpeg", "https://cdn.recreation.gov/public/2026/05/19/21/25/234553_05c875ab-2e58-4a12-9446-f62272738101_700.jpg"],
       "source": "RIDB",
       "rating": 0.0,
       "reviewCount": 0
@@ -18511,7 +18511,7 @@
       "hasBathhouse": true,
       "pullThroughAvailable": false,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2022/07/15/15/19/250850_d5970af5-ed93-4398-b4c0-0efb9ff31848_1440.webp", "https://cdn.recreation.gov/public/2021/07/01/16/33/250850_fcd5f596-1448-4ac2-8a05-200c45578cc2_700.webp", "https://cdn.recreation.gov/public/2021/06/28/18/21/250850_b2911586-08b8-4e1e-80b8-8789f0297a2e_700.webp", "https://cdn.recreation.gov/public/2021/02/18/20/25/250850_de0b5544-352c-4fbc-8670-b47bb7a71c97_700.webp", "https://cdn.recreation.gov/public/2021/02/18/20/09/250850_040ff66d-cc7b-45c0-a0da-85d7595be8f3_700.webp", "https://cdn.recreation.gov/public/2021/02/18/20/37/250850_9c920770-2c89-46ea-8e38-17fc4f858c17_1440.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2022/07/15/15/19/250850_d5970af5-ed93-4398-b4c0-0efb9ff31848_1440.webp", "https://cdn.recreation.gov/public/2021/06/28/18/21/250850_b2911586-08b8-4e1e-80b8-8789f0297a2e_700.webp", "https://cdn.recreation.gov/public/2021/07/01/16/33/250850_fcd5f596-1448-4ac2-8a05-200c45578cc2_700.webp", "https://cdn.recreation.gov/public/2021/02/18/20/25/250850_de0b5544-352c-4fbc-8670-b47bb7a71c97_700.webp", "https://cdn.recreation.gov/public/2021/02/18/20/09/250850_040ff66d-cc7b-45c0-a0da-85d7595be8f3_700.webp", "https://cdn.recreation.gov/public/2021/02/18/20/37/250850_9c920770-2c89-46ea-8e38-17fc4f858c17_1440.webp"],
       "source": "RIDB",
       "rating": 0.0,
       "reviewCount": 0
@@ -19422,7 +19422,7 @@
       "hasBathhouse": false,
       "pullThroughAvailable": false,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2021/10/30/17/36/232468_55294891-1ef8-4a56-bb3e-c5d7ba7bc1c9_1440.webp", "https://cdn.recreation.gov/public/2021/10/30/17/55/232468_cfcfcfdd-cc3c-439a-aa87-0fcb84aa6099_1440.webp", "https://cdn.recreation.gov/public/2021/10/30/18/21/232468_b52891d8-17ff-4645-827a-aefd011d8c57_1440.webp", "https://cdn.recreation.gov/public/images/65861_1440.webp", "https://cdn.recreation.gov/public/2021/10/30/18/21/232468_91c2374d-6730-47a4-9753-f96e60e4152b_1440.webp", "https://cdn.recreation.gov/public/2025/09/14/13/54/232468_8b633a69-cd2e-4bd8-9dc9-08b7cddfb59f_1440.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2021/10/30/17/36/232468_55294891-1ef8-4a56-bb3e-c5d7ba7bc1c9_1440.webp", "https://cdn.recreation.gov/public/2021/10/30/17/55/232468_cfcfcfdd-cc3c-439a-aa87-0fcb84aa6099_1440.webp", "https://cdn.recreation.gov/public/2021/10/30/18/21/232468_91c2374d-6730-47a4-9753-f96e60e4152b_1440.webp", "https://cdn.recreation.gov/public/2021/10/30/18/21/232468_b52891d8-17ff-4645-827a-aefd011d8c57_1440.webp", "https://cdn.recreation.gov/public/images/65861_1440.webp", "https://cdn.recreation.gov/public/2025/09/14/13/54/232468_8b633a69-cd2e-4bd8-9dc9-08b7cddfb59f_1440.webp"],
       "source": "RIDB",
       "rating": 0.0,
       "reviewCount": 0
@@ -25695,7 +25695,7 @@
       "hasBathhouse": false,
       "pullThroughAvailable": false,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2023/05/22/20/09/234283_240bfdf6-86da-4ddf-8e9d-afc3c2d0a944_1440.webp", "https://cdn.recreation.gov/public/2026/02/04/14/39/234283_40050858-24ea-4139-9215-263ca18f42c7_700.jpg", "https://cdn.recreation.gov/public/2026/02/04/14/36/234283_0404b8fa-d799-4135-9d2c-307b68851bad_1440.jpg", "https://cdn.recreation.gov/public/2026/02/04/14/37/234283_165515fc-bff7-4864-b054-64f440898c26_700.jpg", "https://cdn.recreation.gov/public/2026/02/04/14/53/234283_5ebc5a36-0aae-4b0c-9ab5-8e36f5c8d9ff_700.jpg", "https://cdn.recreation.gov/public/2026/02/04/15/05/234283_45b02a78-a78a-4b82-ac96-2e2e27d4649b_700.jpg"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2023/05/22/20/09/234283_240bfdf6-86da-4ddf-8e9d-afc3c2d0a944_1440.webp", "https://cdn.recreation.gov/public/2026/02/04/14/36/234283_0404b8fa-d799-4135-9d2c-307b68851bad_1440.jpg", "https://cdn.recreation.gov/public/2026/02/04/14/39/234283_40050858-24ea-4139-9215-263ca18f42c7_700.jpg", "https://cdn.recreation.gov/public/2026/02/04/14/37/234283_165515fc-bff7-4864-b054-64f440898c26_700.jpg", "https://cdn.recreation.gov/public/2026/02/04/14/53/234283_5ebc5a36-0aae-4b0c-9ab5-8e36f5c8d9ff_700.jpg", "https://cdn.recreation.gov/public/2026/02/04/15/05/234283_45b02a78-a78a-4b82-ac96-2e2e27d4649b_700.jpg"],
       "source": "RIDB",
       "rating": 0.0,
       "reviewCount": 0
@@ -45922,7 +45922,7 @@
       "hasBathhouse": true,
       "pullThroughAvailable": false,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2026/05/29/23/46/233143_2f4bb68e-195d-4558-8f2f-884c020a90b2_1440.png", "https://cdn.recreation.gov/public/2026/06/11/17/03/233143_bdac0d16-e508-4ce0-873f-441b8eefaadb_700.jpg", "https://cdn.recreation.gov/public/2026/06/11/16/54/233143_0a70cfe5-34c9-4b03-9da0-6b94356e8613_700.jpg", "https://cdn.recreation.gov/public/2026/06/11/16/59/233143_864389f3-7139-452e-9ab8-7bcf9bcb24ef_700.jpg", "https://cdn.recreation.gov/public/2026/06/11/16/55/233143_11e72bfc-81a6-4e2c-856f-3180a49172b6_700.jpg", "https://cdn.recreation.gov/public/2026/04/28/21/07/233143_67ecd2a3-8113-4405-b1f9-5355e91d2a94_700.jpg"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2026/05/29/23/46/233143_2f4bb68e-195d-4558-8f2f-884c020a90b2_1440.png", "https://cdn.recreation.gov/public/2026/06/11/17/03/233143_bdac0d16-e508-4ce0-873f-441b8eefaadb_700.jpg", "https://cdn.recreation.gov/public/2026/06/11/16/59/233143_864389f3-7139-452e-9ab8-7bcf9bcb24ef_700.jpg", "https://cdn.recreation.gov/public/2026/06/11/16/54/233143_0a70cfe5-34c9-4b03-9da0-6b94356e8613_700.jpg", "https://cdn.recreation.gov/public/2026/06/11/16/55/233143_11e72bfc-81a6-4e2c-856f-3180a49172b6_700.jpg", "https://cdn.recreation.gov/public/2026/04/28/21/07/233143_67ecd2a3-8113-4405-b1f9-5355e91d2a94_700.jpg"],
       "source": "RIDB",
       "rating": 0.0,
       "reviewCount": 0

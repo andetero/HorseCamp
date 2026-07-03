@@ -1,8 +1,8 @@
 name: Seed Camp Data
 on:
   schedule:
-    # Runs nightly at 4:00 PM Mountain Time
-    - cron: "0 16 * * *"
+    # Runs nightly at 5:00 PM Mountain Time
+    - cron: "0 17 * * *"
       timezone: "America/Denver"
   workflow_dispatch:
 jobs:

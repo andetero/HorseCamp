@@ -31,5 +31,11 @@
     "location": "2499 Pine Creek Rd, Sedalia, CO 80135",
     "maxRigLength": 50,
     "hasDumpStation": false
+  },
+  "wi-stateparks-kettle-moraine-state-forest-northern-unit-new-prospect-horse-riders-campground": {
+    "hookups": [
+      "30A",
+      "50A"
+    ]
   }
 }

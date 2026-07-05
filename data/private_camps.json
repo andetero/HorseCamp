@@ -3456,12 +3456,12 @@
     "source": "Private Camps"
   },
   {
-    "id": "private-gmaps-ukarydee-equestrian-camping-mi",
+    "id": "private-gmaps-ukarydee-equestrian-camping-wi",
     "name": "Ukarydee Equestrian Camping",
-    "location": "MI (44.025024, -89.965789)",
-    "state": "MI",
-    "latitude": 44.025024,
-    "longitude": -89.965789,
+    "location": "2047 Cumberland Ave, Arkdale, WI 54613",
+    "state": "WI",
+    "latitude": 44.024925,
+    "longitude": -89.965678,
     "pricePerNight": 0.0,
     "horseFeePerNight": 0.0,
     "hookups": [],

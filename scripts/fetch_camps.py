@@ -1052,7 +1052,7 @@ def fetch_usfs_recreation_sites():
                 "hasWifi": False,
                 "hasBathhouse": False,
                 "pullThroughAvailable": False,
-                "imageColors": ["2E6B3F", "8FBC8F"],
+                "imageColors": ["00695C", "80CBC4"],
                 "photoURLs": [],
                 "source": "U.S. Forest Service",
             })

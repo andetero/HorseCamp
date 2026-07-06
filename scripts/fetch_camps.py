@@ -335,6 +335,124 @@ def print_nearby_duplicate_details(label, details):
         )
 
 
+# RIDB and the Forest Service sometimes publish the same federal campground
+# with slightly different coordinates. The generic 500 m proximity merge catches
+# the closest cases, but intentionally cannot use a large radius because different
+# campgrounds can sit near one another. This targeted pass is stricter: it only
+# compares RIDB against USFS, requires the same state and a normalized name match,
+# and allows up to three miles for known coordinate disagreement. RIDB is retained
+# because its record generally has the richer reservation, amenity, and photo data.
+RIDB_USFS_DUPLICATE_MAX_DISTANCE_M = 3 * 1609.344
+RIDB_USFS_NAME_NOISE = {
+    "and", "area", "at", "camp", "campground", "campgrounds", "camping",
+    "camps", "campsite", "campsites", "equestrian", "facilities", "facility",
+    "family", "for", "group", "horse", "horses", "of", "recreation", "rv",
+    "site", "sites", "the", "with",
+}
+RIDB_REFERENCES_OTHER_HORSE_CAMP_RE = re.compile(
+    r"\bshares?\s+(?:the\s+)?(?:area|facility|campground|site|sites)\s+with\b"
+    r".{0,160}\b(?:horse|equestrian)\s+camp",
+    re.I | re.S,
+)
+
+
+def _ridb_usfs_name_signature(name):
+    """Return a conservative comparison key for an RIDB/USFS campground name."""
+    text = str(name or "").lower().replace("&", " and ")
+    # Expand fused forms before stripping generic camping words.
+    text = re.sub(r"\bhorse\s*camp(?:ground|ing)?s?\b", " horse camp ", text)
+    text = re.sub(r"\bhorsecamp(?:ground|ing)?s?\b", " horse camp ", text)
+    text = re.sub(r"\b(?:campgrounds?|camping|campsites?)\b", " camp ", text)
+    text = re.sub(r"[^a-z0-9]+", " ", text)
+
+    tokens = []
+    for token in text.split():
+        if token in RIDB_USFS_NAME_NOISE:
+            continue
+        # Normalize only ordinary trailing plurals. Keep proper names such as
+        # Texas and Palisades intact.
+        if len(token) > 3 and token.endswith("s") and token not in {"texas", "palisades"}:
+            token = token[:-1]
+        tokens.append(token)
+    return " ".join(tokens)
+
+
+def _ridb_mentions_another_horse_camp(camp):
+    """Avoid treating a nearby non-horse RIDB campground as the horse camp it mentions."""
+    name = str(camp.get("name") or "")
+    # A camp explicitly named for horses/equestrian use is its own horse camp,
+    # even if the description also says it shares the area with another facility.
+    if re.search(r"\b(?:horse|equestrian|stock)\b|horsecamp", name, re.I):
+        return False
+    description = strip_html(str(camp.get("description") or ""))
+    return bool(RIDB_REFERENCES_OTHER_HORSE_CAMP_RE.search(description))
+
+
+def remove_ridb_usfs_name_location_duplicates(camps_dict):
+    """Drop USFS copies of the same RIDB campground; return audit details.
+
+    This deliberately does not merge broad nearby matches. A site is removed only
+    when RIDB and USFS have the same state, matching normalized names, and are no
+    more than three miles apart. The ridb record remains the authoritative entry.
+    """
+    ridb_camps = [camp for camp in camps_dict.values() if camp.get("source") == "RIDB"]
+    usfs_camps = [camp for camp in camps_dict.values() if camp.get("source") == "U.S. Forest Service"]
+    removed = []
+
+    for usfs in usfs_camps:
+        usfs_signature = _ridb_usfs_name_signature(usfs.get("name"))
+        if not usfs_signature:
+            continue
+
+        best_match = None
+        best_distance_m = None
+        for ridb in ridb_camps:
+            if ridb.get("state") != usfs.get("state"):
+                continue
+            if _ridb_mentions_another_horse_camp(ridb):
+                continue
+            if _ridb_usfs_name_signature(ridb.get("name")) != usfs_signature:
+                continue
+            try:
+                distance_m = haversine_meters(
+                    float(ridb["latitude"]), float(ridb["longitude"]),
+                    float(usfs["latitude"]), float(usfs["longitude"]),
+                )
+            except (KeyError, TypeError, ValueError):
+                continue
+            if distance_m > RIDB_USFS_DUPLICATE_MAX_DISTANCE_M:
+                continue
+            if best_distance_m is None or distance_m < best_distance_m:
+                best_match = ridb
+                best_distance_m = distance_m
+
+        if best_match is not None:
+            camps_dict.pop(usfs["id"], None)
+            removed.append({
+                "ridb": best_match,
+                "usfs": usfs,
+                "distance_m": best_distance_m,
+            })
+
+    return removed
+
+
+def print_ridb_usfs_duplicate_details(details):
+    if not details:
+        return
+    print("  RIDB ↔ USFS duplicate details (kept RIDB):")
+    for item in details:
+        ridb = item["ridb"]
+        usfs = item["usfs"]
+        distance_m = item["distance_m"]
+        print(
+            "    - "
+            f"Removed USFS: {usfs.get('name', 'Unknown')} [{usfs.get('id', 'no-id')}] "
+            f"matched RIDB: {ridb.get('name', 'Unknown')} [{ridb.get('id', 'no-id')}] "
+            f"({distance_m:.0f} m / {distance_m / 1609.344:.2f} mi)"
+        )
+
+
 
 def _compact_selected_array_fields(json_text, field_names):
     """Collapse selected array fields onto a single line after pretty-printing JSON.
@@ -1052,7 +1170,7 @@ def fetch_usfs_recreation_sites():
                 "hasWifi": False,
                 "hasBathhouse": False,
                 "pullThroughAvailable": False,
-                "imageColors": ["00695C", "80CBC4"],
+                "imageColors": ["2E6B3F", "8FBC8F"],
                 "photoURLs": [],
                 "source": "U.S. Forest Service",
             })
@@ -2422,6 +2540,9 @@ def main():
     print_metric("U.S. Forest Service added", usfs_new)
     print_metric("U.S. Forest Service duplicate IDs", usfs_duplicate_ids)
     print_metric("U.S. Forest Service nearby duplicates", usfs_duplicate_nearby)
+    ridb_usfs_duplicate_details = remove_ridb_usfs_name_location_duplicates(all_camps)
+    print_metric("RIDB ↔ USFS name/location duplicates", len(ridb_usfs_duplicate_details))
+    print_ridb_usfs_duplicate_details(ridb_usfs_duplicate_details)
     print_metric("USFS state cache hits", _usfs_state_stats["hits"])
     print_metric("USFS state lookups", _usfs_state_stats["misses"])
 

@@ -2,15 +2,18 @@
 """
 HorseCamp Data Fetcher
 Runs nightly via GitHub Actions.
-Calls Recreation.gov (RIDB) and NPS APIs, writes results to camps.json
-which is served at horsecampfinder.com/camps.json for the iOS app.
+Calls Recreation.gov (RIDB) and NPS APIs, validates the final public feed,
+and writes camps.json served at horsecampfinder.com/camps.json for the mobile apps.
+
+The final-feed safety checks live here so the pipeline does not need a separate
+validation Python script.
 
 Required GitHub Secrets:
   RIDB_API_KEY  — from ridb.recreation.gov/profile
   NPS_API_KEY   — from developer.nps.gov/signup
 """
 
-import os, json, time, re, requests
+import os, json, time, re, math, requests
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -480,6 +483,10 @@ def _compact_selected_array_fields(json_text, field_names):
     return pattern.sub(repl, json_text)
 
 
+# The mobile apps tolerate omitted non-core fields and supply defaults. Keep the
+# public feed lean by omitting provenance/admin-only values and the now-unused
+# rating/reviewCount placeholders. Fields used to render a usable camp are checked
+# below immediately before camps.json is written.
 PUBLIC_FEED_OMIT_FIELDS = {
     "submittedIssueNumber",
     "sourceUrl",
@@ -495,7 +502,13 @@ PUBLIC_FEED_OMIT_FIELDS = {
     "category",
     "city",
     "sourceDetail",
+    "rating",
+    "reviewCount",
 }
+PUBLIC_FEED_MIN_EXPECTED_CAMPS = 1000
+PUBLIC_FEED_REQUIRED_FIELDS = ("id", "name", "location", "state", "source", "latitude", "longitude")
+PUBLIC_FEED_BLOCKED_SOURCES = {"OSM", "OpenStreetMap"}
+HORSEMOTEL_STATE_PAGE_RE = re.compile(r"^https?://(?:www\.)?horsemotel\.com/[A-Za-z-]+\.html$", re.I)
 
 
 def strip_public_feed_fields(camps):
@@ -509,16 +522,74 @@ def strip_public_feed_fields(camps):
     return removed
 
 
-def ensure_legacy_app_required_fields(camps):
-    """Keep current released iOS builds decoding until the app schema is migrated.
+def _is_nonblank(value):
+    return value is not None and (not isinstance(value, str) or bool(value.strip()))
 
-    The live iOS CampRecord currently requires rating and reviewCount even though
-    the values are default-only. Do not remove these from public camps.json until
-    the App Store build has been updated to make them optional/defaulted.
+
+def validate_public_feed(camps):
+    """Fail before publishing an unusable public feed.
+
+    This intentionally validates only delivery-critical data quality. It does not
+    impose a closed JSON schema: newer fields may be added without an app update,
+    and the iOS/Android decoders default absent non-core fields safely.
     """
-    for camp in camps:
-        camp["rating"] = float(camp.get("rating") or 0.0)
-        camp["reviewCount"] = int(camp.get("reviewCount") or 0)
+    errors = []
+    if len(camps) < PUBLIC_FEED_MIN_EXPECTED_CAMPS:
+        errors.append(
+            f"only {len(camps)} camps generated; expected at least {PUBLIC_FEED_MIN_EXPECTED_CAMPS}"
+        )
+
+    seen_ids = set()
+    for index, camp in enumerate(camps):
+        label = f"camps[{index}]"
+        if not isinstance(camp, dict):
+            errors.append(f"{label} is not an object")
+            continue
+
+        camp_id = str(camp.get("id") or "").strip()
+        if not camp_id:
+            errors.append(f"{label} has a blank id")
+        elif camp_id in seen_ids:
+            errors.append(f"duplicate camp id: {camp_id}")
+        seen_ids.add(camp_id)
+
+        for field in PUBLIC_FEED_REQUIRED_FIELDS:
+            if not _is_nonblank(camp.get(field)):
+                errors.append(f"{label} ({camp_id or 'no-id'}) has blank {field}")
+
+        try:
+            latitude = float(camp.get("latitude"))
+            longitude = float(camp.get("longitude"))
+            if not math.isfinite(latitude) or not math.isfinite(longitude):
+                raise ValueError("not finite")
+            if not -90 <= latitude <= 90 or not -180 <= longitude <= 180:
+                raise ValueError("out of range")
+            if latitude == 0 and longitude == 0:
+                raise ValueError("zero coordinate")
+        except (TypeError, ValueError):
+            errors.append(f"{label} ({camp_id or 'no-id'}) has invalid coordinates")
+
+        source = str(camp.get("source") or "")
+        if source in PUBLIC_FEED_BLOCKED_SOURCES or camp_id.startswith("osm-"):
+            errors.append(f"blocked OSM/OpenStreetMap record: {camp_id or label}")
+
+        website = str(camp.get("website") or "").strip()
+        if source == "HorseMotel.com" and website and HORSEMOTEL_STATE_PAGE_RE.match(website):
+            errors.append(f"HorseMotel generic state-page URL: {camp_id or label}")
+
+        retired = sorted(PUBLIC_FEED_OMIT_FIELDS & set(camp.keys()))
+        if retired:
+            errors.append(f"{label} ({camp_id or 'no-id'}) retains omitted fields: {', '.join(retired)}")
+
+    if errors:
+        print("Public feed validation failed; camps.json was not written.")
+        for error in errors[:50]:
+            print(f"ERROR: {error}")
+        if len(errors) > 50:
+            print(f"ERROR: ... {len(errors) - 50} additional validation failures")
+        raise RuntimeError("Public feed validation failed")
+
+    print(f"Public feed validation passed: {len(camps)} camps; {len(seen_ids)} unique IDs")
 
 
 def normalize_description_text(value):
@@ -2652,7 +2723,7 @@ def main():
 
     camps_list = sorted(all_camps.values(), key=lambda c: (c["state"], c["name"]))
     retired_field_count = strip_public_feed_fields(camps_list)
-    ensure_legacy_app_required_fields(camps_list)
+    validate_public_feed(camps_list)
     output = {
         "generated": datetime.now(timezone.utc).isoformat(),
         "count": len(camps_list),
@@ -2708,7 +2779,7 @@ def main():
     print_metric("Exclusions applied", excluded_count)
     print_metric("Invalid/non-horse removed", invalid_count)
     print_metric("Overrides applied", override_count)
-    print_metric("Retired fields stripped", retired_field_count)
+    print_metric("Omitted/default fields stripped", retired_field_count)
 
     print("\nOverall:")
     print_metric("Verified listings", verified_count)

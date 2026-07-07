@@ -32,8 +32,11 @@
     .sname { font-size: 0.9rem; font-weight: 600; }
     .sloc { font-size: 0.78rem; color: #888; margin-top: 1px; }
     .btn { display: block; width: 100%; padding: 14px; margin-top: 20px; background: var(--hay); color: var(--earth); border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; }
-    .noapp { text-align: center; font-size: 0.78rem; color: #aaa; margin-top: 10px; }
+    .noapp { text-align: center; font-size: 0.78rem; color: #888; margin-top: 10px; line-height: 1.5; }
     .noapp a { color: var(--saddle); font-weight: 600; }
+    .store-links { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-top: 14px; }
+    .store-link { color: var(--saddle); font-size: 0.8rem; font-weight: 600; text-decoration: none; border: 1px solid rgba(139,94,60,0.3); border-radius: 999px; padding: 7px 11px; }
+    .store-link:hover { background: rgba(139,94,60,0.08); }
     .nodata { text-align: center; padding: 40px; }
     @media (prefers-color-scheme: dark) {
       body { background: #1C1208; color: #FAF6EE; }
@@ -49,7 +52,7 @@
 </nav>
 <div class="hero">
   <h1 id="trip-name">Shared Trip</h1>
-  <p>Tap below to open in HorseCamp</p>
+  <p>View the itinerary, then open HorseCamp to plan your ride.</p>
 </div>
 <main id="main">
   <p style="text-align:center;padding:40px;color:#888">Loading...</p>
@@ -106,15 +109,25 @@ function go() {
   html += '<div class="meta"><div><div class="mlabel">Departure</div><div class="mvalue">' + fmtDate(trip.departureSince1970) + '</div></div>';
   html += '<div><div class="mlabel">Stops</div><div class="mvalue">' + stops.length + ' camp' + (stops.length !== 1 ? 's' : '') + '</div></div></div>';
   html += stopsHtml;
-  html += '<button class="btn" id="openbtn">📍 Open in HorseCamp</button>';
-  html += '<div class="noapp">Open this link on the iPhone with HorseCamp installed.</div>';
+  var isAndroid = /Android/i.test(navigator.userAgent || '');
+  if (isAndroid) {
+    html += '<a class="btn" href="https://play.google.com/store/apps/details?id=com.pyoba.HorseCamp" target="_blank" rel="noopener noreferrer">📍 View HorseCamp on Google Play</a>';
+    html += '<div class="noapp">This page shows the shared itinerary on Android. Direct trip import from a shared link is currently available on iPhone.</div>';
+  } else {
+    html += '<button class="btn" id="openbtn">📍 Open in HorseCamp</button>';
+    html += '<div class="noapp">Open this link in HorseCamp on iPhone to import the trip.</div>';
+  }
+  html += '<div class="store-links"><a class="store-link" href="https://apps.apple.com/us/app/horsecamp/id6761319280" target="_blank" rel="noopener noreferrer">App Store</a><a class="store-link" href="https://play.google.com/store/apps/details?id=com.pyoba.HorseCamp" target="_blank" rel="noopener noreferrer">Google Play</a></div>';
   html += '</div>';
 
   document.getElementById('main').innerHTML = html;
 
-  document.getElementById('openbtn').addEventListener('click', function() {
-    window.location.href = 'horsecamp://trip?d=' + encodeURIComponent(raw);
-  });
+  var openButton = document.getElementById('openbtn');
+  if (openButton) {
+    openButton.addEventListener('click', function() {
+      window.location.href = 'horsecamp://trip?d=' + encodeURIComponent(raw);
+    });
+  }
 }
 
 go();

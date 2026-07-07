@@ -109,14 +109,8 @@ function go() {
   html += '<div class="meta"><div><div class="mlabel">Departure</div><div class="mvalue">' + fmtDate(trip.departureSince1970) + '</div></div>';
   html += '<div><div class="mlabel">Stops</div><div class="mvalue">' + stops.length + ' camp' + (stops.length !== 1 ? 's' : '') + '</div></div></div>';
   html += stopsHtml;
-  var isAndroid = /Android/i.test(navigator.userAgent || '');
-  if (isAndroid) {
-    html += '<a class="btn" href="https://play.google.com/store/apps/details?id=com.pyoba.HorseCamp" target="_blank" rel="noopener noreferrer">📍 View HorseCamp on Google Play</a>';
-    html += '<div class="noapp">This page shows the shared itinerary on Android. Direct trip import from a shared link is currently available on iPhone.</div>';
-  } else {
-    html += '<button class="btn" id="openbtn">📍 Open in HorseCamp</button>';
-    html += '<div class="noapp">Open this link in HorseCamp on iPhone to import the trip.</div>';
-  }
+  html += '<button class="btn" id="openbtn">📍 Open in HorseCamp</button>';
+  html += '<div class="noapp">Open this link in HorseCamp on iPhone or Android to import the trip.</div>';
   html += '<div class="store-links"><a class="store-link" href="https://apps.apple.com/us/app/horsecamp/id6761319280" target="_blank" rel="noopener noreferrer">App Store</a><a class="store-link" href="https://play.google.com/store/apps/details?id=com.pyoba.HorseCamp" target="_blank" rel="noopener noreferrer">Google Play</a></div>';
   html += '</div>';
 

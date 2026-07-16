@@ -13,9 +13,10 @@ Required GitHub Secrets:
   NPS_API_KEY   — from developer.nps.gov/signup
 """
 
-import os, json, time, re, math, requests
+import os, json, time, re, math, html, requests
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urljoin, urlparse
 
 RIDB_KEY   = os.environ.get("RIDB_API_KEY", "")
 NPS_KEY    = os.environ.get("NPS_API_KEY", "")
@@ -1144,6 +1145,14 @@ def _usfs_has_horse_camping_signal(name, marker_activity, description, restricti
 def fetch_usfs_recreation_sites():
     """Fetch official Forest Service campgrounds that support overnight horses.
 
+    The primary source is the official Forest Service ArcGIS recreation layer.
+    The newer fs.usda.gov site can expose additional official campground pages
+    that are not present, or not fully horse-tagged, in that layer. After the
+    ArcGIS pass, a conservative website supplement crawls the official
+    Horse Riding and Camping opportunity pages for forests already represented
+    by the ArcGIS source and imports only detail pages with coordinates and
+    explicit overnight horse-camping evidence.
+
     The USFS source has no state field. Each accepted coordinate is therefore
     resolved through the official Census geographic lookup and cached. This
     prevents camps from being incorrectly grouped under a fake ``US`` state.
@@ -1259,8 +1268,385 @@ def fetch_usfs_recreation_sites():
             "Refusing to publish generic US state values: " + sample + suffix
         )
 
+    supplemental_camps = fetch_usfs_official_website_supplement(camps)
+    camps.extend(supplemental_camps)
+
     print(f"  U.S. Forest Service: {len(camps)} official horse-camping listings")
+    if supplemental_camps:
+        print(f"  U.S. Forest Service website supplement: {len(supplemental_camps)} additional official pages")
     return camps
+
+
+USFS_WEBSITE_BASE = "https://www.fs.usda.gov"
+USFS_WEBSITE_USER_AGENT = "HorseCampDataFetcher/1.0 (+https://horsecampfinder.com)"
+USFS_HORSE_ACTIVITY_PATH = "/recreation/opportunities/horse-riding-and-camping"
+USFS_WEBSITE_MAX_ACTIVITY_PAGES = 8
+USFS_WEBSITE_MAX_DETAIL_PAGES_PER_FOREST = 80
+
+USFS_PAGE_STRONG_HORSE_CAMPING_PATTERNS = [
+    re.compile(r"\b\d+\s+(?:sites?|campsites?)\s+for\s+horse\s+campers?\b", re.I),
+    re.compile(r"\bhorse\s+campers?\b", re.I),
+    re.compile(r"\bhorse\s+camp(?:ground|ing)?\b", re.I),
+    re.compile(r"\bequestrian\s+camp(?:ground|ing)?\b", re.I),
+    re.compile(r"\bstock\s+camp(?:ground|ing)?\b", re.I),
+    re.compile(r"\bhorse\s*/\s*pack\s+animals?\s+(?:are\s+)?allowed\b", re.I),
+    re.compile(r"\b(?:corrals?|stalls?|mangers?|high\s*lines?|hitching\s+rails?|tie\s+rails?)\b", re.I),
+]
+
+USFS_PAGE_OVERNIGHT_CAMPING_PATTERNS = [
+    re.compile(r"\bcampground\b", re.I),
+    re.compile(r"\bcampsites?\b", re.I),
+    re.compile(r"\bcamping\s+units?\b", re.I),
+    re.compile(r"\bsingle\s+(?:camping\s+)?units?\b", re.I),
+    re.compile(r"\bgroup\s+(?:camping\s+)?sites?\b", re.I),
+    re.compile(r"\bfirst[- ]come,?\s+first[- ]serve", re.I),
+    re.compile(r"\bnon[- ]reservation\s+campground\b", re.I),
+]
+
+USFS_PAGE_NON_OVERNIGHT_PATTERNS = [
+    re.compile(r"\bday\s+use\s+only\b", re.I),
+    re.compile(r"\bno\s+overnight\s+camp(?:ing)?\b", re.I),
+    re.compile(r"\bcamping\s+is\s+not\s+allowed\b", re.I),
+]
+
+
+def _usfs_fetch_html(url, retries=2):
+    for attempt in range(retries):
+        try:
+            response = requests.get(
+                url,
+                timeout=20,
+                headers={"User-Agent": USFS_WEBSITE_USER_AGENT},
+                allow_redirects=True,
+            )
+            if response.status_code == 200 and response.text:
+                return response.url, response.text
+            print(f"  USFS website HTTP {response.status_code} for {url}")
+            return "", ""
+        except Exception as e:
+            print(f"  USFS website request error (attempt {attempt + 1}) for {url}: {e}")
+            time.sleep(2)
+    return "", ""
+
+
+def _usfs_html_to_text(raw_html):
+    text = re.sub(r"<script[\s\S]*?</script>", " ", raw_html or "", flags=re.I)
+    text = re.sub(r"<style[\s\S]*?</style>", " ", text, flags=re.I)
+    text = re.sub(r"<title[\s\S]*?</title>", " ", text, flags=re.I)
+    text = re.sub(r"<!--.*?-->", " ", text, flags=re.S)
+    text = re.sub(r"<\s*br\s*/?\s*>", "\n", text, flags=re.I)
+    text = re.sub(r"</(?:p|div|li|h[1-6]|section|article|tr)>", "\n", text, flags=re.I)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = html.unescape(text)
+    lines = [re.sub(r"\s+", " ", line).strip() for line in text.splitlines()]
+    return "\n".join(line for line in lines if line)
+
+
+def _usfs_extract_h1(raw_html):
+    match = re.search(r"<h1[^>]*>([\s\S]*?)</h1>", raw_html or "", flags=re.I)
+    if not match:
+        return ""
+    return re.sub(r"\s+", " ", _usfs_html_to_text(match.group(1))).strip()
+
+
+def _usfs_extract_title_parts(raw_html):
+    match = re.search(r"<title[^>]*>([\s\S]*?)</title>", raw_html or "", flags=re.I)
+    if not match:
+        return []
+    title = _usfs_html_to_text(match.group(1))
+    return [part.strip() for part in title.split("|") if part.strip()]
+
+
+def _usfs_extract_forest_name(raw_html):
+    parts = _usfs_extract_title_parts(raw_html)
+    if parts and parts[-1].lower() == "forest service":
+        parts = parts[:-1]
+    if len(parts) >= 2 and "national forest" in parts[0].lower():
+        return parts[0]
+    text = _usfs_html_to_text(raw_html)
+    match = re.search(r"\b([A-Z][A-Za-z' -]+ National Forest)\b", text)
+    return match.group(1).strip() if match else "U.S. Forest Service"
+
+
+def _usfs_extract_page_coordinates(text):
+    lat_match = re.search(r"\bLatitude\s*:?\s*(-?\d+(?:\.\d+)?)\b", text, flags=re.I)
+    lon_match = re.search(r"\bLongitude\s*:?\s*(-?\d+(?:\.\d+)?)\b", text, flags=re.I)
+    if not lat_match or not lon_match:
+        return None, None
+    try:
+        lat = float(lat_match.group(1))
+        lon = float(lon_match.group(1))
+    except ValueError:
+        return None, None
+    if not (-90 <= lat <= 90 and -180 <= lon <= 180):
+        return None, None
+    return lat, lon
+
+
+def _usfs_extract_official_detail_links(raw_html, base_url):
+    links = []
+    seen = set()
+    link_re = re.compile(r"href=[\"']([^\"'#?]+)(?:[?#][^\"']*)?[\"']", re.I)
+    for match in link_re.finditer(raw_html or ""):
+        href = html.unescape(match.group(1)).strip()
+        absolute = urljoin(base_url, href)
+        parsed = urlparse(absolute)
+        if parsed.netloc.lower() != "www.fs.usda.gov":
+            continue
+        if not re.match(r"^/r\d{2}/[^/]+/recreation/[^/]+", parsed.path):
+            continue
+        if "/recreation/opportunities/" in parsed.path:
+            continue
+        if "/recreation/areas/" in parsed.path:
+            # Area pages can contain broad recreation summaries but are not
+            # individual overnight camp listings. Detail pages remain eligible.
+            continue
+        normalized = f"https://www.fs.usda.gov{parsed.path}"
+        if normalized not in seen:
+            seen.add(normalized)
+            links.append(normalized)
+    return links
+
+
+def _usfs_resolve_forest_base_url(url):
+    parsed = urlparse(str(url or ""))
+    match = re.match(r"^/(r\d{2})/([^/]+)(?:/|$)", parsed.path)
+    if parsed.netloc.lower() == "www.fs.usda.gov" and match:
+        return f"https://www.fs.usda.gov/{match.group(1)}/{match.group(2)}"
+
+    # Legacy recarea URLs expose the forest slug but not the new /rNN/ prefix.
+    # Follow one representative site URL per forest and derive the modern base
+    # from the redirect target or links in the returned official page.
+    final_url, raw_html = _usfs_fetch_html(str(url or ""), retries=2)
+    if final_url:
+        match = re.match(r"^/(r\d{2})/([^/]+)(?:/|$)", urlparse(final_url).path)
+        if match:
+            return f"https://www.fs.usda.gov/{match.group(1)}/{match.group(2)}"
+    if raw_html:
+        href_re = re.compile(r"href=[\"'](/r\d{2}/[^/]+)/(?:recreation|home|about|visit)?", re.I)
+        match = href_re.search(raw_html)
+        if match:
+            return urljoin(USFS_WEBSITE_BASE, match.group(1))
+    return ""
+
+
+def _usfs_forest_bases_from_primary_camps(camps):
+    samples_by_slug = {}
+    direct_bases = set()
+    for camp in camps:
+        website = str(camp.get("website") or "")
+        parsed = urlparse(website)
+        direct = re.match(r"^/(r\d{2})/([^/]+)(?:/|$)", parsed.path)
+        if parsed.netloc.lower() == "www.fs.usda.gov" and direct:
+            direct_bases.add(f"https://www.fs.usda.gov/{direct.group(1)}/{direct.group(2)}")
+            continue
+        legacy = re.match(r"^/recarea/([^/]+)(?:/|$)", parsed.path)
+        if parsed.netloc.lower() == "www.fs.usda.gov" and legacy:
+            samples_by_slug.setdefault(legacy.group(1), website)
+
+    bases = set(direct_bases)
+    for slug, sample_url in sorted(samples_by_slug.items()):
+        base = _usfs_resolve_forest_base_url(sample_url)
+        if base:
+            bases.add(base)
+        time.sleep(0.15)
+
+    return sorted(bases)
+
+
+def _usfs_page_has_overnight_horse_camping_signal(text):
+    if any(pattern.search(text) for pattern in USFS_PAGE_NON_OVERNIGHT_PATTERNS):
+        return False
+    has_horse_signal = any(pattern.search(text) for pattern in USFS_PAGE_STRONG_HORSE_CAMPING_PATTERNS)
+    has_overnight_signal = any(pattern.search(text) for pattern in USFS_PAGE_OVERNIGHT_CAMPING_PATTERNS)
+    return has_horse_signal and has_overnight_signal
+
+
+def _usfs_page_accommodations(text):
+    accommodations = ["Trails"]
+    if re.search(r"\b(?:corrals?|pens?|paddocks?|mangers?|hitching\s+rails?|tie\s+rails?|high\s*lines?)\b", text, flags=re.I):
+        accommodations.append("Corrals")
+    if re.search(r"\b(?:rv|trailer|motor\s*home|motorhome)\b", text, flags=re.I):
+        accommodations.append("Big Rig")
+    return list(dict.fromkeys(accommodations))
+
+
+def _usfs_page_hookups(text):
+    hookups = []
+    if re.search(r"\bpotable\s+water\s+is\s+available\b|\bdrinking\s+water\b", text, flags=re.I):
+        hookups.append("Water")
+    if re.search(r"\belectric(?:al)?\s+hookups?\b|\b30\s*amp\b|\b30a\b", text, flags=re.I):
+        hookups.append("30A")
+    if re.search(r"\b50\s*amp\b|\b50a\b", text, flags=re.I):
+        hookups.append("50A")
+    if re.search(r"\bsewer\s+hookups?\b", text, flags=re.I):
+        hookups.append("Sewer")
+    return list(dict.fromkeys(hookups))
+
+
+def _usfs_month_after_label(text, label):
+    match = re.search(label + r".{0,80}?\b(" + "|".join(re.escape(k) for k in MONTH_MAP.keys()) + r")\b", text, flags=re.I | re.S)
+    return MONTH_MAP.get(match.group(1).lower(), 0) if match else 0
+
+
+def _usfs_site_id_from_page_url(url):
+    parsed = urlparse(url)
+    raw = re.sub(r"^/", "", parsed.path.lower())
+    raw = re.sub(r"[^a-z0-9]+", "-", raw).strip("-")
+    return f"usfs-page-{raw}"
+
+
+def _usfs_description_from_page(text, name):
+    desc = text
+    title_match = re.search(r"^" + re.escape(name) + r"$", desc, flags=re.M)
+    if title_match:
+        desc = desc[title_match.end():]
+    stop_labels = [
+        "Reservations", "General Information", "Getting There",
+        "Facility and Amenity Information", "Recreation Opportunities",
+        "Recreation Groups", "Last updated",
+    ]
+    for label in stop_labels:
+        idx = desc.find(label)
+        if 0 < idx < 1800:
+            desc = desc[:idx]
+            break
+    desc = re.sub(r"\s+", " ", desc).strip()
+    return desc[:2000]
+
+
+def _usfs_build_camp_from_official_page(url, raw_html):
+    text = _usfs_html_to_text(raw_html)
+    name = _usfs_extract_h1(raw_html)
+    if not name or name.lower() in {"recreation", "horse riding and camping"}:
+        return None
+    if not _usfs_page_has_overnight_horse_camping_signal(text):
+        return None
+    lat, lon = _usfs_extract_page_coordinates(text)
+    if lat is None or lon is None:
+        return None
+    state = _usfs_state_from_coordinates(lat, lon)
+    if not state:
+        raise RuntimeError(
+            "Unable to resolve a state for official Forest Service website page: "
+            f"{name} ({url}; {lat:.5f}, {lon:.5f})"
+        )
+
+    forest = _usfs_extract_forest_name(raw_html)
+    description = _usfs_description_from_page(text, name)
+    if not description:
+        description = "Official U.S. Forest Service horse-camping site."
+
+    return {
+        "id": _usfs_site_id_from_page_url(url),
+        "name": name,
+        "location": forest or f"U.S. Forest Service, {state}",
+        "state": state,
+        "latitude": lat,
+        "longitude": lon,
+        "pricePerNight": 0.0,
+        "horseFeePerNight": 0.0,
+        "hookups": _usfs_page_hookups(text),
+        "accommodations": _usfs_page_accommodations(text),
+        "maxRigLength": 0,
+        "stallCount": 0,
+        "paddockCount": 0,
+        "phone": "",
+        "website": url,
+        "description": description,
+        "isVerified": True,
+        "seasonStart": _usfs_month_after_label(text, r"(?:Seasons?\s+of\s+Use|Open\s+Season)"),
+        "seasonEnd": _usfs_month_after_label(text, r"(?:closes?|through|until|to)"),
+        "hasWashRack": bool(re.search(r"\bwash\s+rack\b", text, flags=re.I)),
+        "hasDumpStation": bool(re.search(r"\bdump\s+station\b", text, flags=re.I)),
+        "hasWifi": bool(re.search(r"\b(?:wi[- ]?fi|internet)\b", text, flags=re.I)),
+        "hasBathhouse": bool(re.search(r"\b(?:shower|bathhouse|flush\s+toilet)\b", text, flags=re.I)),
+        "pullThroughAvailable": bool(re.search(r"\bpull[- ]through\b", text, flags=re.I)),
+        "imageColors": ["6A1B9A", "CE93D8"],
+        "photoURLs": [],
+        "source": "U.S. Forest Service",
+    }
+
+
+def _usfs_existing_page_urls(camps):
+    urls = set()
+    for camp in camps:
+        website = str(camp.get("website") or "")
+        parsed = urlparse(website)
+        if parsed.netloc.lower() == "www.fs.usda.gov":
+            urls.add(f"https://www.fs.usda.gov{parsed.path}".rstrip("/"))
+    return urls
+
+
+def fetch_usfs_official_website_supplement(primary_camps):
+    """Crawl official Forest Service activity pages for missed horse camp pages.
+
+    This is not a manual allowlist. It discovers official fs.usda.gov forest
+    Horse Riding and Camping pages from forests already represented in the USFS
+    ArcGIS result, follows their listed official recreation detail pages, and
+    imports only pages with explicit overnight horse-camping evidence plus
+    coordinates.
+    """
+    forest_bases = _usfs_forest_bases_from_primary_camps(primary_camps)
+    if not forest_bases:
+        print("  U.S. Forest Service website supplement: no forest bases discovered")
+        return []
+
+    existing_urls = _usfs_existing_page_urls(primary_camps)
+    discovered_detail_urls = []
+    seen_detail_urls = set(existing_urls)
+    per_forest_limit = USFS_WEBSITE_MAX_DETAIL_PAGES_PER_FOREST
+
+    for base in forest_bases:
+        forest_detail_count = 0
+        for page_index in range(USFS_WEBSITE_MAX_ACTIVITY_PAGES):
+            activity_url = f"{base}{USFS_HORSE_ACTIVITY_PATH}"
+            if page_index:
+                activity_url += f"?page=%2C{page_index}"
+            final_url, raw_html = _usfs_fetch_html(activity_url, retries=2)
+            if not raw_html:
+                break
+            links = _usfs_extract_official_detail_links(raw_html, final_url or activity_url)
+            for link in links:
+                normalized = link.rstrip("/")
+                if normalized in seen_detail_urls:
+                    continue
+                seen_detail_urls.add(normalized)
+                discovered_detail_urls.append(link)
+                forest_detail_count += 1
+                if forest_detail_count >= per_forest_limit:
+                    break
+
+            text = _usfs_html_to_text(raw_html)
+            showing = re.search(r"Showing:\s*(\d+)\s*-\s*(\d+)\s+of\s+(\d+)\s+results", text, flags=re.I)
+            if forest_detail_count >= per_forest_limit:
+                break
+            if not showing or int(showing.group(2)) >= int(showing.group(3)):
+                break
+            time.sleep(0.15)
+
+    supplemental = []
+    seen_ids = set()
+    for detail_url in discovered_detail_urls:
+        final_url, raw_html = _usfs_fetch_html(detail_url, retries=2)
+        if not raw_html:
+            continue
+        final_url = (final_url or detail_url).split("?", 1)[0].rstrip("/")
+        camp = _usfs_build_camp_from_official_page(final_url, raw_html)
+        if not camp:
+            continue
+        if camp["id"] in seen_ids:
+            continue
+        seen_ids.add(camp["id"])
+        supplemental.append(camp)
+        time.sleep(0.1)
+
+    print(
+        "  U.S. Forest Service website supplement: "
+        f"{len(forest_bases)} forests, {len(discovered_detail_urls)} official detail pages checked, "
+        f"{len(supplemental)} accepted"
+    )
+    return supplemental
 
 # ── NPS ────────────────────────────────────────────────────────────────
 def fetch_nps_state(state):

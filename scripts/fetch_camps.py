@@ -1283,6 +1283,26 @@ USFS_HORSE_ACTIVITY_PATH = "/recreation/opportunities/horse-riding-and-camping"
 USFS_WEBSITE_MAX_ACTIVITY_PAGES = 8
 USFS_WEBSITE_MAX_DETAIL_PAGES_PER_FOREST = 80
 
+# The official Forest Service website rate-limits bursts. Keep this crawler
+# deliberately slower than the API-backed sources and avoid detail pages that
+# cannot plausibly be overnight horse-camping listings.
+USFS_WEBSITE_REQUEST_DELAY_SECONDS = 1.0
+USFS_WEBSITE_MAX_429_RETRY_SECONDS = 60
+_last_usfs_website_request_at = 0.0
+
+USFS_DETAIL_LINK_INCLUDE_RE = re.compile(
+    r"\b(?:camp|campground|campsite|camping|horse\s+camp|equestrian\s+camp|stock\s+camp|cow\s+camp)\b",
+    re.I,
+)
+USFS_DETAIL_LINK_STRONG_CAMP_RE = re.compile(
+    r"\b(?:camp|campground|campsite|camping|horse\s+camp|equestrian\s+camp|stock\s+camp|cow\s+camp)\b",
+    re.I,
+)
+USFS_DETAIL_LINK_EXCLUDE_RE = re.compile(
+    r"\b(?:trail|trails|trailhead|picnic|day[- ]use|overlook|interpretive|ohv|scenic|winter|snowmobile)\b",
+    re.I,
+)
+
 USFS_PAGE_STRONG_HORSE_CAMPING_PATTERNS = [
     re.compile(r"\b\d+\s+(?:sites?|campsites?)\s+for\s+horse\s+campers?\b", re.I),
     re.compile(r"\bhorse\s+campers?\b", re.I),
@@ -1310,9 +1330,26 @@ USFS_PAGE_NON_OVERNIGHT_PATTERNS = [
 ]
 
 
-def _usfs_fetch_html(url, retries=2):
+def _usfs_polite_website_pause():
+    global _last_usfs_website_request_at
+    now = time.monotonic()
+    wait = USFS_WEBSITE_REQUEST_DELAY_SECONDS - (now - _last_usfs_website_request_at)
+    if wait > 0:
+        time.sleep(wait)
+    _last_usfs_website_request_at = time.monotonic()
+
+
+def _usfs_retry_after_seconds(response, attempt):
+    retry_after = str(response.headers.get("Retry-After") or "").strip()
+    if retry_after.isdigit():
+        return min(max(int(retry_after), 5), USFS_WEBSITE_MAX_429_RETRY_SECONDS)
+    return min(10 * (attempt + 1), USFS_WEBSITE_MAX_429_RETRY_SECONDS)
+
+
+def _usfs_fetch_html(url, retries=3):
     for attempt in range(retries):
         try:
+            _usfs_polite_website_pause()
             response = requests.get(
                 url,
                 timeout=20,
@@ -1321,13 +1358,17 @@ def _usfs_fetch_html(url, retries=2):
             )
             if response.status_code == 200 and response.text:
                 return response.url, response.text
+            if response.status_code == 429 and attempt < retries - 1:
+                wait = _usfs_retry_after_seconds(response, attempt)
+                print(f"  USFS website rate limited for {url}; waiting {wait}s before retry")
+                time.sleep(wait)
+                continue
             print(f"  USFS website HTTP {response.status_code} for {url}")
             return "", ""
         except Exception as e:
             print(f"  USFS website request error (attempt {attempt + 1}) for {url}: {e}")
-            time.sleep(2)
+            time.sleep(3 * (attempt + 1))
     return "", ""
-
 
 def _usfs_html_to_text(raw_html):
     text = re.sub(r"<script[\s\S]*?</script>", " ", raw_html or "", flags=re.I)
@@ -1386,27 +1427,39 @@ def _usfs_extract_page_coordinates(text):
 def _usfs_extract_official_detail_links(raw_html, base_url):
     links = []
     seen = set()
-    link_re = re.compile(r"href=[\"']([^\"'#?]+)(?:[?#][^\"']*)?[\"']", re.I)
-    for match in link_re.finditer(raw_html or ""):
+    anchor_re = re.compile(r"<a\b[^>]*href=[\"']([^\"'#?]+)(?:[?#][^\"']*)?[\"'][^>]*>([\s\S]*?)</a>", re.I)
+    for match in anchor_re.finditer(raw_html or ""):
         href = html.unescape(match.group(1)).strip()
+        label = _usfs_html_to_text(match.group(2))
         absolute = urljoin(base_url, href)
         parsed = urlparse(absolute)
         if parsed.netloc.lower() != "www.fs.usda.gov":
             continue
         if not re.match(r"^/r\d{2}/[^/]+/recreation/[^/]+", parsed.path):
             continue
-        if "/recreation/opportunities/" in parsed.path:
+        if "/recreation/opportunities" in parsed.path:
             continue
         if "/recreation/areas/" in parsed.path:
             # Area pages can contain broad recreation summaries but are not
             # individual overnight camp listings. Detail pages remain eligible.
             continue
+        if re.match(r"^/r\d{2}/[^/]+/recreation/(?:camping-cabins|epic-adventures|trails)/?$", parsed.path):
+            continue
+
+        blob = " ".join([
+            parsed.path.replace("-", " ").replace("/", " "),
+            label,
+        ])
+        if not USFS_DETAIL_LINK_INCLUDE_RE.search(blob):
+            continue
+        if USFS_DETAIL_LINK_EXCLUDE_RE.search(blob) and not USFS_DETAIL_LINK_STRONG_CAMP_RE.search(blob):
+            continue
+
         normalized = f"https://www.fs.usda.gov{parsed.path}"
         if normalized not in seen:
             seen.add(normalized)
             links.append(normalized)
     return links
-
 
 def _usfs_resolve_forest_base_url(url):
     parsed = urlparse(str(url or ""))
@@ -1449,7 +1502,7 @@ def _usfs_forest_bases_from_primary_camps(camps):
         base = _usfs_resolve_forest_base_url(sample_url)
         if base:
             bases.add(base)
-        time.sleep(0.15)
+        time.sleep(USFS_WEBSITE_REQUEST_DELAY_SECONDS)
 
     return sorted(bases)
 
@@ -1623,7 +1676,7 @@ def fetch_usfs_official_website_supplement(primary_camps):
                 break
             if not showing or int(showing.group(2)) >= int(showing.group(3)):
                 break
-            time.sleep(0.15)
+            time.sleep(USFS_WEBSITE_REQUEST_DELAY_SECONDS)
 
     supplemental = []
     seen_ids = set()
@@ -1639,7 +1692,7 @@ def fetch_usfs_official_website_supplement(primary_camps):
             continue
         seen_ids.add(camp["id"])
         supplemental.append(camp)
-        time.sleep(0.1)
+        time.sleep(USFS_WEBSITE_REQUEST_DELAY_SECONDS)
 
     print(
         "  U.S. Forest Service website supplement: "

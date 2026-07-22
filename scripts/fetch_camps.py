@@ -13,7 +13,7 @@ Required GitHub Secrets:
   NPS_API_KEY   — from developer.nps.gov/signup
 """
 
-import os, json, time, re, math, html, signal, queue, multiprocessing as mp, requests
+import os, json, time, re, math, html, signal, tempfile, multiprocessing as mp, requests
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
@@ -36,6 +36,7 @@ RIDB_PROGRESS_EVERY_PAGES = 10
 # Run each state RIDB fetch in its own process. If RIDB or one malformed record
 # hangs outside requests' timeout machinery, the parent can still terminate it.
 RIDB_STATE_PROCESS_TIMEOUT_SECONDS = 90
+NPS_STATE_PROCESS_TIMEOUT_SECONDS = 60
 RIDB_DEBUG_STATE = os.environ.get("RIDB_DEBUG_STATE", "WY").strip().upper()
 
 # Official U.S. Forest Service Recreation Opportunities service. This public
@@ -1028,8 +1029,8 @@ def _ridb_total_count(data):
     return None
 
 
-def load_previous_ridb_camps_by_state():
-    """Load the last published RIDB records for safe per-state fallback."""
+def load_previous_camps_by_source_state(source):
+    """Load the last published records for one source, grouped by state."""
     path = REPO_ROOT / "camps.json"
     grouped = {}
     if not path.exists():
@@ -1039,14 +1040,14 @@ def load_previous_ridb_camps_by_state():
         payload = json.loads(path.read_text(encoding="utf-8"))
         camps = payload.get("camps", []) if isinstance(payload, dict) else payload
     except Exception as error:
-        print(f"  WARNING: Could not load previous RIDB fallback data: {error}", flush=True)
+        print(f"  WARNING: Could not load previous {source} fallback data: {error}", flush=True)
         return grouped
 
     if not isinstance(camps, list):
         return grouped
 
     for camp in camps:
-        if not isinstance(camp, dict) or camp.get("source") != "RIDB":
+        if not isinstance(camp, dict) or camp.get("source") != source:
             continue
         state = str(camp.get("state") or "").strip().upper()
         if state:
@@ -1054,74 +1055,89 @@ def load_previous_ridb_camps_by_state():
     return grouped
 
 
-def _ridb_state_worker(state, result_queue):
-    """Child-process entry point for one state's RIDB work."""
-    try:
-        result_queue.put(("ok", fetch_ridb_state(state)))
-    except BaseException as error:
-        result_queue.put(("error", f"{type(error).__name__}: {error}"))
+def _state_fetch_worker_to_file(source, state, result_path):
+    """Child-process entry point that writes its result atomically to disk.
 
-
-def fetch_ridb_state_isolated(state, fallback_camps):
-    """Fetch one RIDB state with a killable process-level deadline.
-
-    Socket timeouts and SIGALRM cannot protect against every possible hang in
-    native code, JSON parsing, or record processing. Process isolation gives the
-    parent a guaranteed escape hatch and lets the feed reuse the last published
-    records for that state instead of deleting them.
+    A temporary file avoids multiprocessing.Queue feeder-thread deadlocks during
+    process shutdown and gives the parent a deterministic handoff point.
     """
+    try:
+        if source == "RIDB":
+            payload = fetch_ridb_state(state)
+        elif source == "NPS":
+            payload = fetch_nps_state(state)
+        else:
+            raise ValueError(f"Unsupported isolated source: {source}")
+        result = {"status": "ok", "payload": payload}
+    except BaseException as error:
+        result = {"status": "error", "error": f"{type(error).__name__}: {error}"}
+
+    result_path = Path(result_path)
+    temp_path = result_path.with_suffix(result_path.suffix + ".tmp")
+    temp_path.write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
+    os.replace(temp_path, result_path)
+
+
+def fetch_state_isolated(source, state, fallback_camps, timeout_seconds):
+    """Fetch one source/state in a killable child process with file handoff."""
     start_method = "fork" if hasattr(os, "fork") else "spawn"
     context = mp.get_context(start_method)
-    result_queue = context.Queue()
-    process = context.Process(
-        target=_ridb_state_worker,
-        args=(state, result_queue),
-        name=f"ridb-{state}",
-    )
-    process.start()
 
-    deadline = time.monotonic() + RIDB_STATE_PROCESS_TIMEOUT_SECONDS
-    result = None
-    while time.monotonic() < deadline:
-        try:
-            result = result_queue.get(timeout=0.5)
-            break
-        except queue.Empty:
-            if not process.is_alive():
-                break
+    with tempfile.TemporaryDirectory(prefix=f"horsecamp-{source.lower()}-{state.lower()}-") as tmpdir:
+        result_path = Path(tmpdir) / "result.json"
+        process = context.Process(
+            target=_state_fetch_worker_to_file,
+            args=(source, state, str(result_path)),
+            name=f"{source.lower()}-{state}",
+        )
+        process.start()
+        process.join(timeout=timeout_seconds)
 
-    if result is None and process.is_alive():
-        process.terminate()
-        process.join(timeout=5)
-        if process.is_alive() and hasattr(process, "kill"):
-            process.kill()
+        if process.is_alive():
+            process.terminate()
             process.join(timeout=5)
-        reason = f"exceeded {RIDB_STATE_PROCESS_TIMEOUT_SECONDS}s and was terminated"
-    elif result is None:
-        process.join(timeout=2)
-        reason = f"worker exited with code {process.exitcode} without returning data"
-    else:
-        process.join(timeout=5)
-        status, payload = result
-        if status == "ok":
-            result_queue.close()
-            result_queue.join_thread()
-            return payload
-        reason = payload
-
-    result_queue.close()
-    result_queue.join_thread()
+            if process.is_alive() and hasattr(process, "kill"):
+                process.kill()
+                process.join(timeout=5)
+            reason = f"exceeded {timeout_seconds}s and was terminated"
+        elif not result_path.exists():
+            reason = f"worker exited with code {process.exitcode} without returning data"
+        else:
+            try:
+                result = json.loads(result_path.read_text(encoding="utf-8"))
+            except Exception as error:
+                reason = f"returned an unreadable result: {error}"
+            else:
+                if result.get("status") == "ok":
+                    payload = result.get("payload")
+                    if isinstance(payload, list):
+                        return payload
+                    reason = "returned a non-list payload"
+                else:
+                    reason = str(result.get("error") or "worker returned an unknown error")
 
     if fallback_camps:
         print(
-            f"  WARNING: RIDB {state} {reason}; reusing "
+            f"  WARNING: {source} {state} {reason}; reusing "
             f"{len(fallback_camps)} records from the last published camps.json",
             flush=True,
         )
         return fallback_camps
 
     raise RuntimeError(
-        f"RIDB {state} {reason}, and no previous RIDB fallback records are available"
+        f"{source} {state} {reason}, and no previous {source} fallback records are available"
+    )
+
+
+def fetch_ridb_state_isolated(state, fallback_camps):
+    return fetch_state_isolated(
+        "RIDB", state, fallback_camps, RIDB_STATE_PROCESS_TIMEOUT_SECONDS
+    )
+
+
+def fetch_nps_state_isolated(state, fallback_camps):
+    return fetch_state_isolated(
+        "NPS", state, fallback_camps, NPS_STATE_PROCESS_TIMEOUT_SECONDS
     )
 
 
@@ -3371,10 +3387,16 @@ def main():
     load_geocode_cache()
 
     all_camps = {}
-    previous_ridb_by_state = load_previous_ridb_camps_by_state()
+    previous_ridb_by_state = load_previous_camps_by_source_state("RIDB")
+    previous_nps_by_state = load_previous_camps_by_source_state("NPS")
     if previous_ridb_by_state:
         print(
             f"  Previous RIDB fallback loaded for {len(previous_ridb_by_state)} states",
+            flush=True,
+        )
+    if previous_nps_by_state:
+        print(
+            f"  Previous NPS fallback loaded for {len(previous_nps_by_state)} states",
             flush=True,
         )
     total_ridb = 0
@@ -3390,7 +3412,16 @@ def main():
             fetch_ridb_state_isolated(state, previous_ridb_by_state.get(state, []))
             if RIDB_KEY else []
         )
-        nps_camps = fetch_nps_state(state) if NPS_KEY else []
+        print(f"  RIDB {state} complete: {len(ridb_camps)} records", flush=True)
+
+        if NPS_KEY:
+            print(f"  NPS {state} starting...", flush=True)
+            nps_camps = fetch_nps_state_isolated(
+                state, previous_nps_by_state.get(state, [])
+            )
+            print(f"  NPS {state} complete: {len(nps_camps)} records", flush=True)
+        else:
+            nps_camps = []
         state_new = 0
         for camp in ridb_camps + nps_camps:
             cid = camp["id"]

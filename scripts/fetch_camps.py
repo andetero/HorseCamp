@@ -25,6 +25,14 @@ NPS_KEY    = os.environ.get("NPS_API_KEY", "")
 RIDB_BASE = "https://ridb.recreation.gov/api/v1"
 NPS_BASE  = "https://developer.nps.gov/api/v1"
 
+# RIDB occasionally returns a full page repeatedly while ignoring the requested
+# offset. Without guards, that can create an endless pagination loop for one
+# state (observed twice with Wyoming on 2026-07-21).
+RIDB_PAGE_SIZE = 50
+RIDB_MAX_PAGES_PER_SEARCH = 100
+RIDB_STATE_TIMEOUT_SECONDS = 180
+RIDB_PROGRESS_EVERY_PAGES = 10
+
 # Official U.S. Forest Service Recreation Opportunities service. This public
 # ArcGIS layer is used by the USFS website, RIDB, and its Interactive Visitor Map.
 USFS_RECREATION_URL = (
@@ -961,9 +969,27 @@ def parse_ridb_photos(facility):
     return [m["URL"] for m in ordered[:6]]  # cap at 6 photos
 
 # ── RIDB ───────────────────────────────────────────────────────────────
+def _ridb_total_count(data):
+    """Return RIDB's reported total result count when present."""
+    metadata = data.get("METADATA") if isinstance(data, dict) else None
+    results = metadata.get("RESULTS") if isinstance(metadata, dict) else None
+    if not isinstance(results, dict):
+        return None
+
+    for key in ("TOTAL_COUNT", "TotalCount", "totalCount", "total_count"):
+        value = results.get(key)
+        try:
+            count = int(value)
+            return count if count >= 0 else None
+        except (TypeError, ValueError):
+            continue
+    return None
+
+
 def fetch_ridb_state(state):
     camps = {}
     headers = {"apikey": RIDB_KEY}
+    state_started = time.monotonic()
     search_terms = [
         ("activity", "9"),           # activity 9 = Horseback Riding
         ("query", "horse corral"),
@@ -974,20 +1000,83 @@ def fetch_ridb_state(state):
 
     for param_key, param_val in search_terms:
         offset = 0
+        page_number = 0
+        seen_term_ids = set()
+        seen_page_signatures = set()
+        reported_total = None
+
         while True:
+            elapsed = time.monotonic() - state_started
+            if elapsed > RIDB_STATE_TIMEOUT_SECONDS:
+                raise RuntimeError(
+                    f"RIDB {state} exceeded {RIDB_STATE_TIMEOUT_SECONDS}s while fetching "
+                    f"{param_key}={param_val!r}; refusing to publish a partial state result"
+                )
+
+            if page_number >= RIDB_MAX_PAGES_PER_SEARCH:
+                raise RuntimeError(
+                    f"RIDB {state} exceeded {RIDB_MAX_PAGES_PER_SEARCH} pages while fetching "
+                    f"{param_key}={param_val!r}; possible pagination loop"
+                )
+
             params = {
                 param_key: param_val,
                 "state":   state,
-                "limit":   50,
+                "limit":   RIDB_PAGE_SIZE,
                 "offset":  offset,
                 "full":    "true",
             }
             data = safe_get(f"{RIDB_BASE}/facilities", headers=headers, params=params)
             if not data:
                 break
+
             facilities = data.get("RECDATA", [])
             if not facilities:
                 break
+
+            page_number += 1
+            if reported_total is None:
+                reported_total = _ridb_total_count(data)
+
+            page_ids = [str(f.get("FacilityID", "")).strip() for f in facilities]
+            page_id_set = {fid for fid in page_ids if fid}
+            page_signature = frozenset(page_id_set)
+
+            # A repeated page means RIDB ignored or reset the offset. Stop this
+            # search term instead of requesting the same records forever.
+            if page_signature and page_signature in seen_page_signatures:
+                print(
+                    f"\n  WARNING: RIDB {state} repeated page {page_number} for "
+                    f"{param_key}={param_val!r} at offset {offset}; stopping that query",
+                    flush=True,
+                )
+                break
+
+            # Also stop if a differently ordered/partially overlapping page adds
+            # no new facility IDs within this search term.
+            new_term_ids = page_id_set - seen_term_ids
+            if page_number > 1 and page_id_set and not new_term_ids:
+                print(
+                    f"\n  WARNING: RIDB {state} page {page_number} added no new IDs for "
+                    f"{param_key}={param_val!r} at offset {offset}; stopping that query",
+                    flush=True,
+                )
+                break
+
+            if page_signature:
+                seen_page_signatures.add(page_signature)
+            seen_term_ids.update(page_id_set)
+
+            if (
+                RIDB_PROGRESS_EVERY_PAGES > 0
+                and page_number % RIDB_PROGRESS_EVERY_PAGES == 0
+            ):
+                total_text = f"/{reported_total}" if reported_total is not None else ""
+                print(
+                    f"\n  RIDB {state} {param_key}={param_val!r}: page {page_number}, "
+                    f"offset {offset}, {len(seen_term_ids)}{total_text} unique raw facilities",
+                    flush=True,
+                )
 
             for f in facilities:
                 fid = str(f.get("FacilityID", ""))
@@ -1043,16 +1132,15 @@ def fetch_ridb_state(state):
                     "horseFeePerNight":    0.0,
                     "hookups":             list(dict.fromkeys(hookups)),
                     "accommodations":      list(dict.fromkeys(accommodations)),
-                     "maxRigLength":        parse_rig_length(f),
-                     "stallCount":          parse_stall_count(f),
-                     "paddockCount":        parse_paddock_count(f),
+                    "maxRigLength":        parse_rig_length(f),
+                    "stallCount":          parse_stall_count(f),
+                    "paddockCount":        parse_paddock_count(f),
                     "phone":               f.get("FacilityPhone", ""),
-
                     "website":             f.get("FacilityReservationURL", "") or f"https://www.recreation.gov/camping/campgrounds/{fid}",
                     "description":         desc[:2000],
                     "isVerified":          False,
-                     "seasonStart":         season_start,
-                     "seasonEnd":           season_end,
+                    "seasonStart":         season_start,
+                    "seasonEnd":           season_end,
                     "hasWashRack":         "wash rack" in blob_lower,
                     "hasDumpStation":      "dump" in blob_lower,
                     "hasWifi":             "wifi" in blob_lower or "internet" in blob_lower,
@@ -1063,9 +1151,18 @@ def fetch_ridb_state(state):
                     "source":              "RIDB",
                 }
 
-            offset += 50
-            if len(facilities) < 50:
+            received_count = len(facilities)
+            next_offset = offset + received_count
+
+            # Prefer RIDB's own total count when available. This handles a final
+            # page containing exactly RIDB_PAGE_SIZE records without requesting
+            # an unnecessary extra page.
+            if reported_total is not None and next_offset >= reported_total:
                 break
+            if received_count < RIDB_PAGE_SIZE:
+                break
+
+            offset = next_offset
             time.sleep(0.5)
 
         time.sleep(0.3)

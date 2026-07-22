@@ -13,7 +13,7 @@ Required GitHub Secrets:
   NPS_API_KEY   — from developer.nps.gov/signup
 """
 
-import os, json, time, re, math, html, signal, requests
+import os, json, time, re, math, html, signal, queue, multiprocessing as mp, requests
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
@@ -33,6 +33,10 @@ RIDB_MAX_PAGES_PER_SEARCH = 100
 RIDB_STATE_TIMEOUT_SECONDS = 180
 HTTP_REQUEST_WALL_TIMEOUT_SECONDS = 45
 RIDB_PROGRESS_EVERY_PAGES = 10
+# Run each state RIDB fetch in its own process. If RIDB or one malformed record
+# hangs outside requests' timeout machinery, the parent can still terminate it.
+RIDB_STATE_PROCESS_TIMEOUT_SECONDS = 90
+RIDB_DEBUG_STATE = os.environ.get("RIDB_DEBUG_STATE", "WY").strip().upper()
 
 # Official U.S. Forest Service Recreation Opportunities service. This public
 # ArcGIS layer is used by the USFS website, RIDB, and its Interactive Visitor Map.
@@ -1024,6 +1028,103 @@ def _ridb_total_count(data):
     return None
 
 
+def load_previous_ridb_camps_by_state():
+    """Load the last published RIDB records for safe per-state fallback."""
+    path = REPO_ROOT / "camps.json"
+    grouped = {}
+    if not path.exists():
+        return grouped
+
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        camps = payload.get("camps", []) if isinstance(payload, dict) else payload
+    except Exception as error:
+        print(f"  WARNING: Could not load previous RIDB fallback data: {error}", flush=True)
+        return grouped
+
+    if not isinstance(camps, list):
+        return grouped
+
+    for camp in camps:
+        if not isinstance(camp, dict) or camp.get("source") != "RIDB":
+            continue
+        state = str(camp.get("state") or "").strip().upper()
+        if state:
+            grouped.setdefault(state, []).append(camp)
+    return grouped
+
+
+def _ridb_state_worker(state, result_queue):
+    """Child-process entry point for one state's RIDB work."""
+    try:
+        result_queue.put(("ok", fetch_ridb_state(state)))
+    except BaseException as error:
+        result_queue.put(("error", f"{type(error).__name__}: {error}"))
+
+
+def fetch_ridb_state_isolated(state, fallback_camps):
+    """Fetch one RIDB state with a killable process-level deadline.
+
+    Socket timeouts and SIGALRM cannot protect against every possible hang in
+    native code, JSON parsing, or record processing. Process isolation gives the
+    parent a guaranteed escape hatch and lets the feed reuse the last published
+    records for that state instead of deleting them.
+    """
+    start_method = "fork" if hasattr(os, "fork") else "spawn"
+    context = mp.get_context(start_method)
+    result_queue = context.Queue()
+    process = context.Process(
+        target=_ridb_state_worker,
+        args=(state, result_queue),
+        name=f"ridb-{state}",
+    )
+    process.start()
+
+    deadline = time.monotonic() + RIDB_STATE_PROCESS_TIMEOUT_SECONDS
+    result = None
+    while time.monotonic() < deadline:
+        try:
+            result = result_queue.get(timeout=0.5)
+            break
+        except queue.Empty:
+            if not process.is_alive():
+                break
+
+    if result is None and process.is_alive():
+        process.terminate()
+        process.join(timeout=5)
+        if process.is_alive() and hasattr(process, "kill"):
+            process.kill()
+            process.join(timeout=5)
+        reason = f"exceeded {RIDB_STATE_PROCESS_TIMEOUT_SECONDS}s and was terminated"
+    elif result is None:
+        process.join(timeout=2)
+        reason = f"worker exited with code {process.exitcode} without returning data"
+    else:
+        process.join(timeout=5)
+        status, payload = result
+        if status == "ok":
+            result_queue.close()
+            result_queue.join_thread()
+            return payload
+        reason = payload
+
+    result_queue.close()
+    result_queue.join_thread()
+
+    if fallback_camps:
+        print(
+            f"  WARNING: RIDB {state} {reason}; reusing "
+            f"{len(fallback_camps)} records from the last published camps.json",
+            flush=True,
+        )
+        return fallback_camps
+
+    raise RuntimeError(
+        f"RIDB {state} {reason}, and no previous RIDB fallback records are available"
+    )
+
+
 def fetch_ridb_state(state):
     camps = {}
     headers = {"apikey": RIDB_KEY}
@@ -1035,6 +1136,8 @@ def fetch_ridb_state(state):
         ("query", "horse camp"),
         ("query", "horse stall"),
     ]
+
+    debug_state = state == RIDB_DEBUG_STATE
 
     for param_key, param_val in search_terms:
         offset = 0
@@ -1064,13 +1167,32 @@ def fetch_ridb_state(state):
                 "offset":  offset,
                 "full":    "true",
             }
+            if debug_state:
+                print(
+                    f"  RIDB {state} requesting {param_key}={param_val!r}, "
+                    f"page {page_number + 1}, offset {offset}",
+                    flush=True,
+                )
             data = safe_get(f"{RIDB_BASE}/facilities", headers=headers, params=params)
             if not data:
                 break
 
             facilities = data.get("RECDATA", [])
             if not facilities:
+                if debug_state:
+                    print(
+                        f"  RIDB {state} returned no records for {param_key}={param_val!r} "
+                        f"at offset {offset}",
+                        flush=True,
+                    )
                 break
+
+            if debug_state:
+                print(
+                    f"  RIDB {state} received {len(facilities)} records for "
+                    f"{param_key}={param_val!r}, offset {offset}",
+                    flush=True,
+                )
 
             page_number += 1
             if reported_total is None:
@@ -1116,8 +1238,15 @@ def fetch_ridb_state(state):
                     flush=True,
                 )
 
-            for f in facilities:
+            for facility_index, f in enumerate(facilities, start=1):
                 fid = str(f.get("FacilityID", ""))
+                if debug_state:
+                    facility_name = str(f.get("FacilityName") or "Unknown Camp")
+                    print(
+                        f"    RIDB {state} processing {facility_index}/{len(facilities)}: "
+                        f"{fid or 'no-id'} {facility_name[:100]}",
+                        flush=True,
+                    )
                 if not fid or fid in camps:
                     continue
 
@@ -3242,6 +3371,12 @@ def main():
     load_geocode_cache()
 
     all_camps = {}
+    previous_ridb_by_state = load_previous_ridb_camps_by_state()
+    if previous_ridb_by_state:
+        print(
+            f"  Previous RIDB fallback loaded for {len(previous_ridb_by_state)} states",
+            flush=True,
+        )
     total_ridb = 0
     total_nps = 0
     total_usfs = 0
@@ -3251,7 +3386,10 @@ def main():
         # Use a complete line so GitHub Actions displays the state immediately,
         # even when the following network request stalls before producing output.
         print(f"[{i+1}/{len(STATES)}] {state}...", flush=True)
-        ridb_camps = fetch_ridb_state(state) if RIDB_KEY else []
+        ridb_camps = (
+            fetch_ridb_state_isolated(state, previous_ridb_by_state.get(state, []))
+            if RIDB_KEY else []
+        )
         nps_camps = fetch_nps_state(state) if NPS_KEY else []
         state_new = 0
         for camp in ridb_camps + nps_camps:

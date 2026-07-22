@@ -13,7 +13,7 @@ Required GitHub Secrets:
   NPS_API_KEY   — from developer.nps.gov/signup
 """
 
-import os, json, time, re, math, html, requests
+import os, json, time, re, math, html, signal, requests
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
@@ -31,6 +31,7 @@ NPS_BASE  = "https://developer.nps.gov/api/v1"
 RIDB_PAGE_SIZE = 50
 RIDB_MAX_PAGES_PER_SEARCH = 100
 RIDB_STATE_TIMEOUT_SECONDS = 180
+HTTP_REQUEST_WALL_TIMEOUT_SECONDS = 45
 RIDB_PROGRESS_EVERY_PAGES = 10
 
 # Official U.S. Forest Service Recreation Opportunities service. This public
@@ -314,21 +315,58 @@ def remove_invalid_equestrian_listings(camps_dict):
     print(f"  Invalid/non-horse listings removed: {len(bad_ids)}")
     return len(bad_ids)
 
+class _RequestWallClockTimeout(TimeoutError):
+    pass
+
+
+def _request_timeout_handler(signum, frame):
+    raise _RequestWallClockTimeout(
+        f"request exceeded {HTTP_REQUEST_WALL_TIMEOUT_SECONDS}s wall-clock limit"
+    )
+
+
 def safe_get(url, headers=None, params=None, retries=3):
+    """Fetch and decode one JSON response with both socket and hard wall-clock limits.
+
+    requests' normal read timeout measures periods of socket inactivity. A server
+    that keeps sending tiny chunks can therefore hold a request open indefinitely.
+    GitHub Actions runs on Linux, so SIGALRM provides a true total request deadline.
+    """
     for attempt in range(retries):
+        previous_handler = None
+        alarm_enabled = hasattr(signal, "SIGALRM") and hasattr(signal, "setitimer")
         try:
-            r = requests.get(url, headers=headers, params=params, timeout=15)
-            if r.status_code == 200:
-                return r.json()
-            elif r.status_code == 429:
-                print(f"  Rate limited — waiting 10s...")
+            if alarm_enabled:
+                previous_handler = signal.signal(signal.SIGALRM, _request_timeout_handler)
+                signal.setitimer(signal.ITIMER_REAL, HTTP_REQUEST_WALL_TIMEOUT_SECONDS)
+
+            # Separate connection and inactivity limits, in addition to the hard
+            # total deadline above.
+            response = requests.get(url, headers=headers, params=params, timeout=(8, 15))
+            if response.status_code == 200:
+                return response.json()
+            if response.status_code == 429:
+                print("  Rate limited — waiting 10s...", flush=True)
                 time.sleep(10)
-            else:
-                print(f"  HTTP {r.status_code} for {url}")
-                return None
-        except Exception as e:
-            print(f"  Request error (attempt {attempt+1}): {e}")
+                continue
+
+            print(f"  HTTP {response.status_code} for {url}", flush=True)
+            return None
+        except _RequestWallClockTimeout as error:
+            print(f"  Request timeout (attempt {attempt + 1}/{retries}): {error}", flush=True)
+        except requests.RequestException as error:
+            print(f"  Request error (attempt {attempt + 1}/{retries}): {error}", flush=True)
+        except (ValueError, TypeError, json.JSONDecodeError) as error:
+            print(f"  Invalid JSON response (attempt {attempt + 1}/{retries}): {error}", flush=True)
+        finally:
+            if alarm_enabled:
+                signal.setitimer(signal.ITIMER_REAL, 0)
+                if previous_handler is not None:
+                    signal.signal(signal.SIGALRM, previous_handler)
+
+        if attempt + 1 < retries:
             time.sleep(3)
+
     return None
 
 def print_section(title):
@@ -3210,7 +3248,9 @@ def main():
 
     for i, state in enumerate(STATES):
         state_started = time.time()
-        print(f"[{i+1}/{len(STATES)}] {state}...", end=" ", flush=True)
+        # Use a complete line so GitHub Actions displays the state immediately,
+        # even when the following network request stalls before producing output.
+        print(f"[{i+1}/{len(STATES)}] {state}...", flush=True)
         ridb_camps = fetch_ridb_state(state) if RIDB_KEY else []
         nps_camps = fetch_nps_state(state) if NPS_KEY else []
         state_new = 0
@@ -3222,7 +3262,7 @@ def main():
         total_ridb += len(ridb_camps)
         total_nps += len(nps_camps)
         elapsed = time.time() - state_started
-        print(f"{len(ridb_camps)} RIDB + {len(nps_camps)} NPS = {state_new} new [{elapsed:.1f}s]")
+        print(f"  {len(ridb_camps)} RIDB + {len(nps_camps)} NPS = {state_new} new [{elapsed:.1f}s]")
         time.sleep(0.5)
 
     print_section("U.S. Forest Service")

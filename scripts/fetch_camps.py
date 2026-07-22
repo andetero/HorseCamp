@@ -13,7 +13,7 @@ Required GitHub Secrets:
   NPS_API_KEY   — from developer.nps.gov/signup
 """
 
-import os, json, time, re, math, html, signal, tempfile, multiprocessing as mp, requests
+import os, json, time, re, math, html, requests
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
@@ -25,19 +25,12 @@ NPS_KEY    = os.environ.get("NPS_API_KEY", "")
 RIDB_BASE = "https://ridb.recreation.gov/api/v1"
 NPS_BASE  = "https://developer.nps.gov/api/v1"
 
-# RIDB occasionally returns a full page repeatedly while ignoring the requested
-# offset. Without guards, that can create an endless pagination loop for one
-# state (observed twice with Wyoming on 2026-07-21).
+# Defensive pagination guards prevent a malformed or repeated RIDB page from
+# creating an endless loop while preserving normal multi-page results.
 RIDB_PAGE_SIZE = 50
 RIDB_MAX_PAGES_PER_SEARCH = 100
 RIDB_STATE_TIMEOUT_SECONDS = 180
-HTTP_REQUEST_WALL_TIMEOUT_SECONDS = 45
 RIDB_PROGRESS_EVERY_PAGES = 10
-# Run each state RIDB fetch in its own process. If RIDB or one malformed record
-# hangs outside requests' timeout machinery, the parent can still terminate it.
-RIDB_STATE_PROCESS_TIMEOUT_SECONDS = 90
-NPS_STATE_PROCESS_TIMEOUT_SECONDS = 60
-RIDB_DEBUG_STATE = os.environ.get("RIDB_DEBUG_STATE", "WY").strip().upper()
 
 # Official U.S. Forest Service Recreation Opportunities service. This public
 # ArcGIS layer is used by the USFS website, RIDB, and its Interactive Visitor Map.
@@ -320,34 +313,16 @@ def remove_invalid_equestrian_listings(camps_dict):
     print(f"  Invalid/non-horse listings removed: {len(bad_ids)}")
     return len(bad_ids)
 
-class _RequestWallClockTimeout(TimeoutError):
-    pass
-
-
-def _request_timeout_handler(signum, frame):
-    raise _RequestWallClockTimeout(
-        f"request exceeded {HTTP_REQUEST_WALL_TIMEOUT_SECONDS}s wall-clock limit"
-    )
-
-
 def safe_get(url, headers=None, params=None, retries=3):
-    """Fetch and decode one JSON response with both socket and hard wall-clock limits.
-
-    requests' normal read timeout measures periods of socket inactivity. A server
-    that keeps sending tiny chunks can therefore hold a request open indefinitely.
-    GitHub Actions runs on Linux, so SIGALRM provides a true total request deadline.
-    """
+    """Fetch and decode one JSON response with bounded connect/read timeouts."""
     for attempt in range(retries):
-        previous_handler = None
-        alarm_enabled = hasattr(signal, "SIGALRM") and hasattr(signal, "setitimer")
         try:
-            if alarm_enabled:
-                previous_handler = signal.signal(signal.SIGALRM, _request_timeout_handler)
-                signal.setitimer(signal.ITIMER_REAL, HTTP_REQUEST_WALL_TIMEOUT_SECONDS)
-
-            # Separate connection and inactivity limits, in addition to the hard
-            # total deadline above.
-            response = requests.get(url, headers=headers, params=params, timeout=(8, 15))
+            response = requests.get(
+                url,
+                headers=headers,
+                params=params,
+                timeout=(8, 20),
+            )
             if response.status_code == 200:
                 return response.json()
             if response.status_code == 429:
@@ -357,22 +332,22 @@ def safe_get(url, headers=None, params=None, retries=3):
 
             print(f"  HTTP {response.status_code} for {url}", flush=True)
             return None
-        except _RequestWallClockTimeout as error:
-            print(f"  Request timeout (attempt {attempt + 1}/{retries}): {error}", flush=True)
         except requests.RequestException as error:
-            print(f"  Request error (attempt {attempt + 1}/{retries}): {error}", flush=True)
+            print(
+                f"  Request error (attempt {attempt + 1}/{retries}): {error}",
+                flush=True,
+            )
         except (ValueError, TypeError, json.JSONDecodeError) as error:
-            print(f"  Invalid JSON response (attempt {attempt + 1}/{retries}): {error}", flush=True)
-        finally:
-            if alarm_enabled:
-                signal.setitimer(signal.ITIMER_REAL, 0)
-                if previous_handler is not None:
-                    signal.signal(signal.SIGALRM, previous_handler)
+            print(
+                f"  Invalid JSON response (attempt {attempt + 1}/{retries}): {error}",
+                flush=True,
+            )
 
         if attempt + 1 < retries:
             time.sleep(3)
 
     return None
+
 
 def print_section(title):
     print(f"\n=== {title} ===")
@@ -1029,118 +1004,6 @@ def _ridb_total_count(data):
     return None
 
 
-def load_previous_camps_by_source_state(source):
-    """Load the last published records for one source, grouped by state."""
-    path = REPO_ROOT / "camps.json"
-    grouped = {}
-    if not path.exists():
-        return grouped
-
-    try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
-        camps = payload.get("camps", []) if isinstance(payload, dict) else payload
-    except Exception as error:
-        print(f"  WARNING: Could not load previous {source} fallback data: {error}", flush=True)
-        return grouped
-
-    if not isinstance(camps, list):
-        return grouped
-
-    for camp in camps:
-        if not isinstance(camp, dict) or camp.get("source") != source:
-            continue
-        state = str(camp.get("state") or "").strip().upper()
-        if state:
-            grouped.setdefault(state, []).append(camp)
-    return grouped
-
-
-def _state_fetch_worker_to_file(source, state, result_path):
-    """Child-process entry point that writes its result atomically to disk.
-
-    A temporary file avoids multiprocessing.Queue feeder-thread deadlocks during
-    process shutdown and gives the parent a deterministic handoff point.
-    """
-    try:
-        if source == "RIDB":
-            payload = fetch_ridb_state(state)
-        elif source == "NPS":
-            payload = fetch_nps_state(state)
-        else:
-            raise ValueError(f"Unsupported isolated source: {source}")
-        result = {"status": "ok", "payload": payload}
-    except BaseException as error:
-        result = {"status": "error", "error": f"{type(error).__name__}: {error}"}
-
-    result_path = Path(result_path)
-    temp_path = result_path.with_suffix(result_path.suffix + ".tmp")
-    temp_path.write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
-    os.replace(temp_path, result_path)
-
-
-def fetch_state_isolated(source, state, fallback_camps, timeout_seconds):
-    """Fetch one source/state in a killable child process with file handoff."""
-    start_method = "fork" if hasattr(os, "fork") else "spawn"
-    context = mp.get_context(start_method)
-
-    with tempfile.TemporaryDirectory(prefix=f"horsecamp-{source.lower()}-{state.lower()}-") as tmpdir:
-        result_path = Path(tmpdir) / "result.json"
-        process = context.Process(
-            target=_state_fetch_worker_to_file,
-            args=(source, state, str(result_path)),
-            name=f"{source.lower()}-{state}",
-        )
-        process.start()
-        process.join(timeout=timeout_seconds)
-
-        if process.is_alive():
-            process.terminate()
-            process.join(timeout=5)
-            if process.is_alive() and hasattr(process, "kill"):
-                process.kill()
-                process.join(timeout=5)
-            reason = f"exceeded {timeout_seconds}s and was terminated"
-        elif not result_path.exists():
-            reason = f"worker exited with code {process.exitcode} without returning data"
-        else:
-            try:
-                result = json.loads(result_path.read_text(encoding="utf-8"))
-            except Exception as error:
-                reason = f"returned an unreadable result: {error}"
-            else:
-                if result.get("status") == "ok":
-                    payload = result.get("payload")
-                    if isinstance(payload, list):
-                        return payload
-                    reason = "returned a non-list payload"
-                else:
-                    reason = str(result.get("error") or "worker returned an unknown error")
-
-    if fallback_camps:
-        print(
-            f"  WARNING: {source} {state} {reason}; reusing "
-            f"{len(fallback_camps)} records from the last published camps.json",
-            flush=True,
-        )
-        return fallback_camps
-
-    raise RuntimeError(
-        f"{source} {state} {reason}, and no previous {source} fallback records are available"
-    )
-
-
-def fetch_ridb_state_isolated(state, fallback_camps):
-    return fetch_state_isolated(
-        "RIDB", state, fallback_camps, RIDB_STATE_PROCESS_TIMEOUT_SECONDS
-    )
-
-
-def fetch_nps_state_isolated(state, fallback_camps):
-    return fetch_state_isolated(
-        "NPS", state, fallback_camps, NPS_STATE_PROCESS_TIMEOUT_SECONDS
-    )
-
-
 def fetch_ridb_state(state):
     camps = {}
     headers = {"apikey": RIDB_KEY}
@@ -1153,7 +1016,6 @@ def fetch_ridb_state(state):
         ("query", "horse stall"),
     ]
 
-    debug_state = state == RIDB_DEBUG_STATE
 
     for param_key, param_val in search_terms:
         offset = 0
@@ -1183,32 +1045,14 @@ def fetch_ridb_state(state):
                 "offset":  offset,
                 "full":    "true",
             }
-            if debug_state:
-                print(
-                    f"  RIDB {state} requesting {param_key}={param_val!r}, "
-                    f"page {page_number + 1}, offset {offset}",
-                    flush=True,
-                )
             data = safe_get(f"{RIDB_BASE}/facilities", headers=headers, params=params)
             if not data:
                 break
 
             facilities = data.get("RECDATA", [])
             if not facilities:
-                if debug_state:
-                    print(
-                        f"  RIDB {state} returned no records for {param_key}={param_val!r} "
-                        f"at offset {offset}",
-                        flush=True,
-                    )
                 break
 
-            if debug_state:
-                print(
-                    f"  RIDB {state} received {len(facilities)} records for "
-                    f"{param_key}={param_val!r}, offset {offset}",
-                    flush=True,
-                )
 
             page_number += 1
             if reported_total is None:
@@ -1254,15 +1098,8 @@ def fetch_ridb_state(state):
                     flush=True,
                 )
 
-            for facility_index, f in enumerate(facilities, start=1):
+            for f in facilities:
                 fid = str(f.get("FacilityID", ""))
-                if debug_state:
-                    facility_name = str(f.get("FacilityName") or "Unknown Camp")
-                    print(
-                        f"    RIDB {state} processing {facility_index}/{len(facilities)}: "
-                        f"{fid or 'no-id'} {facility_name[:100]}",
-                        flush=True,
-                    )
                 if not fid or fid in camps:
                     continue
 
@@ -3387,18 +3224,6 @@ def main():
     load_geocode_cache()
 
     all_camps = {}
-    previous_ridb_by_state = load_previous_camps_by_source_state("RIDB")
-    previous_nps_by_state = load_previous_camps_by_source_state("NPS")
-    if previous_ridb_by_state:
-        print(
-            f"  Previous RIDB fallback loaded for {len(previous_ridb_by_state)} states",
-            flush=True,
-        )
-    if previous_nps_by_state:
-        print(
-            f"  Previous NPS fallback loaded for {len(previous_nps_by_state)} states",
-            flush=True,
-        )
     total_ridb = 0
     total_nps = 0
     total_usfs = 0
@@ -3408,17 +3233,12 @@ def main():
         # Use a complete line so GitHub Actions displays the state immediately,
         # even when the following network request stalls before producing output.
         print(f"[{i+1}/{len(STATES)}] {state}...", flush=True)
-        ridb_camps = (
-            fetch_ridb_state_isolated(state, previous_ridb_by_state.get(state, []))
-            if RIDB_KEY else []
-        )
+        ridb_camps = fetch_ridb_state(state) if RIDB_KEY else []
         print(f"  RIDB {state} complete: {len(ridb_camps)} records", flush=True)
 
         if NPS_KEY:
             print(f"  NPS {state} starting...", flush=True)
-            nps_camps = fetch_nps_state_isolated(
-                state, previous_nps_by_state.get(state, [])
-            )
+            nps_camps = fetch_nps_state(state)
             print(f"  NPS {state} complete: {len(nps_camps)} records", flush=True)
         else:
             nps_camps = []
@@ -3556,6 +3376,13 @@ def main():
 
     camps_list = sorted(all_camps.values(), key=lambda c: (c["state"], c["name"]))
     retired_field_count = strip_public_feed_fields(camps_list)
+    descriptions_before = [str(camp.get("description") or "") for camp in camps_list]
+    camps_list = normalize_description_fields(camps_list)
+    sanitized_description_count = sum(
+        before != str(camp.get("description") or "")
+        for before, camp in zip(descriptions_before, camps_list)
+    )
+    print_metric("Descriptions sanitized", sanitized_description_count)
     validate_public_feed(camps_list)
     output = {
         "generated": datetime.now(timezone.utc).isoformat(),

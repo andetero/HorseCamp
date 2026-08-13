@@ -13,8 +13,9 @@ Required GitHub Secrets:
   NPS_API_KEY   — from developer.nps.gov/signup
 """
 
-import os, json, time, re, math, html, requests
+import os, json, time, re, math, html, random, requests
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
@@ -1491,9 +1492,14 @@ USFS_WEBSITE_MAX_DETAIL_PAGES_PER_FOREST = 80
 # The official Forest Service website rate-limits bursts. Keep this crawler
 # deliberately slower than the API-backed sources and avoid detail pages that
 # cannot plausibly be overnight horse-camping listings.
-USFS_WEBSITE_REQUEST_DELAY_SECONDS = 1.0
+USFS_WEBSITE_REQUEST_DELAY_SECONDS = 2.0
+USFS_WEBSITE_REQUEST_JITTER_SECONDS = 0.5
 USFS_WEBSITE_MAX_429_RETRY_SECONDS = 60
+USFS_WEBSITE_403_RETRY_SECONDS = 60
+USFS_WEBSITE_MAX_CONSECUTIVE_403_FAILURES = 5
 _last_usfs_website_request_at = 0.0
+_usfs_consecutive_403_failures = 0
+_usfs_website_supplement_stopped = False
 
 USFS_DETAIL_LINK_INCLUDE_RE = re.compile(
     r"\b(?:camp|campground|campsite|camping|horse\s+camp|equestrian\s+camp|stock\s+camp|cow\s+camp)\b",
@@ -1536,23 +1542,55 @@ USFS_PAGE_NON_OVERNIGHT_PATTERNS = [
 
 
 def _usfs_polite_website_pause():
+    """Keep official Forest Service website requests about 2–2.5s apart."""
     global _last_usfs_website_request_at
     now = time.monotonic()
-    wait = USFS_WEBSITE_REQUEST_DELAY_SECONDS - (now - _last_usfs_website_request_at)
+    target_delay = USFS_WEBSITE_REQUEST_DELAY_SECONDS + random.uniform(
+        0.0, USFS_WEBSITE_REQUEST_JITTER_SECONDS
+    )
+    wait = target_delay - (now - _last_usfs_website_request_at)
     if wait > 0:
         time.sleep(wait)
     _last_usfs_website_request_at = time.monotonic()
 
 
 def _usfs_retry_after_seconds(response, attempt):
+    """Honor Retry-After when supplied; otherwise use 15s → 30s → 60s."""
     retry_after = str(response.headers.get("Retry-After") or "").strip()
-    if retry_after.isdigit():
-        return min(max(int(retry_after), 5), USFS_WEBSITE_MAX_429_RETRY_SECONDS)
-    return min(10 * (attempt + 1), USFS_WEBSITE_MAX_429_RETRY_SECONDS)
+    if retry_after:
+        if retry_after.isdigit():
+            return max(int(retry_after), 0)
+        try:
+            retry_at = parsedate_to_datetime(retry_after)
+            if retry_at.tzinfo is None:
+                retry_at = retry_at.replace(tzinfo=timezone.utc)
+            seconds = math.ceil((retry_at - datetime.now(timezone.utc)).total_seconds())
+            return max(seconds, 0)
+        except (TypeError, ValueError, OverflowError):
+            pass
+
+    backoff = (15, 30, 60)
+    return min(backoff[min(attempt, len(backoff) - 1)], USFS_WEBSITE_MAX_429_RETRY_SECONDS)
 
 
-def _usfs_fetch_html(url, retries=3):
-    for attempt in range(retries):
+def _usfs_fetch_html(url, retries=4):
+    """Fetch one official USFS page with bounded adaptive throttling.
+
+    A 403 gets one retry after 60 seconds. Five consecutive pages that still
+    return 403 after that retry stop the website supplement for the rest of the
+    run so we do not continue hammering fs.usda.gov.
+    """
+    global _usfs_consecutive_403_failures, _usfs_website_supplement_stopped
+
+    if _usfs_website_supplement_stopped:
+        return "", ""
+
+    max_attempts = max(4, int(retries or 0))
+    attempt = 0
+    retried_403 = False
+
+    while attempt < max_attempts:
+        attempt += 1
         try:
             _usfs_polite_website_pause()
             response = requests.get(
@@ -1561,18 +1599,57 @@ def _usfs_fetch_html(url, retries=3):
                 headers={"User-Agent": USFS_WEBSITE_USER_AGENT},
                 allow_redirects=True,
             )
+
             if response.status_code == 200 and response.text:
+                _usfs_consecutive_403_failures = 0
                 return response.url, response.text
-            if response.status_code == 429 and attempt < retries - 1:
-                wait = _usfs_retry_after_seconds(response, attempt)
-                print(f"  USFS website rate limited for {url}; waiting {wait}s before retry")
-                time.sleep(wait)
-                continue
+
+            if response.status_code == 429:
+                if attempt < max_attempts:
+                    wait = _usfs_retry_after_seconds(response, attempt - 1)
+                    print(f"  USFS website rate limited for {url}; waiting {wait}s before retry")
+                    time.sleep(wait)
+                    continue
+                _usfs_consecutive_403_failures = 0
+                print(f"  USFS website HTTP 429 for {url} after all retries")
+                return "", ""
+
+            if response.status_code == 403:
+                if not retried_403:
+                    retried_403 = True
+                    print(
+                        f"  USFS website HTTP 403 for {url}; "
+                        f"waiting {USFS_WEBSITE_403_RETRY_SECONDS}s before one retry"
+                    )
+                    time.sleep(USFS_WEBSITE_403_RETRY_SECONDS)
+                    if attempt >= max_attempts:
+                        max_attempts += 1
+                    continue
+
+                _usfs_consecutive_403_failures += 1
+                print(
+                    f"  USFS website HTTP 403 for {url} after retry "
+                    f"({_usfs_consecutive_403_failures}/"
+                    f"{USFS_WEBSITE_MAX_CONSECUTIVE_403_FAILURES} consecutive blocked pages)"
+                )
+                if _usfs_consecutive_403_failures >= USFS_WEBSITE_MAX_CONSECUTIVE_403_FAILURES:
+                    _usfs_website_supplement_stopped = True
+                    print(
+                        "  WARNING: Stopping U.S. Forest Service website supplement for this run "
+                        "after repeated HTTP 403 responses."
+                    )
+                return "", ""
+
+            _usfs_consecutive_403_failures = 0
             print(f"  USFS website HTTP {response.status_code} for {url}")
             return "", ""
+
         except Exception as e:
-            print(f"  USFS website request error (attempt {attempt + 1}) for {url}: {e}")
-            time.sleep(3 * (attempt + 1))
+            _usfs_consecutive_403_failures = 0
+            print(f"  USFS website request error (attempt {attempt}/{max_attempts}) for {url}: {e}")
+            if attempt < max_attempts:
+                time.sleep(3 * attempt)
+
     return "", ""
 
 def _usfs_html_to_text(raw_html):
@@ -1704,10 +1781,11 @@ def _usfs_forest_bases_from_primary_camps(camps):
 
     bases = set(direct_bases)
     for slug, sample_url in sorted(samples_by_slug.items()):
+        if _usfs_website_supplement_stopped:
+            break
         base = _usfs_resolve_forest_base_url(sample_url)
         if base:
             bases.add(base)
-        time.sleep(USFS_WEBSITE_REQUEST_DELAY_SECONDS)
 
     return sorted(bases)
 
@@ -1845,7 +1923,16 @@ def fetch_usfs_official_website_supplement(primary_camps):
     imports only pages with explicit overnight horse-camping evidence plus
     coordinates.
     """
+    global _last_usfs_website_request_at
+    global _usfs_consecutive_403_failures, _usfs_website_supplement_stopped
+    _last_usfs_website_request_at = 0.0
+    _usfs_consecutive_403_failures = 0
+    _usfs_website_supplement_stopped = False
+
     forest_bases = _usfs_forest_bases_from_primary_camps(primary_camps)
+    if _usfs_website_supplement_stopped:
+        print("  U.S. Forest Service website supplement stopped during forest discovery after repeated HTTP 403 responses")
+        return []
     if not forest_bases:
         print("  U.S. Forest Service website supplement: no forest bases discovered")
         return []
@@ -1856,8 +1943,12 @@ def fetch_usfs_official_website_supplement(primary_camps):
     per_forest_limit = USFS_WEBSITE_MAX_DETAIL_PAGES_PER_FOREST
 
     for base in forest_bases:
+        if _usfs_website_supplement_stopped:
+            break
         forest_detail_count = 0
         for page_index in range(USFS_WEBSITE_MAX_ACTIVITY_PAGES):
+            if _usfs_website_supplement_stopped:
+                break
             activity_url = f"{base}{USFS_HORSE_ACTIVITY_PATH}"
             if page_index:
                 activity_url += f"?page=%2C{page_index}"
@@ -1881,11 +1972,12 @@ def fetch_usfs_official_website_supplement(primary_camps):
                 break
             if not showing or int(showing.group(2)) >= int(showing.group(3)):
                 break
-            time.sleep(USFS_WEBSITE_REQUEST_DELAY_SECONDS)
 
     supplemental = []
     seen_ids = set()
     for detail_url in discovered_detail_urls:
+        if _usfs_website_supplement_stopped:
+            break
         final_url, raw_html = _usfs_fetch_html(detail_url, retries=2)
         if not raw_html:
             continue
@@ -1897,12 +1989,12 @@ def fetch_usfs_official_website_supplement(primary_camps):
             continue
         seen_ids.add(camp["id"])
         supplemental.append(camp)
-        time.sleep(USFS_WEBSITE_REQUEST_DELAY_SECONDS)
 
+    stop_note = " (stopped after repeated HTTP 403 responses)" if _usfs_website_supplement_stopped else ""
     print(
         "  U.S. Forest Service website supplement: "
         f"{len(forest_bases)} forests, {len(discovered_detail_urls)} official detail pages checked, "
-        f"{len(supplemental)} accepted"
+        f"{len(supplemental)} accepted{stop_note}"
     )
     return supplemental
 

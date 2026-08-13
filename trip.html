@@ -1,130 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HorseCamp Trip</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    :root { --earth: #3D2B1A; --hay: #D4A853; --trail: #5C7A4E; --cream: #FAF6EE; --saddle: #8B5E3C; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--earth); }
-    nav { background: var(--earth); padding: 1rem 5vw; display: flex; align-items: center; gap: 12px; }
-    nav .logo { font-family: 'Playfair Display', serif; color: var(--hay); font-size: 1.2rem; }
-    nav .badge { background: var(--trail); color: white; font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
-    .hero { background: var(--earth); padding: 2rem 5vw; border-bottom: 1px solid rgba(212,168,83,0.2); }
-    .hero h1 { font-family: 'Playfair Display', serif; color: var(--hay); font-size: 1.8rem; }
-    .hero p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 4px; }
-    main { max-width: 640px; margin: 0 auto; padding: 2rem 5vw; }
-    .card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.06); }
-    .route-row { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
-    .route-point { flex: 1; }
-    .rlabel { font-size: 0.7rem; color: var(--saddle); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 2px; }
-    .rname { font-size: 0.95rem; font-weight: 600; }
-    .arrow { color: var(--hay); font-size: 1.2rem; }
-    .meta { display: flex; gap: 20px; padding: 12px 0; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; margin-bottom: 16px; }
-    .mlabel { font-size: 0.7rem; color: var(--saddle); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-    .mvalue { font-size: 0.95rem; font-weight: 600; margin-top: 2px; }
-    .stitle { font-size: 0.75rem; color: var(--saddle); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 600; margin-bottom: 10px; }
-    .srow { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
-    .srow:last-child { border-bottom: none; }
-    .snum { width: 24px; height: 24px; background: var(--hay); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--earth); flex-shrink: 0; }
-    .sname { font-size: 0.9rem; font-weight: 600; }
-    .sloc { font-size: 0.78rem; color: #888; margin-top: 1px; }
-    .btn { display: block; width: 100%; padding: 14px; margin-top: 20px; background: var(--hay); color: var(--earth); border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; }
-    .noapp { text-align: center; font-size: 0.78rem; color: #888; margin-top: 10px; line-height: 1.5; }
-    .noapp a { color: var(--saddle); font-weight: 600; }
-    .store-links { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-top: 14px; }
-    .store-link { color: var(--saddle); font-size: 0.8rem; font-weight: 600; text-decoration: none; border: 1px solid rgba(139,94,60,0.3); border-radius: 999px; padding: 7px 11px; }
-    .store-link:hover { background: rgba(139,94,60,0.08); }
-    .nodata { text-align: center; padding: 40px; }
-    @media (prefers-color-scheme: dark) {
-      body { background: #1C1208; color: #FAF6EE; }
-      .card { background: #2C1E10; border-color: rgba(255,255,255,0.08); }
-      .srow, .meta { border-color: rgba(255,255,255,0.08); }
-    }
-  </style>
-</head>
-<body>
-<nav>
-  <span class="logo">🐴 HorseCamp</span>
-  <span class="badge">SHARED TRIP</span>
-</nav>
-<div class="hero">
-  <h1 id="trip-name">Shared Trip</h1>
-  <p>View the itinerary, then open HorseCamp to plan your ride.</p>
-</div>
-<main id="main">
-  <p style="text-align:center;padding:40px;color:#888">Loading...</p>
-</main>
-<script>
-function esc(value) {
-  return String(value ?? '').replace(/[&<>"']/g, function(c) {
-    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-  });
-}
-
-window.onerror = function(msg, src, line) {
-  document.getElementById('main').innerHTML = '<div class="nodata"><h2>JS Error</h2><p>' + esc(msg) + ' (line ' + esc(line) + ')</p></div>';
-  return true;
-};
-
-function fmtDate(ts) {
-  return new Date(ts * 1000).toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'});
-}
-
-function go() {
-  var search = window.location.search;
-  var match = search.match(/[?&]d=([^&]+)/);
-  if (!match) {
-    document.getElementById('main').innerHTML = '<div class="nodata"><h2>No trip data</h2><p>search was: ' + esc(search.substring(0,80)) + '</p></div>';
-    return;
-  }
-
-  var raw = match[1];
-  var trip = null;
-
-  try { trip = JSON.parse(decodeURIComponent(raw)); } catch(e1) {
-    try { trip = JSON.parse(raw); } catch(e2) {
-      document.getElementById('main').innerHTML = '<div class="nodata"><h2>Could not parse trip</h2><p>Raw starts with: ' + esc(raw.substring(0,80)) + '</p></div>';
-      return;
-    }
-  }
-
-  document.getElementById('trip-name').textContent = trip.name || 'Shared Trip';
-
-  var stops = trip.stops || [];
-  var stopsHtml = '';
-  if (stops.length > 0) {
-    stopsHtml += '<div class="stitle">Overnight Stops</div>';
-    for (var i = 0; i < stops.length; i++) {
-      stopsHtml += '<div class="srow"><div class="snum">' + (i+1) + '</div><div><div class="sname">' + esc(stops[i].campName || 'Unnamed stop') + '</div><div class="sloc">' + esc(stops[i].location || '') + '</div></div></div>';
-    }
-  }
-
-  var html = '<div class="card">';
-  html += '<div class="route-row"><div class="route-point"><div class="rlabel">From</div><div class="rname">' + esc(trip.originName || '—') + '</div></div>';
-  html += '<div class="arrow">→</div>';
-  html += '<div class="route-point" style="text-align:right"><div class="rlabel">To</div><div class="rname">' + esc(trip.destinationName || '—') + '</div></div></div>';
-  html += '<div class="meta"><div><div class="mlabel">Departure</div><div class="mvalue">' + fmtDate(trip.departureSince1970) + '</div></div>';
-  html += '<div><div class="mlabel">Stops</div><div class="mvalue">' + stops.length + ' camp' + (stops.length !== 1 ? 's' : '') + '</div></div></div>';
-  html += stopsHtml;
-  html += '<button class="btn" id="openbtn">📍 Open in HorseCamp</button>';
-  html += '<div class="noapp">Open this link in HorseCamp on iPhone or Android to import the trip.</div>';
-  html += '<div class="store-links"><a class="store-link" href="https://apps.apple.com/us/app/horsecamp/id6761319280" target="_blank" rel="noopener noreferrer">App Store</a><a class="store-link" href="https://play.google.com/store/apps/details?id=com.pyoba.HorseCamp" target="_blank" rel="noopener noreferrer">Google Play</a></div>';
-  html += '</div>';
-
-  document.getElementById('main').innerHTML = html;
-
-  var openButton = document.getElementById('openbtn');
-  if (openButton) {
-    openButton.addEventListener('click', function() {
-      window.location.href = 'horsecamp://trip?d=' + encodeURIComponent(raw);
-    });
-  }
-}
-
-go();
-</script>
-</body>
-</html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HorseCamp Shared Trip</title><meta name="description" content="View a shared HorseCamp trip and open it in the HorseCamp app."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"><style>:root{--earth:#3D2B1A;--hay:#D4A853;--trail:#5C7A4E;--cream:#FAF6EE;--saddle:#8B5E3C;--warm:#EDE8DF}*{box-sizing:border-box}body{margin:0;font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--earth)}nav{background:var(--earth);padding:1rem 5vw;display:flex;gap:.7rem;align-items:center}.logo{font:700 1.2rem 'Playfair Display',serif;color:var(--hay)}.badge{background:var(--trail);color:white;border-radius:5px;padding:2px 8px;font-size:.7rem;font-weight:600}.hero{background:var(--earth);padding:2rem 5vw}.hero h1{margin:0;color:var(--hay);font:700 1.9rem 'Playfair Display',serif}.hero p{color:rgba(255,255,255,.5);font-size:.85rem}.main{max-width:680px;margin:auto;padding:2rem 5vw}.card{background:white;border-radius:16px;padding:20px;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 12px rgba(0,0,0,.05)}.route{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px}.to{text-align:right}.label,.section-title{font-size:.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--saddle);font-weight:600}.name{font-weight:600;margin-top:2px}.arrow{color:var(--hay);font-size:1.2rem}.meta{display:flex;gap:22px;flex-wrap:wrap;padding:14px 0;margin:16px 0;border-top:1px solid var(--warm);border-bottom:1px solid var(--warm)}.value{font-weight:600;margin-top:2px}.section{margin-top:18px}.row{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--warm)}.row:last-child{border-bottom:0}.num{width:25px;height:25px;border-radius:50%;background:var(--hay);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex:0 0 auto}.row-title{font-size:.92rem;font-weight:600}.row-sub{font-size:.78rem;color:#888;margin-top:2px}.advisory{background:#FFF7E0;border-left:3px solid var(--hay);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:.84rem;line-height:1.5}.btn{display:block;width:100%;border:0;border-radius:12px;background:var(--hay);color:var(--earth);padding:14px;margin-top:20px;font-weight:700;font-size:1rem;cursor:pointer}.note{text-align:center;color:#888;font-size:.78rem;line-height:1.5;margin-top:10px}.stores{display:flex;justify-content:center;gap:.7rem;flex-wrap:wrap;margin-top:14px}.store{border:1px solid rgba(139,94,60,.3);color:var(--saddle);text-decoration:none;border-radius:999px;padding:7px 11px;font-size:.8rem;font-weight:600}.error{text-align:center;padding:35px 10px}.error h2{font-family:'Playfair Display',serif}.error p{color:#777;line-height:1.6}@media(prefers-color-scheme:dark){body{background:#1C1208;color:#FAF6EE}.card{background:#2C1E10;border-color:rgba(255,255,255,.08)}.meta,.row{border-color:rgba(255,255,255,.08)}.advisory{background:#3A2A12}.row-sub,.note,.error p{color:rgba(250,246,238,.55)}}</style></head><body><nav><span class="logo">HorseCamp</span><span class="badge">SHARED TRIP</span></nav><div class="hero"><h1 id="trip-name">Shared Trip</h1><p>View the itinerary, then open HorseCamp to import or continue planning.</p></div><main class="main" id="main"><div class="error"><p>Loading trip…</p></div></main><script>
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmtDate(ts){if(!ts)return 'Not specified';var d=new Date(Number(ts)*1000);return isNaN(d.getTime())?'Not specified':d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}
+function fmtDrive(obj){if(!obj)return'';var seconds=Number(obj.driveSeconds);if(!Number.isFinite(seconds)){var minutes=Number(obj.driveMinutes);if(Number.isFinite(minutes))seconds=minutes*60}if(!Number.isFinite(seconds)||seconds<=0)return'';var mins=Math.round(seconds/60),h=Math.floor(mins/60),m=mins%60;return h?(h+' hr'+(m?' '+m+' min':'')):(m+' min')}
+function stopName(s){return s.campName||s.name||s.title||'Planned stop'}
+function stopLocation(s){return s.location||s.address||s.subtitle||''}
+function renderStops(title,items,start){if(!Array.isArray(items)||!items.length)return'';var out='<div class="section"><div class="section-title">'+esc(title)+'</div>';items.forEach(function(s,i){var detail=[stopLocation(s),fmtDrive(s)].filter(Boolean).join(' · ');out+='<div class="row"><div class="num">'+(start+i)+'</div><div><div class="row-title">'+esc(stopName(s))+'</div>'+(detail?'<div class="row-sub">'+esc(detail)+'</div>':'')+'</div></div>'});return out+'</div>'}
+function renderAdvisories(items){if(!Array.isArray(items)||!items.length)return'';var out='<div class="section"><div class="section-title">Route Advisories</div>';items.forEach(function(a){var text=typeof a==='string'?a:(a.message||a.text||a.title||'');if(text)out+='<div class="advisory">'+esc(text)+'</div>'});return out+'</div>'}
+function fail(msg){document.getElementById('main').innerHTML='<div class="error"><h2>Trip unavailable</h2><p>'+esc(msg)+'</p><div class="stores"><a class="store" href="https://apps.apple.com/us/app/horsecamp/id6761319280">App Store</a><a class="store" href="https://play.google.com/store/apps/details?id=com.pyoba.HorseCamp">Google Play</a></div></div>'}
+function go(){var params=new URLSearchParams(location.search);var raw=params.get('d');if(!raw){fail('This shared trip link does not contain trip data. Ask the sender to share the trip again from HorseCamp.');return}var trip;try{trip=JSON.parse(raw)}catch(e){try{trip=JSON.parse(decodeURIComponent(raw))}catch(e2){fail('This shared trip link could not be read. It may be incomplete or from an unsupported older format.');return}}
+document.getElementById('trip-name').textContent=trip.name||'Shared Trip';var planned=Array.isArray(trip.plannedStops)?trip.plannedStops:[];var camps=Array.isArray(trip.stops)?trip.stops:[];var total=planned.length+camps.length;var html='<div class="card"><div class="route"><div><div class="label">From</div><div class="name">'+esc(trip.originName||'—')+'</div></div><div class="arrow">→</div><div class="to"><div class="label">To</div><div class="name">'+esc(trip.destinationName||'—')+'</div></div></div><div class="meta"><div><div class="label">Departure</div><div class="value">'+esc(fmtDate(trip.departureSince1970))+'</div></div><div><div class="label">Planned stops</div><div class="value">'+total+'</div></div></div>';html+=renderStops('Planned Stops',planned,1);html+=renderStops('Overnight Camps',camps,planned.length+1);html+=renderAdvisories(trip.advisories||trip.routeAdvisories||[]);html+='<button class="btn" id="openbtn">Open in HorseCamp</button><div class="note">HorseCamp on iPhone or Android can import supported shared-trip data. Newer app versions may contain additional route details not shown on this page.</div><div class="stores"><a class="store" href="https://apps.apple.com/us/app/horsecamp/id6761319280" target="_blank" rel="noopener">App Store</a><a class="store" href="https://play.google.com/store/apps/details?id=com.pyoba.HorseCamp" target="_blank" rel="noopener">Google Play</a></div></div>';document.getElementById('main').innerHTML=html;document.getElementById('openbtn').addEventListener('click',function(){location.href='horsecamp://trip?d='+encodeURIComponent(raw)})}
+window.addEventListener('error',function(){fail('Something went wrong while displaying this trip. Try opening the link directly in HorseCamp.')});go();
+</script></body></html>

@@ -4763,10 +4763,10 @@
   {
     "id": "private-gmaps-heaven-s-gate-rv-and-retreat-ok",
     "name": "Heaven's Gate RV Park and Retreat",
-    "location": "OK (34.679948, -94.737396)",
+    "location": "58122 Billy Crk Rd, Hodgen, OK 74939",
     "state": "OK",
-    "latitude": 34.679948,
-    "longitude": -94.737396,
+    "latitude": 34.680189,
+    "longitude": -94.737684,
     "pricePerNight": 30,
     "horseFeePerNight": 0,
     "hookups": ["30A", "Water"],
@@ -4786,7 +4786,7 @@
     "hasBathhouse": true,
     "pullThroughAvailable": false,
     "imageColors": ["6D4C41", "BCAAA4"],
-    "photoURLs": [],
+    "photoURLs": ["https://static.wixstatic.com/media/990e3c_8c015b0424684d4ea5c331f2bf6bb457~mv2.jpg/v1/crop/x_5,y_139,w_1608,h_941/fill/w_560,h_376,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/LRG_DSC00104_JPG.jpg"],
     "source": "Private Camps",
     "email": "cowboypaint@yahoo.com"
   },

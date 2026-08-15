@@ -4769,7 +4769,7 @@
     "longitude": -94.737684,
     "pricePerNight": 30,
     "horseFeePerNight": 0,
-    "hookups": ["30A", "Water"],
+    "hookups": ["30A", "50A", "Water"],
     "accommodations": ["Cabins", "Corrals", "Horse Camping", "Stalls", "Trails"],
     "maxRigLength": 0,
     "stallCount": 0,

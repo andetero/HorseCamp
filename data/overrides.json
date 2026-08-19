@@ -6,6 +6,13 @@
     "latitude": 41.302384,
     "longitude": -89.016934
   },
+  "ks-stateparks-perry": {
+    "hookups": [
+      "30A",
+      "Water"
+    ],
+    "hasBathhouse": true
+  },
   "ne-stateparks-fort-robinson": {
     "latitude": 42.672851,
     "longitude": -103.479256

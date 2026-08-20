@@ -17,344 +17,64 @@ jobs:
         with:
           ref: stateparks-alabama-test
           fetch-depth: 0
+
       - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
+
       - run: pip install requests
 
-      - name: Convert Alabama importer
+      - name: Apply reviewed Alabama dynamic importer
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
+          import subprocess
 
-          path = Path('scripts/fetch_camps.py')
-          text = path.read_text(encoding='utf-8')
+          # The immediately previous commit contains the reviewed full Alabama
+          # importer. Reuse that exact implementation, then apply the final
+          # campground decisions from manual + official-site review.
+          previous_workflow = subprocess.check_output(
+              ['git', 'show', 'HEAD^:.github/workflows/temp-alabama-stateparks-test.yml'],
+              text=True,
+          )
+          match = re.search(r"new = r'''(.*?)'''\n          if old not in text:", previous_workflow, re.S)
+          if not match:
+              raise SystemExit('Could not recover reviewed Alabama importer from previous workflow commit')
+          importer = match.group(1)
+
+          # Established Alabama equestrian campgrounds today:
+          # Oak Mountain and Wind Creek. Paul Grist is still developing its
+          # horse campground; Cheaha has no current official overnight horse-camp evidence.
+          importer = importer.replace('    "al-stateparks-paul-grist",\n', '')
+          importer = importer.replace('AL_DYNAMIC_REQUIRED_IDS, 3)', 'AL_DYNAMIC_REQUIRED_IDS, 2)')
+          importer = importer.replace(
+              '    camp_id = _al_slug_id(park_url)\n\n    main_text = _usfs_html_to_text(main_html)',
+              '    camp_id = _al_slug_id(park_url)\n'
+              '    if camp_id in {"al-stateparks-paul-grist", "al-stateparks-cheaha"}:\n'
+              '        return None\n\n'
+              '    main_text = _usfs_html_to_text(main_html)',
+          )
+
+          source = Path('scripts/fetch_camps.py')
+          text = source.read_text(encoding='utf-8')
           old = '''def fetch_al_state_parks():
               """Load manual AL state-park listings from data/state_parks/al.json."""
               return load_manual_state_parks("AL")
           '''
-          new = r'''STATE_PARK_FETCH_USER_AGENT = "HorseCampDataFetcher/1.0 (+https://horsecampfinder.com/)"
-
-
-def _fetch_state_park_html(url, label="State Parks", retries=3):
-    """Fetch one official state-park HTML page with bounded retries."""
-    for attempt in range(1, retries + 1):
-        try:
-            response = requests.get(
-                url,
-                timeout=(8, 20),
-                headers={"User-Agent": STATE_PARK_FETCH_USER_AGENT},
-                allow_redirects=True,
-            )
-            if response.status_code == 200 and response.text:
-                return response.url, response.text
-            if response.status_code == 429 and attempt < retries:
-                retry_after = str(response.headers.get("Retry-After") or "").strip()
-                wait = int(retry_after) if retry_after.isdigit() else 10 * attempt
-                wait = max(2, min(wait, 60))
-                print(f"  {label} HTTP 429; waiting {wait}s before retry", flush=True)
-                time.sleep(wait)
-                continue
-            if response.status_code >= 500 and attempt < retries:
-                time.sleep(3 * attempt)
-                continue
-            print(f"  {label} HTTP {response.status_code} for {url}", flush=True)
-            return "", ""
-        except requests.RequestException as error:
-            if attempt >= retries:
-                print(f"  {label} request failed for {url}: {error}", flush=True)
-                return "", ""
-            time.sleep(3 * attempt)
-    return "", ""
-
-
-def _load_previous_dynamic_state_park_records(state_code):
-    """Read last-published dynamic/verified State Parks records for one state."""
-    path = REPO_ROOT / "camps.json"
-    if not path.exists():
-        return []
-    try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
-    except Exception as error:
-        print(f"  WARNING: Could not read previous camps.json for {state_code}: {error}")
-        return []
-    camps = payload.get("camps", []) if isinstance(payload, dict) else []
-    return [
-        dict(camp)
-        for camp in camps
-        if isinstance(camp, dict)
-        and camp.get("source") == "State Parks"
-        and camp.get("state") == state_code
-        and camp.get("isVerified") is True
-    ]
-
-
-def _guard_dynamic_state_park_result(state_code, camps, required_ids=None, minimum_count=1):
-    """Use only a previously published dynamic/verified result as failure fallback."""
-    required_ids = set(required_ids or [])
-    ids = {str(camp.get("id") or "") for camp in camps}
-    if len(camps) >= minimum_count and required_ids.issubset(ids):
-        return camps
-
-    missing = sorted(required_ids - ids)
-    detail = f"; missing required IDs: {', '.join(missing)}" if missing else ""
-    previous = _load_previous_dynamic_state_park_records(state_code)
-    previous_ids = {str(camp.get("id") or "") for camp in previous}
-    if len(previous) >= minimum_count and required_ids.issubset(previous_ids):
-        print(
-            f"  WARNING: {state_code} official State Parks fetch incomplete "
-            f"({len(camps)} records; minimum {minimum_count}{detail}); "
-            f"retaining {len(previous)} last-published dynamic records."
-        )
-        return previous
-
-    raise RuntimeError(
-        f"{state_code} official State Parks fetch incomplete ({len(camps)} records; "
-        f"minimum {minimum_count}{detail}) and no validated dynamic fallback exists"
-    )
-
-
-AL_STATE_PARKS_INDEX = "https://www.alapark.com/parks"
-AL_DYNAMIC_REQUIRED_IDS = {
-    "al-stateparks-oak-mountain",
-    "al-stateparks-paul-grist",
-    "al-stateparks-wind-creek",
-}
-AL_HORSE_CAMP_PATTERNS = [
-    re.compile(r"\bequestrian\s+camp(?:ground|ing|sites?|area)?\b", re.I),
-    re.compile(r"\bhorse\s+camp(?:ground|ing|sites?|area)?\b", re.I),
-    re.compile(r"\bequine\s+camp(?:ground|ing|sites?|area)?\b", re.I),
-    re.compile(r"\bover\s*night\s+horseback\s+camping\b", re.I),
-    re.compile(r"\bovernight\s+horseback\s+camping\b", re.I),
-    re.compile(r"\bhorse\s+camp\s+area\b.{0,700}\bovernight\s+camping\s+is\s+allowed\b", re.I | re.S),
-]
-
-
-def _al_root_park_urls(index_html):
-    urls, seen = [], set()
-    for match in re.finditer(r"<a\b[^>]*href=[\"']([^\"'#]+)[\"'][^>]*>", index_html or "", re.I):
-        absolute = urljoin(AL_STATE_PARKS_INDEX, html.unescape(match.group(1)).strip())
-        parsed = urlparse(absolute)
-        if parsed.netloc.lower() not in {"alapark.com", "www.alapark.com"}:
-            continue
-        park_path = parsed.path.rstrip("/")
-        if not re.fullmatch(r"/parks/[^/]+", park_path):
-            continue
-        normalized = f"https://www.alapark.com{park_path}"
-        if normalized not in seen:
-            seen.add(normalized)
-            urls.append(normalized)
-    return urls
-
-
-def _al_extract_h1(raw_html):
-    match = re.search(r"<h1[^>]*>([\s\S]*?)</h1>", raw_html or "", re.I)
-    return _strip_html_basic(match.group(1)).strip() if match else ""
-
-
-def _al_candidate_links(park_url, raw_html):
-    base_path = urlparse(park_url).path.rstrip("/")
-    links, seen = [], set()
-    anchor_re = re.compile(r"<a\b[^>]*href=[\"']([^\"'#]+)[\"'][^>]*>([\s\S]*?)</a>", re.I)
-    for match in anchor_re.finditer(raw_html or ""):
-        absolute = urljoin(park_url, html.unescape(match.group(1)).strip())
-        parsed = urlparse(absolute)
-        if parsed.netloc.lower() not in {"alapark.com", "www.alapark.com"}:
-            continue
-        if not parsed.path.startswith(base_path + "/"):
-            continue
-        label = _strip_html_basic(match.group(2))
-        blob = f"{parsed.path} {label}".lower()
-        if not any(term in blob for term in ("horse", "equestrian", "equine", "camp")):
-            continue
-        normalized = f"https://www.alapark.com{parsed.path.rstrip('/')}"
-        if normalized not in seen:
-            seen.add(normalized)
-            links.append(normalized)
-    return links[:12]
-
-
-def _al_has_horse_camp_signal(text):
-    return any(pattern.search(text or "") for pattern in AL_HORSE_CAMP_PATTERNS)
-
-
-def _al_horse_camp_context(text):
-    starts = []
-    for pattern in AL_HORSE_CAMP_PATTERNS:
-        match = pattern.search(text or "")
-        if match:
-            starts.append(match.start())
-    if not starts:
-        return ""
-    start = max(0, min(starts) - 250)
-    return (text or "")[start:start + 4500]
-
-
-def _al_slug_id(park_url):
-    slug = urlparse(park_url).path.rstrip("/").split("/")[-1]
-    slug = re.sub(r"-state-park$", "", slug)
-    return f"al-stateparks-{slug}"
-
-
-def _al_phone(text):
-    match = re.search(r"\b(?:\+?1[-. ]*)?(\d{3})[-. )]+(\d{3})[-. ]+(\d{4})\b", text or "")
-    return f"{match.group(1)}-{match.group(2)}-{match.group(3)}" if match else ""
-
-
-def _al_city(text):
-    matches = re.findall(r"\b([A-Z][A-Za-z .'-]+),\s*AL\s+\d{5}(?:-\d{4})?\b", text or "")
-    return matches[0].strip() if matches else ""
-
-
-def _al_build_dynamic_camp(park_url, main_html, horse_page_url, horse_contexts):
-    park_name = _al_extract_h1(main_html)
-    if not park_name:
-        return None
-
-    combined = "\n".join(context for context in horse_contexts if context)
-    low = combined.lower()
-    camp_id = _al_slug_id(park_url)
-
-    main_text = _usfs_html_to_text(main_html)
-    city = _al_city(main_text)
-    lat, lon = _geocode_place_nominatim(f"{park_name}, Alabama")
-    time.sleep(1.0)
-    if abs(lat) < 0.1 or abs(lon) < 0.1:
-        print(f"  Alabama State Parks: could not geocode {park_name}; skipping")
-        return None
-
-    if "equestrian campground" in low:
-        camp_name = f"{park_name} Equestrian Campground"
-    elif "horse camp" in low:
-        camp_name = f"{park_name} Horse Camp Area"
-    else:
-        camp_name = f"{park_name} Equestrian Camping Area"
-
-    hookups = []
-    if re.search(r"\b50\s*(?:-| )?amp\b|\b50a\b", low): hookups.append("50A")
-    if re.search(r"\b30\s*(?:-| )?amp\b|\b30a\b", low): hookups.append("30A")
-    if re.search(r"\bwater\b.{0,60}\b(?:hook\s*ups?|service|spigots?|hydrants?)\b|\b(?:water\s+spigots?|hydrants?)\b", low, re.S): hookups.append("Water")
-    if re.search(r"\bsewer\b.{0,45}\bhook\s*ups?\b", low, re.S): hookups.append("Sewer")
-    if re.search(r"\bno\s+(?:utility\s+)?hookups?\b", low): hookups = ["No Hookups"]
-    hookups = list(dict.fromkeys(hookups))
-
-    accommodations = ["Trails"]
-    if re.search(r"\bstalls?\b", low): accommodations.append("Stalls")
-    if re.search(r"\bcorrals?\b", low): accommodations.append("Corrals")
-    if re.search(r"\bhighlines?\b|\bhigh lines?\b|\btie rails?\b", low): accommodations.append("Highlines")
-    accommodations = list(dict.fromkeys(accommodations))
-
-    stall_count = 0
-    stall_match = re.search(r"\b(\d+)\s+(?:covered\s+)?stalls?\b", low)
-    if stall_match:
-        stall_count = int(stall_match.group(1))
-
-    phone = _al_phone(main_text)
-    year_round = bool(re.search(r"\byear[- ]round\b", low))
-
-    # Deliberately do not treat Oak Mountain's "dump station for horse waste"
-    # as an RV sanitary dump station.
-    has_dump = bool(re.search(r"\b(?:sanitary dump|rv dump station)\b", low))
-    has_bathhouse = bool(re.search(r"\b(?:bathhouse|shower(?:s| house| building)?)\b", low))
-    has_wash = bool(re.search(r"\b(?:wash rack|horse wash)\b", low))
-    has_wifi = bool(re.search(r"\b(?:wi[- ]?fi|internet)\b", low))
-    pull_through = bool(re.search(r"\bpull[- ]through\b", low))
-
-    description = re.sub(r"\s+", " ", combined).strip()
-    if not description:
-        description = f"Official Alabama State Parks horse-camping location at {park_name}."
-
-    return {
-        "id": camp_id,
-        "name": camp_name,
-        "location": f"{city}, AL" if city else f"{park_name}, AL",
-        "state": "AL",
-        "latitude": lat,
-        "longitude": lon,
-        "pricePerNight": 0.0,
-        "horseFeePerNight": 0.0,
-        "hookups": hookups,
-        "accommodations": accommodations,
-        "maxRigLength": 0,
-        "stallCount": stall_count,
-        "paddockCount": 0,
-        "phone": phone,
-        "website": horse_page_url or park_url,
-        "description": description[:2000],
-        "isVerified": True,
-        "seasonStart": 1 if year_round else 0,
-        "seasonEnd": 12 if year_round else 0,
-        "hasWashRack": has_wash,
-        "hasDumpStation": has_dump,
-        "hasWifi": has_wifi,
-        "hasBathhouse": has_bathhouse,
-        "pullThroughAvailable": pull_through,
-        "imageColors": ["C0392B", "F1948A"],
-        "photoURLs": [],
-        "source": "State Parks",
-    }
-
-
-def fetch_al_state_parks():
-    """Dynamically discover official Alabama State Parks with overnight horse camping."""
-    _, index_html = _fetch_state_park_html(AL_STATE_PARKS_INDEX, "Alabama State Parks index")
-    if not index_html:
-        return _guard_dynamic_state_park_result("AL", [], AL_DYNAMIC_REQUIRED_IDS, 3)
-
-    park_urls = _al_root_park_urls(index_html)
-    if not park_urls:
-        return _guard_dynamic_state_park_result("AL", [], AL_DYNAMIC_REQUIRED_IDS, 3)
-
-    camps = []
-    for park_url in park_urls:
-        _, main_html = _fetch_state_park_html(park_url, "Alabama State Parks")
-        if not main_html:
-            continue
-
-        main_text = _usfs_html_to_text(main_html)
-        horse_pages = []
-        if _al_has_horse_camp_signal(main_text):
-            horse_pages.append((park_url, _al_horse_camp_context(main_text)))
-
-        for candidate_url in _al_candidate_links(park_url, main_html):
-            _, candidate_html = _fetch_state_park_html(candidate_url, "Alabama State Parks")
-            if not candidate_html:
-                continue
-            candidate_text = _usfs_html_to_text(candidate_html)
-            if _al_has_horse_camp_signal(candidate_text):
-                horse_pages.append((candidate_url, _al_horse_camp_context(candidate_text)))
-            time.sleep(0.2)
-
-        if not horse_pages:
-            continue
-
-        horse_pages.sort(key=lambda row: len(row[1]), reverse=True)
-        camp = _al_build_dynamic_camp(
-            park_url,
-            main_html,
-            horse_pages[0][0],
-            [row[1] for row in horse_pages],
-        )
-        if camp:
-            camps.append(camp)
-
-    camps.sort(key=lambda camp: camp["name"])
-    camps = _guard_dynamic_state_park_result("AL", camps, AL_DYNAMIC_REQUIRED_IDS, 3)
-    print(f"  Alabama State Parks: {len(camps)} dynamic official horse-camping listings")
-    return camps
-'''
           if old not in text:
               raise SystemExit('Expected manual Alabama importer not found; refusing to edit')
-          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          source.write_text(text.replace(old, importer, 1), encoding='utf-8')
           PY
 
-      - name: Compile
+      - name: Compile fetch_camps.py
         run: python -m py_compile scripts/fetch_camps.py
 
-      - name: Run live Alabama importer and compare with old static JSON
+      - name: Run live Alabama importer and compare with static JSON
         run: |
           python - <<'PY'
-          import importlib.util, json
+          import importlib.util
+          import json
           from pathlib import Path
 
           old = json.loads(Path('data/state_parks/al.json').read_text(encoding='utf-8'))
@@ -366,7 +86,7 @@ def fetch_al_state_parks():
 
           old_by = {c['id']: c for c in old}
           new_by = {c['id']: c for c in new}
-          print('\n=== Alabama static → dynamic comparison ===')
+          print('\n=== Alabama static -> dynamic comparison ===')
           print('Old IDs:', sorted(old_by))
           print('New IDs:', sorted(new_by))
           print('Added:', sorted(set(new_by) - set(old_by)))
@@ -375,39 +95,32 @@ def fetch_al_state_parks():
 
           required = {
               'al-stateparks-oak-mountain',
-              'al-stateparks-paul-grist',
               'al-stateparks-wind-creek',
           }
-          if not required.issubset(new_by):
-              raise SystemExit(f'Missing expected Alabama dynamic IDs: {sorted(required - set(new_by))}')
-          if 'al-stateparks-cheaha' in new_by:
-              raise SystemExit('Cheaha still appears despite no current official overnight horse-camping signal')
+          if set(new_by) != required:
+              raise SystemExit(
+                  f'Alabama must resolve to exactly Oak Mountain + Wind Creek; got {sorted(new_by)}'
+              )
 
           oak = new_by['al-stateparks-oak-mountain']
           for value in ('50A', 'Water', 'Sewer'):
               if value not in oak.get('hookups', []):
-                  raise SystemExit(f'Oak Mountain missing {value}')
+                  raise SystemExit(f'Oak Mountain missing official hookup {value}')
           if 'Stalls' not in oak.get('accommodations', []):
-              raise SystemExit('Oak Mountain missing stalls')
+              raise SystemExit('Oak Mountain missing official stalls')
 
           wind = new_by['al-stateparks-wind-creek']
           for value in ('30A', 'Water'):
               if value not in wind.get('hookups', []):
-                  raise SystemExit(f'Wind Creek missing {value}')
-
-          paul = new_by['al-stateparks-paul-grist']
-          if 'Water' not in paul.get('hookups', []):
-              raise SystemExit('Paul Grist missing water')
-          if any(v in paul.get('hookups', []) for v in ('30A', '50A', 'Sewer')):
-              raise SystemExit('Paul Grist incorrectly inherited regular-campground hookups')
+                  raise SystemExit(f'Wind Creek missing official hookup {value}')
           PY
 
-      - name: Remove obsolete static Alabama file and this temporary workflow
+      - name: Remove obsolete Alabama static file and temporary workflow
         run: |
           rm data/state_parks/al.json
           rm .github/workflows/temp-alabama-stateparks-test.yml
 
-      - name: Commit tested Alabama conversion to test branch
+      - name: Commit tested Alabama conversion
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

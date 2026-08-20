@@ -1,0 +1,126 @@
+name: Temporary Run Alabama State Parks Test
+
+on:
+  push:
+    paths:
+      - '.github/workflows/temp-run-alabama-test.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  test-alabama:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout Alabama test branch
+        uses: actions/checkout@v6
+        with:
+          ref: stateparks-alabama-test
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Apply reviewed Alabama importer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import subprocess
+
+          # Recover the fully reviewed importer body from the original Alabama
+          # test commit, then apply the final campground decision: Oak Mountain
+          # and Wind Creek only.
+          workflow = subprocess.check_output(
+              ['git', 'show', '8ecbab9ce6aaa6c1a541bbf008bd4add6829da7d:.github/workflows/temp-alabama-stateparks-test.yml'],
+              text=True,
+          )
+          match = re.search(r"new = r'''(.*?)'''\n          if old not in text:", workflow, re.S)
+          if not match:
+              raise SystemExit('Could not recover reviewed Alabama importer')
+          importer = match.group(1)
+          importer = importer.replace('    "al-stateparks-paul-grist",\n', '')
+          importer = importer.replace('AL_DYNAMIC_REQUIRED_IDS, 3)', 'AL_DYNAMIC_REQUIRED_IDS, 2)')
+          importer = importer.replace(
+              '    camp_id = _al_slug_id(park_url)\n\n    main_text = _usfs_html_to_text(main_html)',
+              '    camp_id = _al_slug_id(park_url)\n'
+              '    if camp_id in {"al-stateparks-paul-grist", "al-stateparks-cheaha"}:\n'
+              '        return None\n\n'
+              '    main_text = _usfs_html_to_text(main_html)',
+          )
+
+          source = Path('scripts/fetch_camps.py')
+          text = source.read_text(encoding='utf-8')
+          old = '''def fetch_al_state_parks():
+              """Load manual AL state-park listings from data/state_parks/al.json."""
+              return load_manual_state_parks("AL")
+          '''
+          if old not in text:
+              raise SystemExit('Expected manual Alabama importer not found')
+          source.write_text(text.replace(old, importer, 1), encoding='utf-8')
+          PY
+
+      - name: Syntax check
+        run: python -m py_compile scripts/fetch_camps.py
+
+      - name: Validate live Alabama result against static JSON
+        run: |
+          python - <<'PY'
+          import importlib.util
+          import json
+          from pathlib import Path
+
+          old = json.loads(Path('data/state_parks/al.json').read_text(encoding='utf-8'))
+          spec = importlib.util.spec_from_file_location('fetch_camps', 'scripts/fetch_camps.py')
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+          module.load_geocode_cache()
+          new = module.fetch_al_state_parks()
+
+          old_by = {c['id']: c for c in old}
+          new_by = {c['id']: c for c in new}
+          print('\n=== Alabama static -> dynamic comparison ===')
+          print('Old IDs:', sorted(old_by))
+          print('New IDs:', sorted(new_by))
+          print('Added:', sorted(set(new_by) - set(old_by)))
+          print('Removed:', sorted(set(old_by) - set(new_by)))
+          print(json.dumps(new, indent=2, ensure_ascii=False))
+
+          expected = {
+              'al-stateparks-oak-mountain',
+              'al-stateparks-wind-creek',
+          }
+          if set(new_by) != expected:
+              raise SystemExit(f'Expected exactly Oak Mountain + Wind Creek; got {sorted(new_by)}')
+
+          oak = new_by['al-stateparks-oak-mountain']
+          for value in ('50A', 'Water', 'Sewer'):
+              if value not in oak.get('hookups', []):
+                  raise SystemExit(f'Oak Mountain missing {value}')
+          if 'Stalls' not in oak.get('accommodations', []):
+              raise SystemExit('Oak Mountain missing stalls')
+
+          wind = new_by['al-stateparks-wind-creek']
+          for value in ('30A', 'Water'):
+              if value not in wind.get('hookups', []):
+                  raise SystemExit(f'Wind Creek missing {value}')
+          PY
+
+      - name: Remove Alabama static file and branch test workflow
+        run: |
+          rm data/state_parks/al.json
+          rm -f .github/workflows/temp-alabama-stateparks-test.yml
+
+      - name: Commit validated Alabama conversion to test branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add scripts/fetch_camps.py data/state_parks/al.json .github/workflows/temp-alabama-stateparks-test.yml data/geocode_cache.json
+          git commit -m "Make Alabama State Parks dynamic"
+          git push origin HEAD:stateparks-alabama-test

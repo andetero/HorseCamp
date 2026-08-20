@@ -18,6 +18,9 @@ jobs:
           ref: stateparks-alabama-test
           fetch-depth: 0
 
+      - name: Restore full fetch_camps.py from main baseline
+        run: git show origin/main:scripts/fetch_camps.py > scripts/fetch_camps.py
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -58,7 +61,7 @@ AL_STATE_PARK_SOURCES = [
         "pages": [
             {
                 "url": "https://www.alapark.com/parks/wind-creek-state-park",
-                "start": "area restricted to equestrian camping",
+                "start": "Our campsites are designed",
                 "end": "Nature",
             },
             {
@@ -166,13 +169,14 @@ def _alabama_phone(raw_html):
 def _alabama_hookups(section):
     low = section.lower()
     hookups = []
-    if re.search(r"\b50\s*[- ]?amp\b|\b50a\b", low):
+    dash = r"[\s\-\u2010-\u2015]*"
+    if re.search(rf"\b50{dash}amp\b|\b50a\b", low):
         hookups.append("50A")
-    if re.search(r"\b30\s*[- ]?amp\b|\b30a\b", low):
+    if re.search(rf"\b30{dash}amp\b|\b30a\b", low):
         hookups.append("30A")
     if "water" in low and re.search(r"\b(?:hook\s*ups?|service|spigots?|hydrants?)\b", low):
         hookups.append("Water")
-    if re.search(r"\bsewer\s+hookups?\b|\bwater,?\s+and\s+sewer\s+hookups?\b", low):
+    if re.search(r"\bsewer\s+hook\s*ups?\b|\bwater,?\s+and\s+sewer\s+hook\s*ups?\b", low):
         hookups.append("Sewer")
     return list(dict.fromkeys(hookups))
 
@@ -268,7 +272,7 @@ def fetch_al_state_parks():
     return camps
 '''
           if old not in text:
-              raise SystemExit('Expected manual Alabama importer not found')
+              raise SystemExit('Expected manual Alabama importer not found in main baseline')
           source.write_text(text.replace(old, new, 1), encoding='utf-8')
           PY
 
@@ -298,10 +302,7 @@ def fetch_al_state_parks():
           print('Removed:', sorted(set(old_by) - set(new_by)))
           print(json.dumps(new, indent=2, ensure_ascii=False))
 
-          expected = {
-              'al-stateparks-oak-mountain',
-              'al-stateparks-wind-creek',
-          }
+          expected = {'al-stateparks-oak-mountain', 'al-stateparks-wind-creek'}
           if set(new_by) != expected:
               raise SystemExit(f'Expected exactly Oak Mountain + Wind Creek; got {sorted(new_by)}')
 
@@ -318,7 +319,7 @@ def fetch_al_state_parks():
                   raise SystemExit(f'Wind Creek missing {value}')
           PY
 
-      - name: Remove Alabama static file and branch test workflow
+      - name: Remove obsolete Alabama static file and branch marker workflow
         run: |
           rm data/state_parks/al.json
           rm -f .github/workflows/temp-alabama-stateparks-test.yml

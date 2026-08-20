@@ -1,9 +1,8 @@
 name: Temporary Run Alabama State Parks Test
 
 on:
-  push:
-    paths:
-      - '.github/workflows/temp-run-alabama-test.yml'
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
@@ -34,9 +33,6 @@ jobs:
           import re
           import subprocess
 
-          # Recover the fully reviewed importer body from the original Alabama
-          # test commit, then apply the final campground decision: Oak Mountain
-          # and Wind Creek only.
           workflow = subprocess.check_output(
               ['git', 'show', '8ecbab9ce6aaa6c1a541bbf008bd4add6829da7d:.github/workflows/temp-alabama-stateparks-test.yml'],
               text=True,

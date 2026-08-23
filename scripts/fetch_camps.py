@@ -2898,22 +2898,55 @@ def _al_is_established_horse_camp(text):
 
 
 def _al_local_horse_windows(text, radius=420):
-    """Return compact text windows around explicit horse-camping statements."""
+    """Return tightly scoped text around explicit horse-camping statements.
+
+    Keep unrelated campground amenities from leaking into the horse-camp record.
+    A preceding sentence is included only when it clearly applies to all campsites
+    (for example, "all with 30-amp service"). The window always stops at the end
+    of the horse-camping sentence, so a following premium/RV-site sentence such as
+    "50/30/20-amp service" cannot be mistaken for an equestrian amenity.
+    """
     text = str(text or "")
     windows = []
     starts = []
     for pattern in AL_HORSE_CAMP_POSITIVE_PATTERNS:
         starts.extend(match.start() for match in pattern.finditer(text))
+
+    sentence_boundary_re = re.compile(r"(?:[.!?](?:\s+|$)|\n+)")
+
     for start_pos in sorted(set(starts)):
-        left = max(0, start_pos - radius)
-        right = min(len(text), start_pos + radius)
-        window = text[left:right]
-        # Snap toward sentence/line boundaries when available.
-        boundary = max(window.rfind("\n", 0, min(radius, len(window))), window.rfind(". ", 0, min(radius, len(window))))
-        if boundary >= 0:
-            window = window[boundary + 1:]
+        # Find the sentence containing the horse-camping signal.
+        prior_boundaries = list(sentence_boundary_re.finditer(text, 0, start_pos))
+        sentence_start = prior_boundaries[-1].end() if prior_boundaries else 0
+        next_boundary = sentence_boundary_re.search(text, start_pos)
+        sentence_end = next_boundary.end() if next_boundary else min(len(text), start_pos + radius)
+        current_sentence = text[sentence_start:sentence_end].strip()
+
+        # A park page may state a campground-wide utility in the immediately
+        # preceding sentence, then identify the equestrian area in the next one.
+        # Import that prior sentence only when it explicitly applies to all sites;
+        # never pull in premium/special-loop amenities.
+        previous_sentence = ""
+        if prior_boundaries:
+            previous_end = prior_boundaries[-1].start()
+            earlier = list(sentence_boundary_re.finditer(text, 0, previous_end))
+            previous_start = earlier[-1].end() if earlier else 0
+            candidate = text[previous_start:sentence_start].strip()
+            candidate_low = candidate.lower()
+            applies_to_all_sites = bool(
+                re.search(r"\ball\b.{0,100}\b(?:camp)?sites?\b", candidate_low, flags=re.S)
+                or re.search(r"\b(?:camp)?sites?\b.{0,120}\ball\b", candidate_low, flags=re.S)
+            )
+            has_utility_detail = bool(
+                re.search(r"\b(?:20|30|50)\s*[-‐‑‒–—]?\s*amp\b", candidate_low)
+                or re.search(r"\b(?:water|sewer)\b.{0,80}\b(?:hook\s*ups?|service)\b", candidate_low, flags=re.S)
+            )
+            if applies_to_all_sites and has_utility_detail and "premium" not in candidate_low:
+                previous_sentence = candidate
+
+        window = " ".join(part for part in (previous_sentence, current_sentence) if part).strip()
         if _al_is_established_horse_camp(window):
-            windows.append(window.strip())
+            windows.append(window)
     return windows
 
 

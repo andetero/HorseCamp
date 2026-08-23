@@ -3538,8 +3538,156 @@ def fetch_ok_state_parks():
 # No Kansas park names, individual park URLs, or amenity values are hardcoded.
 KS_STATE_PARKS_EQ_INDEX = "https://www.ksoutdoors.gov/outdoor-activities/other-outdoor-recreation-in-kansas"
 KS_STATE_PARKS_USER_AGENT = (
-    "Mozilla/5.0 (compatible; HorseCampDataFetcher/1.0; +https://horsecampfinder.com/)"
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
 )
+
+# KDWP returned HTTP 403 to a GitHub Actions runner on the first request of an
+# overnight run. Kansas therefore uses its own persistent browser-like session,
+# bounded 403/429 backoff, and a deliberately slow request pace. This is scoped
+# only to KDWP so it does not make RIDB/NPS/USFS or other state importers slower.
+KS_STATE_PARKS_REQUEST_DELAY_SECONDS = 2.5
+KS_STATE_PARKS_REQUEST_JITTER_SECONDS = 1.0
+KS_STATE_PARKS_403_BACKOFF_SECONDS = (25, 55, 90)
+KS_STATE_PARKS_429_BACKOFF_SECONDS = (15, 30, 60)
+_ks_state_parks_last_request_at = 0.0
+_ks_state_parks_session = None
+
+
+def _ks_session():
+    global _ks_state_parks_session
+    if _ks_state_parks_session is None:
+        session = requests.Session()
+        session.headers.update({
+            "User-Agent": KS_STATE_PARKS_USER_AGENT,
+            "Accept": (
+                "text/html,application/xhtml+xml,application/xml;q=0.9,"
+                "image/avif,image/webp,image/apng,*/*;q=0.8"
+            ),
+            "Accept-Language": "en-US,en;q=0.9",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache",
+            "Upgrade-Insecure-Requests": "1",
+            "Connection": "keep-alive",
+        })
+        _ks_state_parks_session = session
+    return _ks_state_parks_session
+
+
+def _ks_polite_pause():
+    global _ks_state_parks_last_request_at
+    target_delay = KS_STATE_PARKS_REQUEST_DELAY_SECONDS + random.uniform(
+        0.0, KS_STATE_PARKS_REQUEST_JITTER_SECONDS
+    )
+    elapsed = time.monotonic() - _ks_state_parks_last_request_at
+    wait = target_delay - elapsed
+    if wait > 0:
+        time.sleep(wait)
+    _ks_state_parks_last_request_at = time.monotonic()
+
+
+def _ks_retry_after_seconds(response, attempt, defaults):
+    retry_after = str(response.headers.get("Retry-After") or "").strip()
+    if retry_after.isdigit():
+        return max(5, min(int(retry_after), 120))
+    return defaults[min(attempt, len(defaults) - 1)]
+
+
+def _ks_fetch_html(url, referer=None, retries=3):
+    """Fetch one official KDWP page with persistent-session anti-blocking care.
+
+    A 403 is treated as temporary blocking rather than as a missing page. The
+    retry waits are intentionally substantial because the 2026-08-23 scheduled
+    GitHub Actions run was blocked on its very first Kansas request.
+    """
+    session = _ks_session()
+    max_attempts = max(1, retries)
+
+    for attempt in range(max_attempts):
+        try:
+            _ks_polite_pause()
+            headers = {}
+            if referer:
+                headers["Referer"] = referer
+            response = session.get(
+                url,
+                headers=headers or None,
+                timeout=(10, 30),
+                allow_redirects=True,
+            )
+            if response.status_code == 200 and response.text:
+                return response.url, response.text
+
+            if response.status_code == 403:
+                if attempt < max_attempts - 1:
+                    base_wait = KS_STATE_PARKS_403_BACKOFF_SECONDS[
+                        min(attempt, len(KS_STATE_PARKS_403_BACKOFF_SECONDS) - 1)
+                    ]
+                    wait = base_wait + random.uniform(0.0, 8.0)
+                    print(
+                        f"  Kansas State Parks: HTTP 403 for {url}; "
+                        f"waiting {wait:.1f}s before retry {attempt + 2}/{max_attempts}",
+                        flush=True,
+                    )
+                    time.sleep(wait)
+                    continue
+                print(
+                    f"  Kansas State Parks: HTTP 403 for {url} after {max_attempts} attempts",
+                    flush=True,
+                )
+                return "", ""
+
+            if response.status_code == 429:
+                if attempt < max_attempts - 1:
+                    wait = _ks_retry_after_seconds(
+                        response, attempt, KS_STATE_PARKS_429_BACKOFF_SECONDS
+                    ) + random.uniform(0.0, 5.0)
+                    print(
+                        f"  Kansas State Parks: HTTP 429 for {url}; "
+                        f"waiting {wait:.1f}s before retry {attempt + 2}/{max_attempts}",
+                        flush=True,
+                    )
+                    time.sleep(wait)
+                    continue
+                print(
+                    f"  Kansas State Parks: HTTP 429 for {url} after {max_attempts} attempts",
+                    flush=True,
+                )
+                return "", ""
+
+            if response.status_code >= 500 and attempt < max_attempts - 1:
+                wait = 5 * (attempt + 1) + random.uniform(0.0, 3.0)
+                print(
+                    f"  Kansas State Parks: HTTP {response.status_code} for {url}; "
+                    f"waiting {wait:.1f}s before retry",
+                    flush=True,
+                )
+                time.sleep(wait)
+                continue
+
+            print(
+                f"  Kansas State Parks: HTTP {response.status_code} for {url}",
+                flush=True,
+            )
+            return "", ""
+        except requests.RequestException as error:
+            if attempt >= max_attempts - 1:
+                print(
+                    f"  Kansas State Parks: request failed for {url} after "
+                    f"{max_attempts} attempts: {error}",
+                    flush=True,
+                )
+                return "", ""
+            wait = 5 * (attempt + 1) + random.uniform(0.0, 3.0)
+            print(
+                f"  Kansas State Parks: request error for {url}: {error}; "
+                f"waiting {wait:.1f}s before retry",
+                flush=True,
+            )
+            time.sleep(wait)
+
+    return "", ""
+
 
 KS_HORSE_TERMS_RE = re.compile(
     r"\b(?:horse|horses|horseback|equestrian|equine|corrals?|horse\s+pens?|"
@@ -3859,10 +4007,10 @@ def _ks_build_camp(park_url, park_html):
     detail_text = ""
     detail_horse_contexts = []
     if detail_url and detail_url.rstrip("/") != park_url.rstrip("/"):
-        final_url, detail_html = _fetch_state_park_html(
+        final_url, detail_html = _ks_fetch_html(
             detail_url,
-            "Kansas State Parks",
-            user_agent=KS_STATE_PARKS_USER_AGENT,
+            referer=park_url,
+            retries=3,
         )
         if detail_html:
             detail_url = final_url or detail_url
@@ -3941,10 +4089,10 @@ def _ks_build_camp(park_url, park_html):
 
 def fetch_ks_state_parks():
     """Dynamically fetch Kansas state parks with official equestrian campgrounds."""
-    _, index_html = _fetch_state_park_html(
+    _, index_html = _ks_fetch_html(
         KS_STATE_PARKS_EQ_INDEX,
-        "Kansas State Parks",
-        user_agent=KS_STATE_PARKS_USER_AGENT,
+        referer="https://www.ksoutdoors.gov/",
+        retries=4,
     )
     if not index_html:
         return _guard_dynamic_state_park_result("KS", [])
@@ -3957,17 +4105,16 @@ def fetch_ks_state_parks():
 
     camps = []
     for park_url in park_urls:
-        final_url, park_html = _fetch_state_park_html(
+        final_url, park_html = _ks_fetch_html(
             park_url,
-            "Kansas State Parks",
-            user_agent=KS_STATE_PARKS_USER_AGENT,
+            referer=KS_STATE_PARKS_EQ_INDEX,
+            retries=3,
         )
         if not park_html:
             continue
         camp = _ks_build_camp(final_url or park_url, park_html)
         if camp:
             camps.append(camp)
-        time.sleep(0.15)
 
     deduped = {camp["id"]: camp for camp in camps}
     camps = sorted(deduped.values(), key=lambda row: row["name"])

@@ -2700,14 +2700,14 @@ AL_HORSE_CAMP_NON_OVERNIGHT_PATTERNS = [
 ]
 
 
-def _fetch_state_park_html(url, label="State Parks", retries=3):
+def _fetch_state_park_html(url, label="State Parks", retries=3, user_agent=None):
     """Fetch one official state-park HTML page with bounded retries."""
     for attempt in range(1, retries + 1):
         try:
             response = requests.get(
                 url,
                 timeout=(8, 20),
-                headers={"User-Agent": AL_STATE_PARKS_USER_AGENT},
+                headers={"User-Agent": user_agent or AL_STATE_PARKS_USER_AGENT},
                 allow_redirects=True,
             )
             if response.status_code == 200 and response.text:
@@ -3531,9 +3531,449 @@ def fetch_ok_state_parks():
     """Load manual OK state-park listings from data/state_parks/ok.json."""
     return load_manual_state_parks("OK")
 
+# ── KANSAS STATE PARKS ─────────────────────────────────────────────────
+# Kansas publishes a statewide official list of state parks with equestrian
+# campgrounds. The importer discovers the park links from that list on every run,
+# then reads each official park page for the current campground/area details.
+# No Kansas park names, individual park URLs, or amenity values are hardcoded.
+KS_STATE_PARKS_EQ_INDEX = "https://www.ksoutdoors.gov/outdoor-activities/other-outdoor-recreation-in-kansas"
+KS_STATE_PARKS_USER_AGENT = (
+    "Mozilla/5.0 (compatible; HorseCampDataFetcher/1.0; +https://horsecampfinder.com/)"
+)
+
+KS_HORSE_TERMS_RE = re.compile(
+    r"\b(?:horse|horses|horseback|equestrian|equine|corrals?|horse\s+pens?|"
+    r"paddocks?|stalls?|high\s*lines?|hitching\s+posts?|tie\s+rails?)\b",
+    re.I,
+)
+
+
+def _ks_official_url(href, base=KS_STATE_PARKS_EQ_INDEX):
+    absolute = urljoin(base, html.unescape(str(href or "")).strip())
+    parsed = urlparse(absolute)
+    host = parsed.netloc.lower().split(":", 1)[0]
+    if host not in {"ksoutdoors.gov", "www.ksoutdoors.gov", "ksoutdoors.com", "www.ksoutdoors.com"}:
+        return ""
+    path = re.sub(r"/{2,}", "/", parsed.path or "/")
+    return f"https://www.ksoutdoors.gov{path.rstrip('/')}"
+
+
+def _ks_equestrian_park_links(index_html):
+    """Discover park pages only from KDWP's equestrian-campground section."""
+    raw = str(index_html or "")
+    low = raw.lower()
+    marker = "state parks with equestrian campgrounds"
+    start = low.find(marker)
+    if start < 0:
+        return []
+
+    end = low.find("equestrian trails", start + len(marker))
+    segment = raw[start:end if end > start else min(len(raw), start + 30000)]
+    anchor_re = re.compile(
+        r"<a\b[^>]*href=[\"']([^\"'#]+)(?:[?#][^\"']*)?[\"'][^>]*>([\s\S]*?)</a>",
+        re.I,
+    )
+
+    links = []
+    seen = set()
+    for match in anchor_re.finditer(segment):
+        label = _strip_html_basic(match.group(2)).strip()
+        if "state park" not in label.lower():
+            continue
+        url = _ks_official_url(match.group(1))
+        if not url:
+            continue
+        if url not in seen:
+            seen.add(url)
+            links.append(url)
+    return links
+
+
+def _ks_slug_id(park_name):
+    base = re.sub(r"\bstate\s+park\b", " ", str(park_name or ""), flags=re.I)
+    slug = re.sub(r"[^a-z0-9]+", "-", base.lower()).strip("-")
+    return f"ks-stateparks-{slug}"
+
+
+def _ks_phone(raw_html):
+    text = _usfs_html_to_text(raw_html)
+    office = re.search(
+        r"Park\s+Office.{0,100}?(?:\+?1[-. ]*)?\(?([2-9]\d{2})\)?[-. /]+(\d{3})[-. ]+(\d{4})",
+        text,
+        flags=re.I | re.S,
+    )
+    if office:
+        return f"{office.group(1)}-{office.group(2)}-{office.group(3)}"
+    match = re.search(r"\b(?:\+?1[-. ]*)?\(?([2-9]\d{2})\)?[-. /]+(\d{3})[-. ]+(\d{4})\b", text)
+    return f"{match.group(1)}-{match.group(2)}-{match.group(3)}" if match else ""
+
+
+def _ks_city(raw_html):
+    text = _usfs_html_to_text(raw_html)
+    location_pos = text.lower().find("location")
+    search_text = text[location_pos:location_pos + 900] if location_pos >= 0 else text
+
+    road_match = re.search(
+        r"\b(?:Road|Rd\.?|Street|St\.?|Drive|Dr\.?|Avenue|Ave\.?|Highway|Hwy\.?|"
+        r"Lane|Ln\.?|Parkway|Pkwy\.?|Boulevard|Blvd\.?|Route)\s+"
+        r"([A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+){0,3}),\s*KS\s+\d{5}(?:-\d{4})?\b",
+        search_text,
+    )
+    if road_match:
+        return road_match.group(1).strip()
+
+    matches = list(re.finditer(
+        r"\b([A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+){0,2}),\s*KS\s+\d{5}(?:-\d{4})?\b",
+        search_text,
+    ))
+    return matches[-1].group(1).strip() if matches else ""
+
+
+def _ks_name_tokens(value):
+    noise = {
+        "area", "camp", "campground", "campgrounds", "camping", "equestrian",
+        "horse", "horses", "park", "state", "trail", "trails", "the",
+    }
+    return {
+        token for token in re.findall(r"[a-z0-9]+", str(value or "").lower())
+        if len(token) >= 4 and token not in noise
+    }
+
+
+def _ks_horse_contexts(raw_html):
+    """Keep local horse/equestrian statements instead of generic park amenities."""
+    text = _usfs_html_to_text(raw_html)
+    contexts = []
+    for match in KS_HORSE_TERMS_RE.finditer(text):
+        left = max(0, match.start() - 260)
+        right = min(len(text), match.end() + 420)
+        window = text[left:right]
+        # Trim to nearby sentence/line boundaries so a generic campground utility
+        # paragraph does not bleed into the equestrian details.
+        rel = match.start() - left
+        before = max(window.rfind("\n", 0, rel), window.rfind(". ", 0, rel))
+        if before >= 0:
+            window = window[before + 1:]
+            rel -= before + 1
+        after_candidates = [
+            pos for pos in (window.find("\n", rel), window.find(". ", rel)) if pos >= 0
+        ]
+        if after_candidates:
+            window = window[:min(after_candidates) + 1]
+        cleaned = re.sub(r"\s+", " ", window).strip()
+        if cleaned and KS_HORSE_TERMS_RE.search(cleaned):
+            contexts.append(cleaned)
+
+    out = []
+    seen = set()
+    for context in contexts:
+        key = context.lower()
+        if key not in seen:
+            seen.add(key)
+            out.append(context)
+    return out
+
+
+def _ks_area_sections(raw_html):
+    areas = []
+    for level, heading, body in _al_heading_rows(raw_html):
+        if level < 3:
+            continue
+        if not re.search(r"\bCamping\s+Available\s*:\s*Yes\b", body, flags=re.I):
+            continue
+        areas.append((heading.strip(), re.sub(r"\s+", " ", body).strip()))
+    return areas
+
+
+def _ks_horse_trail_names(raw_html):
+    names = []
+    for level, heading, body in _al_heading_rows(raw_html):
+        if level < 3:
+            continue
+        if re.search(r"\bHorse\s+Riding\b", body, flags=re.I) or re.search(
+            r"\b(?:horse|equestrian)\b", heading, flags=re.I
+        ):
+            names.append(heading.strip())
+    return names
+
+
+def _ks_select_horse_area(raw_html, horse_contexts):
+    areas = _ks_area_sections(raw_html)
+    if not areas:
+        return None
+
+    context_text = " ".join(horse_contexts).lower()
+    trail_names = _ks_horse_trail_names(raw_html)
+    trail_tokens = [_ks_name_tokens(name) for name in trail_names]
+    best = None
+
+    for name, body in areas:
+        tokens = _ks_name_tokens(name)
+        low = f"{name} {body}".lower()
+        score = 0
+        if KS_HORSE_TERMS_RE.search(low):
+            score += 120
+
+        # If an official horse statement names the area (Randolph, Saddle Ridge,
+        # etc.), treat that as strong evidence even when the campground table
+        # itself contains only generic utility fields.
+        significant_mentions = [token for token in tokens if token in context_text]
+        if significant_mentions:
+            score += 50 + 10 * min(len(significant_mentions), 3)
+
+        for horse_tokens in trail_tokens:
+            overlap = tokens & horse_tokens
+            if overlap:
+                score += 35 + 10 * min(len(overlap), 2)
+
+        if best is None or score > best[0]:
+            best = (score, name, body)
+
+    if not best or best[0] < 45:
+        return None
+    return best[1], best[2]
+
+
+def _ks_find_area_detail_link(park_url, raw_html, area_name):
+    if not area_name:
+        return ""
+    wanted = re.sub(r"\s+", " ", area_name).strip().lower()
+    anchor_re = re.compile(
+        r"<a\b[^>]*href=[\"']([^\"'#]+)(?:[?#][^\"']*)?[\"'][^>]*>([\s\S]*?)</a>",
+        re.I,
+    )
+    best = ""
+    best_score = 0
+    wanted_tokens = _ks_name_tokens(area_name)
+    for match in anchor_re.finditer(raw_html or ""):
+        label = _strip_html_basic(match.group(2)).strip()
+        label_low = re.sub(r"\s+", " ", label).lower()
+        if not label_low:
+            continue
+        score = 0
+        if label_low == wanted:
+            score = 100
+        else:
+            overlap = wanted_tokens & _ks_name_tokens(label)
+            if overlap:
+                score = 20 + 10 * len(overlap)
+        if score <= best_score:
+            continue
+        url = _ks_official_url(match.group(1), park_url)
+        if not url:
+            continue
+        best = url
+        best_score = score
+    return best
+
+
+def _ks_hookups(text):
+    low = str(text or "").lower()
+    hookups = []
+    dash = r"[\s\-\u2010-\u2015]*"
+    for amps in (20, 30, 50):
+        if re.search(rf"\b{amps}{dash}amp\b|\b{amps}a\b", low):
+            hookups.append(f"{amps}A")
+
+    # KDWP area tables commonly use phrases such as "Water, Electric" and
+    # "Water, Sewer, Electric" without specifying amperage. Preserve what the
+    # source actually says; do not guess an amp rating from a site count.
+    if re.search(
+        r"\bwater\b.{0,80}\b(?:electric|hook\s*ups?|hydrants?|service)\b"
+        r"|\b(?:electric|hook\s*ups?|hydrants?|service)\b.{0,80}\bwater\b",
+        low,
+        flags=re.S,
+    ):
+        hookups.append("Water")
+    if re.search(r"\bsewer\b.{0,80}\b(?:electric|water|hook\s*ups?)\b|\bfull\s+hook\s*ups?\b", low, flags=re.S):
+        hookups.append("Sewer")
+    return list(dict.fromkeys(hookups))
+
+
+def _ks_accommodations(horse_text, page_text):
+    low = str(horse_text or "").lower()
+    page_low = str(page_text or "").lower()
+    accommodations = []
+    if re.search(r"\b(?:horse|equestrian)\s+trail\b|\bhorse\s+riding\b|\bhorseback\s+riding\b", page_low):
+        accommodations.append("Trails")
+    if re.search(r"\b(?:corrals?|horse\s+pens?)\b", low):
+        accommodations.append("Corrals")
+    if re.search(r"\bstalls?\b", low):
+        accommodations.append("Stalls")
+    if re.search(r"\bpaddocks?\b", low):
+        accommodations.append("Paddocks")
+    if re.search(r"\bhigh\s*lines?\b|\btie\s+rails?\b|\bhitching\s+(?:rails?|posts?)\b", low):
+        accommodations.append("Highlines")
+    return list(dict.fromkeys(accommodations)) or ["Trails"]
+
+
+KS_NUMBER_WORDS = {
+    "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
+    "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11,
+    "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15,
+    "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19,
+    "twenty": 20,
+}
+
+
+def _ks_parse_count_token(value):
+    token = str(value or "").strip().lower()
+    if token.isdigit():
+        return int(token)
+    return KS_NUMBER_WORDS.get(token, 0)
+
+
+def _ks_paddock_count(text):
+    # Only count when KDWP explicitly ties a numbered group of equestrian sites
+    # to individual corrals. A generic campsite count must not become a corral count.
+    number = r"(?:\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)"
+    match = re.search(
+        rf"\b({number})\s+equestrian\s+campsites?\b.{{0,160}}\bindividual\s+corrals?\b",
+        str(text or ""),
+        flags=re.I | re.S,
+    )
+    return _ks_parse_count_token(match.group(1)) if match else 0
+
+
+def _ks_camp_name(park_name, selected_area):
+    if not selected_area:
+        return f"{park_name} Equestrian Campground"
+    if selected_area.lower() in park_name.lower():
+        return park_name
+    if "camp" in selected_area.lower():
+        return f"{park_name} {selected_area}"
+    return f"{park_name} {selected_area} Equestrian Campground"
+
+
+def _ks_build_camp(park_url, park_html):
+    park_name = _al_extract_h1(park_html)
+    if not park_name:
+        return None
+
+    page_text = _usfs_html_to_text(park_html)
+    horse_contexts = _ks_horse_contexts(park_html)
+    selected = _ks_select_horse_area(park_html, horse_contexts)
+    area_name, area_body = selected if selected else ("", "")
+
+    detail_url = _ks_find_area_detail_link(park_url, park_html, area_name)
+    detail_text = ""
+    detail_horse_contexts = []
+    if detail_url and detail_url.rstrip("/") != park_url.rstrip("/"):
+        final_url, detail_html = _fetch_state_park_html(
+            detail_url,
+            "Kansas State Parks",
+            user_agent=KS_STATE_PARKS_USER_AGENT,
+        )
+        if detail_html:
+            detail_url = final_url or detail_url
+            detail_text = _usfs_html_to_text(detail_html)
+            detail_horse_contexts = _ks_horse_contexts(detail_html)
+
+    horse_text = " ".join(horse_contexts + detail_horse_contexts + ([area_body] if area_body else []))
+    if not horse_text:
+        # The statewide KDWP page is already authoritative that this park has an
+        # equestrian campground; keep unknown amenities blank rather than inventing them.
+        horse_text = "Official KDWP equestrian campground."
+
+    camp_id = _ks_slug_id(park_name)
+    lat, lon = _geocode_place_nominatim(f"{park_name}, Kansas")
+    time.sleep(1.0)
+    if abs(lat) < 0.1 or abs(lon) < 0.1:
+        previous = {
+            row.get("id"): row
+            for row in _load_previous_state_park_records("KS", verified_only=False)
+        }.get(camp_id)
+        if previous:
+            try:
+                lat = float(previous.get("latitude") or 0)
+                lon = float(previous.get("longitude") or 0)
+            except (TypeError, ValueError):
+                lat = lon = 0.0
+    if abs(lat) < 0.1 or abs(lon) < 0.1:
+        print(f"  Kansas State Parks: could not resolve coordinates for {park_name}")
+        return None
+
+    description_parts = horse_contexts[:4] + detail_horse_contexts[:3]
+    if area_name and area_body:
+        description_parts.append(f"{area_name}: {area_body}")
+    description = re.sub(r"\s+", " ", " ".join(description_parts)).strip()
+    if not description:
+        description = f"Official Kansas Department of Wildlife and Parks equestrian campground at {park_name}."
+
+    city = _ks_city(park_html)
+    year_round = bool(re.search(
+        r"\b(?:year[- ]around|year[- ]round|open\s+year\s+round)\b",
+        " ".join(horse_contexts),
+        flags=re.I,
+    ))
+
+    amenity_text = " ".join([horse_text, detail_text if detail_horse_contexts else ""])
+    return {
+        "id": camp_id,
+        "name": _ks_camp_name(park_name, area_name),
+        "location": f"{city}, KS" if city else f"{park_name}, KS",
+        "state": "KS",
+        "latitude": lat,
+        "longitude": lon,
+        "pricePerNight": 0.0,
+        "horseFeePerNight": 0.0,
+        "hookups": _ks_hookups(amenity_text),
+        "accommodations": _ks_accommodations(horse_text, page_text),
+        "maxRigLength": 0,
+        "stallCount": 0,
+        "paddockCount": _ks_paddock_count(horse_text),
+        "phone": _ks_phone(park_html),
+        "website": detail_url or park_url,
+        "description": description[:2000],
+        "isVerified": True,
+        "seasonStart": 1 if year_round else 0,
+        "seasonEnd": 12 if year_round else 0,
+        "hasWashRack": bool(re.search(r"\bwash\s+(?:rack|station)\b", amenity_text, flags=re.I)),
+        "hasDumpStation": bool(re.search(r"\bdump\s+station\b", amenity_text, flags=re.I)),
+        "hasWifi": bool(re.search(r"\bwi[- ]?fi\b|\binternet\b", amenity_text, flags=re.I)),
+        "hasBathhouse": bool(re.search(r"\b(?:shower\s+(?:house|building)|bathhouse|modern\s+restroom)\b", amenity_text, flags=re.I)),
+        "pullThroughAvailable": bool(re.search(r"\bpull[- ]through\b", amenity_text, flags=re.I)),
+        "imageColors": ["C0392B", "F1948A"],
+        "photoURLs": [],
+        "source": "State Parks",
+    }
+
+
 def fetch_ks_state_parks():
-    """Load manual KS state-park listings from data/state_parks/ks.json."""
-    return load_manual_state_parks("KS")
+    """Dynamically fetch Kansas state parks with official equestrian campgrounds."""
+    _, index_html = _fetch_state_park_html(
+        KS_STATE_PARKS_EQ_INDEX,
+        "Kansas State Parks",
+        user_agent=KS_STATE_PARKS_USER_AGENT,
+    )
+    if not index_html:
+        return _guard_dynamic_state_park_result("KS", [])
+
+    park_urls = _ks_equestrian_park_links(index_html)
+    if not park_urls:
+        print("  Kansas State Parks: no equestrian campground park links found on statewide index")
+        return _guard_dynamic_state_park_result("KS", [])
+    print(f"  Kansas State Parks: discovered {len(park_urls)} official equestrian-campground park pages")
+
+    camps = []
+    for park_url in park_urls:
+        final_url, park_html = _fetch_state_park_html(
+            park_url,
+            "Kansas State Parks",
+            user_agent=KS_STATE_PARKS_USER_AGENT,
+        )
+        if not park_html:
+            continue
+        camp = _ks_build_camp(final_url or park_url, park_html)
+        if camp:
+            camps.append(camp)
+        time.sleep(0.15)
+
+    deduped = {camp["id"]: camp for camp in camps}
+    camps = sorted(deduped.values(), key=lambda row: row["name"])
+    camps = _guard_dynamic_state_park_result("KS", camps)
+    print(f"  Kansas State Parks: {len(camps)} dynamic official equestrian-camping listings")
+    return camps
 
 def fetch_md_state_parks():
     """Load manual MD state-park listings from data/state_parks/md.json."""

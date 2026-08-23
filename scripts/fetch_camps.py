@@ -2656,9 +2656,586 @@ def fetch_sc_state_parks():
     """Load manual SC state-park listings from data/state_parks/sc.json."""
     return load_manual_state_parks("SC")
 
+# ── ALABAMA STATE PARKS ────────────────────────────────────────────────
+# Alabama is discovered from the official Alabama State Parks site on every run.
+# No park names, campground names, campground URLs, or amenities are hardcoded.
+# Once this importer has completed successfully at least once, the previous
+# verified Alabama records in camps.json are used as last-known-good protection
+# if the official site is temporarily unavailable or the live result collapses.
+AL_STATE_PARKS_INDEX = "https://www.alapark.com/parks"
+AL_STATE_PARKS_USER_AGENT = "HorseCampDataFetcher/1.0 (+https://horsecampfinder.com/)"
+
+AL_HORSE_CAMP_POSITIVE_PATTERNS = [
+    re.compile(r"\bequestrian\s+camp(?:ground|ing|sites?|area)\b", re.I),
+    re.compile(r"\bhorse\s+camp(?:ground|ing|sites?|area)\b", re.I),
+    re.compile(r"\bequine\s+camp(?:ground|ing|sites?|area)\b", re.I),
+    re.compile(r"\bover\s*night\s+horseback\s+camping\b", re.I),
+    re.compile(r"\bovernight\s+(?:horse|equestrian|equine)\s+camping\b", re.I),
+    re.compile(r"\bcamping\s+in\s+the\s+equestrian\s+area\b", re.I),
+    re.compile(r"\b(?:camping|campsites?)\b.{0,120}\brestricted\s+to\s+equestrian\b", re.I | re.S),
+    re.compile(r"\brestricted\s+to\s+equestrian\s+camp(?:ground|ing|sites?|area)?\b", re.I),
+]
+
+AL_HORSE_CAMP_DETAIL_PATTERNS = [
+    re.compile(r"\bover\s*night\b|\bovernight\b", re.I),
+    re.compile(r"\b\d+\s+(?:equestrian\s+|horse\s+|equine\s+)?(?:camp)?sites?\b", re.I),
+    re.compile(r"\b(?:electric(?:al)?|water|sewer)\b.{0,80}\b(?:hook\s*ups?|service|spigots?|hydrants?)\b", re.I | re.S),
+    re.compile(r"\b(?:first[- ]come|walk[- ]up|reservations?|camping\s+rate|campground\s+amenities)\b", re.I),
+    re.compile(r"\bcamping\s+in\s+the\s+equestrian\s+area\b", re.I),
+]
+
+# Do not publish an area that the official site itself describes as still being
+# developed into a horse campground. This keeps trail/day-use or future projects
+# from being presented as established HorseCamp destinations.
+AL_HORSE_CAMP_DEVELOPMENT_PATTERNS = [
+    re.compile(r"\b(?:working|work)\b.{0,100}\bdevelop(?:ing|ment)?\b.{0,100}\bhorse\s+camp", re.I | re.S),
+    re.compile(r"\bdevelop(?:ing|ment)?\b.{0,100}\bhorse\s+camp\s+area\b", re.I | re.S),
+    re.compile(r"\bhorse\s+camp\s+area\b.{0,120}\b(?:still\s+primitive|under\s+development|being\s+developed)\b", re.I | re.S),
+]
+
+AL_HORSE_CAMP_NON_OVERNIGHT_PATTERNS = [
+    re.compile(r"\bday\s+use\s+only\b", re.I),
+    re.compile(r"\bno\s+overnight\s+camp(?:ing)?\b", re.I),
+    re.compile(r"\bovernight\s+camping\s+is\s+not\s+allowed\b", re.I),
+]
+
+
+def _fetch_state_park_html(url, label="State Parks", retries=3):
+    """Fetch one official state-park HTML page with bounded retries."""
+    for attempt in range(1, retries + 1):
+        try:
+            response = requests.get(
+                url,
+                timeout=(8, 20),
+                headers={"User-Agent": AL_STATE_PARKS_USER_AGENT},
+                allow_redirects=True,
+            )
+            if response.status_code == 200 and response.text:
+                return response.url, response.text
+            if response.status_code == 429 and attempt < retries:
+                retry_after = str(response.headers.get("Retry-After") or "").strip()
+                wait = int(retry_after) if retry_after.isdigit() else 10 * attempt
+                wait = max(2, min(wait, 60))
+                print(f"  {label}: HTTP 429; waiting {wait}s before retry", flush=True)
+                time.sleep(wait)
+                continue
+            if response.status_code >= 500 and attempt < retries:
+                time.sleep(3 * attempt)
+                continue
+            print(f"  {label}: HTTP {response.status_code} for {url}", flush=True)
+            return "", ""
+        except requests.RequestException as error:
+            if attempt >= retries:
+                print(f"  {label}: request failed for {url}: {error}", flush=True)
+                return "", ""
+            time.sleep(3 * attempt)
+    return "", ""
+
+
+def _load_previous_state_park_records(state_code, verified_only=False):
+    """Read a state's previously published State Parks records from camps.json."""
+    path = REPO_ROOT / "camps.json"
+    if not path.exists():
+        return []
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as error:
+        print(f"  WARNING: Could not read previous camps.json for {state_code}: {error}")
+        return []
+
+    rows = payload.get("camps", []) if isinstance(payload, dict) else []
+    result = []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        if row.get("source") != "State Parks" or row.get("state") != state_code:
+            continue
+        if verified_only and row.get("isVerified") is not True:
+            continue
+        result.append(dict(row))
+    return result
+
+
+def _guard_dynamic_state_park_result(state_code, current):
+    """Protect a dynamic state source from a temporary or suspicious collapse.
+
+    Manual state JSON can establish the first migration's rough expected count,
+    but it is never used as fallback data. After a successful dynamic run, the
+    prior verified records already present in camps.json become the last-known-good
+    fallback. A moderate natural change is allowed; a large count drop or major ID
+    churn is treated as a scraper/source failure that needs review.
+    """
+    previous_all = _load_previous_state_park_records(state_code, verified_only=False)
+    previous_verified = _load_previous_state_park_records(state_code, verified_only=True)
+    baseline = previous_verified or previous_all
+    minimum_count = max(1, math.ceil(len(baseline) * 0.70)) if baseline else 1
+
+    suspicious_identity_churn = False
+    if previous_verified and current:
+        previous_ids = {str(row.get("id") or "") for row in previous_verified}
+        current_ids = {str(row.get("id") or "") for row in current}
+        minimum_overlap = max(1, math.ceil(len(previous_ids) * 0.60))
+        suspicious_identity_churn = len(previous_ids & current_ids) < minimum_overlap
+
+    if len(current) >= minimum_count and not suspicious_identity_churn:
+        return current
+
+    reason = (
+        "major campground-ID churn"
+        if suspicious_identity_churn
+        else f"only {len(current)} records (minimum safe count {minimum_count})"
+    )
+    if previous_verified:
+        print(
+            f"  WARNING: {state_code} live State Parks result is suspicious ({reason}); "
+            f"retaining {len(previous_verified)} last-known-good verified records from camps.json."
+        )
+        return previous_verified
+
+    raise RuntimeError(
+        f"{state_code} live State Parks result is suspicious ({reason}) and no verified "
+        "dynamic fallback exists. Refusing to publish stale/manual state data."
+    )
+
+
+def _al_root_park_links(index_html):
+    """Discover official Alabama park root pages from the statewide park index."""
+    links = []
+    seen = set()
+    anchor_re = re.compile(
+        r"<a\b[^>]*href=[\"']([^\"'#]+)[\"'][^>]*>([\s\S]*?)</a>",
+        re.I,
+    )
+    for match in anchor_re.finditer(index_html or ""):
+        href = html.unescape(match.group(1)).strip()
+        label = _strip_html_basic(match.group(2)).strip()
+        absolute = urljoin(AL_STATE_PARKS_INDEX, href)
+        parsed = urlparse(absolute)
+        if parsed.netloc.lower() not in {"alapark.com", "www.alapark.com"}:
+            continue
+        park_path = parsed.path.rstrip("/")
+        if not re.fullmatch(r"/parks/[^/]+", park_path):
+            continue
+        if not label or "park" not in label.lower():
+            continue
+        normalized = f"https://www.alapark.com{park_path}"
+        if normalized not in seen:
+            seen.add(normalized)
+            links.append(normalized)
+    return links
+
+
+def _al_same_park_candidate_links(park_url, raw_html):
+    """Find official pages that could contain horse-camping information."""
+    parsed_park = urlparse(park_url)
+    base_path = parsed_park.path.rstrip("/")
+    candidates = []
+    seen = {park_url.rstrip("/")}
+    anchor_re = re.compile(
+        r"<a\b[^>]*href=[\"']([^\"'#]+)[\"'][^>]*>([\s\S]*?)</a>",
+        re.I,
+    )
+    for match in anchor_re.finditer(raw_html or ""):
+        href = html.unescape(match.group(1)).strip()
+        label = _strip_html_basic(match.group(2)).strip()
+        absolute = urljoin(park_url, href)
+        parsed = urlparse(absolute)
+        if parsed.netloc.lower() not in {"alapark.com", "www.alapark.com"}:
+            continue
+        if not parsed.path.startswith(base_path + "/"):
+            continue
+        blob = f"{parsed.path} {label}".lower()
+        if not any(term in blob for term in ("horse", "equestrian", "equine", "camp")):
+            continue
+        normalized = f"https://www.alapark.com{parsed.path.rstrip('/')}"
+        if normalized in seen:
+            continue
+        seen.add(normalized)
+        candidates.append(normalized)
+    def priority(url):
+        low = url.lower()
+        if any(term in low for term in ("horse", "equestrian", "equine")):
+            return 0
+        return 1
+
+    candidates.sort(key=priority)
+    strong = [url for url in candidates if priority(url) == 0]
+    generic = [url for url in candidates if priority(url) == 1][:4]
+    return (strong + generic)[:10]
+
+
+def _al_extract_h1(raw_html):
+    match = re.search(r"<h1[^>]*>([\s\S]*?)</h1>", raw_html or "", flags=re.I)
+    return _strip_html_basic(match.group(1)).strip() if match else ""
+
+
+def _al_heading_rows(raw_html):
+    rows = []
+    heading_re = re.compile(r"<h([1-6])\b[^>]*>([\s\S]*?)</h\1>", re.I)
+    matches = list(heading_re.finditer(raw_html or ""))
+    for index, match in enumerate(matches):
+        level = int(match.group(1))
+        heading = _strip_html_basic(match.group(2)).strip()
+        end = len(raw_html or "")
+        for later in matches[index + 1:]:
+            if int(later.group(1)) <= level:
+                end = later.start()
+                break
+        body = _usfs_html_to_text((raw_html or "")[match.end():end])
+        rows.append((level, heading, body))
+    return rows
+
+
+def _al_is_established_horse_camp(text):
+    text = str(text or "")
+    if any(pattern.search(text) for pattern in AL_HORSE_CAMP_NON_OVERNIGHT_PATTERNS):
+        return False
+    if any(pattern.search(text) for pattern in AL_HORSE_CAMP_DEVELOPMENT_PATTERNS):
+        return False
+    has_horse_camp = any(pattern.search(text) for pattern in AL_HORSE_CAMP_POSITIVE_PATTERNS)
+    has_camping_detail = any(pattern.search(text) for pattern in AL_HORSE_CAMP_DETAIL_PATTERNS)
+    return has_horse_camp and has_camping_detail
+
+
+def _al_local_horse_windows(text, radius=420):
+    """Return compact text windows around explicit horse-camping statements."""
+    text = str(text or "")
+    windows = []
+    starts = []
+    for pattern in AL_HORSE_CAMP_POSITIVE_PATTERNS:
+        starts.extend(match.start() for match in pattern.finditer(text))
+    for start_pos in sorted(set(starts)):
+        left = max(0, start_pos - radius)
+        right = min(len(text), start_pos + radius)
+        window = text[left:right]
+        # Snap toward sentence/line boundaries when available.
+        boundary = max(window.rfind("\n", 0, min(radius, len(window))), window.rfind(". ", 0, min(radius, len(window))))
+        if boundary >= 0:
+            window = window[boundary + 1:]
+        if _al_is_established_horse_camp(window):
+            windows.append(window.strip())
+    return windows
+
+
+def _al_horse_context(raw_html):
+    """Extract horse-specific text without inheriting ordinary RV-loop amenities."""
+    sections = []
+    for level, heading, body in _al_heading_rows(raw_html):
+        if level == 1:
+            continue
+        heading_low = heading.lower()
+        combined = f"{heading}\n{body}".strip()
+        heading_is_horse_camp = (
+            any(term in heading_low for term in ("horse", "equestrian", "equine"))
+            and "camp" in heading_low
+        )
+        if heading_is_horse_camp and _al_is_established_horse_camp(combined):
+            # Dedicated horse-camping heading: the whole section is relevant.
+            sections.append(combined)
+        elif _al_is_established_horse_camp(combined):
+            # Generic headings such as "Accommodations" can mix regular RV sites
+            # with an equestrian subsection. Keep only the local horse statement.
+            sections.extend(_al_local_horse_windows(body))
+
+    if not sections:
+        sections.extend(_al_local_horse_windows(_usfs_html_to_text(raw_html)))
+
+    deduped = []
+    seen = set()
+    for section in sections:
+        normalized = re.sub(r"\s+", " ", section).strip()
+        key = normalized.lower()
+        if normalized and key not in seen:
+            seen.add(key)
+            deduped.append(normalized)
+    return deduped
+
+
+def _al_horse_page_score(url, contexts):
+    text = " ".join(contexts).lower()
+    score = len(contexts) * 10
+    if "horse" in url.lower() or "equestrian" in url.lower() or "equine" in url.lower():
+        score += 20
+    if "equestrian campground" in text or "horse campground" in text:
+        score += 20
+    if "horse camping area" in text or "equestrian camping area" in text:
+        score += 15
+    return score
+
+
+def _al_camp_label(raw_html, contexts):
+    candidates = []
+    for _, heading, _ in _al_heading_rows(raw_html):
+        lower = heading.lower()
+        if not any(term in lower for term in ("horse", "equestrian", "equine")):
+            continue
+        if "camp" not in lower:
+            continue
+        cleaned = re.sub(r"\s*/\s*day\s+riding.*$", "", heading, flags=re.I).strip(" -/")
+        cleaned = re.sub(r"\bday\s+riding\b.*$", "", cleaned, flags=re.I).strip(" -/")
+        score = 0
+        low = cleaned.lower()
+        if "horse camping area" in low:
+            score = 40
+        elif "equestrian campground" in low or "horse campground" in low:
+            score = 35
+        elif "equestrian camping" in low or "equine camping" in low:
+            score = 30
+        else:
+            score = 20
+        candidates.append((score, cleaned))
+
+    if candidates:
+        candidates.sort(reverse=True)
+        label = candidates[0][1]
+        if label.lower() == "equestrian camping":
+            return "Equestrian Campground"
+        if label.lower() == "equine camping":
+            return "Equestrian Camping Area"
+        return label
+
+    combined = " ".join(contexts).lower()
+    if "equestrian campground" in combined:
+        return "Equestrian Campground"
+    if "horse camping area" in combined:
+        return "Horse Camping Area"
+    return "Equestrian Camping Area"
+
+
+def _al_hookups(text):
+    low = str(text or "").lower()
+    hookups = []
+    dash = r"[\s\-\u2010-\u2015]*"
+    for amps in (20, 30, 50):
+        if re.search(rf"\b{amps}{dash}amp\b|\b{amps}a\b", low):
+            hookups.append(f"{amps}A")
+
+    if re.search(
+        r"\bwater\b.{0,80}\b(?:hook\s*ups?|service|spigots?|hydrants?)\b"
+        r"|\b(?:water\s+spigots?|water\s+hydrants?|hydrants?)\b"
+        r"|\b(?:service|hook\s*ups?)\b.{0,80}\bwater\b",
+        low,
+        flags=re.S,
+    ):
+        hookups.append("Water")
+    if re.search(r"\bsewer\b.{0,60}\bhook\s*ups?\b|\bfull\s+hook\s*ups?\b", low, flags=re.S):
+        hookups.append("Sewer")
+    if re.search(r"\bno\s+(?:utility\s+)?hook\s*ups?\b", low):
+        return ["No Hookups"]
+    return list(dict.fromkeys(hookups))
+
+
+def _al_accommodations(horse_text, support_text):
+    low = str(horse_text or "").lower()
+    support = str(support_text or "").lower()
+    accommodations = []
+    if re.search(r"\b(?:horse|equestrian|equine)\s+trails?\b|\bhorseback\s+riding\b", support):
+        accommodations.append("Trails")
+    if re.search(r"\bstalls?\b", low):
+        accommodations.append("Stalls")
+    if re.search(r"\bcorrals?\b", low):
+        accommodations.append("Corrals")
+    if re.search(r"\bpaddocks?\b", low):
+        accommodations.append("Paddocks")
+    if re.search(r"\bhigh\s*lines?\b|\btie\s+rails?\b|\bhitching\s+rails?\b", low):
+        accommodations.append("Highlines")
+    return list(dict.fromkeys(accommodations)) or ["Trails"]
+
+
+def _al_stall_count(text):
+    match = re.search(r"\b(\d+)\s+(?:covered\s+)?stalls?\b", str(text or ""), flags=re.I)
+    return int(match.group(1)) if match else 0
+
+
+def _al_paddock_count(text):
+    match = re.search(r"\b(\d+)\s+paddocks?\b", str(text or ""), flags=re.I)
+    return int(match.group(1)) if match else 0
+
+
+def _al_phone(raw_html):
+    text = _usfs_html_to_text(raw_html)
+    directory = re.search(
+        r"(?:Park\s+Directory|Phone\s+Numbers?|Park\s+Office)\s*:?\s*#?\s*"
+        r"(?:\+?1[-. ]*)?(\d{3})[-. )]+(\d{3})[-. ]+(\d{4})",
+        text,
+        flags=re.I,
+    )
+    if directory:
+        return f"{directory.group(1)}-{directory.group(2)}-{directory.group(3)}"
+    match = re.search(r"\b(?:\+?1[-. ]*)?(\d{3})[-. )]+(\d{3})[-. ]+(\d{4})\b", text)
+    return f"{match.group(1)}-{match.group(2)}-{match.group(3)}" if match else ""
+
+
+def _al_city(raw_html):
+    text = _usfs_html_to_text(raw_html)
+    location_pos = text.lower().find("location")
+    search_text = text[location_pos:location_pos + 700] if location_pos >= 0 else text
+
+    # Prefer an address-shaped line and strip the street portion. Alabama park
+    # pages commonly render: "200 Terrace Drive Pelham, AL 35124" or
+    # "4325 Alabama Highway 128 Alexander City, AL 35010".
+    address_match = re.search(
+        r"(?:^|\n)([^\n]{0,140}?,\s*AL\s+\d{5}(?:-\d{4})?)(?:$|\n)",
+        search_text,
+        flags=re.M,
+    )
+    candidate = address_match.group(1).strip() if address_match else search_text
+    road_match = re.search(
+        r"\b(?:Street|St\.?|Road|Rd\.?|Drive|Dr\.?|Highway|Hwy\.?|Avenue|Ave\.?|"
+        r"Lane|Ln\.?|Parkway|Pkwy\.?|Boulevard|Blvd\.?|Route|County\s+Road|Co\.?\s*Rd\.?)"
+        r"\s+(?:\d+[A-Za-z-]*\s+)?([A-Z][A-Za-z .'-]+),\s*AL\s+\d{5}(?:-\d{4})?\b",
+        candidate,
+    )
+    if road_match:
+        return road_match.group(1).strip()
+
+    match = re.search(
+        r"\b([A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+){0,2}),\s*AL\s+\d{5}(?:-\d{4})?\b",
+        candidate,
+    )
+    return match.group(1).strip() if match else ""
+
+
+def _al_slug_id(park_url):
+    slug = urlparse(park_url).path.rstrip("/").split("/")[-1]
+    slug = re.sub(r"-state-park$", "", slug, flags=re.I)
+    return "al-stateparks-" + re.sub(r"[^a-z0-9]+", "-", slug.lower()).strip("-")
+
+
+def _al_build_camp(park_url, park_html, horse_pages):
+    park_name = _al_extract_h1(park_html)
+    if not park_name:
+        return None
+
+    scored_pages = []
+    all_contexts = []
+    support_texts = [_usfs_html_to_text(park_html)]
+    for page_url, raw_html, contexts in horse_pages:
+        all_contexts.extend(contexts)
+        support_texts.append(_usfs_html_to_text(raw_html))
+        scored_pages.append((_al_horse_page_score(page_url, contexts), page_url, raw_html, contexts))
+    if not scored_pages or not all_contexts:
+        return None
+
+    scored_pages.sort(key=lambda row: row[0], reverse=True)
+    _, best_url, best_html, best_contexts = scored_pages[0]
+    horse_text = "\n".join(all_contexts)
+    support_text = "\n".join(support_texts)
+    label = _al_camp_label(best_html, best_contexts)
+    name = label if park_name.lower() in label.lower() else f"{park_name} {label}"
+
+    lat, lon = _geocode_place_nominatim(f"{park_name}, Alabama")
+    time.sleep(1.0)
+    if abs(lat) < 0.1 or abs(lon) < 0.1:
+        previous = {
+            row.get("id"): row
+            for row in _load_previous_state_park_records("AL", verified_only=False)
+        }.get(_al_slug_id(park_url))
+        if previous:
+            try:
+                lat = float(previous.get("latitude") or 0)
+                lon = float(previous.get("longitude") or 0)
+            except (TypeError, ValueError):
+                lat = lon = 0.0
+    if abs(lat) < 0.1 or abs(lon) < 0.1:
+        print(f"  Alabama State Parks: could not resolve coordinates for {park_name}")
+        return None
+
+    low = horse_text.lower()
+    year_round = bool(re.search(r"\byear[- ]round\b", horse_text, flags=re.I))
+    city = _al_city(park_html)
+    description = re.sub(r"\s+", " ", " ".join(best_contexts)).strip()
+
+    return {
+        "id": _al_slug_id(park_url),
+        "name": name,
+        "location": f"{city}, AL" if city else f"{park_name}, AL",
+        "state": "AL",
+        "latitude": lat,
+        "longitude": lon,
+        "pricePerNight": 0.0,
+        "horseFeePerNight": 0.0,
+        "hookups": _al_hookups(horse_text),
+        "accommodations": _al_accommodations(horse_text, support_text),
+        "maxRigLength": 0,
+        "stallCount": _al_stall_count(horse_text),
+        "paddockCount": _al_paddock_count(horse_text),
+        "phone": _al_phone(park_html),
+        "website": best_url,
+        "description": description[:2000] or f"Official Alabama State Parks horse-camping location at {park_name}.",
+        "isVerified": True,
+        "seasonStart": 1 if year_round else 0,
+        "seasonEnd": 12 if year_round else 0,
+        "hasWashRack": bool(re.search(r"\b(?:wash\s+rack|horse\s+wash)\b", low)),
+        "hasDumpStation": bool(
+            re.search(r"\b(?:rv\s+dump\s+station|sanitary\s+dump)\b", low)
+            or (
+                re.search(r"\bdump\s+station\b", low)
+                and not re.search(r"\bdump\s+station\s+for\s+horse\s+waste\b", low)
+            )
+        ),
+        "hasWifi": bool(re.search(r"\b(?:wi[- ]?fi|internet)\b", low)),
+        "hasBathhouse": bool(re.search(r"\b(?:bathhouse|shower\s+house|shower\s+building|flush\s+toilets?)\b", low)),
+        "pullThroughAvailable": bool(re.search(r"\bpull[- ]through\b", low)),
+        "imageColors": ["C0392B", "F1948A"],
+        "photoURLs": [],
+        "source": "State Parks",
+    }
+
+
 def fetch_al_state_parks():
-    """Load manual AL state-park listings from data/state_parks/al.json."""
-    return load_manual_state_parks("AL")
+    """Dynamically discover established Alabama horse campgrounds and amenities.
+
+    Discovery starts from the official Alabama State Parks index, follows each
+    official park root page and its horse/equestrian/camping subpages, and only
+    publishes parks with explicit established overnight horse-camping evidence.
+    No Alabama campground names or amenity values are hardcoded here.
+    """
+    index_url, index_html = _fetch_state_park_html(AL_STATE_PARKS_INDEX, "Alabama State Parks index")
+    if not index_html:
+        return _guard_dynamic_state_park_result("AL", [])
+
+    park_urls = _al_root_park_links(index_html)
+    if not park_urls:
+        return _guard_dynamic_state_park_result("AL", [])
+    print(f"  Alabama State Parks: discovered {len(park_urls)} official park pages from statewide index")
+
+    camps = []
+    for park_url in park_urls:
+        _, park_html = _fetch_state_park_html(park_url, "Alabama State Parks")
+        if not park_html:
+            continue
+
+        horse_pages = []
+        root_contexts = _al_horse_context(park_html)
+        if root_contexts:
+            horse_pages.append((park_url, park_html, root_contexts))
+
+        for candidate_url in _al_same_park_candidate_links(park_url, park_html):
+            final_url, candidate_html = _fetch_state_park_html(candidate_url, "Alabama State Parks")
+            if not candidate_html:
+                continue
+            contexts = _al_horse_context(candidate_html)
+            if contexts:
+                horse_pages.append((final_url or candidate_url, candidate_html, contexts))
+            time.sleep(0.15)
+
+        if not horse_pages:
+            continue
+
+        camp = _al_build_camp(park_url, park_html, horse_pages)
+        if camp:
+            camps.append(camp)
+
+    # Stable ordering and duplicate protection if the site index repeats a park.
+    deduped = {}
+    for camp in camps:
+        deduped[camp["id"]] = camp
+    camps = sorted(deduped.values(), key=lambda row: row["name"])
+
+    camps = _guard_dynamic_state_park_result("AL", camps)
+    print(f"  Alabama State Parks: {len(camps)} dynamic official horse-camping listings")
+    return camps
 
 def fetch_wy_state_parks():
     """Load manual WY state-park listings from data/state_parks/wy.json."""

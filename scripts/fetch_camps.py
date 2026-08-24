@@ -3532,162 +3532,24 @@ def fetch_ok_state_parks():
     return load_manual_state_parks("OK")
 
 # ── KANSAS STATE PARKS ─────────────────────────────────────────────────
-# Kansas publishes a statewide official list of state parks with equestrian
-# campgrounds. The importer discovers the park links from that list on every run,
-# then reads each official park page for the current campground/area details.
-# No Kansas park names, individual park URLs, or amenity values are hardcoded.
-KS_STATE_PARKS_EQ_INDEX = "https://www.ksoutdoors.gov/outdoor-activities/other-outdoor-recreation-in-kansas"
+# Kansas is discovered dynamically from official KDWP sources. The legacy/current
+# HTML equestrian indexes are preferred; if KDWP's main website blocks GitHub
+# Actions, official KDWP publications are used as a discovery fallback. No Kansas
+# park names, individual park URLs, or amenity values are hardcoded.
+KS_STATE_PARKS_HTML_SOURCES = [
+    "https://ksoutdoors.com/Services/Outdoor-Activities/Equestrian-Trails-Campgrounds",
+    "https://www.ksoutdoors.gov/outdoor-activities/other-outdoor-recreation-in-kansas",
+]
+KS_STATE_PARKS_BASE = "https://www.ksoutdoors.gov/about-kdwp/where-we-work/state-parks"
+KS_STATE_PARKS_PUBLICATION_SOURCES = [
+    "https://ksoutdoors.gov/content/download/52060/526467/version/3/file/Kansas%2BHorse%2BTrails%2B2020.pdf",
+    "https://history.ksoutdoors.com/content/download/7798/33835/file/2022%20-79-4%20-%20JA%20Kansas%20Wildlife%20%26%20Parks%20Magazine.pdf",
+]
 KS_STATE_PARKS_USER_AGENT = (
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    "(KHTML, like Gecko) Chrome/131.0 Safari/537.36"
 )
-
-# KDWP returned HTTP 403 to a GitHub Actions runner on the first request of an
-# overnight run. Kansas therefore uses its own persistent browser-like session,
-# bounded 403/429 backoff, and a deliberately slow request pace. This is scoped
-# only to KDWP so it does not make RIDB/NPS/USFS or other state importers slower.
-KS_STATE_PARKS_REQUEST_DELAY_SECONDS = 2.5
-KS_STATE_PARKS_REQUEST_JITTER_SECONDS = 1.0
-KS_STATE_PARKS_403_BACKOFF_SECONDS = (25, 55, 90)
-KS_STATE_PARKS_429_BACKOFF_SECONDS = (15, 30, 60)
-_ks_state_parks_last_request_at = 0.0
-_ks_state_parks_session = None
-
-
-def _ks_session():
-    global _ks_state_parks_session
-    if _ks_state_parks_session is None:
-        session = requests.Session()
-        session.headers.update({
-            "User-Agent": KS_STATE_PARKS_USER_AGENT,
-            "Accept": (
-                "text/html,application/xhtml+xml,application/xml;q=0.9,"
-                "image/avif,image/webp,image/apng,*/*;q=0.8"
-            ),
-            "Accept-Language": "en-US,en;q=0.9",
-            "Cache-Control": "no-cache",
-            "Pragma": "no-cache",
-            "Upgrade-Insecure-Requests": "1",
-            "Connection": "keep-alive",
-        })
-        _ks_state_parks_session = session
-    return _ks_state_parks_session
-
-
-def _ks_polite_pause():
-    global _ks_state_parks_last_request_at
-    target_delay = KS_STATE_PARKS_REQUEST_DELAY_SECONDS + random.uniform(
-        0.0, KS_STATE_PARKS_REQUEST_JITTER_SECONDS
-    )
-    elapsed = time.monotonic() - _ks_state_parks_last_request_at
-    wait = target_delay - elapsed
-    if wait > 0:
-        time.sleep(wait)
-    _ks_state_parks_last_request_at = time.monotonic()
-
-
-def _ks_retry_after_seconds(response, attempt, defaults):
-    retry_after = str(response.headers.get("Retry-After") or "").strip()
-    if retry_after.isdigit():
-        return max(5, min(int(retry_after), 120))
-    return defaults[min(attempt, len(defaults) - 1)]
-
-
-def _ks_fetch_html(url, referer=None, retries=3):
-    """Fetch one official KDWP page with persistent-session anti-blocking care.
-
-    A 403 is treated as temporary blocking rather than as a missing page. The
-    retry waits are intentionally substantial because the 2026-08-23 scheduled
-    GitHub Actions run was blocked on its very first Kansas request.
-    """
-    session = _ks_session()
-    max_attempts = max(1, retries)
-
-    for attempt in range(max_attempts):
-        try:
-            _ks_polite_pause()
-            headers = {}
-            if referer:
-                headers["Referer"] = referer
-            response = session.get(
-                url,
-                headers=headers or None,
-                timeout=(10, 30),
-                allow_redirects=True,
-            )
-            if response.status_code == 200 and response.text:
-                return response.url, response.text
-
-            if response.status_code == 403:
-                if attempt < max_attempts - 1:
-                    base_wait = KS_STATE_PARKS_403_BACKOFF_SECONDS[
-                        min(attempt, len(KS_STATE_PARKS_403_BACKOFF_SECONDS) - 1)
-                    ]
-                    wait = base_wait + random.uniform(0.0, 8.0)
-                    print(
-                        f"  Kansas State Parks: HTTP 403 for {url}; "
-                        f"waiting {wait:.1f}s before retry {attempt + 2}/{max_attempts}",
-                        flush=True,
-                    )
-                    time.sleep(wait)
-                    continue
-                print(
-                    f"  Kansas State Parks: HTTP 403 for {url} after {max_attempts} attempts",
-                    flush=True,
-                )
-                return "", ""
-
-            if response.status_code == 429:
-                if attempt < max_attempts - 1:
-                    wait = _ks_retry_after_seconds(
-                        response, attempt, KS_STATE_PARKS_429_BACKOFF_SECONDS
-                    ) + random.uniform(0.0, 5.0)
-                    print(
-                        f"  Kansas State Parks: HTTP 429 for {url}; "
-                        f"waiting {wait:.1f}s before retry {attempt + 2}/{max_attempts}",
-                        flush=True,
-                    )
-                    time.sleep(wait)
-                    continue
-                print(
-                    f"  Kansas State Parks: HTTP 429 for {url} after {max_attempts} attempts",
-                    flush=True,
-                )
-                return "", ""
-
-            if response.status_code >= 500 and attempt < max_attempts - 1:
-                wait = 5 * (attempt + 1) + random.uniform(0.0, 3.0)
-                print(
-                    f"  Kansas State Parks: HTTP {response.status_code} for {url}; "
-                    f"waiting {wait:.1f}s before retry",
-                    flush=True,
-                )
-                time.sleep(wait)
-                continue
-
-            print(
-                f"  Kansas State Parks: HTTP {response.status_code} for {url}",
-                flush=True,
-            )
-            return "", ""
-        except requests.RequestException as error:
-            if attempt >= max_attempts - 1:
-                print(
-                    f"  Kansas State Parks: request failed for {url} after "
-                    f"{max_attempts} attempts: {error}",
-                    flush=True,
-                )
-                return "", ""
-            wait = 5 * (attempt + 1) + random.uniform(0.0, 3.0)
-            print(
-                f"  Kansas State Parks: request error for {url}: {error}; "
-                f"waiting {wait:.1f}s before retry",
-                flush=True,
-            )
-            time.sleep(wait)
-
-    return "", ""
-
+KS_STATE_PARKS_DELAY_SECONDS = (2.5, 3.5)
 
 KS_HORSE_TERMS_RE = re.compile(
     r"\b(?:horse|horses|horseback|equestrian|equine|corrals?|horse\s+pens?|"
@@ -3696,7 +3558,83 @@ KS_HORSE_TERMS_RE = re.compile(
 )
 
 
-def _ks_official_url(href, base=KS_STATE_PARKS_EQ_INDEX):
+def _ks_session():
+    session = requests.Session()
+    session.headers.update({
+        "User-Agent": KS_STATE_PARKS_USER_AGENT,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Upgrade-Insecure-Requests": "1",
+    })
+    return session
+
+
+_KS_HTTP = _ks_session()
+
+
+def _ks_request(url, *, referrer="", binary=False, attempts=2):
+    """Fetch one KDWP resource with short bounded retries.
+
+    KDWP has returned immediate 403 responses to GitHub-hosted runners. A 403 gets
+    one short retry and then control moves to the next official source instead of
+    waiting minutes and repeating a request that is being blocked by the WAF.
+    """
+    headers = {"Referer": referrer} if referrer else {}
+    for attempt in range(1, attempts + 1):
+        try:
+            response = _KS_HTTP.get(
+                url,
+                timeout=(10, 35),
+                headers=headers,
+                allow_redirects=True,
+            )
+        except requests.RequestException as error:
+            if attempt >= attempts:
+                print(f"  Kansas State Parks: request failed for {url}: {error}")
+                return "", b"" if binary else ""
+            wait = 4 + random.uniform(0, 2)
+            print(f"  Kansas State Parks: request error; retrying in {wait:.1f}s")
+            time.sleep(wait)
+            continue
+
+        if response.status_code == 200 and response.content:
+            return response.url, response.content if binary else response.text
+
+        if response.status_code == 403:
+            if attempt < attempts:
+                wait = 5 + random.uniform(0, 3)
+                print(f"  Kansas State Parks: HTTP 403 for {url}; one retry in {wait:.1f}s")
+                time.sleep(wait)
+                continue
+            print(f"  Kansas State Parks: HTTP 403 for {url}; trying alternate official source")
+            return "", b"" if binary else ""
+
+        if response.status_code == 429 and attempt < attempts:
+            retry_after = str(response.headers.get("Retry-After") or "").strip()
+            wait = int(retry_after) if retry_after.isdigit() else 10
+            wait = max(3, min(wait, 30))
+            print(f"  Kansas State Parks: HTTP 429; retrying in {wait}s")
+            time.sleep(wait)
+            continue
+
+        if response.status_code >= 500 and attempt < attempts:
+            time.sleep(5 + random.uniform(0, 2))
+            continue
+
+        print(f"  Kansas State Parks: HTTP {response.status_code} for {url}")
+        return "", b"" if binary else ""
+
+    return "", b"" if binary else ""
+
+
+def _ks_fetch_html(url, referrer=""):
+    final_url, body = _ks_request(url, referrer=referrer, binary=False)
+    return final_url, body
+
+
+def _ks_official_url(href, base=KS_STATE_PARKS_HTML_SOURCES[0]):
     absolute = urljoin(base, html.unescape(str(href or "")).strip())
     parsed = urlparse(absolute)
     host = parsed.netloc.lower().split(":", 1)[0]
@@ -3706,36 +3644,240 @@ def _ks_official_url(href, base=KS_STATE_PARKS_EQ_INDEX):
     return f"https://www.ksoutdoors.gov{path.rstrip('/')}"
 
 
-def _ks_equestrian_park_links(index_html):
-    """Discover park pages only from KDWP's equestrian-campground section."""
+def _ks_equestrian_park_links(index_html, source_url):
+    """Discover park names/links only from KDWP's equestrian-campground section."""
     raw = str(index_html or "")
     low = raw.lower()
     marker = "state parks with equestrian campgrounds"
-    start = low.find(marker)
-    if start < 0:
+    section_start = low.find(marker)
+    if section_start < 0:
         return []
 
-    end = low.find("equestrian trails", start + len(marker))
-    segment = raw[start:end if end > start else min(len(raw), start + 30000)]
+    section_end = low.find("equestrian trails", section_start + len(marker))
+    segment = raw[section_start:section_end if section_end > section_start else min(len(raw), section_start + 30000)]
     anchor_re = re.compile(
         r"<a\b[^>]*href=[\"']([^\"'#]+)(?:[?#][^\"']*)?[\"'][^>]*>([\s\S]*?)</a>",
         re.I,
     )
 
-    links = []
+    rows = []
     seen = set()
     for match in anchor_re.finditer(segment):
-        label = _strip_html_basic(match.group(2)).strip()
+        label = re.sub(r"\s+", " ", _strip_html_basic(match.group(2))).strip()
         if "state park" not in label.lower():
             continue
-        url = _ks_official_url(match.group(1))
-        if not url:
+        url = _ks_official_url(match.group(1), source_url)
+        key = re.sub(r"[^a-z0-9]+", "-", label.lower()).strip("-")
+        if not url or key in seen:
             continue
-        if url not in seen:
-            seen.add(url)
-            links.append(url)
-    return links
+        seen.add(key)
+        rows.append({
+            "name": label,
+            "park_url": url,
+            "source_url": source_url,
+            "phone": "",
+            "campsites": 0,
+            "trail_miles": 0.0,
+            "source_kind": "html-index",
+        })
+    return rows
 
+
+def _ks_pdf_to_text(pdf_bytes):
+    """Extract text from an official KDWP PDF.
+
+    The workflow installs pypdf for this fallback. pdftotext remains a secondary
+    option so the importer is still usable in local environments without pypdf.
+    """
+    if not pdf_bytes:
+        return ""
+
+    # Preferred pure-Python path used by GitHub Actions.
+    try:
+        from io import BytesIO
+        from pypdf import PdfReader
+        reader = PdfReader(BytesIO(pdf_bytes))
+        chunks = []
+        for page in reader.pages:
+            try:
+                text = page.extract_text() or ""
+            except Exception:
+                text = ""
+            if text:
+                chunks.append(text)
+        extracted = "\n".join(chunks).strip()
+        if extracted:
+            return extracted
+    except ImportError:
+        pass
+    except Exception as error:
+        print(f"  Kansas State Parks: pypdf could not read KDWP publication: {error}")
+
+    # Local fallback when pypdf is not installed but poppler is available.
+    token = f"{os.getpid()}_{random.randint(100000, 999999)}"
+    pdf_path = Path("/tmp") / f"horsecamp_ks_{token}.pdf"
+    txt_path = Path("/tmp") / f"horsecamp_ks_{token}.txt"
+    try:
+        pdf_path.write_bytes(pdf_bytes)
+        try:
+            proc = subprocess.run(
+                ["pdftotext", "-layout", str(pdf_path), str(txt_path)],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                timeout=45,
+                check=False,
+            )
+        except FileNotFoundError:
+            print("  Kansas State Parks: no PDF text extractor is available")
+            return ""
+        except subprocess.TimeoutExpired:
+            print("  Kansas State Parks: pdftotext timed out on KDWP publication")
+            return ""
+        if proc.returncode != 0 or not txt_path.exists():
+            detail = re.sub(r"\s+", " ", proc.stderr or "").strip()[:180]
+            print(f"  Kansas State Parks: could not extract KDWP publication text{': ' + detail if detail else ''}")
+            return ""
+        return txt_path.read_text(encoding="utf-8", errors="replace")
+    finally:
+        for path in (pdf_path, txt_path):
+            try:
+                path.unlink(missing_ok=True)
+            except Exception:
+                pass
+
+
+def _ks_normalize_publication_name(name):
+    name = re.sub(r"\s+", " ", str(name or "")).strip(" ,.-")
+    name = re.sub(r"\s+SP$", " State Park", name, flags=re.I)
+    return name
+
+
+def _ks_declared_publication_count(text):
+    """Return an official publication's stated equestrian-campground count when present."""
+    low = re.sub(r"\s+", " ", str(text or "")).lower()
+    number_words = {
+        "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
+        "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11,
+        "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15,
+        "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19,
+        "twenty": 20,
+    }
+    match = re.search(r"\b(\d+|" + "|".join(number_words) + r")\s+equestrian\s+campgrounds?\b", low)
+    if not match:
+        return 0
+    token = match.group(1)
+    return int(token) if token.isdigit() else number_words.get(token, 0)
+
+
+def _ks_publication_rows(text, source_url):
+    """Parse horse-camp park names from official KDWP publication text.
+
+    Supports both the KDWP Horse Trails contact table and the later magazine
+    poster format. Parks with an explicit campsite count of zero are excluded.
+    """
+    clean = str(text or "").replace("\r", "")
+    rows = []
+    seen = set()
+
+    # Horse Trails brochure: park name, phone, email, campsite count, trail miles.
+    contact_re = re.compile(
+        r"(?P<name>[A-Z][A-Za-z0-9 &'’.-]{2,80}?(?:State\s+Park|\bSP))\s+"
+        r"(?P<phone>\(?\d{3}\)?[ -]\d{3}-\d{4})\s+"
+        r"[^\s@]+@[^\s]+\s+"
+        r"(?P<camps>\d+)\+?\s+"
+        r"(?P<trails>\d+(?:\.\d+)?)\+?",
+        re.I,
+    )
+    for match in contact_re.finditer(clean):
+        campsites = int(match.group("camps"))
+        if campsites <= 0:
+            continue
+        name = _ks_normalize_publication_name(match.group("name"))
+        key = name.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        rows.append({
+            "name": name,
+            "park_url": "",
+            "source_url": source_url,
+            "phone": re.sub(r"[()]", "", match.group("phone")).replace(" ", "-"),
+            "campsites": campsites,
+            "trail_miles": float(match.group("trails")),
+            "source_kind": "horse-trails-publication",
+        })
+
+    # Magazine poster: "Park Name, City + Horse Campsites". Only explicit horse-
+    # campsite lines qualify, so trail-only facilities are not introduced.
+    poster_re = re.compile(
+        r"(?P<name>[A-Z][A-Za-z0-9 &'’.-]{2,80}?(?:State\s+Park|\bSP))\s*,[^\n+]{1,60}\+\s*Horse\s+Campsites\b",
+        re.I,
+    )
+    for match in poster_re.finditer(clean):
+        name = _ks_normalize_publication_name(match.group("name"))
+        key = name.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        rows.append({
+            "name": name,
+            "park_url": "",
+            "source_url": source_url,
+            "phone": "",
+            "campsites": 0,
+            "trail_miles": 0.0,
+            "source_kind": "magazine-publication",
+        })
+    return rows
+
+
+def _ks_slug_from_name(park_name):
+    base = re.sub(r"\bstate\s+park\b", " ", str(park_name or ""), flags=re.I)
+    return re.sub(r"[^a-z0-9]+", "-", base.lower()).strip("-")
+
+
+def _ks_park_url_from_name(park_name):
+    slug = _ks_slug_from_name(park_name)
+    return f"{KS_STATE_PARKS_BASE}/{slug}" if slug else ""
+
+
+def _ks_discover_official_rows():
+    # Prefer the official equestrian HTML lists because they provide direct park
+    # links. A 403 on one source immediately moves to the next source.
+    for source_url in KS_STATE_PARKS_HTML_SOURCES:
+        _, index_html = _ks_fetch_html(source_url)
+        if not index_html:
+            continue
+        rows = _ks_equestrian_park_links(index_html, source_url)
+        if rows:
+            print(f"  Kansas State Parks: discovered {len(rows)} equestrian-campground parks from official HTML")
+            return rows
+        print(f"  Kansas State Parks: official HTML source had no campground links: {source_url}")
+
+    # Publication fallback. The PDFs are official KDWP publications, and park
+    # names are parsed from the downloaded content rather than hardcoded here.
+    for source_url in KS_STATE_PARKS_PUBLICATION_SOURCES:
+        _, pdf_bytes = _ks_request(source_url, binary=True)
+        if not pdf_bytes:
+            continue
+        text = _ks_pdf_to_text(pdf_bytes)
+        rows = _ks_publication_rows(text, source_url)
+        declared = _ks_declared_publication_count(text)
+        if rows and declared:
+            minimum_parse = max(1, math.ceil(declared * 0.80))
+            if len(rows) < minimum_parse:
+                print(
+                    f"  Kansas State Parks: publication says {declared} equestrian campgrounds "
+                    f"but parser found only {len(rows)}; trying alternate official publication"
+                )
+                continue
+        if rows:
+            print(f"  Kansas State Parks: discovered {len(rows)} horse-camping parks from official KDWP publication")
+            return rows
+        print(f"  Kansas State Parks: KDWP publication produced no horse-camp rows: {source_url}")
+
+    return []
 
 def _ks_slug_id(park_name):
     base = re.sub(r"\bstate\s+park\b", " ", str(park_name or ""), flags=re.I)
@@ -4007,11 +4149,7 @@ def _ks_build_camp(park_url, park_html):
     detail_text = ""
     detail_horse_contexts = []
     if detail_url and detail_url.rstrip("/") != park_url.rstrip("/"):
-        final_url, detail_html = _ks_fetch_html(
-            detail_url,
-            referer=park_url,
-            retries=3,
-        )
+        final_url, detail_html = _ks_fetch_html(detail_url, referrer=park_url)
         if detail_html:
             detail_url = final_url or detail_url
             detail_text = _usfs_html_to_text(detail_html)
@@ -4029,7 +4167,7 @@ def _ks_build_camp(park_url, park_html):
     if abs(lat) < 0.1 or abs(lon) < 0.1:
         previous = {
             row.get("id"): row
-            for row in _load_previous_state_park_records("KS", verified_only=False)
+            for row in _load_previous_state_park_records("KS", verified_only=True)
         }.get(camp_id)
         if previous:
             try:
@@ -4087,37 +4225,104 @@ def _ks_build_camp(park_url, park_html):
     }
 
 
-def fetch_ks_state_parks():
-    """Dynamically fetch Kansas state parks with official equestrian campgrounds."""
-    _, index_html = _ks_fetch_html(
-        KS_STATE_PARKS_EQ_INDEX,
-        referer="https://www.ksoutdoors.gov/",
-        retries=4,
-    )
-    if not index_html:
-        return _guard_dynamic_state_park_result("KS", [])
 
-    park_urls = _ks_equestrian_park_links(index_html)
-    if not park_urls:
-        print("  Kansas State Parks: no equestrian campground park links found on statewide index")
+
+def _ks_build_discovery_camp(row):
+    """Build a conservative record when KDWP confirms horse camping but blocks details."""
+    park_name = str(row.get("name") or "").strip()
+    if not park_name:
+        return None
+    camp_id = _ks_slug_id(park_name)
+    lat, lon = _geocode_place_nominatim(f"{park_name}, Kansas")
+    time.sleep(1.0)
+    if abs(lat) < 0.1 or abs(lon) < 0.1:
+        previous = {
+            item.get("id"): item
+            for item in _load_previous_state_park_records("KS", verified_only=True)
+        }.get(camp_id)
+        if previous:
+            try:
+                lat = float(previous.get("latitude") or 0)
+                lon = float(previous.get("longitude") or 0)
+            except (TypeError, ValueError):
+                lat = lon = 0.0
+    if abs(lat) < 0.1 or abs(lon) < 0.1:
+        print(f"  Kansas State Parks: could not resolve coordinates for {park_name}")
+        return None
+
+    campsites = int(row.get("campsites") or 0)
+    trail_miles = float(row.get("trail_miles") or 0.0)
+    details = ["Official Kansas Department of Wildlife and Parks source confirms an equestrian campground."]
+    if campsites:
+        details.append(f"The official KDWP publication lists {campsites} horse campsites.")
+    if trail_miles:
+        details.append(f"The same publication lists approximately {trail_miles:g} miles of trail.")
+
+    park_url = row.get("park_url") or _ks_park_url_from_name(park_name)
+    accommodations = ["Trails"] if trail_miles > 0 else []
+    return {
+        "id": camp_id,
+        "name": f"{park_name} Equestrian Campground",
+        "location": f"{park_name}, KS",
+        "state": "KS",
+        "latitude": lat,
+        "longitude": lon,
+        "pricePerNight": 0.0,
+        "horseFeePerNight": 0.0,
+        "hookups": [],
+        "accommodations": accommodations,
+        "maxRigLength": 0,
+        "stallCount": 0,
+        "paddockCount": 0,
+        "phone": str(row.get("phone") or ""),
+        "website": park_url or str(row.get("source_url") or ""),
+        "description": " ".join(details)[:2000],
+        "isVerified": True,
+        "seasonStart": 0,
+        "seasonEnd": 0,
+        "hasWashRack": False,
+        "hasDumpStation": False,
+        "hasWifi": False,
+        "hasBathhouse": False,
+        "pullThroughAvailable": False,
+        "imageColors": ["C0392B", "F1948A"],
+        "photoURLs": [],
+        "source": "State Parks",
+    }
+
+
+def fetch_ks_state_parks():
+    """Dynamically fetch Kansas horse campgrounds from official KDWP sources."""
+    rows = _ks_discover_official_rows()
+    if not rows:
+        print("  Kansas State Parks: all official discovery sources unavailable")
         return _guard_dynamic_state_park_result("KS", [])
-    print(f"  Kansas State Parks: discovered {len(park_urls)} official equestrian-campground park pages")
 
     camps = []
-    for park_url in park_urls:
-        final_url, park_html = _ks_fetch_html(
-            park_url,
-            referer=KS_STATE_PARKS_EQ_INDEX,
-            retries=3,
-        )
-        if not park_html:
-            continue
-        camp = _ks_build_camp(final_url or park_url, park_html)
+    for row in rows:
+        park_name = str(row.get("name") or "").strip()
+        park_url = str(row.get("park_url") or "") or _ks_park_url_from_name(park_name)
+        final_url = ""
+        park_html = ""
+        if park_url:
+            final_url, park_html = _ks_fetch_html(park_url, referrer=str(row.get("source_url") or ""))
+
+        camp = None
+        if park_html:
+            camp = _ks_build_camp(final_url or park_url, park_html)
+            if camp and not camp.get("phone") and row.get("phone"):
+                camp["phone"] = str(row.get("phone"))
+        if camp is None:
+            # The discovery source itself is authoritative that horse camping is
+            # present. Publish only fields it supports; do not copy manual JSON.
+            camp = _ks_build_discovery_camp(row)
+
         if camp:
             camps.append(camp)
+        time.sleep(random.uniform(*KS_STATE_PARKS_DELAY_SECONDS))
 
     deduped = {camp["id"]: camp for camp in camps}
-    camps = sorted(deduped.values(), key=lambda row: row["name"])
+    camps = sorted(deduped.values(), key=lambda item: item["name"])
     camps = _guard_dynamic_state_park_result("KS", camps)
     print(f"  Kansas State Parks: {len(camps)} dynamic official equestrian-camping listings")
     return camps

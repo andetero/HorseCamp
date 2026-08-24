@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install requests
+        run: pip install requests pypdf
       - name: Fetch camp data
         env:
           RIDB_API_KEY: ${{ secrets.RIDB_API_KEY }}

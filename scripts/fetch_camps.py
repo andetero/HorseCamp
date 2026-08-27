@@ -3332,9 +3332,9 @@ class _AKCampgroundDirectoryParser(HTMLParser):
             if self._href:
                 self._cell["links"].append(self._href)
         elif tag == "img" and self._cell is not None:
-            alt = str(attrs.get("alt") or "").strip()
-            if alt:
-                self._cell["parts"].append(alt)
+            # Directory icons describe RV/accessibility metadata and are not
+            # part of the campground/unit name.
+            pass
 
     def handle_data(self, data):
         if self._cell is not None and data:
@@ -3564,14 +3564,33 @@ def _ak_previous_by_id(camp_id):
     return None
 
 
+def _ak_normalize_official_url(url):
+    parsed = urlparse(str(url or "").strip())
+    host = parsed.netloc.lower()
+    path = re.sub(r"/{2,}", "/", parsed.path or "/").rstrip("/")
+    if host != "dnr.alaska.gov" or not path:
+        return ""
+    return f"https://dnr.alaska.gov{path}"
+
+
+def _ak_previous_by_website(url):
+    target = _ak_normalize_official_url(url)
+    if not target:
+        return None
+    for row in _load_previous_state_park_records("AK", verified_only=False):
+        website = _ak_normalize_official_url(row.get("website"))
+        if website and website == target:
+            return row
+    return None
+
+
 def _ak_build_dynamic_camp(directory_row, final_url, raw_html):
-    # The statewide campground directory is the authoritative identity source.
-    # Some legacy Alaska park pages render a generic statewide <h1> after the
-    # facility content, so do not let that template heading replace the actual
-    # campground/unit name from the directory.
+    # Prefer the clean official detail-page heading for the published name.
+    # Fall back to the statewide directory label only when the page lacks a
+    # useful facility heading.
     directory_name = _ak_expand_unit_name(directory_row.get("directory_name"))
     page_heading = _ak_extract_h1(raw_html)
-    page_name = directory_name or page_heading
+    page_name = page_heading or directory_name
     if not page_name:
         return None
 
@@ -3592,6 +3611,8 @@ def _ak_build_dynamic_camp(directory_row, final_url, raw_html):
 
     if abs(lat) < 0.1 or abs(lon) < 0.1:
         previous = _ak_previous_by_id(camp_id)
+        if previous is None:
+            previous = _ak_previous_by_website(final_url or directory_row.get("detail_url"))
         if previous:
             try:
                 lat = float(previous.get("latitude") or 0)

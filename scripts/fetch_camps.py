@@ -3482,8 +3482,33 @@ def _ak_page_horse_context(raw_html):
 
 
 def _ak_extract_h1(raw_html):
-    match = re.search(r"<h1[^>]*>([\s\S]*?)</h1>", str(raw_html or ""), flags=re.I)
-    return _strip_html_basic(match.group(1)).strip() if match else ""
+    """Return a useful Alaska park-page H1, ignoring statewide template headings."""
+    generic = {
+        "division of parks & outdoor recreation",
+        "division of parks and outdoor recreation",
+        "alaska state parks",
+        "department of natural resources",
+    }
+    matches = re.findall(r"<h1[^>]*>([\s\S]*?)</h1>", str(raw_html or ""), flags=re.I)
+    for raw_heading in matches:
+        heading = _strip_html_basic(raw_heading).strip()
+        if heading and heading.lower() not in generic:
+            return heading
+    return ""
+
+
+def _ak_expand_unit_name(name):
+    """Expand generic Alaska State Parks unit abbreviations from the live directory."""
+    text = re.sub(r"\s+", " ", str(name or "")).strip()
+    replacements = [
+        (r"\bSRA\b", "State Recreation Area"),
+        (r"\bSRS\b", "State Recreation Site"),
+        (r"\bSHP\b", "State Historical Park"),
+        (r"\bSP\b", "State Park"),
+    ]
+    for pattern, replacement in replacements:
+        text = re.sub(pattern, replacement, text, flags=re.I)
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def _ak_slug_id(name):
@@ -3540,7 +3565,13 @@ def _ak_previous_by_id(camp_id):
 
 
 def _ak_build_dynamic_camp(directory_row, final_url, raw_html):
-    page_name = _ak_extract_h1(raw_html) or str(directory_row.get("directory_name") or "").strip()
+    # The statewide campground directory is the authoritative identity source.
+    # Some legacy Alaska park pages render a generic statewide <h1> after the
+    # facility content, so do not let that template heading replace the actual
+    # campground/unit name from the directory.
+    directory_name = _ak_expand_unit_name(directory_row.get("directory_name"))
+    page_heading = _ak_extract_h1(raw_html)
+    page_name = directory_name or page_heading
     if not page_name:
         return None
 

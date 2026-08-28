@@ -3288,13 +3288,18 @@ def fetch_ms_state_parks():
 
 # ── ALASKA STATE PARKS ─────────────────────────────────────────────────
 # Alaska is discovered dynamically from the official statewide campground
-# directory. The directory establishes that a unit has developed overnight
-# camping; each linked official park page must also contain a positive horse-use
-# signal. No Alaska park names, campground URLs, coordinates, or amenities are
-# hardcoded.
+# directory. Current Chapter 20 horse-use regulations are read from the official
+# Alaska Legislature Title 11 PDF on every run. A developed campground is only
+# accepted when its current official park page contains a horse-use signal AND a
+# current Chapter 20 horse provision applies without prohibiting campground use.
+# No Alaska park names, campground names, individual campground URLs,
+# coordinates, or campground-specific amenities are hardcoded.
 AK_STATE_PARKS_CAMPGROUND_INDEX = "https://dnr.alaska.gov/parks/units/campsitelist.htm"
 AK_STATE_PARKS_USER_AGENT = "HorseCampDataFetcher/1.0 (+https://horsecampfinder.com/)"
+AK_TITLE11_REGULATIONS_PDF = "https://www.akleg.gov/statutesPDF/aac%20Title%2011.pdf"
 
+# A park page may mention horseback riding because a trail is nearby. That alone
+# is not proof that a traveler may keep a horse at the developed campground.
 AK_HORSE_ACCESS_PATTERNS = [
     re.compile(r"\bhorseback\s+riding\b", re.I),
     re.compile(r"\bequestrian\b", re.I),
@@ -3303,15 +3308,33 @@ AK_HORSE_ACCESS_PATTERNS = [
     re.compile(r"\b(?:horses?|mules?|burros?|pack\s+animals?)\b.{0,80}\ballowed\b", re.I | re.S),
 ]
 
-AK_HORSE_CAMPING_NEGATIVE_PATTERNS = [
-    re.compile(r"\bhorses?\b.{0,100}\b(?:not\s+allowed|prohibited)\b.{0,100}\b(?:campground|camping|campsites?)\b", re.I | re.S),
-    re.compile(r"\b(?:campground|camping|campsites?)\b.{0,100}\bhorses?\b.{0,80}\b(?:not\s+allowed|prohibited)\b", re.I | re.S),
-    re.compile(r"\bno\s+(?:horse|equestrian)\s+camp(?:ing|ground)?\b", re.I),
+# Strong facility-level evidence. These patterns tie horses to camping itself,
+# rather than merely to a trail or day-use activity somewhere in the park.
+AK_HORSE_CAMPING_PATTERNS = [
+    re.compile(r"\bhorse\s+camp(?:ground|ing|sites?|area)\b", re.I),
+    re.compile(r"\bequestrian\s+camp(?:ground|ing|sites?|area)\b", re.I),
+    re.compile(r"\bequine\s+camp(?:ground|ing|sites?|area)\b", re.I),
+    re.compile(r"\bcamp(?:ground|ing|sites?)\b.{0,120}\b(?:horses?|mules?|burros?|equestrian)\b", re.I | re.S),
+    re.compile(r"\b(?:horses?|mules?|burros?|equestrian)\b.{0,120}\bcamp(?:ground|ing|sites?)\b", re.I | re.S),
+    re.compile(r"\b(?:corrals?|stalls?|paddocks?|high\s*lines?|tie\s+rails?|hitching\s+rails?)\b.{0,140}\bcamp(?:ground|ing|sites?)\b", re.I | re.S),
+    re.compile(r"\bcamp(?:ground|ing|sites?)\b.{0,140}\b(?:corrals?|stalls?|paddocks?|high\s*lines?|tie\s+rails?|hitching\s+rails?)\b", re.I | re.S),
 ]
+
+AK_HORSE_CAMPING_NEGATIVE_PATTERNS = [
+    re.compile(r"\bhorses?\b.{0,140}\b(?:not\s+allowed|prohibited)\b.{0,140}\b(?:campground|camping|campsites?)\b", re.I | re.S),
+    re.compile(r"\b(?:campground|camping|campsites?)\b.{0,140}\bhorses?\b.{0,100}\b(?:not\s+allowed|prohibited)\b", re.I | re.S),
+    re.compile(r"\bno\s+(?:horse|equestrian|equine)\s+camp(?:ing|ground)?\b", re.I),
+]
+
+AK_REG_SCOPE_STOPWORDS = {
+    "aac", "alaska", "and", "area", "areas", "article", "burro", "burros",
+    "camp", "campground", "campgrounds", "horse", "horses", "mule", "mules",
+    "park", "parks", "recreation", "site", "state", "the", "use", "uses",
+}
 
 
 class _AKCampgroundDirectoryParser(HTMLParser):
-    """Extract table rows/cells and links from Alaska's campground directory."""
+    """Extract Alaska campground directory tables without mixing image alt text into names."""
 
     def __init__(self):
         super().__init__(convert_charrefs=True)
@@ -3319,40 +3342,64 @@ class _AKCampgroundDirectoryParser(HTMLParser):
         self._row = None
         self._cell = None
         self._href = ""
+        self._in_h2 = False
+        self._h2_parts = []
+        self._current_heading = ""
+        self._row_heading = ""
 
     def handle_starttag(self, tag, attrs):
         tag = tag.lower()
         attrs = dict(attrs)
-        if tag == "tr":
+        if tag == "h2":
+            self._in_h2 = True
+            self._h2_parts = []
+        elif tag == "tr":
             self._row = []
+            self._row_heading = self._current_heading
         elif tag in {"td", "th"} and self._row is not None:
-            self._cell = {"parts": [], "links": []}
+            self._cell = {"parts": [], "links": [], "images": []}
         elif tag == "a" and self._cell is not None:
             self._href = str(attrs.get("href") or "").strip()
             if self._href:
                 self._cell["links"].append(self._href)
         elif tag == "img" and self._cell is not None:
-            # Directory icons describe RV/accessibility metadata and are not
-            # part of the campground/unit name.
-            pass
+            # Keep image metadata separate from visible text. This prevents icons
+            # such as the RV marker from becoming part of the campground name,
+            # while still allowing amenity columns to be recognized generically.
+            self._cell["images"].append({
+                "alt": str(attrs.get("alt") or "").strip(),
+                "src": str(attrs.get("src") or "").strip(),
+                "title": str(attrs.get("title") or "").strip(),
+            })
 
     def handle_data(self, data):
+        if self._in_h2 and data:
+            self._h2_parts.append(data)
         if self._cell is not None and data:
             self._cell["parts"].append(data)
 
     def handle_endtag(self, tag):
         tag = tag.lower()
-        if tag in {"td", "th"} and self._cell is not None and self._row is not None:
+        if tag == "h2" and self._in_h2:
+            self._current_heading = re.sub(r"\s+", " ", " ".join(self._h2_parts)).strip()
+            self._in_h2 = False
+            self._h2_parts = []
+        elif tag in {"td", "th"} and self._cell is not None and self._row is not None:
             text = re.sub(r"\s+", " ", " ".join(self._cell["parts"])).strip()
-            self._row.append({"text": text, "links": list(self._cell["links"])})
+            self._row.append({
+                "text": text,
+                "links": list(self._cell["links"]),
+                "images": list(self._cell["images"]),
+            })
             self._cell = None
             self._href = ""
         elif tag == "tr" and self._row is not None:
             if self._row:
-                self.rows.append(self._row)
+                self.rows.append({"heading": self._row_heading, "cells": self._row})
             self._row = None
             self._cell = None
             self._href = ""
+            self._row_heading = ""
 
 
 def _ak_official_park_url(href, base_url=AK_STATE_PARKS_CAMPGROUND_INDEX):
@@ -3387,8 +3434,26 @@ def _ak_parse_fee(text):
     return float(match.group(1)) if match else 0.0
 
 
+def _ak_cell_has_positive_marker(cell):
+    """Return True when a directory amenity cell visibly/semantically marks availability."""
+    text = str((cell or {}).get("text") or "").strip().lower()
+    if text and text not in {"no", "none", "n/a", "na", "-", "—"}:
+        # The directory commonly renders a dot or accessibility glyph as a yes marker.
+        if text in {"yes", "y", "●", "⚫", "♿", "•", "*"}:
+            return True
+    for image in (cell or {}).get("images") or []:
+        blob = " ".join(str(image.get(k) or "") for k in ("alt", "src", "title")).lower()
+        if any(term in blob for term in ("yes", "check", "accessible", "ada", "water", "trail")):
+            return True
+    return False
+
+
+def _ak_header_key(text):
+    return re.sub(r"[^a-z0-9]+", " ", str(text or "").lower()).strip()
+
+
 def _ak_directory_rows(index_html):
-    """Return developed campground rows with official Alaska DNR detail pages."""
+    """Return developed campground rows from the current official statewide directory."""
     parser = _AKCampgroundDirectoryParser()
     try:
         parser.feed(index_html or "")
@@ -3398,59 +3463,97 @@ def _ak_directory_rows(index_html):
 
     candidates = []
     seen_urls = set()
+    current_headers = {}
+    current_heading = ""
+    current_parent_unit = ""
 
-    for row in parser.rows:
-        # Current official directory columns:
-        # Unit Name | Fee | No. of Campsites | ... | Nearest Community | Location
-        if len(row) < 3:
+    for parsed_row in parser.rows:
+        heading = str(parsed_row.get("heading") or "").strip()
+        cells = parsed_row.get("cells") or []
+        if heading != current_heading:
+            current_heading = heading
+            current_headers = {}
+            current_parent_unit = ""
+
+        texts = [str(cell.get("text") or "").strip() for cell in cells]
+        normalized = [_ak_header_key(value) for value in texts]
+        if "unit name" in normalized and any("campsite" in value for value in normalized):
+            current_headers = {value: i for i, value in enumerate(normalized) if value}
+            current_parent_unit = ""
             continue
 
-        unit_name = str(row[0].get("text") or "").strip()
-        if not unit_name or unit_name.lower() == "unit name":
+        if not current_headers or not cells:
             continue
 
-        campsite_count = _ak_parse_positive_int(row[2].get("text"))
-        if campsite_count <= 0:
-            # This deliberately excludes parent park/management-area summary rows.
-            # HorseCamp needs a developed overnight camping facility, not merely a
-            # broad park where dispersed camping and horse use both happen.
+        def column_index(*needles):
+            for header, idx in current_headers.items():
+                if all(needle in header for needle in needles):
+                    return idx
+            return None
+
+        unit_idx = column_index("unit", "name")
+        campsites_idx = column_index("campsite")
+        fee_idx = column_index("fee")
+        community_idx = column_index("nearest", "community")
+        location_idx = column_index("location")
+        water_idx = column_index("drinking", "water")
+        trails_idx = column_index("trails")
+
+        if unit_idx is None or campsites_idx is None or unit_idx >= len(cells) or campsites_idx >= len(cells):
+            continue
+
+        unit_name = str(cells[unit_idx].get("text") or "").strip()
+        if not unit_name:
             continue
 
         detail_url = ""
-        for href in row[0].get("links") or []:
+        for href in cells[unit_idx].get("links") or []:
             detail_url = _ak_official_park_url(href)
             if detail_url:
                 break
-        if not detail_url or detail_url in seen_urls:
+
+        campsite_count = _ak_parse_positive_int(cells[campsites_idx].get("text"))
+        if campsite_count <= 0:
+            # Parent park/recreation-area rows in the directory have no developed
+            # campsite count and are followed by the individual campgrounds they own.
+            # Remember the parent dynamically so regulations can be matched without
+            # maintaining a list of Alaska park names in code.
+            if detail_url:
+                current_parent_unit = unit_name
             continue
 
+        if not detail_url or detail_url in seen_urls:
+            continue
         seen_urls.add(detail_url)
-        community = str(row[-2].get("text") or "").strip() if len(row) >= 12 else ""
-        location_text = str(row[-1].get("text") or "").strip() if len(row) >= 13 else ""
+
+        def cell_text(index):
+            return str(cells[index].get("text") or "").strip() if index is not None and index < len(cells) else ""
 
         candidates.append({
             "directory_name": unit_name,
+            "parent_unit": current_parent_unit,
+            "area_heading": current_heading,
             "detail_url": detail_url,
             "campsites": campsite_count,
-            "fee": _ak_parse_fee(row[1].get("text") if len(row) > 1 else ""),
-            "community": community,
-            "directory_location": location_text,
+            "fee": _ak_parse_fee(cell_text(fee_idx)),
+            "community": cell_text(community_idx),
+            "directory_location": cell_text(location_idx),
+            "directory_has_water": bool(water_idx is not None and water_idx < len(cells) and _ak_cell_has_positive_marker(cells[water_idx])),
+            "directory_has_trails": bool(trails_idx is not None and trails_idx < len(cells) and _ak_cell_has_positive_marker(cells[trails_idx])),
         })
 
     return candidates
 
 
 def _ak_main_page_text(raw_html):
-    """Strip navigation/footer so horse evidence comes from the park detail body."""
+    """Strip navigation/footer so horse and amenity evidence comes from the park body."""
     raw = str(raw_html or "")
     h1_pos = raw.lower().find("<h1")
     if h1_pos >= 0:
         raw = raw[h1_pos:]
 
-    # Alaska park pages consistently put the statewide mission/footer after the
-    # facility description. Avoid matching generic navigation/footer language.
     stop_candidates = []
-    for marker in ('Mission Statement', 'Division of Parks & Outdoor Recreation'):
+    for marker in ("Mission Statement", "Division of Parks & Outdoor Recreation"):
         pos = raw.find(marker)
         if pos > 0:
             stop_candidates.append(pos)
@@ -3458,27 +3561,6 @@ def _ak_main_page_text(raw_html):
         raw = raw[:min(stop_candidates)]
 
     return _usfs_html_to_text(raw)
-
-
-def _ak_page_has_horse_access(raw_html):
-    text = _ak_main_page_text(raw_html)
-    if any(pattern.search(text) for pattern in AK_HORSE_CAMPING_NEGATIVE_PATTERNS):
-        return False
-    return any(pattern.search(text) for pattern in AK_HORSE_ACCESS_PATTERNS)
-
-
-def _ak_page_horse_context(raw_html):
-    text = _ak_main_page_text(raw_html)
-    matches = []
-    for pattern in AK_HORSE_ACCESS_PATTERNS:
-        matches.extend(match.start() for match in pattern.finditer(text))
-    if not matches:
-        return ""
-
-    start = max(0, min(matches) - 300)
-    end = min(len(text), max(matches) + 500)
-    context = re.sub(r"\s+", " ", text[start:end]).strip()
-    return context
 
 
 def _ak_extract_h1(raw_html):
@@ -3498,7 +3580,7 @@ def _ak_extract_h1(raw_html):
 
 
 def _ak_expand_unit_name(name):
-    """Expand generic Alaska State Parks unit abbreviations from the live directory."""
+    """Expand generic Alaska State Parks unit abbreviations from live source text."""
     text = re.sub(r"\s+", " ", str(name or "")).strip()
     replacements = [
         (r"\bSRA\b", "State Recreation Area"),
@@ -3513,7 +3595,6 @@ def _ak_expand_unit_name(name):
 
 def _ak_slug_id(name):
     text = str(name or "").lower()
-    # Keep IDs stable and generic by removing common Alaska park facility suffixes.
     suffix_re = re.compile(
         r"\b(?:state\s+recreation\s+area|state\s+recreation\s+site|"
         r"state\s+park|state\s+historical\s+park|management\s+area|campground)\b",
@@ -3524,11 +3605,243 @@ def _ak_slug_id(name):
     return f"ak-stateparks-{slug}" if slug else ""
 
 
-def _ak_page_hookups(main_text):
+def _ak_page_has_general_horse_signal(raw_html):
+    text = _ak_main_page_text(raw_html)
+    if any(pattern.search(text) for pattern in AK_HORSE_CAMPING_NEGATIVE_PATTERNS):
+        return False
+    return any(pattern.search(text) for pattern in AK_HORSE_ACCESS_PATTERNS + AK_HORSE_CAMPING_PATTERNS)
+
+
+def _ak_page_has_explicit_horse_camping(raw_html):
+    text = _ak_main_page_text(raw_html)
+    if any(pattern.search(text) for pattern in AK_HORSE_CAMPING_NEGATIVE_PATTERNS):
+        return False
+    return any(pattern.search(text) for pattern in AK_HORSE_CAMPING_PATTERNS)
+
+
+def _ak_page_horse_context(raw_html):
+    text = _ak_main_page_text(raw_html)
+    positions = []
+    for pattern in AK_HORSE_ACCESS_PATTERNS + AK_HORSE_CAMPING_PATTERNS:
+        positions.extend(match.start() for match in pattern.finditer(text))
+    if not positions:
+        return ""
+    start = max(0, min(positions) - 350)
+    end = min(len(text), max(positions) + 650)
+    return re.sub(r"\s+", " ", text[start:end]).strip()
+
+
+def _ak_fetch_title11_chapter20_text():
+    """Fetch the current official Alaska Legislature Title 11 regulations and isolate Chapter 20."""
+    try:
+        response = requests.get(
+            AK_TITLE11_REGULATIONS_PDF,
+            timeout=(10, 60),
+            headers={"User-Agent": AK_STATE_PARKS_USER_AGENT},
+        )
+        if response.status_code != 200 or not response.content:
+            print(f"  Alaska regulations: HTTP {response.status_code} for official Title 11 PDF")
+            return ""
+
+        import io
+        from pypdf import PdfReader
+
+        reader = PdfReader(io.BytesIO(response.content))
+        page_texts = []
+        for page in reader.pages:
+            try:
+                page_texts.append(page.extract_text() or "")
+            except Exception:
+                page_texts.append("")
+        full_text = "\n".join(page_texts)
+    except Exception as error:
+        print(f"  Alaska regulations: could not read official Title 11 PDF: {error}")
+        return ""
+
+    marker = "Chapter 20. State Park Land and Water"
+    starts = [match.start() for match in re.finditer(re.escape(marker), full_text, flags=re.I)]
+    if not starts:
+        print("  Alaska regulations: Chapter 20 marker not found in official Title 11 PDF")
+        return ""
+
+    # The PDF can mention Chapter 20 in front matter. Prefer the occurrence with
+    # actual 11 AAC 20.xxx regulation text following it.
+    start = None
+    for candidate in reversed(starts):
+        probe = full_text[candidate:candidate + 20000]
+        if len(re.findall(r"11\s+AAC\s+20\.\d{3}", probe, flags=re.I)) >= 3:
+            start = candidate
+            break
+    if start is None:
+        start = starts[-1]
+
+    next_chapter = re.search(r"\n\s*Chapter\s+21\.", full_text[start + len(marker):], flags=re.I)
+    if next_chapter:
+        end = start + len(marker) + next_chapter.start()
+        chapter = full_text[start:end]
+    else:
+        chapter = full_text[start:]
+
+    return re.sub(r"[\t\r]+", " ", chapter)
+
+
+def _ak_extract_horse_regulations(chapter20_text):
+    """Dynamically discover Chapter 20 sections whose current title concerns horse use."""
+    text = str(chapter20_text or "")
+    if not text:
+        return []
+
+    section_re = re.compile(
+        r"(?m)^\s*(11\s+AAC\s+20\.\d{3})\.\s*([^\n]{0,180})",
+        flags=re.I,
+    )
+    matches = list(section_re.finditer(text))
+    regulations = []
+
+    for index, match in enumerate(matches):
+        section_number = re.sub(r"\s+", " ", match.group(1)).upper()
+        title = re.sub(r"\s+", " ", match.group(2)).strip()
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
+        body = re.sub(r"\s+", " ", text[match.start():end]).strip()
+
+        # Horse sections are discovered by their current official title, not by a
+        # hardcoded list of regulation numbers.
+        if not re.search(r"\b(?:horse|horses|equine)\b", title, flags=re.I):
+            continue
+
+        preceding = text[max(0, match.start() - 3000):match.start()]
+        articles = list(re.finditer(r"Article\s+\d+\.\s*([^\n]+)", preceding, flags=re.I))
+        article = re.sub(r"\s+", " ", articles[-1].group(1)).strip(" .") if articles else ""
+
+        low = body.lower()
+        allows_horses = bool(re.search(
+            r"\b(?:use\s+of\s+)?horses?(?:,\s*mules?(?:,?\s*and\s*burros?)?)?.{0,100}\b(?:is\s+allowed|are\s+allowed|may\s+use|may\s+be\s+used)\b",
+            low,
+            flags=re.S,
+        )) or bool(re.search(r"\ba\s+person\s+may\s+use\s+a\s+horse\b", low))
+
+        campground_prohibited = bool(re.search(
+            r"\b(?:except(?:ion)?\s+(?:of\s+)?|prohibit(?:ed|s)?\s+(?:in|at)?|not\s+allowed\s+(?:in|at)?)"
+            r".{0,450}\b(?:designated\s+)?campgrounds?\b",
+            low,
+            flags=re.S,
+        ))
+
+        limited_to_designated_or_trails = bool(re.search(
+            r"\b(?:allowed|may\s+use).{0,120}\b(?:only\s+)?(?:on|in)\s+(?:officially\s+)?(?:designated\s+)?"
+            r"(?:and\s+marked\s+)?(?:trails?|areas?)\b",
+            low,
+            flags=re.S,
+        ))
+
+        regulations.append({
+            "section": section_number,
+            "title": title,
+            "article": article,
+            "text": body,
+            "allows_horses": allows_horses,
+            "campground_prohibited": campground_prohibited,
+            "limited_to_designated_or_trails": limited_to_designated_or_trails,
+        })
+
+    return regulations
+
+
+def _ak_normalized_words(text):
+    expanded = _ak_expand_unit_name(str(text or ""))
+    return re.sub(r"[^a-z0-9]+", " ", expanded.lower()).strip()
+
+
+def _ak_distinctive_tokens(text):
+    return {
+        token for token in _ak_normalized_words(text).split()
+        if len(token) >= 5 and token not in AK_REG_SCOPE_STOPWORDS
+    }
+
+
+def _ak_regulation_match_score(regulation, directory_row, page_name, final_url, main_text):
+    candidate_parts = [
+        page_name,
+        directory_row.get("directory_name"),
+        directory_row.get("area_heading"),
+        directory_row.get("directory_location"),
+        final_url,
+        main_text[:2500],
+    ]
+    # A directory parent row can group the child campgrounds below it, but some
+    # tables return to standalone sites without another parent row. Use the
+    # remembered parent only when the campground's own current page confirms it.
+    parent_unit = str(directory_row.get("parent_unit") or "").strip()
+    if parent_unit and _ak_normalized_words(parent_unit) in _ak_normalized_words(main_text):
+        candidate_parts.append(parent_unit)
+    candidate = _ak_normalized_words(" ".join(str(part or "") for part in candidate_parts))
+    candidate_compact = candidate.replace(" ", "")
+
+    scope_parts = [regulation.get("article"), regulation.get("title"), regulation.get("text", "")[:1200]]
+    scope = _ak_normalized_words(" ".join(str(part or "") for part in scope_parts))
+    score = 0
+
+    article = _ak_normalized_words(regulation.get("article"))
+    if article and article not in {"special provisions", "general provisions"} and article in candidate:
+        score += 30
+
+    # Reward any current official two-word scope phrase that occurs in the page,
+    # including geographic scopes such as a peninsula or a renamed park complex.
+    scope_words = [word for word in scope.split() if word not in AK_REG_SCOPE_STOPWORDS]
+    for i in range(len(scope_words) - 1):
+        phrase = f"{scope_words[i]} {scope_words[i + 1]}"
+        if len(phrase) >= 10 and phrase in candidate:
+            score += 8
+
+    candidate_tokens = _ak_distinctive_tokens(candidate)
+    scope_tokens = _ak_distinctive_tokens(scope)
+    common = candidate_tokens & scope_tokens
+    score += len(common) * 3
+
+    # Official legacy URLs can preserve a former park name after the displayed
+    # unit is renamed. Long regulation-scope tokens inside the URL/path are useful
+    # identity evidence without hardcoding either old or new park names.
+    for token in scope_tokens:
+        if len(token) >= 6 and token in candidate_compact:
+            score += 2
+
+    return score
+
+
+def _ak_match_horse_regulation(regulations, directory_row, page_name, final_url, main_text):
+    scored = []
+    for regulation in regulations or []:
+        score = _ak_regulation_match_score(regulation, directory_row, page_name, final_url, main_text)
+        if score > 0:
+            scored.append((score, regulation))
+    if not scored:
+        return None
+    scored.sort(key=lambda item: item[0], reverse=True)
+    best_score, best = scored[0]
+    # Require meaningful identity evidence. A single generic/shared place token
+    # should not cause one park's horse regulation to authorize another park.
+    return best if best_score >= 5 else None
+
+
+def _ak_regulation_allows_this_campground(regulation, explicit_horse_camping):
+    if not regulation or not regulation.get("allows_horses"):
+        return False
+    if regulation.get("campground_prohibited"):
+        return False
+    if regulation.get("limited_to_designated_or_trails") and not explicit_horse_camping:
+        return False
+    return True
+
+
+def _ak_page_hookups(main_text, directory_row=None):
     hookups = []
-    # Alaska park detail pages use a Facilities section with standalone labels
-    # such as "Water". Do not treat generic lake/river prose as a water hookup.
-    if re.search(r"(?:^|\n)\s*[★*]?\s*(?:drinking\s+)?water(?:\s*[-:★♿]|$)", main_text, flags=re.I | re.M):
+    # The statewide directory has a dedicated Drinking Water column. The detail
+    # page may also list Water in a Facilities section.
+    if (directory_row or {}).get("directory_has_water") or re.search(
+        r"(?:^|\n)\s*[★*]?\s*(?:drinking\s+)?water(?:\s*[-:★♿]|$)",
+        main_text,
+        flags=re.I | re.M,
+    ):
         hookups.append("Water")
 
     if re.search(r"\b50\s*[- ]?amp\b|\b50a\b", main_text, flags=re.I):
@@ -3584,10 +3897,9 @@ def _ak_previous_by_website(url):
     return None
 
 
-def _ak_build_dynamic_camp(directory_row, final_url, raw_html):
-    # Prefer the clean official detail-page heading for the published name.
-    # Fall back to the statewide directory label only when the page lacks a
-    # useful facility heading.
+def _ak_build_dynamic_camp(directory_row, final_url, raw_html, regulation):
+    # Prefer the clean official detail-page heading. Directory text is the fallback
+    # when an older Alaska page lacks a useful facility H1.
     directory_name = _ak_expand_unit_name(directory_row.get("directory_name"))
     page_heading = _ak_extract_h1(raw_html)
     page_name = page_heading or directory_name
@@ -3625,8 +3937,19 @@ def _ak_build_dynamic_camp(directory_row, final_url, raw_html):
         return None
 
     accommodations = ["Horse Camping"]
-    if re.search(r"\btrails?\b", main_text, flags=re.I):
+    if directory_row.get("directory_has_trails") or re.search(r"\btrails?\b", main_text, flags=re.I):
         accommodations.insert(0, "Trails")
+    if re.search(r"\bstalls?\b", main_text, flags=re.I):
+        accommodations.append("Stalls")
+    if re.search(r"\bcorrals?\b", main_text, flags=re.I):
+        accommodations.append("Corrals")
+    if re.search(r"\bpaddocks?\b", main_text, flags=re.I):
+        accommodations.append("Paddocks")
+    if re.search(r"\b(?:high\s*lines?|tie\s+rails?|hitching\s+rails?)\b", main_text, flags=re.I):
+        accommodations.append("Highlines")
+
+    stall_match = re.search(r"\b(\d+)\s+(?:covered\s+)?stalls?\b", main_text, flags=re.I)
+    paddock_match = re.search(r"\b(\d+)\s+paddocks?\b", main_text, flags=re.I)
 
     return {
         "id": camp_id,
@@ -3637,11 +3960,11 @@ def _ak_build_dynamic_camp(directory_row, final_url, raw_html):
         "longitude": lon,
         "pricePerNight": float(directory_row.get("fee") or 0.0),
         "horseFeePerNight": 0.0,
-        "hookups": _ak_page_hookups(main_text),
+        "hookups": _ak_page_hookups(main_text, directory_row),
         "accommodations": list(dict.fromkeys(accommodations)),
         "maxRigLength": _ak_rig_length(main_text),
-        "stallCount": 0,
-        "paddockCount": 0,
+        "stallCount": int(stall_match.group(1)) if stall_match else 0,
+        "paddockCount": int(paddock_match.group(1)) if paddock_match else 0,
         "phone": _ak_page_phone(main_text),
         "website": final_url or str(directory_row.get("detail_url") or ""),
         "description": horse_context[:2000],
@@ -3659,12 +3982,35 @@ def _ak_build_dynamic_camp(directory_row, final_url, raw_html):
     }
 
 
+def _ak_guard_reviewed_dynamic_result(current, source_checks_ok):
+    """Alaska-specific guard that can safely accept a reviewed zero-result migration.
+
+    The old manual AK file contained candidate parks that were based on horseback
+    riding plus camping, not proven horse camping. If both official dynamic sources
+    were successfully checked, zero current campgrounds can therefore be a valid
+    correction. After Alaska publishes any verified dynamic records, the shared
+    last-known-good guard again protects them from a later source/parser collapse.
+    """
+    previous_verified = _load_previous_state_park_records("AK", verified_only=True)
+    if previous_verified:
+        return _guard_dynamic_state_park_result("AK", current)
+    if source_checks_ok:
+        print(
+            "  Alaska State Parks: first dynamic migration completed against the official "
+            "campground directory and current Chapter 20 horse regulations; zero is allowed "
+            "when no developed campground is legally supported for horse camping."
+        )
+        return current
+    return _guard_dynamic_state_park_result("AK", current)
+
+
 def fetch_ak_state_parks():
-    """Dynamically discover developed Alaska State Parks camping with horse access.
+    """Dynamically discover legal developed Alaska State Parks horse camping.
 
     The official statewide campground directory supplies the current developed
-    campground list, fee, campsite count, and nearest community. Each official
-    DNR detail page is then checked for a positive horse/equestrian access signal.
+    campground list and basic facility data. Current Chapter 20 horse-use rules are
+    discovered from the official Alaska Legislature Title 11 regulations PDF.
+    Each campground's official DNR page must also contain current horse-use evidence.
     """
     _, index_html = _fetch_state_park_html(
         AK_STATE_PARKS_CAMPGROUND_INDEX,
@@ -3672,18 +4018,30 @@ def fetch_ak_state_parks():
         user_agent=AK_STATE_PARKS_USER_AGENT,
     )
     if not index_html:
-        return _guard_dynamic_state_park_result("AK", [])
+        return _ak_guard_reviewed_dynamic_result([], source_checks_ok=False)
 
     rows = _ak_directory_rows(index_html)
     if not rows:
-        return _guard_dynamic_state_park_result("AK", [])
+        return _ak_guard_reviewed_dynamic_result([], source_checks_ok=False)
 
     print(
         f"  Alaska State Parks: discovered {len(rows)} developed campground "
         "detail pages from statewide index"
     )
 
+    chapter20_text = _ak_fetch_title11_chapter20_text()
+    regulations = _ak_extract_horse_regulations(chapter20_text)
+    if not regulations:
+        print("  Alaska State Parks: no current Chapter 20 horse regulations could be parsed")
+        return _ak_guard_reviewed_dynamic_result([], source_checks_ok=False)
+
+    print(f"  Alaska State Parks: discovered {len(regulations)} current Chapter 20 horse-use regulations")
+
     camps = []
+    general_horse_candidates = 0
+    regulation_rejections = 0
+    no_regulation_matches = 0
+
     for row in rows:
         detail_url = str(row.get("detail_url") or "")
         final_url, raw_html = _fetch_state_park_html(
@@ -3693,13 +4051,35 @@ def fetch_ak_state_parks():
         )
         if not raw_html:
             continue
-        if not _ak_page_has_horse_access(raw_html):
+        if not _ak_page_has_general_horse_signal(raw_html):
             continue
 
-        camp = _ak_build_dynamic_camp(row, final_url or detail_url, raw_html)
+        general_horse_candidates += 1
+        page_name = _ak_extract_h1(raw_html) or _ak_expand_unit_name(row.get("directory_name"))
+        main_text = _ak_main_page_text(raw_html)
+        final = final_url or detail_url
+        regulation = _ak_match_horse_regulation(regulations, row, page_name, final, main_text)
+        if regulation is None:
+            no_regulation_matches += 1
+            print(f"    Alaska rejected (no applicable Chapter 20 horse rule): {page_name}")
+            continue
+
+        explicit_horse_camping = _ak_page_has_explicit_horse_camping(raw_html)
+        if not _ak_regulation_allows_this_campground(regulation, explicit_horse_camping):
+            regulation_rejections += 1
+            reason = "campgrounds prohibited" if regulation.get("campground_prohibited") else "horse use limited to designated trails/areas"
+            print(
+                f"    Alaska rejected ({reason}; {regulation.get('section')}): {page_name}"
+            )
+            continue
+
+        camp = _ak_build_dynamic_camp(row, final, raw_html, regulation)
         if camp:
             camps.append(camp)
-            print(f"    Alaska horse-access camping: {camp['name']}")
+            print(
+                f"    Alaska legal horse camping: {camp['name']} "
+                f"({regulation.get('section')})"
+            )
 
         time.sleep(0.15)
 
@@ -3708,9 +4088,20 @@ def fetch_ak_state_parks():
         deduped[camp["id"]] = camp
     camps = sorted(deduped.values(), key=lambda row: row["name"])
 
-    camps = _guard_dynamic_state_park_result("AK", camps)
-    print(f"  Alaska State Parks: {len(camps)} dynamic official horse-access camping listings")
+    print(
+        "  Alaska State Parks review: "
+        f"{general_horse_candidates} campground pages with horse signals; "
+        f"{regulation_rejections} rejected by applicable horse rules; "
+        f"{no_regulation_matches} rejected without a matching Chapter 20 horse rule"
+    )
+
+    camps = _ak_guard_reviewed_dynamic_result(
+        camps,
+        source_checks_ok=(general_horse_candidates > 0),
+    )
+    print(f"  Alaska State Parks: {len(camps)} dynamic official legal horse-camping listings")
     return camps
+
 
 def fetch_ia_state_parks():
     """Load manual IA state-park listings from data/state_parks/ia.json."""

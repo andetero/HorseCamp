@@ -3983,22 +3983,18 @@ def _ak_build_dynamic_camp(directory_row, final_url, raw_html, regulation):
 
 
 def _ak_guard_reviewed_dynamic_result(current, source_checks_ok):
-    """Alaska-specific guard that can safely accept a reviewed zero-result migration.
+    """Protect Alaska from source failures while allowing a fully reviewed zero result.
 
-    The old manual AK file contained candidate parks that were based on horseback
-    riding plus camping, not proven horse camping. If both official dynamic sources
-    were successfully checked, zero current campgrounds can therefore be a valid
-    correction. After Alaska publishes any verified dynamic records, the shared
-    last-known-good guard again protects them from a later source/parser collapse.
+    A zero result is authoritative only when the statewide campground directory,
+    current Chapter 20 regulations, and every discovered campground detail page were
+    successfully reviewed. In that case, retaining older records would re-publish
+    campgrounds that the current official legal review rejected. Any incomplete source
+    check still falls back to the shared last-known-good guard.
     """
-    previous_verified = _load_previous_state_park_records("AK", verified_only=True)
-    if previous_verified:
-        return _guard_dynamic_state_park_result("AK", current)
-    if source_checks_ok:
+    if source_checks_ok and not current:
         print(
-            "  Alaska State Parks: first dynamic migration completed against the official "
-            "campground directory and current Chapter 20 horse regulations; zero is allowed "
-            "when no developed campground is legally supported for horse camping."
+            "  Alaska State Parks: complete official campground/regulation review returned "
+            "zero legal horse-camping listings; accepting zero instead of restoring older records."
         )
         return current
     return _guard_dynamic_state_park_result("AK", current)
@@ -4038,6 +4034,7 @@ def fetch_ak_state_parks():
     print(f"  Alaska State Parks: discovered {len(regulations)} current Chapter 20 horse-use regulations")
 
     camps = []
+    detail_pages_fetched = 0
     general_horse_candidates = 0
     regulation_rejections = 0
     no_regulation_matches = 0
@@ -4051,6 +4048,7 @@ def fetch_ak_state_parks():
         )
         if not raw_html:
             continue
+        detail_pages_fetched += 1
         if not _ak_page_has_general_horse_signal(raw_html):
             continue
 
@@ -4090,6 +4088,7 @@ def fetch_ak_state_parks():
 
     print(
         "  Alaska State Parks review: "
+        f"{detail_pages_fetched}/{len(rows)} campground detail pages fetched; "
         f"{general_horse_candidates} campground pages with horse signals; "
         f"{regulation_rejections} rejected by applicable horse rules; "
         f"{no_regulation_matches} rejected without a matching Chapter 20 horse rule"
@@ -4097,7 +4096,7 @@ def fetch_ak_state_parks():
 
     camps = _ak_guard_reviewed_dynamic_result(
         camps,
-        source_checks_ok=(general_horse_candidates > 0),
+        source_checks_ok=(detail_pages_fetched == len(rows)),
     )
     print(f"  Alaska State Parks: {len(camps)} dynamic official legal horse-camping listings")
     return camps

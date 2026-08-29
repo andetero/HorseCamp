@@ -3783,6 +3783,20 @@ def _ak_extract_horse_regulations(chapter20_text):
             flags=re.S,
         ))
 
+        # pypdf occasionally inserts punctuation/line artifacts inside otherwise
+        # ordinary sentences. Keep a punctuation-insensitive fallback so wording
+        # such as "the use of horses, mules, and burros is allowed in ..." is not
+        # lost merely because of PDF extraction.
+        normalized_legal_text = re.sub(r"[^a-z0-9]+", " ", low)
+        if not allows_horses:
+            allows_horses = bool(re.search(
+                r"\bhorses?\b.{0,220}\b(?:is\s+)?allowed\b",
+                normalized_legal_text,
+            )) or bool(re.search(
+                r"\bperson\s+may\s+use\s+(?:a\s+)?horse\b",
+                normalized_legal_text,
+            ))
+
         campground_prohibited = bool(re.search(
             r"\b(?:except(?:ion)?\s+(?:of\s+)?|prohibit(?:ed|s)?\s+(?:in|at)?|not\s+allowed\s+(?:in|at)?)"
             r".{0,450}\b(?:designated\s+)?campgrounds?\b",
@@ -3840,7 +3854,6 @@ def _ak_regulation_match_score(regulation, directory_row, page_name, final_url, 
         directory_row.get("area_heading"),
         directory_row.get("directory_location"),
         final_url,
-        main_text[:2500],
     ]
 
     # The statewide directory uses parent rows immediately before grouped
@@ -3925,18 +3938,42 @@ def _ak_page_prohibits_horse_camping(raw_html):
     return any(pattern.search(text) for pattern in AK_HORSE_CAMPING_NEGATIVE_PATTERNS)
 
 
+def _ak_regulation_affirmatively_allows_horses(regulation):
+    """Return True when the current rule text affirmatively authorizes horse use."""
+    if not regulation:
+        return False
+    if regulation.get("allows_horses"):
+        return True
+
+    # Re-check the extracted legal text after stripping punctuation and PDF layout
+    # artifacts. This is intentionally only a positive permission test; explicit
+    # campground prohibitions and designated-area limits are evaluated separately.
+    normalized = re.sub(
+        r"[^a-z0-9]+",
+        " ",
+        str(regulation.get("text") or "").lower(),
+    )
+    return bool(re.search(
+        r"\bhorses?\b.{0,220}\b(?:is\s+)?allowed\b",
+        normalized,
+    )) or bool(re.search(
+        r"\bperson\s+may\s+use\s+(?:a\s+)?horse\b",
+        normalized,
+    ))
+
+
 def _ak_regulation_is_park_wide_permission(regulation):
     """True when the current horse rule authorizes the area generally, not only designated places."""
     return bool(
         regulation
-        and regulation.get("allows_horses")
+        and _ak_regulation_affirmatively_allows_horses(regulation)
         and not regulation.get("campground_prohibited")
         and not regulation.get("limited_to_designated_or_trails")
     )
 
 
 def _ak_regulation_allows_this_campground(regulation, explicit_horse_camping, page_prohibits_horse_camping=False):
-    if not regulation or not regulation.get("allows_horses"):
+    if not regulation or not _ak_regulation_affirmatively_allows_horses(regulation):
         return False
     if regulation.get("campground_prohibited") or page_prohibits_horse_camping:
         return False
@@ -4207,10 +4244,13 @@ def fetch_ak_state_parks():
         # the official campground directory plus that rule is sufficient legal
         # evidence. A merely generic horseback-riding page remains insufficient.
         park_wide_permission = _ak_regulation_is_park_wide_permission(regulation)
-        if row.get("parent_unit") and regulation is not None:
+        if regulation is not None:
             print(
                 f"    Alaska scope match: {page_name} -> {regulation.get('article') or 'unknown scope'} "
-                f"({regulation.get('section')}); park-wide={'yes' if park_wide_permission else 'no'}"
+                f"({regulation.get('section')}); park-wide={'yes' if park_wide_permission else 'no'}; "
+                f"allows={'yes' if _ak_regulation_affirmatively_allows_horses(regulation) else 'no'}; "
+                f"campground-ban={'yes' if regulation.get('campground_prohibited') else 'no'}; "
+                f"designated-only={'yes' if regulation.get('limited_to_designated_or_trails') else 'no'}"
             )
         if not page_has_horse_signal and not park_wide_permission:
             continue

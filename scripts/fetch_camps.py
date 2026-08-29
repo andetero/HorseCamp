@@ -3298,6 +3298,7 @@ def fetch_ms_state_parks():
 # No Alaska park names, campground names, individual campground URLs,
 # coordinates, or campground-specific amenities are hardcoded.
 AK_STATE_PARKS_CAMPGROUND_INDEX = "https://dnr.alaska.gov/parks/units/campsitelist.htm"
+AK_CHAPTER20_INDEX_URL = "https://dnr.alaska.gov/parks/regstatu/chap20.htm"
 AK_STATE_PARKS_USER_AGENT = "HorseCampDataFetcher/1.0 (+https://horsecampfinder.com/)"
 AK_TITLE11_REGULATIONS_PDF = "https://www.akleg.gov/statutesPDF/aac%20Title%2011.pdf"
 
@@ -3632,6 +3633,55 @@ def _ak_page_horse_context(raw_html):
     start = max(0, min(positions) - 350)
     end = min(len(text), max(positions) + 650)
     return re.sub(r"\s+", " ", text[start:end]).strip()
+
+
+def _ak_parse_chapter20_article_map(raw_html):
+    """Map current Chapter 20 section numbers to their official DNR article/park names.
+
+    Alaska DNR's Chapter 20 index explicitly groups each regulation under the park or
+    recreation area it governs. Using that live index avoids depending on PDF page/text
+    proximity to infer a horse regulation's geographic scope.
+    """
+    text = _usfs_html_to_text(str(raw_html or ""))
+    if not text:
+        return {}
+
+    article_re = re.compile(
+        r"\bArticle\s+\d+\.\s*(.{1,180}?)(?=\s*[\"“”]?11\s+AAC\s+20\.\d{3})",
+        flags=re.I | re.S,
+    )
+    matches = list(article_re.finditer(text))
+    mapping = {}
+
+    for index, match in enumerate(matches):
+        article = re.sub(r"\s+", " ", match.group(1)).strip(" .\"“”")
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
+        block = text[match.end():end]
+        for section in re.findall(r"11\s+AAC\s+20\.\d{3}", block, flags=re.I):
+            section = re.sub(r"\s+", " ", section).upper()
+            if article:
+                mapping[section] = article
+
+    return mapping
+
+
+def _ak_fetch_chapter20_article_map():
+    """Fetch the official Alaska DNR Chapter 20 index and return section->park scope."""
+    _, raw_html = _fetch_state_park_html(
+        AK_CHAPTER20_INDEX_URL,
+        "Alaska State Parks Chapter 20 index",
+        user_agent=AK_STATE_PARKS_USER_AGENT,
+    )
+    if not raw_html:
+        return {}
+
+    mapping = _ak_parse_chapter20_article_map(raw_html)
+    if not mapping:
+        print("  Alaska regulations: official DNR Chapter 20 article map could not be parsed")
+        return {}
+
+    print(f"  Alaska regulations: mapped {len(mapping)} Chapter 20 sections to official DNR park scopes")
+    return mapping
 
 
 def _ak_fetch_title11_chapter20_text():
@@ -4064,6 +4114,25 @@ def fetch_ak_state_parks():
 
     print(f"  Alaska State Parks: discovered {len(regulations)} current Chapter 20 horse-use regulations")
 
+    # The official DNR Chapter 20 index is the authoritative relationship between
+    # regulation sections and park/recreation-area scopes. The PDF remains the
+    # authoritative source for the rule text itself. Keep PDF-derived scope only
+    # for current sections the DNR index does not list.
+    article_map = _ak_fetch_chapter20_article_map()
+    if not article_map:
+        return _ak_guard_reviewed_dynamic_result([], source_checks_ok=False)
+
+    mapped_horse_rules = 0
+    for regulation in regulations:
+        official_article = article_map.get(str(regulation.get("section") or ""))
+        if official_article:
+            regulation["article"] = official_article
+            mapped_horse_rules += 1
+    print(
+        f"  Alaska regulations: {mapped_horse_rules}/{len(regulations)} horse-use rules "
+        "mapped to official DNR park scopes"
+    )
+
     camps = []
     detail_pages_fetched = 0
     page_horse_signals = 0
@@ -4099,6 +4168,11 @@ def fetch_ak_state_parks():
         # the official campground directory plus that rule is sufficient legal
         # evidence. A merely generic horseback-riding page remains insufficient.
         park_wide_permission = _ak_regulation_is_park_wide_permission(regulation)
+        if row.get("parent_unit") and regulation is not None:
+            print(
+                f"    Alaska scope match: {page_name} -> {regulation.get('article') or 'unknown scope'} "
+                f"({regulation.get('section')}); park-wide={'yes' if park_wide_permission else 'no'}"
+            )
         if not page_has_horse_signal and not park_wide_permission:
             continue
 

@@ -3790,14 +3790,20 @@ def _ak_extract_horse_regulations(chapter20_text):
             flags=re.S,
         ))
 
+        # A rule is restrictive only when it actually says horse use is limited
+        # to "only" or "designated" trails/areas. Do not treat ordinary language
+        # such as "horses ... are allowed in the Chena River Recreation Area" as
+        # trail-only merely because the park name ends with the word "Area".
         limited_to_designated_or_trails = bool(re.search(
-            r"\b(?:allowed|may\s+use|may\s+be\s+used).{0,180}\b(?:only\s+)?(?:on|in)\s+"
-            r"(?:officially\s+)?(?:designated\s+)?(?:and\s+marked\s+)?(?:trails?|areas?)\b",
+            r"\b(?:allowed|may\s+use|may\s+be\s+used).{0,220}\b(?:"
+            r"only\s+(?:on|in)\s+(?:officially\s+)?(?:designated\s+)?(?:and\s+marked\s+)?(?:trails?|areas?)"
+            r"|(?:on|in)\s+(?:officially\s+)?designated(?:\s+and\s+marked)?\s+(?:trails?|areas?)"
+            r")\b",
             low,
             flags=re.S,
         )) or bool(re.search(
-            r"\b(?:only\s+)?(?:on|in)\s+(?:officially\s+)?(?:designated\s+)?"
-            r"(?:and\s+marked\s+)?(?:trails?|areas?)\b.{0,180}\b(?:horses?|mules?|burros?)\b",
+            r"\b(?:horses?|mules?|burros?)\b.{0,180}\b(?:limited|restricted)\s+to\b"
+            r".{0,100}\b(?:trails?|areas?)\b",
             low,
             flags=re.S,
         ))
@@ -3831,12 +3837,24 @@ def _ak_regulation_match_score(regulation, directory_row, page_name, final_url, 
     candidate_parts = [
         page_name,
         directory_row.get("directory_name"),
-        directory_row.get("parent_unit"),
         directory_row.get("area_heading"),
         directory_row.get("directory_location"),
         final_url,
         main_text[:2500],
     ]
+
+    # The statewide directory uses parent rows immediately before grouped
+    # campgrounds, but the same table then returns to standalone sites without a
+    # delimiter. A remembered parent can therefore bleed into unrelated rows.
+    # Trust parent_unit only when the campground's own official page independently
+    # confirms that scope.
+    parent_unit = str(directory_row.get("parent_unit") or "").strip()
+    if parent_unit:
+        parent_tokens = _ak_distinctive_tokens(parent_unit)
+        page_tokens = _ak_distinctive_tokens(main_text[:5000])
+        required = 1 if len(parent_tokens) <= 1 else 2
+        if parent_tokens and len(parent_tokens & page_tokens) >= required:
+            candidate_parts.append(parent_unit)
     candidate = _ak_normalized_words(" ".join(str(part or "") for part in candidate_parts))
     candidate_tokens = _ak_distinctive_tokens(candidate)
 

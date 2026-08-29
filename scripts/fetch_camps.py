@@ -3318,8 +3318,19 @@ AK_HORSE_CAMPING_PATTERNS = [
     re.compile(r"\bhorse\s+camp(?:ground|ing|sites?|area)\b", re.I),
     re.compile(r"\bequestrian\s+camp(?:ground|ing|sites?|area)\b", re.I),
     re.compile(r"\bequine\s+camp(?:ground|ing|sites?|area)\b", re.I),
-    re.compile(r"\bcamp(?:ground|ing|sites?)\b.{0,120}\b(?:horses?|mules?|burros?|equestrian)\b", re.I | re.S),
-    re.compile(r"\b(?:horses?|mules?|burros?|equestrian)\b.{0,120}\bcamp(?:ground|ing|sites?)\b", re.I | re.S),
+    # Do not treat an Activities list containing both "Camping" and "Horseback
+    # Riding" as proof that horses may stay in the campground. Require wording
+    # that actually ties horse permission to camping/campground occupancy.
+    re.compile(
+        r"\bcamp(?:ground|ing|sites?)\b.{0,140}\b(?:horses?|mules?|burros?)\b"
+        r".{0,80}\b(?:allowed|permitted|may\s+(?:stay|camp|be\s+kept))\b",
+        re.I | re.S,
+    ),
+    re.compile(
+        r"\b(?:horses?|mules?|burros?)\b.{0,100}\b(?:allowed|permitted|may\s+(?:stay|camp|be\s+kept))\b"
+        r".{0,140}\bcamp(?:ground|ing|sites?)\b",
+        re.I | re.S,
+    ),
     re.compile(r"\b(?:corrals?|stalls?|paddocks?|high\s*lines?|tie\s+rails?|hitching\s+rails?)\b.{0,140}\bcamp(?:ground|ing|sites?)\b", re.I | re.S),
     re.compile(r"\bcamp(?:ground|ing|sites?)\b.{0,140}\b(?:corrals?|stalls?|paddocks?|high\s*lines?|tie\s+rails?|hitching\s+rails?)\b", re.I | re.S),
 ]
@@ -3832,7 +3843,33 @@ def _ak_extract_horse_regulations(chapter20_text):
             "limited_to_designated_or_trails": limited_to_designated_or_trails,
         })
 
-    return regulations
+    # The official Title 11 PDF contains a Chapter 20 rule listing before the
+    # full regulation text, so horse sections can appear twice. Prefer the
+    # substantive occurrence for each section instead of letting an index entry
+    # with no operative language win regulation matching.
+    by_section = {}
+    for regulation in regulations:
+        section = str(regulation.get("section") or "")
+        text = str(regulation.get("text") or "")
+        normalized = re.sub(r"[^a-z0-9]+", " ", text.lower())
+        legal_signal_count = sum(bool(re.search(pattern, normalized)) for pattern in (
+            r"\b(?:allowed|prohibited|subject to|may use|may be used)\b",
+            r"\b(?:exception|except|conditions?)\b",
+            r"\b(?:groups?|tethering|herding|campgrounds?|trails?|areas?)\b",
+        ))
+        score = (legal_signal_count, len(text))
+        existing = by_section.get(section)
+        if existing is None or score > existing[0]:
+            by_section[section] = (score, regulation)
+
+    deduped = [item[1] for item in by_section.values()]
+    deduped.sort(key=lambda regulation: regulation.get("section") or "")
+    if len(deduped) != len(regulations):
+        print(
+            f"  Alaska regulations: collapsed {len(regulations)} horse-rule PDF occurrences "
+            f"to {len(deduped)} unique sections"
+        )
+    return deduped
 
 
 def _ak_normalized_words(text):

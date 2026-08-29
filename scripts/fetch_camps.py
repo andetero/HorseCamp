@@ -3767,11 +3767,21 @@ def _ak_extract_horse_regulations(chapter20_text):
         article = re.sub(r"\s+", " ", articles[-1].group(1)).strip(" .") if articles else ""
 
         low = body.lower()
+        # PDF extraction can insert page headers, line-break artifacts, or authority
+        # text between the animal list and the word "allowed". Detect the legal
+        # permission semantically across a wider window, while refusing a phrase
+        # that reaches "not allowed" or "prohibited" before the permission word.
         allows_horses = bool(re.search(
-            r"\b(?:use\s+of\s+)?horses?(?:,\s*mules?(?:,?\s*and\s*burros?)?)?.{0,100}\b(?:is\s+allowed|are\s+allowed|may\s+use|may\s+be\s+used)\b",
+            r"\b(?:use\s+of\s+)?horses?\b"
+            r"(?:(?!\bnot\s+allowed\b|\bprohibited\b).){0,350}"
+            r"\b(?:allowed|may\s+be\s+used)\b",
             low,
             flags=re.S,
-        )) or bool(re.search(r"\ba\s+person\s+may\s+use\s+a\s+horse\b", low))
+        )) or bool(re.search(
+            r"\ba\s+person\s+may\s+use\s+(?:a\s+)?horse\b",
+            low,
+            flags=re.S,
+        ))
 
         campground_prohibited = bool(re.search(
             r"\b(?:except(?:ion)?\s+(?:of\s+)?|prohibit(?:ed|s)?\s+(?:in|at)?|not\s+allowed\s+(?:in|at)?)"
@@ -3821,44 +3831,55 @@ def _ak_regulation_match_score(regulation, directory_row, page_name, final_url, 
     candidate_parts = [
         page_name,
         directory_row.get("directory_name"),
+        directory_row.get("parent_unit"),
         directory_row.get("area_heading"),
         directory_row.get("directory_location"),
         final_url,
         main_text[:2500],
     ]
-    # A directory parent row can group the child campgrounds below it, but some
-    # tables return to standalone sites without another parent row. Use the
-    # remembered parent only when the campground's own current page confirms it.
-    parent_unit = str(directory_row.get("parent_unit") or "").strip()
-    if parent_unit and _ak_normalized_words(parent_unit) in _ak_normalized_words(main_text):
-        candidate_parts.append(parent_unit)
     candidate = _ak_normalized_words(" ".join(str(part or "") for part in candidate_parts))
-    candidate_compact = candidate.replace(" ", "")
-
-    scope_parts = [regulation.get("article"), regulation.get("title"), regulation.get("text", "")[:1200]]
-    scope = _ak_normalized_words(" ".join(str(part or "") for part in scope_parts))
-    score = 0
+    candidate_tokens = _ak_distinctive_tokens(candidate)
 
     article = _ak_normalized_words(regulation.get("article"))
-    if article and article not in {"special provisions", "general provisions"} and article in candidate:
-        score += 30
+    generic_articles = {"special provisions", "general provisions"}
 
-    # Reward any current official two-word scope phrase that occurs in the page,
-    # including geographic scopes such as a peninsula or a renamed park complex.
+    # When the live DNR Chapter 20 index provides a named park/SRA article, that
+    # official scope is the only geographic identity evidence we use. Do not let
+    # generic words in a regulation body (trail, developed area, campground, etc.)
+    # accidentally match an unrelated park.
+    if article and article not in generic_articles:
+        if article in candidate:
+            return 100
+
+        article_tokens = _ak_distinctive_tokens(article)
+        common = article_tokens & candidate_tokens
+        if article_tokens:
+            # A one-token official scope such as "Chugach" or "Denali" must
+            # actually occur. Multi-token scopes require at least two distinctive
+            # words when available.
+            required = 1 if len(article_tokens) == 1 else 2
+            if len(common) >= required:
+                return 40 + (len(common) * 5)
+        return 0
+
+    # Article 18 is intentionally generic ("Special Provisions"). For those
+    # current rules, retain the conservative rule-title/body identity fallback so
+    # named units such as legacy/renamed recreation areas can still be resolved.
+    scope_parts = [regulation.get("title"), regulation.get("text", "")[:1200]]
+    scope = _ak_normalized_words(" ".join(str(part or "") for part in scope_parts))
     scope_words = [word for word in scope.split() if word not in AK_REG_SCOPE_STOPWORDS]
+    score = 0
+
     for i in range(len(scope_words) - 1):
         phrase = f"{scope_words[i]} {scope_words[i + 1]}"
         if len(phrase) >= 10 and phrase in candidate:
             score += 8
 
-    candidate_tokens = _ak_distinctive_tokens(candidate)
     scope_tokens = _ak_distinctive_tokens(scope)
     common = candidate_tokens & scope_tokens
     score += len(common) * 3
 
-    # Official legacy URLs can preserve a former park name after the displayed
-    # unit is renamed. Long regulation-scope tokens inside the URL/path are useful
-    # identity evidence without hardcoding either old or new park names.
+    candidate_compact = candidate.replace(" ", "")
     for token in scope_tokens:
         if len(token) >= 6 and token in candidate_compact:
             score += 2

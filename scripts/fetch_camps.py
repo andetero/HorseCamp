@@ -3288,10 +3288,13 @@ def fetch_ms_state_parks():
 
 # ── ALASKA STATE PARKS ─────────────────────────────────────────────────
 # Alaska is discovered dynamically from the official statewide campground
-# directory. Current Chapter 20 horse-use regulations are read from the official
-# Alaska Legislature Title 11 PDF on every run. A developed campground is only
-# accepted when its current official park page contains a horse-use signal AND a
-# current Chapter 20 horse provision applies without prohibiting campground use.
+# directory. 11 AAC 12.120 supplies the default horse-use prohibition; current
+# Chapter 20 horse-use regulations are read from the official Alaska Legislature
+# Title 11 PDF on every run and provide the park-specific exceptions. A developed campground may qualify
+# either from explicit campground-level horse-camping evidence, or from a current
+# park-wide horse provision that affirmatively allows horses throughout the parent
+# park/recreation area without excluding campgrounds. Rules limited to designated
+# trails/areas still require campground-specific horse-camping evidence.
 # No Alaska park names, campground names, individual campground URLs,
 # coordinates, or campground-specific amenities are hardcoded.
 AK_STATE_PARKS_CAMPGROUND_INDEX = "https://dnr.alaska.gov/parks/units/campsitelist.htm"
@@ -3728,8 +3731,13 @@ def _ak_extract_horse_regulations(chapter20_text):
         ))
 
         limited_to_designated_or_trails = bool(re.search(
-            r"\b(?:allowed|may\s+use).{0,120}\b(?:only\s+)?(?:on|in)\s+(?:officially\s+)?(?:designated\s+)?"
-            r"(?:and\s+marked\s+)?(?:trails?|areas?)\b",
+            r"\b(?:allowed|may\s+use|may\s+be\s+used).{0,180}\b(?:only\s+)?(?:on|in)\s+"
+            r"(?:officially\s+)?(?:designated\s+)?(?:and\s+marked\s+)?(?:trails?|areas?)\b",
+            low,
+            flags=re.S,
+        )) or bool(re.search(
+            r"\b(?:only\s+)?(?:on|in)\s+(?:officially\s+)?(?:designated\s+)?"
+            r"(?:and\s+marked\s+)?(?:trails?|areas?)\b.{0,180}\b(?:horses?|mules?|burros?)\b",
             low,
             flags=re.S,
         ))
@@ -3823,10 +3831,25 @@ def _ak_match_horse_regulation(regulations, directory_row, page_name, final_url,
     return best if best_score >= 5 else None
 
 
-def _ak_regulation_allows_this_campground(regulation, explicit_horse_camping):
+def _ak_page_prohibits_horse_camping(raw_html):
+    text = _ak_main_page_text(raw_html)
+    return any(pattern.search(text) for pattern in AK_HORSE_CAMPING_NEGATIVE_PATTERNS)
+
+
+def _ak_regulation_is_park_wide_permission(regulation):
+    """True when the current horse rule authorizes the area generally, not only designated places."""
+    return bool(
+        regulation
+        and regulation.get("allows_horses")
+        and not regulation.get("campground_prohibited")
+        and not regulation.get("limited_to_designated_or_trails")
+    )
+
+
+def _ak_regulation_allows_this_campground(regulation, explicit_horse_camping, page_prohibits_horse_camping=False):
     if not regulation or not regulation.get("allows_horses"):
         return False
-    if regulation.get("campground_prohibited"):
+    if regulation.get("campground_prohibited") or page_prohibits_horse_camping:
         return False
     if regulation.get("limited_to_designated_or_trails") and not explicit_horse_camping:
         return False
@@ -3912,6 +3935,12 @@ def _ak_build_dynamic_camp(directory_row, final_url, raw_html, regulation):
 
     main_text = _ak_main_page_text(raw_html)
     horse_context = _ak_page_horse_context(raw_html)
+    if not horse_context:
+        # A campground can be legal horse camping because the current regulation
+        # authorizes horses throughout its parent park/recreation area even when the
+        # individual campground page does not repeat the horse rule. Preserve the
+        # official regulation text as the verification context in that case.
+        horse_context = re.sub(r"\s+", " ", str((regulation or {}).get("text") or "")).strip()
     if not horse_context:
         return None
 
@@ -4006,7 +4035,9 @@ def fetch_ak_state_parks():
     The official statewide campground directory supplies the current developed
     campground list and basic facility data. Current Chapter 20 horse-use rules are
     discovered from the official Alaska Legislature Title 11 regulations PDF.
-    Each campground's official DNR page must also contain current horse-use evidence.
+    A park-wide rule that affirmatively allows horses throughout the applicable area
+    can authorize its developed campgrounds even when their individual pages do not
+    repeat horse wording; rules limited to designated trails/areas cannot.
     """
     _, index_html = _fetch_state_park_html(
         AK_STATE_PARKS_CAMPGROUND_INDEX,
@@ -4035,7 +4066,8 @@ def fetch_ak_state_parks():
 
     camps = []
     detail_pages_fetched = 0
-    general_horse_candidates = 0
+    page_horse_signals = 0
+    park_wide_authorizations = 0
     regulation_rejections = 0
     no_regulation_matches = 0
 
@@ -4049,27 +4081,49 @@ def fetch_ak_state_parks():
         if not raw_html:
             continue
         detail_pages_fetched += 1
-        if not _ak_page_has_general_horse_signal(raw_html):
-            continue
 
-        general_horse_candidates += 1
         page_name = _ak_extract_h1(raw_html) or _ak_expand_unit_name(row.get("directory_name"))
         main_text = _ak_main_page_text(raw_html)
         final = final_url or detail_url
         regulation = _ak_match_horse_regulation(regulations, row, page_name, final, main_text)
+        page_has_horse_signal = _ak_page_has_general_horse_signal(raw_html)
+        explicit_horse_camping = _ak_page_has_explicit_horse_camping(raw_html)
+        page_prohibits_horse_camping = _ak_page_prohibits_horse_camping(raw_html)
+
+        if page_has_horse_signal:
+            page_horse_signals += 1
+
+        # Most Alaska campground pages describe facilities and activities but do
+        # not restate park-wide horse regulations. If the current regulation
+        # affirmatively authorizes horse use throughout the applicable park/SRA,
+        # the official campground directory plus that rule is sufficient legal
+        # evidence. A merely generic horseback-riding page remains insufficient.
+        park_wide_permission = _ak_regulation_is_park_wide_permission(regulation)
+        if not page_has_horse_signal and not park_wide_permission:
+            continue
+
         if regulation is None:
             no_regulation_matches += 1
             print(f"    Alaska rejected (no applicable Chapter 20 horse rule): {page_name}")
             continue
 
-        explicit_horse_camping = _ak_page_has_explicit_horse_camping(raw_html)
-        if not _ak_regulation_allows_this_campground(regulation, explicit_horse_camping):
+        if not _ak_regulation_allows_this_campground(
+            regulation,
+            explicit_horse_camping,
+            page_prohibits_horse_camping=page_prohibits_horse_camping,
+        ):
             regulation_rejections += 1
-            reason = "campgrounds prohibited" if regulation.get("campground_prohibited") else "horse use limited to designated trails/areas"
+            if regulation.get("campground_prohibited") or page_prohibits_horse_camping:
+                reason = "campgrounds prohibited"
+            else:
+                reason = "horse use limited to designated trails/areas"
             print(
                 f"    Alaska rejected ({reason}; {regulation.get('section')}): {page_name}"
             )
             continue
+
+        if park_wide_permission and not page_has_horse_signal:
+            park_wide_authorizations += 1
 
         camp = _ak_build_dynamic_camp(row, final, raw_html, regulation)
         if camp:
@@ -4089,7 +4143,8 @@ def fetch_ak_state_parks():
     print(
         "  Alaska State Parks review: "
         f"{detail_pages_fetched}/{len(rows)} campground detail pages fetched; "
-        f"{general_horse_candidates} campground pages with horse signals; "
+        f"{page_horse_signals} campground pages with horse signals; "
+        f"{park_wide_authorizations} accepted from park-wide horse rules without page horse wording; "
         f"{regulation_rejections} rejected by applicable horse rules; "
         f"{no_regulation_matches} rejected without a matching Chapter 20 horse rule"
     )

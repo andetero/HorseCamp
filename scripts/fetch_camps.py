@@ -3833,22 +3833,49 @@ def _ak_extract_horse_regulations(chapter20_text):
             "limited_to_designated_or_trails": limited_to_designated_or_trails,
         })
 
-    # The official Title 11 PDF lists Chapter 20 sections before printing the
-    # substantive regulations, so horse sections normally appear twice. The list
-    # occurrence precedes the operative regulation. Keep the LAST occurrence of
-    # each section instead of trying to infer substance from keyword counts; a
-    # table-of-contents block can contain unrelated legal words from nearby rules.
+    # The official Title 11 PDF can contain the same Chapter 20 section in both
+    # navigation/listing material and the substantive regulation text. PDF layout
+    # order is not stable enough to safely choose the first or last occurrence.
+    # Merge every occurrence of the same section instead. The short listing copy
+    # then becomes harmless, while the operative legal language remains available
+    # for permission/prohibition parsing regardless of extraction order.
     by_section = {}
-    for occurrence_index, regulation in enumerate(regulations):
+    for regulation in regulations:
         section = str(regulation.get("section") or "")
-        by_section[section] = (occurrence_index, regulation)
+        if not section:
+            continue
+        bucket = by_section.setdefault(section, [])
+        bucket.append(regulation)
 
-    deduped = [item[1] for item in by_section.values()]
+    deduped = []
+    for section, occurrences in by_section.items():
+        unique_texts = []
+        seen_texts = set()
+        for occurrence in occurrences:
+            body = re.sub(r"\s+", " ", str(occurrence.get("text") or "")).strip()
+            if body and body not in seen_texts:
+                seen_texts.add(body)
+                unique_texts.append(body)
+
+        merged_text = " ".join(unique_texts).strip()
+        # Re-evaluate the operative flags across all copies. This is deliberately
+        # conservative for prohibitions/restrictions: if any current occurrence
+        # contains a campground ban or designated-only limitation, retain it.
+        deduped.append({
+            "section": section,
+            "title": max((str(o.get("title") or "") for o in occurrences), key=len, default=""),
+            "article": max((str(o.get("article") or "") for o in occurrences), key=len, default=""),
+            "text": merged_text,
+            "allows_horses": any(bool(o.get("allows_horses")) for o in occurrences),
+            "campground_prohibited": any(bool(o.get("campground_prohibited")) for o in occurrences),
+            "limited_to_designated_or_trails": any(bool(o.get("limited_to_designated_or_trails")) for o in occurrences),
+        })
+
     deduped.sort(key=lambda regulation: regulation.get("section") or "")
     if len(deduped) != len(regulations):
         print(
-            f"  Alaska regulations: collapsed {len(regulations)} horse-rule PDF occurrences "
-            f"to {len(deduped)} unique sections"
+            f"  Alaska regulations: merged {len(regulations)} horse-rule PDF occurrences "
+            f"into {len(deduped)} unique sections"
         )
     return deduped
 

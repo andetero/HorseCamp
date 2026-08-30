@@ -47,7 +47,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
         run: |
-          gh issue view "$ISSUE_NUMBER" --json labels --jq '.labels[].name' > /tmp/issue_labels.txt
+          gh issue view "$ISSUE_NUMBER" --repo andetero/HorseCamp --json labels --jq '.labels[].name' > /tmp/issue_labels.txt
 
           grep -Fxq "approved" /tmp/issue_labels.txt || { echo "Issue #$ISSUE_NUMBER is missing approved" >&2; exit 1; }
           grep -Fxq "problem-report" /tmp/issue_labels.txt || { echo "Issue #$ISSUE_NUMBER is missing problem-report" >&2; exit 1; }
@@ -87,9 +87,10 @@ jobs:
           ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
         run: |
           gh label create "backend-dispatched" \
+            --repo andetero/HorseCamp \
             --color "0969da" \
             --description "Approved issue sent to the private HorseCamp data backend" \
             2>/dev/null || true
 
-          gh issue edit "$ISSUE_NUMBER" --remove-label "needs-review" 2>/dev/null || true
-          gh issue edit "$ISSUE_NUMBER" --add-label "backend-dispatched"
+          gh issue edit "$ISSUE_NUMBER" --repo andetero/HorseCamp --remove-label "needs-review" 2>/dev/null || true
+          gh issue edit "$ISSUE_NUMBER" --repo andetero/HorseCamp --add-label "backend-dispatched"

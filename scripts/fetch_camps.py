@@ -4041,29 +4041,54 @@ def _ak_regulation_match_score(regulation, directory_row, page_name, final_url, 
                 return 40 + (len(common) * 5)
         return 0
 
-    # Article 18 is intentionally generic ("Special Provisions"). For those
-    # current rules, retain the conservative rule-title/body identity fallback so
-    # named units such as legacy/renamed recreation areas can still be resolved.
-    scope_parts = [regulation.get("title"), regulation.get("text", "")[:1200]]
-    scope = _ak_normalized_words(" ".join(str(part or "") for part in scope_parts))
-    scope_words = [word for word in scope.split() if word not in AK_REG_SCOPE_STOPWORDS]
-    score = 0
+    # Article 18 is intentionally generic ("Special Provisions"). Never match
+    # those rules from ordinary words in the body such as "water", "group", or
+    # "area"; that can authorize an unrelated campground. Instead, dynamically
+    # extract only explicitly named park/recreation units from the current rule
+    # title/text and require the campground identity to match one of those names.
+    scope_source = " ".join([
+        str(regulation.get("title") or ""),
+        str(regulation.get("text") or ""),
+    ])
+    unit_re = re.compile(
+        r"\b([A-Z][A-Za-z0-9’'&.-]*(?:\s+[A-Z][A-Za-z0-9’'&.-]*){0,5})\s+"
+        r"(State\s+(?:Recreation\s+(?:Area|Site)|Historical\s+Park|Park)|"
+        r"Management\s+Area|SRA|SRS|SHP|SP)\b"
+    )
+    explicit_scopes = []
+    seen_scopes = set()
+    for match in unit_re.finditer(scope_source):
+        raw_scope = f"{match.group(1)} {match.group(2)}"
+        normalized_scope = _ak_normalized_words(raw_scope)
+        if not normalized_scope or normalized_scope in seen_scopes:
+            continue
+        seen_scopes.add(normalized_scope)
+        explicit_scopes.append(normalized_scope)
 
-    for i in range(len(scope_words) - 1):
-        phrase = f"{scope_words[i]} {scope_words[i + 1]}"
-        if len(phrase) >= 10 and phrase in candidate:
-            score += 8
-
-    scope_tokens = _ak_distinctive_tokens(scope)
-    common = candidate_tokens & scope_tokens
-    score += len(common) * 3
+    if not explicit_scopes:
+        return 0
 
     candidate_compact = candidate.replace(" ", "")
-    for token in scope_tokens:
-        if len(token) >= 6 and token in candidate_compact:
-            score += 2
+    for scope in explicit_scopes:
+        if scope in candidate:
+            return 90
+        scope_tokens = _ak_distinctive_tokens(scope)
+        if not scope_tokens:
+            continue
+        common = scope_tokens & candidate_tokens
+        required = 1 if len(scope_tokens) == 1 else 2
+        if len(common) >= required:
+            return 55 + (len(common) * 5)
+        # Legacy Alaska URLs sometimes concatenate a former unit name. Preserve
+        # that useful identity signal without hardcoding any park or campground.
+        compact_hits = sum(
+            1 for token in scope_tokens
+            if len(token) >= 6 and (token in candidate_compact or token[:5] in candidate_compact)
+        )
+        if compact_hits >= required:
+            return 45 + (compact_hits * 5)
 
-    return score
+    return 0
 
 
 def _ak_match_horse_regulation(regulations, directory_row, page_name, final_url, main_text):
@@ -4250,6 +4275,52 @@ def _ak_build_dynamic_camp(directory_row, final_url, raw_html, regulation):
 
     lat, lon = _geocode_place_nominatim(f"{page_name}, Alaska")
     time.sleep(1.0)
+
+    if abs(lat) < 0.1 or abs(lon) < 0.1:
+        # Alaska's official campground pages sometimes use road-mile addresses
+        # that Nominatim recognizes better than the facility name. Try only
+        # current source-derived alternatives before falling back to prior data.
+        geocode_queries = []
+        address_match = re.search(
+            r"\bAddress\s*:\s*(.{1,180}?)(?=\bDriving\s+Directions\b|\bDirections\s*:|\bGPS\s*:|$)",
+            main_text,
+            flags=re.I | re.S,
+        )
+        if address_match:
+            official_address = re.sub(r"\s+", " ", address_match.group(1)).strip(" ,.;")
+            if official_address:
+                geocode_queries.append(
+                    f"{official_address}, {community}, Alaska" if community else f"{official_address}, Alaska"
+                )
+
+        directory_location = str(directory_row.get("directory_location") or "").strip()
+        if directory_location:
+            geocode_queries.append(
+                f"{directory_location}, {community}, Alaska" if community else f"{directory_location}, Alaska"
+            )
+
+        simplified_name = re.sub(r"\bTrail\s+(?=Campground\b)", "", page_name, flags=re.I)
+        simplified_name = re.sub(r"\s+", " ", simplified_name).strip()
+        if simplified_name and simplified_name != page_name:
+            geocode_queries.append(
+                f"{simplified_name}, {community}, Alaska" if community else f"{simplified_name}, Alaska"
+            )
+
+        parent_unit = str(directory_row.get("parent_unit") or "").strip()
+        if parent_unit:
+            geocode_queries.append(f"{page_name}, {parent_unit}, Alaska")
+
+        seen_queries = {f"{page_name}, Alaska".lower()}
+        for query in geocode_queries:
+            key = query.lower()
+            if key in seen_queries:
+                continue
+            seen_queries.add(key)
+            lat, lon = _geocode_place_nominatim(query)
+            time.sleep(1.0)
+            if abs(lat) >= 0.1 or abs(lon) >= 0.1:
+                print(f"  Alaska State Parks: resolved coordinates using official-source fallback: {query}")
+                break
 
     if abs(lat) < 0.1 or abs(lon) < 0.1:
         previous = _ak_previous_by_id(camp_id)

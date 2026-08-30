@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-30T00:31:34.870261+00:00",
-  "count": 1892,
+  "generated": "2026-08-30T01:42:26.870345+00:00",
+  "count": 1891,
   "sources": [
     "Recreation.gov RIDB",
     "NPS API",
@@ -59,35 +59,6 @@
     "Private Camps"
   ],
   "camps": [
-    {
-      "id": "ak-stateparks-matanuska-lakes",
-      "name": "Matanuska Lakes State Recreation Area",
-      "location": "Palmer, AK",
-      "state": "AK",
-      "latitude": 61.5590323,
-      "longitude": -149.2011901,
-      "pricePerNight": 25.0,
-      "horseFeePerNight": 0.0,
-      "hookups": ["Water"],
-      "accommodations": ["Trails", "Horse Camping"],
-      "maxRigLength": 0,
-      "stallCount": 0,
-      "paddockCount": 0,
-      "phone": "",
-      "website": "https://dnr.alaska.gov/parks/aspunits/matsu/keplerbradlksra.htm",
-      "description": "e lakes are located in depressions (old glacial crevasses) in between moraine ridges (eskers) formed by glaciers 30,000 years ago. Trails from the park connect to the Mat-Su Borough Crevasse Moraine Trail System, The University of Alaska – Fairbanks Farm, and the University of Alaska – Anchorage College campus. Fishing, camping, hiking, biking and horseback riding are the dominant activities. Firewood is not provided; please bring your own firewood. Address: Matanuska Lakes 4376 S. Glenn Highway Palmer, AK Driving Directions: Take the Glenn Highway to Mile 36.4, turn north into Matanuska Lake. You enter the park immediately. There is no Kepler Drive; Glenn Highway Mile 36.4 is the driveway into the campground.",
-      "isVerified": true,
-      "seasonStart": 0,
-      "seasonEnd": 0,
-      "hasWashRack": false,
-      "hasDumpStation": false,
-      "hasWifi": false,
-      "hasBathhouse": false,
-      "pullThroughAvailable": false,
-      "imageColors": ["C0392B", "F1948A"],
-      "photoURLs": [],
-      "source": "State Parks"
-    },
     {
       "id": "horsemotel-2cc81afaa8",
       "name": "Tok, Alaska, Tok Line Camp B & B",

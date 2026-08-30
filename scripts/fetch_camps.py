@@ -3833,22 +3833,21 @@ def _ak_extract_horse_regulations(chapter20_text):
             "limited_to_designated_or_trails": limited_to_designated_or_trails,
         })
 
-    # The official Title 11 PDF can contain the same Chapter 20 section in both
-    # navigation/listing material and the substantive regulation text. PDF layout
-    # order is not stable enough to safely choose the first or last occurrence.
-    # Merge every occurrence of the same section instead. The short listing copy
-    # then becomes harmless, while the operative legal language remains available
-    # for permission/prohibition parsing regardless of extraction order.
+    # The official Title 11 PDF can place a section heading and its operative
+    # paragraph in different extraction blocks. Choosing only the first/last
+    # heading occurrence is therefore not reliable. Group each horse section and
+    # also inspect a larger raw-text window following EVERY occurrence of that
+    # section number. This keeps the logic dynamic while making it resilient to
+    # pypdf page/header ordering artifacts.
     by_section = {}
     for regulation in regulations:
         section = str(regulation.get("section") or "")
-        if not section:
-            continue
-        bucket = by_section.setdefault(section, [])
-        bucket.append(regulation)
+        if section:
+            by_section.setdefault(section, []).append(regulation)
 
     deduped = []
     for section, occurrences in by_section.items():
+        # Collect all normal section slices first.
         unique_texts = []
         seen_texts = set()
         for occurrence in occurrences:
@@ -3857,25 +3856,129 @@ def _ak_extract_horse_regulations(chapter20_text):
                 seen_texts.add(body)
                 unique_texts.append(body)
 
-        merged_text = " ".join(unique_texts).strip()
-        # Re-evaluate the operative flags across all copies. This is deliberately
-        # conservative for prohibitions/restrictions: if any current occurrence
-        # contains a campground ban or designated-only limitation, retain it.
+        # Then collect a wider window after every raw section-number occurrence.
+        # Stop at the NEXT DIFFERENT horse regulation rather than using a blind
+        # character count. This survives PDF heading/body reordering without
+        # letting a later park's horse restriction bleed into this rule.
+        horse_suffixes = sorted({key.rsplit(".", 1)[-1] for key in by_section})
+        any_horse_section_pattern = re.compile(
+            r"11\s+AAC\s+20\.(" + "|".join(re.escape(suffix) for suffix in horse_suffixes) + r")",
+            flags=re.I,
+        )
+        all_horse_markers = list(any_horse_section_pattern.finditer(text))
+        target_suffix = section.rsplit(".", 1)[-1]
+        raw_windows = []
+        for marker_index, raw_match in enumerate(all_horse_markers):
+            if raw_match.group(1) != target_suffix:
+                continue
+            window_end = min(len(text), raw_match.start() + 12000)
+            for later in all_horse_markers[marker_index + 1:]:
+                if later.group(1) != target_suffix:
+                    window_end = min(window_end, later.start())
+                    break
+            raw_window = re.sub(r"\s+", " ", text[raw_match.start():window_end]).strip()
+            if raw_window and raw_window not in seen_texts:
+                seen_texts.add(raw_window)
+                raw_windows.append(raw_window)
+
+        combined_text = " ".join(unique_texts + raw_windows).strip()
+        normalized = re.sub(r"[^a-z0-9]+", " ", combined_text.lower())
+        title = max((str(o.get("title") or "") for o in occurrences), key=len, default="")
+        normalized_title = re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()
+
+        # Keep permission tied to horse language so a mixed rule's boat clause
+        # cannot authorize horses. The wider distance tolerates extracted page
+        # headers between the animal list and the operative word "allowed".
+        horse_permission = any(bool(o.get("allows_horses")) for o in occurrences)
+        if not horse_permission:
+            horse_permission = bool(re.search(
+                r"\b(?:the\s+)?use\s+of\s+horses?\b"
+                r"(?:(?!\b(?:power\s+boats?|motorized\s+boats?|boat\s+motors?)\b).){0,1200}"
+                r"\b(?:is|are)\s+allowed\b",
+                normalized,
+                flags=re.S,
+            )) or bool(re.search(
+                r"\bhorses?\b"
+                r"(?:(?!\b(?:power\s+boats?|motorized\s+boats?|boat\s+motors?)\b).){0,800}"
+                r"\b(?:is|are)\s+allowed\b",
+                normalized,
+                flags=re.S,
+            )) or bool(re.search(
+                r"\bperson\s+may\s+use\s+(?:a\s+)?horse\b",
+                normalized,
+            ))
+
+        campground_prohibited = any(bool(o.get("campground_prohibited")) for o in occurrences)
+        if not campground_prohibited:
+            campground_prohibited = bool(re.search(
+                r"\bhorses?\b.{0,1400}\b(?:not\s+allowed|prohibited)\b.{0,700}"
+                r"\b(?:designated\s+)?campgrounds?\b",
+                normalized,
+                flags=re.S,
+            )) or bool(re.search(
+                r"\b(?:designated\s+)?campgrounds?\b.{0,700}\bhorses?\b.{0,700}"
+                r"\b(?:not\s+allowed|prohibited)\b",
+                normalized,
+                flags=re.S,
+            ))
+
+        limited_to_designated = any(bool(o.get("limited_to_designated_or_trails")) for o in occurrences)
+        if not limited_to_designated:
+            limited_to_designated = bool(re.search(
+                r"\bhorses?\b.{0,1200}\b(?:allowed|may\s+be\s+used|may\s+use)\b.{0,500}"
+                r"\b(?:only\s+(?:on|in)|(?:on|in)\s+(?:officially\s+)?designated)\b.{0,250}"
+                r"\b(?:trails?|areas?)\b",
+                normalized,
+                flags=re.S,
+            )) or bool(re.search(
+                r"\bhorses?\b.{0,900}\b(?:limited|restricted)\s+to\b.{0,300}"
+                r"\b(?:trails?|areas?)\b",
+                normalized,
+                flags=re.S,
+            ))
+
+        # Broad geographic permission is separate from simple permission. A rule
+        # may allow horses only on designated trails; that must never authorize
+        # every campground in its article.
+        park_wide_permission = bool(re.search(
+            r"\b(?:the\s+)?use\s+of\s+horses?\b"
+            r"(?:(?!\b(?:power\s+boats?|motorized\s+boats?|boat\s+motors?)\b).){0,1200}"
+            r"\b(?:is|are)\s+allowed\s+(?:throughout|in|within)\b.{0,700}"
+            r"\b(?:state\s+)?(?:recreation\s+area|park|management\s+area|recreation\s+site)\b",
+            normalized,
+            flags=re.S,
+        ))
+
+        # For a horse-only regulation title, allow a final PDF-layout fallback
+        # when the window clearly contains both the horse phrase and an allowed
+        # clause but extraction has inserted too much unrelated page text between
+        # them. Mixed horse/boat titles are intentionally excluded from this path.
+        mixed_subject_title = bool(re.search(
+            r"\b(?:boat|motor|aircraft|vehicle|snow|weapon|bicycle)\b",
+            normalized_title,
+        ))
+        if not horse_permission and not mixed_subject_title:
+            horse_permission = bool(
+                re.search(r"\b(?:use\s+of\s+)?horses?\b", normalized)
+                and re.search(r"\b(?:is|are)\s+allowed\b", normalized)
+            )
+
         deduped.append({
             "section": section,
-            "title": max((str(o.get("title") or "") for o in occurrences), key=len, default=""),
+            "title": title,
             "article": max((str(o.get("article") or "") for o in occurrences), key=len, default=""),
-            "text": merged_text,
-            "allows_horses": any(bool(o.get("allows_horses")) for o in occurrences),
-            "campground_prohibited": any(bool(o.get("campground_prohibited")) for o in occurrences),
-            "limited_to_designated_or_trails": any(bool(o.get("limited_to_designated_or_trails")) for o in occurrences),
+            "text": combined_text,
+            "allows_horses": horse_permission,
+            "campground_prohibited": campground_prohibited,
+            "limited_to_designated_or_trails": limited_to_designated,
+            "park_wide_horse_permission": park_wide_permission,
         })
 
     deduped.sort(key=lambda regulation: regulation.get("section") or "")
     if len(deduped) != len(regulations):
         print(
-            f"  Alaska regulations: merged {len(regulations)} horse-rule PDF occurrences "
-            f"into {len(deduped)} unique sections"
+            f"  Alaska regulations: recovered {len(regulations)} horse-rule PDF occurrences "
+            f"into {len(deduped)} unique sections using raw section windows"
         )
     return deduped
 
@@ -4020,6 +4123,8 @@ def _ak_regulation_is_park_wide_permission(regulation):
         return False
     if regulation.get("campground_prohibited") or regulation.get("limited_to_designated_or_trails"):
         return False
+    if regulation.get("park_wide_horse_permission"):
+        return True
 
     normalized = re.sub(
         r"[^a-z0-9]+",

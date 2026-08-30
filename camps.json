@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-30T11:18:38.345309+00:00",
+  "generated": "2026-08-30T14:02:52.313736+00:00",
   "count": 1896,
   "sources": [
     "Recreation.gov RIDB",
@@ -60,12 +60,12 @@
   ],
   "camps": [
     {
-      "id": "ak-stateparks-fort-abercrombie",
-      "name": "Fort Abercrombie State Historical Park",
-      "location": "Kodiak, AK",
+      "id": "ak-stateparks-granite-tors-trail",
+      "name": "Granite Tors Trail Campground",
+      "location": "Fairbanks, AK",
       "state": "AK",
-      "latitude": 57.8325604,
-      "longitude": -152.3559963,
+      "latitude": 64.904951,
+      "longitude": -146.3603274,
       "pricePerNight": 20.0,
       "horseFeePerNight": 0.0,
       "hookups": ["Water"],
@@ -74,8 +74,8 @@
       "stallCount": 0,
       "paddockCount": 0,
       "phone": "",
-      "website": "https://dnr.alaska.gov/parks/aspunits/kodiak/fortabercrombieshp.htm",
-      "description": "11 AAC 20.987. Use of horses, mules, and burros 11 AAC 20.987. Use of horses, mules, and burros. (a) The use of horses, mules, and burros is allowed in the following state recreation areas: (1) Blair Lake State Recreation Area; and (2) Tokositna State Recreation Area. (b) The use of horses, mules and burros in a st ate recreation area described in (a) of this section is subject to the following conditions: (1) a group using 10 or more animals sh all obtain a park use permit under 11 AAC 18.010 before entering the recreation area; (2) tethering horses, mules, and burros within 100 feet of fresh water is prohibited; and (3) loose herding of animals is prohibited. (Eff. 7/1/98, Register 146) Statutory Authority: Authority: AS 41.21.020 AS 41.21.040 11 AAC 20.987. Use of horses, mules, and burros 11 AAC 20.988. Use of hovercraft 11 AAC 20.990. Definitions 11 AAC 20.905. Use of alcoholic beverages. Unless authorized by the director, a person may not possess or consume alcoholic beverages at (1) Miller Point at Fort Abercrombie State Historic Park; (2) Castle Hill State Historic Site; (3) Repealed 11/15/2015; (4) Old Sitka State Historic Site; (5) Totem Bight State Historic Site; (6) Independence Mine State Historical Park Visitor Center; (7) Big Lake North State Recreation Site; (8) Big Lake South State Recreation Site; (9) Rocky Lake State Recreation Site; or (10) Chena River State Recreation Site. (Eff. 5/11/85, Register 94; am 2/3/88, Register 105; am 5/ 24/96, Register 138; am 4/20/2002, Register 162; am 11/15/2015, Register 216; am 5/5/2022, Register 242) Statutory Authority: Authority: AS 41.21.020 AS 41.21.040 11 AAC 20.987. Use of horses, mules, and burros. (a) The use of horses, mules, and burros is allowed in the following state recreation areas: (1) Blair Lake State Recreation Area; and (2) Tokositna State Recreation Area. (b) The use of horses, mules and burros in a st ate recreation area described in (a) of this section is subject to the following conditions",
+      "website": "https://dnr.alaska.gov/parks/aspunits/northern/torstlcamp.htm",
+      "description": "11 AAC 20.475. Horses 11 AAC 20.475. Horses. (a) The use of horses, mules, and burros is a llowed in the Chena River Recreation Area, with the exception of Rock Creek/Granite Tors Hi king Trail and the boardwalk portions of any developed hiking trail. (b) The use of horses, mules, and burros is subject to the following conditions: (1) groups using 10 or more animals must obtain a park use permit under 11 AAC 18.010 before entering the park; (2) tethering horses, mules, or burros within 100 feet of fresh water is prohibited; (3) loose herding of animals is prohibited. (Eff. 5/11/85, Register 94) Statutory Authority: Authority: AS 41.21.020 AS 41.21.040 AS 41.21.475 11 AAC 20.475. Horses 11 AAC 20.480. (Repealed) 11 AAC 20.485. Campfires 11 AAC 20.490. (Repealed) 11 AAC 20.492. Camping 11 AAC 20.460. Use of weapons. Repealed. (Eff. 5/11/85, Register 94; am 7/1/89, Register 110; am 5/ 24/96, Register 138; am 1/16/2005, Register 173; repealed 5/5/2022, Register 242) 11 AAC 20.465. Off-road vehicles. (a) Except as provided in (b) of this section, the use of off-road vehicles is allowed in the Chena River State Recreation Area on trails offici ally designated and marked as open to off-road vehicles. (b) The following trails are open to the use of off-road vehicles except when posted as closed due to trail conditions during spring break-up, th e absence of adequate ground frost, or the opening to snowmobile use under 11 AAC 12.035(b)(7): (1) Angel Creek Hillside Trail; (2) Compeau Trail; (3) Stiles Trail; (4) Chena Hot Springs (Yukon Quest) Winter Trail. (Eff. 5/11/85, Register 94; am 12/25/91, Register 120; am 5/5/2022, Register 242) Statutory Authority: Authority: AS 41.21.020 AS 41.21.475 AS 41.21.040 AS 41.21.490 11 AAC 20.470. Motorized boats. The use of motorized boats in Chena River State Recreation Area is allowed on the Chena River and its tributaries. (Eff. 5/11/85, Register 94; am 5/18/97, Register 142) Statutory Authority: Authority: AS 41.21.020 AS 41.21.040 A",
       "isVerified": true,
       "seasonStart": 0,
       "seasonEnd": 0,

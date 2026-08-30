@@ -3995,6 +3995,57 @@ def _ak_distinctive_tokens(text):
     }
 
 
+def _ak_generic_regulation_scope_source(regulation):
+    """Return only section-bounded text for a generic Alaska horse rule.
+
+    Article 18 uses generic headings such as ``Special Provisions``.  The PDF
+    recovery text for a horse section can contain material from later sections,
+    especially when the horse section is the last horse-specific rule nearby.
+    Geographic scope must therefore come only from copies of the target section
+    bounded by the next *different* 11 AAC 20.xxx section.  This keeps later
+    park names from being mistaken for units governed by the horse rule.
+    """
+    title = str(regulation.get("title") or "")
+    raw_text = str(regulation.get("text") or "")
+    section = re.sub(r"\s+", " ", str(regulation.get("section") or "")).upper().strip()
+    if not raw_text or not section:
+        return title
+
+    target_match = re.search(r"20\.(\d{3})", section, flags=re.I)
+    if not target_match:
+        return " ".join(part for part in (title, raw_text[:4000]) if part)
+    target_suffix = target_match.group(1)
+
+    marker_re = re.compile(r"11\s+AAC\s+20\.(\d{3})", flags=re.I)
+    markers = list(marker_re.finditer(raw_text))
+    bounded = []
+    seen = set()
+    for index, marker in enumerate(markers):
+        if marker.group(1) != target_suffix:
+            continue
+        end = min(len(raw_text), marker.start() + 6000)
+        for later in markers[index + 1:]:
+            if later.group(1) != target_suffix:
+                end = min(end, later.start())
+                break
+        segment = re.sub(r"\s+", " ", raw_text[marker.start():end]).strip()
+        if not segment or segment in seen:
+            continue
+        # Ignore a table-of-contents-only copy unless it contains actual horse
+        # rule content beyond the heading. Substantive duplicates, when present,
+        # are retained and merged.
+        if re.search(r"\b(?:horse|horses|mule|mules|burro|burros|equine)\b", segment, flags=re.I):
+            seen.add(segment)
+            bounded.append(segment)
+
+    if bounded:
+        return " ".join([title] + bounded)
+
+    # Conservative fallback: never scan an unbounded recovered window for a
+    # generic article. The title alone cannot invent another park's scope.
+    return title
+
+
 def _ak_regulation_match_score(regulation, directory_row, page_name, final_url, main_text):
     candidate_parts = [
         page_name,
@@ -4046,10 +4097,7 @@ def _ak_regulation_match_score(regulation, directory_row, page_name, final_url, 
     # "area"; that can authorize an unrelated campground. Instead, dynamically
     # extract only explicitly named park/recreation units from the current rule
     # title/text and require the campground identity to match one of those names.
-    scope_source = " ".join([
-        str(regulation.get("title") or ""),
-        str(regulation.get("text") or ""),
-    ])
+    scope_source = _ak_generic_regulation_scope_source(regulation)
     unit_re = re.compile(
         r"\b([A-Z][A-Za-z0-9’'&.-]*(?:\s+[A-Z][A-Za-z0-9’'&.-]*){0,5})\s+"
         r"(State\s+(?:Recreation\s+(?:Area|Site)|Historical\s+Park|Park)|"

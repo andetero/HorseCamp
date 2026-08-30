@@ -3778,35 +3778,25 @@ def _ak_extract_horse_regulations(chapter20_text):
         article = re.sub(r"\s+", " ", articles[-1].group(1)).strip(" .") if articles else ""
 
         low = body.lower()
-        # PDF extraction can insert page headers, line-break artifacts, or authority
-        # text between the animal list and the word "allowed". Detect the legal
-        # permission semantically across a wider window, while refusing a phrase
-        # that reaches "not allowed" or "prohibited" before the permission word.
-        allows_horses = bool(re.search(
-            r"\b(?:use\s+of\s+)?horses?\b"
-            r"(?:(?!\bnot\s+allowed\b|\bprohibited\b).){0,350}"
-            r"\b(?:allowed|may\s+be\s+used)\b",
-            low,
-            flags=re.S,
-        )) or bool(re.search(
-            r"\ba\s+person\s+may\s+use\s+(?:a\s+)?horse\b",
-            low,
-            flags=re.S,
-        ))
-
-        # pypdf occasionally inserts punctuation/line artifacts inside otherwise
-        # ordinary sentences. Keep a punctuation-insensitive fallback so wording
-        # such as "the use of horses, mules, and burros is allowed in ..." is not
-        # lost merely because of PDF extraction.
+        # Normalize PDF punctuation/layout before interpreting the operative horse
+        # clause. Keep the permission test horse-specific so a later sentence about
+        # boats or another activity being "allowed" cannot accidentally authorize
+        # horses in a mixed-use regulation such as 11 AAC 20.920.
         normalized_legal_text = re.sub(r"[^a-z0-9]+", " ", low)
-        if not allows_horses:
-            allows_horses = bool(re.search(
-                r"\bhorses?\b.{0,220}\b(?:is\s+)?allowed\b",
-                normalized_legal_text,
-            )) or bool(re.search(
-                r"\bperson\s+may\s+use\s+(?:a\s+)?horse\b",
-                normalized_legal_text,
-            ))
+        allows_horses = bool(re.search(
+            r"\b(?:the\s+)?use\s+of\s+horses?\b.{0,140}"
+            r"\b(?:is|are)\s+allowed\b",
+            normalized_legal_text,
+        )) or bool(re.search(
+            r"\bhorses?\b.{0,100}\b(?:is|are)\s+allowed\b",
+            normalized_legal_text,
+        )) or bool(re.search(
+            r"\bperson\s+may\s+use\s+(?:a\s+)?horse\b",
+            normalized_legal_text,
+        )) or bool(re.search(
+            r"\bhorses?\b.{0,100}\bmay\s+be\s+used\b",
+            normalized_legal_text,
+        ))
 
         campground_prohibited = bool(re.search(
             r"\b(?:except(?:ion)?\s+(?:of\s+)?|prohibit(?:ed|s)?\s+(?:in|at)?|not\s+allowed\s+(?:in|at)?)"
@@ -3843,24 +3833,15 @@ def _ak_extract_horse_regulations(chapter20_text):
             "limited_to_designated_or_trails": limited_to_designated_or_trails,
         })
 
-    # The official Title 11 PDF contains a Chapter 20 rule listing before the
-    # full regulation text, so horse sections can appear twice. Prefer the
-    # substantive occurrence for each section instead of letting an index entry
-    # with no operative language win regulation matching.
+    # The official Title 11 PDF lists Chapter 20 sections before printing the
+    # substantive regulations, so horse sections normally appear twice. The list
+    # occurrence precedes the operative regulation. Keep the LAST occurrence of
+    # each section instead of trying to infer substance from keyword counts; a
+    # table-of-contents block can contain unrelated legal words from nearby rules.
     by_section = {}
-    for regulation in regulations:
+    for occurrence_index, regulation in enumerate(regulations):
         section = str(regulation.get("section") or "")
-        text = str(regulation.get("text") or "")
-        normalized = re.sub(r"[^a-z0-9]+", " ", text.lower())
-        legal_signal_count = sum(bool(re.search(pattern, normalized)) for pattern in (
-            r"\b(?:allowed|prohibited|subject to|may use|may be used)\b",
-            r"\b(?:exception|except|conditions?)\b",
-            r"\b(?:groups?|tethering|herding|campgrounds?|trails?|areas?)\b",
-        ))
-        score = (legal_signal_count, len(text))
-        existing = by_section.get(section)
-        if existing is None or score > existing[0]:
-            by_section[section] = (score, regulation)
+        by_section[section] = (occurrence_index, regulation)
 
     deduped = [item[1] for item in by_section.values()]
     deduped.sort(key=lambda regulation: regulation.get("section") or "")
@@ -3991,22 +3972,47 @@ def _ak_regulation_affirmatively_allows_horses(regulation):
         str(regulation.get("text") or "").lower(),
     )
     return bool(re.search(
-        r"\bhorses?\b.{0,220}\b(?:is\s+)?allowed\b",
+        r"\b(?:the\s+)?use\s+of\s+horses?\b.{0,140}"
+        r"\b(?:is|are)\s+allowed\b",
+        normalized,
+    )) or bool(re.search(
+        r"\bhorses?\b.{0,100}\b(?:is|are)\s+allowed\b",
         normalized,
     )) or bool(re.search(
         r"\bperson\s+may\s+use\s+(?:a\s+)?horse\b",
+        normalized,
+    )) or bool(re.search(
+        r"\bhorses?\b.{0,100}\bmay\s+be\s+used\b",
         normalized,
     ))
 
 
 def _ak_regulation_is_park_wide_permission(regulation):
-    """True when the current horse rule authorizes the area generally, not only designated places."""
-    return bool(
-        regulation
-        and _ak_regulation_affirmatively_allows_horses(regulation)
-        and not regulation.get("campground_prohibited")
-        and not regulation.get("limited_to_designated_or_trails")
+    """True only for an explicit broad geographic horse authorization."""
+    if not regulation or not _ak_regulation_affirmatively_allows_horses(regulation):
+        return False
+    if regulation.get("campground_prohibited") or regulation.get("limited_to_designated_or_trails"):
+        return False
+
+    normalized = re.sub(
+        r"[^a-z0-9]+",
+        " ",
+        str(regulation.get("text") or "").lower(),
     )
+    # Chena/Quartz-style language says the use of horses is allowed IN the
+    # recreation area. Requiring that broad geographic phrase prevents a narrow
+    # trail permission, or a boat-use clause in a mixed regulation, from being
+    # promoted to campground-wide horse authorization.
+    return bool(re.search(
+        r"\b(?:the\s+)?use\s+of\s+horses?\b.{0,140}"
+        r"\b(?:is|are)\s+allowed\s+(?:throughout|in|within)\b.{0,180}"
+        r"\b(?:state\s+)?(?:recreation\s+area|park|management\s+area|recreation\s+site)\b",
+        normalized,
+    )) or bool(re.search(
+        r"\bhorses?\b.{0,100}\bmay\s+be\s+used\s+(?:throughout|in|within)\b.{0,180}"
+        r"\b(?:state\s+)?(?:recreation\s+area|park|management\s+area|recreation\s+site)\b",
+        normalized,
+    ))
 
 
 def _ak_regulation_allows_this_campground(regulation, explicit_horse_camping, page_prohibits_horse_camping=False):

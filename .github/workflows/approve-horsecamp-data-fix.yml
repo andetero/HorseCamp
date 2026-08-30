@@ -11,29 +11,26 @@ on:
         type: string
 
 permissions:
-  contents: write
+  contents: read
   issues: write
-  pull-requests: write
 
 concurrency:
   group: approve-horsecamp-data-fix-${{ github.event_name == 'workflow_dispatch' && inputs.issue_number || github.event.issue.number }}
   cancel-in-progress: true
 
 jobs:
-  approved-problem-report-to-pr:
+  dispatch-approved-data-fix:
     if: >-
       (github.event_name == 'issues' &&
        github.event.label.name == 'approved' &&
        contains(github.event.issue.labels.*.name, 'problem-report') &&
-       !contains(github.event.issue.labels.*.name, 'pr-created')) ||
+       !contains(github.event.issue.labels.*.name, 'backend-dispatched') &&
+       !contains(github.event.issue.labels.*.name, 'backend-processed')) ||
       github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v6
-
       - name: Resolve issue number
         id: issue
         run: |
@@ -42,95 +39,57 @@ jobs:
           else
             ISSUE_NUMBER="${{ github.event.issue.number }}"
           fi
+          [[ "$ISSUE_NUMBER" =~ ^[0-9]+$ ]] || { echo "Invalid issue number" >&2; exit 1; }
           echo "number=$ISSUE_NUMBER" >> "$GITHUB_OUTPUT"
 
-      - name: Validate issue labels
+      - name: Validate public issue labels
         env:
           GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
         run: |
-          gh issue view "${{ steps.issue.outputs.number }}" --json labels --jq '.labels[].name' > /tmp/issue_labels.txt
+          gh issue view "$ISSUE_NUMBER" --json labels --jq '.labels[].name' > /tmp/issue_labels.txt
 
-          require_label() {
-            if ! grep -Fxq "$1" /tmp/issue_labels.txt; then
-              echo "Issue #${{ steps.issue.outputs.number }} is missing required label: $1" >&2
-              exit 1
-            fi
-          }
+          grep -Fxq "approved" /tmp/issue_labels.txt || { echo "Issue #$ISSUE_NUMBER is missing approved" >&2; exit 1; }
+          grep -Fxq "problem-report" /tmp/issue_labels.txt || { echo "Issue #$ISSUE_NUMBER is missing problem-report" >&2; exit 1; }
 
-          require_label "approved"
-          require_label "problem-report"
-
-          if grep -Fxq "pr-created" /tmp/issue_labels.txt; then
-            echo "Issue #${{ steps.issue.outputs.number }} already has pr-created; nothing to do." >&2
+          if grep -Fxq "backend-processed" /tmp/issue_labels.txt; then
+            echo "Issue #$ISSUE_NUMBER has already been processed." >&2
             exit 1
           fi
 
-      - name: Create data-fix branch
-        run: git checkout -B "data-fix-${{ steps.issue.outputs.number }}"
+      - name: Verify private-backend token
+        env:
+          HORSECAMP_BACKEND_TOKEN: ${{ secrets.HORSECAMP_BACKEND_TOKEN }}
+        run: |
+          test -n "$HORSECAMP_BACKEND_TOKEN" || {
+            echo "Missing HORSECAMP_BACKEND_TOKEN repository secret." >&2
+            exit 1
+          }
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.11"
+      - name: Dispatch approved data fix to HorseCampPrivate
+        env:
+          GH_TOKEN: ${{ secrets.HORSECAMP_BACKEND_TOKEN }}
+          ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
+        run: |
+          jq -n \
+            --arg issue_number "$ISSUE_NUMBER" \
+            '{event_type:"approved-data-fix",client_payload:{issue_number:$issue_number}}' \
+            > /tmp/dispatch.json
 
-      - name: Read issue body
+          gh api \
+            --method POST \
+            repos/andetero/HorseCampPrivate/dispatches \
+            --input /tmp/dispatch.json
+
+      - name: Mark public issue dispatched
         env:
           GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ steps.issue.outputs.number }}
         run: |
-          gh issue view "${{ steps.issue.outputs.number }}" --json body --jq .body > /tmp/horsecamp_problem_report_issue.md
+          gh label create "backend-dispatched" \
+            --color "0969da" \
+            --description "Approved issue sent to the private HorseCamp data backend" \
+            2>/dev/null || true
 
-      - name: Convert approved problem report into source JSON update
-        id: process
-        run: |
-          python scripts/approve_problem_report.py \
-            --issue-body /tmp/horsecamp_problem_report_issue.md \
-            --issue-number "${{ steps.issue.outputs.number }}"
-
-      - name: Commit data-fix source JSON update
-        id: commit
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Only commit source/review files here. Do NOT run fetch_camps.py or update camps.json.
-          # The scheduled Seed Camp Data workflow will rebuild camps.json overnight, or you can run it manually.
-          git add data/exclusions.json data/overrides.json data/private_camps.json
-
-          if git diff --staged --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "No changes to commit."
-          else
-            git commit -m "chore: approve HorseCamp data fix #${{ steps.issue.outputs.number }}"
-            git push --force origin "data-fix-${{ steps.issue.outputs.number }}"
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Create or find pull request
-        id: pr
-        if: steps.commit.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          cat > /tmp/horsecamp_data_fix_pr_body.md <<'EOF'
-          ${{ steps.process.outputs.pr_body }}
-          EOF
-
-          PR_URL=$(gh pr view "data-fix-${{ steps.issue.outputs.number }}" --json url --jq .url 2>/dev/null || gh pr create \
-            --base main \
-            --head "data-fix-${{ steps.issue.outputs.number }}" \
-            --title "${{ steps.process.outputs.pr_title }}" \
-            --body-file /tmp/horsecamp_data_fix_pr_body.md)
-
-          echo "url=$PR_URL" >> "$GITHUB_OUTPUT"
-
-      - name: Update labels
-        if: steps.commit.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          # Make this idempotent: create the status label if it does not already exist.
-          gh label create "pr-created" --color "8250df" --description "Submission or data-fix PR has been created" 2>/dev/null || true
-
-          # Remove/add labels without failing the whole workflow if a label is already absent/present.
-          gh issue edit "${{ steps.issue.outputs.number }}" --remove-label "needs-review" || true
-          gh issue edit "${{ steps.issue.outputs.number }}" --add-label "pr-created" || true
+          gh issue edit "$ISSUE_NUMBER" --remove-label "needs-review" 2>/dev/null || true
+          gh issue edit "$ISSUE_NUMBER" --add-label "backend-dispatched"

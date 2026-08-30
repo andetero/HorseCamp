@@ -53,9 +53,10 @@ jobs:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
           gh label create "backend-dispatched" \
+            --repo andetero/HorseCamp \
             --color "0969da" \
             --description "Approved issue sent to the private HorseCamp data backend" \
             2>/dev/null || true
 
-          gh issue edit "$ISSUE_NUMBER" --remove-label "needs-review" 2>/dev/null || true
-          gh issue edit "$ISSUE_NUMBER" --add-label "backend-dispatched"
+          gh issue edit "$ISSUE_NUMBER" --repo andetero/HorseCamp --remove-label "needs-review" 2>/dev/null || true
+          gh issue edit "$ISSUE_NUMBER" --repo andetero/HorseCamp --add-label "backend-dispatched"

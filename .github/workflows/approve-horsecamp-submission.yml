@@ -5,93 +5,57 @@ on:
     types: [labeled]
 
 permissions:
-  contents: write
+  contents: read
   issues: write
-  pull-requests: write
 
 concurrency:
   group: approve-horsecamp-submission-${{ github.event.issue.number }}
   cancel-in-progress: true
 
 jobs:
-  approved-submission-to-pr:
-    if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'submission') && !contains(github.event.issue.labels.*.name, 'pr-created')
+  dispatch-approved-submission:
+    if: >-
+      github.event.label.name == 'approved' &&
+      contains(github.event.issue.labels.*.name, 'submission') &&
+      !contains(github.event.issue.labels.*.name, 'backend-dispatched') &&
+      !contains(github.event.issue.labels.*.name, 'backend-processed')
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v6
+      - name: Verify private-backend token
+        env:
+          HORSECAMP_BACKEND_TOKEN: ${{ secrets.HORSECAMP_BACKEND_TOKEN }}
+        run: |
+          test -n "$HORSECAMP_BACKEND_TOKEN" || {
+            echo "Missing HORSECAMP_BACKEND_TOKEN repository secret." >&2
+            exit 1
+          }
 
-      - name: Create approval branch
-        run: git checkout -B "submission-${{ github.event.issue.number }}"
+      - name: Dispatch approved submission to HorseCampPrivate
+        env:
+          GH_TOKEN: ${{ secrets.HORSECAMP_BACKEND_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          jq -n \
+            --arg issue_number "$ISSUE_NUMBER" \
+            '{event_type:"approved-submission",client_payload:{issue_number:$issue_number}}' \
+            > /tmp/dispatch.json
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.11"
+          gh api \
+            --method POST \
+            repos/andetero/HorseCampPrivate/dispatches \
+            --input /tmp/dispatch.json
 
-      - name: Read issue body
+      - name: Mark public issue dispatched
         env:
           GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
-          gh issue view "${{ github.event.issue.number }}" --json body --jq .body > /tmp/horsecamp_submission_issue.md
+          gh label create "backend-dispatched" \
+            --color "0969da" \
+            --description "Approved issue sent to the private HorseCamp data backend" \
+            2>/dev/null || true
 
-      - name: Convert approved issue into JSON update
-        id: process
-        run: |
-          python scripts/approve_submission.py \
-            --issue-body /tmp/horsecamp_submission_issue.md \
-            --issue-number "${{ github.event.issue.number }}"
-
-      - name: Commit submission source JSON update
-        id: commit
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Only commit source/staging files here. Do NOT run fetch_camps.py or update camps.json.
-          # The scheduled Seed Camp Data workflow will rebuild camps.json overnight, or you can run it manually.
-          git add data/private_camps.json
-
-          if git diff --staged --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "No changes to commit."
-          else
-            git commit -m "chore: approve HorseCamp submission #${{ github.event.issue.number }}"
-            # This branch is fully managed by this workflow. Force push avoids stale branch conflicts
-            # from earlier failed/retried approval runs for the same issue.
-            git push --force origin "submission-${{ github.event.issue.number }}"
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Create or find pull request
-        id: pr
-        if: steps.commit.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          cat > /tmp/horsecamp_pr_body.md <<'EOF'
-          ${{ steps.process.outputs.pr_body }}
-          EOF
-
-          PR_URL=$(gh pr view "submission-${{ github.event.issue.number }}" --json url --jq .url 2>/dev/null || gh pr create \
-            --base main \
-            --head "submission-${{ github.event.issue.number }}" \
-            --title "${{ steps.process.outputs.pr_title }}" \
-            --body-file /tmp/horsecamp_pr_body.md)
-
-          echo "url=$PR_URL" >> "$GITHUB_OUTPUT"
-
-      - name: Comment on issue and update labels
-        if: steps.commit.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          
-          # Make this idempotent: create the status label if it does not already exist.
-          gh label create "pr-created" --color "8250df" --description "Submission PR has been created" 2>/dev/null || true
-
-          # Remove/add labels without failing the whole workflow if a label is already absent/present.
-          gh issue edit "${{ github.event.issue.number }}" --remove-label "needs-review" || true
-          gh issue edit "${{ github.event.issue.number }}" --add-label "pr-created" || true
+          gh issue edit "$ISSUE_NUMBER" --remove-label "needs-review" 2>/dev/null || true
+          gh issue edit "$ISSUE_NUMBER" --add-label "backend-dispatched"

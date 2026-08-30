@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-30T14:02:52.313736+00:00",
-  "count": 1896,
+  "generated": "2026-08-30T19:12:08.172121+00:00",
+  "count": 1897,
   "sources": [
     "Recreation.gov RIDB",
     "NPS API",
@@ -34140,6 +34140,36 @@
       "source": "State Parks"
     },
     {
+      "id": "horsemotel-e81a26eb30",
+      "name": "Enchanted Equestrian Center, Talia Matthews",
+      "location": "821 Watson Lane, Las Cruces , NM 88005",
+      "state": "NM",
+      "latitude": 32.2654245,
+      "longitude": -106.7731044,
+      "pricePerNight": 0.0,
+      "horseFeePerNight": 0.0,
+      "hookups": ["30A", "50A", "Electric"],
+      "accommodations": ["Stalls", "RV Hookups", "Big Rig Friendly", "Wash Rack", "WiFi", "Lodging", "Horse Motel"],
+      "maxRigLength": 0,
+      "stallCount": 0,
+      "paddockCount": 0,
+      "phone": "575-386-3252",
+      "website": "https://www.enchantedequestriancenter.com/",
+      "description": "Large, outdoor covered stalls, with complementary shavings. Stalls have clean water buckets filled prior to arrival. We have AZ Alfalfa and Bermuda grass available for purchase, $40 per horse per night. Airbnb fully stocked apartments, laundry/king bed/smart tv available located next to your horses. 50/30 plugs available for trailers, $60 per night. Free Wi-Fi available. We are set up for big rigs more than 5 horses, 24/7 on site security, feed, air bnbs and trailer/rv hook ups, turn out, multi day stays, emergency veterinary, wash rack, farriers. Location notes: Located 1.5 miles from I-10",
+      "isVerified": true,
+      "seasonStart": 1,
+      "seasonEnd": 12,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": false,
+      "pullThroughAvailable": false,
+      "imageColors": [],
+      "photoURLs": ["https://www.horsemotel.com/ZP-EnchantedEquestrian1Big.jpg", "https://www.horsemotel.com/ZP-EnchantedEquestrian2Big.jpg", "https://www.horsemotel.com/ZP-EnchantedEquestrian3Big.jpg", "https://www.horsemotel.com/ZP-EnchantedEquestrian4Big.jpg", "https://www.horsemotel.com/ZP-EnchantedEquestrian5Big.jpg", "https://www.horsemotel.com/ZP-EnchantedEquestrian6Big.jpg", "https://www.horsemotel.com/ZP-EnchantedEquestrian7Big.jpg"],
+      "source": "HorseMotel.com",
+      "email": "taliamatthews89@gmail.com"
+    },
+    {
       "id": "nm-stateparks-fenton-lake",
       "name": "Fenton Lake State Park Equestrian Camping Area",
       "location": "Jemez Springs, NM",
@@ -37030,7 +37060,7 @@
       "hasBathhouse": false,
       "pullThroughAvailable": false,
       "imageColors": ["5C7A4E", "D4A853"],
-      "photoURLs": ["https://cdn.recreation.gov/public/2020/10/27/18/40/233430_f55c5304-0a3f-42a8-9c51-7ab60516c336_1440.webp", "https://cdn.recreation.gov/public/2020/05/13/15/06/233430_cea997ac-bd6a-4669-a407-a407acb565b9_700.webp", "https://cdn.recreation.gov/public/2020/05/05/16/24/233430_6f8dde66-e060-442d-a1fa-903f0cae6eae_700.webp", "https://cdn.recreation.gov/public/2021/02/24/20/01/233430_913a9a71-aaac-4e84-b9d1-7c7f36a3430d_700.webp", "https://cdn.recreation.gov/public/2020/05/13/15/01/233430_91dbd1e9-6dd4-4da2-a61d-33d04872effb_700.webp", "https://cdn.recreation.gov/public/2020/05/13/15/04/233430_a9f6012d-e43d-47ad-955d-fd8a4bdd0527_700.webp"],
+      "photoURLs": ["https://cdn.recreation.gov/public/2026/08/30/13/50/233430_2bd63474-fa43-40a8-a69a-08136b2e16a6_1440.jpeg", "https://cdn.recreation.gov/public/2026/08/30/13/41/233430_766762a6-708a-4a35-98ee-1b69b26bfd21_700.jpeg", "https://cdn.recreation.gov/public/2026/08/30/13/39/233430_6209fdb1-6ee3-44ac-86e1-e36f26a4ed89_700.jpeg", "https://cdn.recreation.gov/public/2026/08/30/13/39/233430_57dd7a7c-45e2-473f-ae6e-8f23ed1c28ce_700.jpeg", "https://cdn.recreation.gov/public/2026/08/30/13/38/233430_d7d8b5b9-04c9-406c-b973-280c9e15edf1_700.jpeg", "https://cdn.recreation.gov/public/2026/08/30/13/52/233430_509e6ef2-21aa-48b2-9b7e-46fb021c4dac_700.jpeg"],
       "source": "RIDB"
     },
     {

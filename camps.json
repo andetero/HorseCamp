@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-11T04:58:13.348645+00:00",
-  "count": 2110,
+  "generated": "2026-09-12T05:07:57.202529+00:00",
+  "count": 2111,
   "sources": [
     "Recreation.gov RIDB",
     "NPS API",
@@ -291,6 +291,36 @@
       "imageColors": [],
       "photoURLs": [],
       "source": "HorseMotel.com"
+    },
+    {
+      "id": "horsemotel-89c8ef6606",
+      "name": "45 RANCH",
+      "location": "4753 Lower Wetumpka Road, Montgomery , AL 36110",
+      "state": "AL",
+      "latitude": 32.4459195,
+      "longitude": -86.2651963,
+      "pricePerNight": 0.0,
+      "horseFeePerNight": 0.0,
+      "hookups": ["Electric"],
+      "accommodations": ["Stalls", "Paddocks", "RV Hookups", "Wash Rack", "Horse Motel"],
+      "maxRigLength": 0,
+      "stallCount": 0,
+      "paddockCount": 0,
+      "phone": "903-707-5332",
+      "website": "",
+      "description": "17 stalls, RV hookup, wash rack, turn out pens, arena, 2 ponds, plenty of room to enjoy and rest up. Horses happiness is priority and if there’s something you need, let us know. This is our horse HAPPY place! Location notes: Montgomery Al - just about 5 miles off I-65.",
+      "isVerified": false,
+      "seasonStart": 1,
+      "seasonEnd": 12,
+      "hasWashRack": false,
+      "hasDumpStation": false,
+      "hasWifi": false,
+      "hasBathhouse": false,
+      "pullThroughAvailable": false,
+      "imageColors": [],
+      "photoURLs": ["https://www.horsemotel.com/ZP-fourfive4Big.jpg", "https://www.horsemotel.com/ZP-fourfive1Big.jpg", "https://www.horsemotel.com/ZP-fourfive3Big.jpg", "https://www.horsemotel.com/ZP-fourfive2Big.jpg", "https://www.horsemotel.com/ZP-fourfive5Big.jpg"],
+      "source": "HorseMotel.com",
+      "email": "45boardingranch@gmail.com"
     },
     {
       "id": "horsemotel-6ed318445c",
@@ -4835,7 +4865,7 @@
       "hasBathhouse": false,
       "pullThroughAvailable": false,
       "imageColors": [],
-      "photoURLs": ["https://www.horsemotel.com/ZP-JKCBig.jpg"],
+      "photoURLs": ["https://www.horsemotel.com/ZP-JKC1Big.jpg", "https://www.horsemotel.com/ZP-JKC3Big.jpg", "https://www.horsemotel.com/ZP-JKC2Big.jpg"],
       "source": "HorseMotel.com",
       "email": "kmiller652000@yahoo.com"
     },
@@ -11444,7 +11474,7 @@
       "hasBathhouse": false,
       "pullThroughAvailable": false,
       "imageColors": [],
-      "photoURLs": ["https://www.horsemotel.com/ZP-Salt1Big.jpg", "https://www.horsemotel.com/ZP-Salt2Big.jpg", "https://www.horsemotel.com/ZP-Salt3Big.jpg", "https://www.horsemotel.com/ZP-Salt8Big.jpg", "https://www.horsemotel.com/ZP-Salt5Big.jpg", "https://www.horsemotel.com/ZP-Salt6Big.jpg", "https://www.horsemotel.com/ZP-Salt7Big.jpg", "https://www.horsemotel.com/ZP-Salt4Big.jpg"],
+      "photoURLs": ["https://www.horsemotel.com/ZP-Salt10Big.jpg", "https://www.horsemotel.com/ZP-Salt7Big.jpg", "https://www.horsemotel.com/ZP-Salt4Big.jpg", "https://www.horsemotel.com/ZP-Salt1Big.jpg", "https://www.horsemotel.com/ZP-Salt8Big.jpg"],
       "source": "HorseMotel.com",
       "email": "saltoftheearthranch@gmail.com"
     },

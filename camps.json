@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-06T10:57:05.893572+00:00",
+  "generated": "2026-10-07T10:36:37.216573+00:00",
   "count": 2135,
   "sources": [
     "Recreation.gov RIDB",
@@ -20138,8 +20138,8 @@
       "name": "Jubilee College State Park",
       "location": "Jubilee College State Park, IL",
       "state": "IL",
-      "latitude": 40.824,
-      "longitude": -89.799,
+      "latitude": 41.39,
+      "longitude": -88.48,
       "pricePerNight": 0.0,
       "horseFeePerNight": 0.0,
       "hookups": ["Water"],
@@ -58669,7 +58669,7 @@
       "paddockCount": 0,
       "phone": "",
       "website": "https://www.fs.usda.gov/r06/colville/recreation/fourteen-mile-campground-trailhead",
-      "description": "T T T Alerts Passes Permits Recreation Camping and Cabins Opportunities Discover History Safety and Outdoor Ethics Visitor Maps and Guides Site Open Recreation Region: Tonasket Ranger District Fourteen Mile Campground/Trailhead This trailhead provides access to Albert Camp Trail #375 which leads into the Pasayten Wilderness. The trailhead is also a small campground offering seven campsites, horse corral, seven hitching rails, two unloading ramps, a registration box and information sign, and a bear-proof garbage can. Each site has picnic tables and fire rings at each campsite and offers toilet facilities. Active Alerts Sinlahekin Fire Closure Areas of the Tonasket Ranger District",
+      "description": "T T T Alerts Passes Permits Recreation Camping and Cabins Opportunities Discover History Safety and Outdoor Ethics Visitor Maps and Guides Site Open Recreation Region: Tonasket Ranger District Fourteen Mile Campground/Trailhead This trailhead provides access to Albert Camp Trail #375 which leads into the Pasayten Wilderness. The trailhead is also a small campground offering seven campsites, horse corral, seven hitching rails, two unloading ramps, a registration box and information sign, and a bear-proof garbage can. Each site has picnic tables and fire rings at each campsite and offers toilet facilities.",
       "isVerified": true,
       "seasonStart": 5,
       "seasonEnd": 7,

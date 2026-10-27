@@ -1,0 +1,62 @@
+name: Approve HorseCamp Submission
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: approve-horsecamp-submission-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  dispatch-approved-submission:
+    if: >-
+      github.event.label.name == 'approved' &&
+      contains(github.event.issue.labels.*.name, 'submission') &&
+      !contains(github.event.issue.labels.*.name, 'backend-dispatched') &&
+      !contains(github.event.issue.labels.*.name, 'backend-processed')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Verify private-backend token
+        env:
+          HORSECAMP_BACKEND_TOKEN: ${{ secrets.HORSECAMP_BACKEND_TOKEN }}
+        run: |
+          test -n "$HORSECAMP_BACKEND_TOKEN" || {
+            echo "Missing HORSECAMP_BACKEND_TOKEN repository secret." >&2
+            exit 1
+          }
+
+      - name: Dispatch approved submission to HorseCampPrivate
+        env:
+          GH_TOKEN: ${{ secrets.HORSECAMP_BACKEND_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          jq -n \
+            --arg issue_number "$ISSUE_NUMBER" \
+            '{event_type:"approved-submission",client_payload:{issue_number:$issue_number}}' \
+            > /tmp/dispatch.json
+
+          gh api \
+            --method POST \
+            repos/andetero/HorseCampPrivate/dispatches \
+            --input /tmp/dispatch.json
+
+      - name: Mark public issue dispatched
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          gh label create "backend-dispatched" \
+            --repo andetero/HorseCamp \
+            --color "0969da" \
+            --description "Approved issue sent to the private HorseCamp data backend" \
+            2>/dev/null || true
+
+          gh issue edit "$ISSUE_NUMBER" --repo andetero/HorseCamp --remove-label "needs-review" 2>/dev/null || true
+          gh issue edit "$ISSUE_NUMBER" --repo andetero/HorseCamp --add-label "backend-dispatched"
